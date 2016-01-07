@@ -14,4 +14,9 @@ class IndexController extends Controller {
     	$this->display();
 		//session('user',null);
     }
+
+    public function test(){
+        echo 'ok';
+        
+    }
 }
