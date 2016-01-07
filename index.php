@@ -54,11 +54,12 @@ function is_mobile_request()
 	else
 		return false;
 }
+define('ZMLTPL','wap');
 //如果是手机设备 定义常量
 if(is_mobile_request()==true){
-	define('ZMLTPL','wap');
+	//define('ZMLTPL','wap');
 }else{
-	define('ZMLTPL','default');
+	//define('ZMLTPL','default');
 }
 // 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
 define('APP_DEBUG',True);
