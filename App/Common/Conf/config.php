@@ -6,8 +6,8 @@ $config = array(
     'TMPL_STRIP_SPACE'     =>true,
     'OUTPUT_ENCODE'        =>true, // 页面压缩输出
 
-    'MODULE_ALLOW_LIST'    =>    array('Home','User','Admin','Install'),
-    'DEFAULT_MODULE'       =>    'Home',  // 默认模块
+    'MODULE_ALLOW_LIST'    =>    array('Www','Home','User','Admin','Install'),
+    'DEFAULT_MODULE'       =>    'Www',  // 默认模块
 
     //加密混合值
 	'AUTH_CODE' => 'ZhiMaLe',
