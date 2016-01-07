@@ -5,10 +5,10 @@ $config = array(
     'DB_FIELDTYPE_CHECK'   =>true,
     'TMPL_STRIP_SPACE'     =>true,
     'OUTPUT_ENCODE'        =>true, // 页面压缩输出
-
+    'URL_CASE_INSENSITIVE' => true,
     'MODULE_ALLOW_LIST'    =>    array('Www','Home','User','Admin','Install'),
     'DEFAULT_MODULE'       =>    'Www',  // 默认模块
-
+    'URL_HTML_SUFFIX'=>'.html',
     //加密混合值
 	'AUTH_CODE' => 'ZhiMaLe',
     //数据库配置
