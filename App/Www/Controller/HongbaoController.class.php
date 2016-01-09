@@ -11,6 +11,7 @@ use Think\Controller;
 class HongbaoController extends Controller {
     public function index(){
         //define your token
+        $this->selected = CONTROLLER_NAME;
         $this->display();
     }
 
