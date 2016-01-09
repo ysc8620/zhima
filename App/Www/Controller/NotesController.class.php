@@ -7,11 +7,10 @@
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
 namespace Www\Controller;
-use Think\Controller;
-class NotesController extends Controller {
+class NotesController extends BaseController {
     public function index(){
-        //define your token
 
+        $this->title = '我发起的';
         $Page              = new \Think\Page(105,10); // 实例化分页类 传入总记录数和每页显示的记录数(20)
         $Page->rollPage = 5;
         $Page->setConfig('prev','上一页');
@@ -23,6 +22,7 @@ class NotesController extends Controller {
     }
 
     public function join(){
+        $this->title = '我参与的';
         $Page              = new \Think\Page(105,10); // 实例化分页类 传入总记录数和每页显示的记录数(20)
         $Page->rollPage = 5;
         $Page->setConfig('prev','上一页');

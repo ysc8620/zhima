@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 namespace Www\Controller;
 use Think\Controller;
-class IndexController extends Controller {
+class IndexController extends BaseController {
     public function index(){
 
         redirect(U("/hongbao"));

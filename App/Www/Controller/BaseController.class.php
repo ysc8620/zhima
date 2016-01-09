@@ -7,12 +7,11 @@
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
 namespace Www\Controller;
-class HongbaoController extends BaseController {
-    public function index(){
-        //define your token
-        $this->selected = CONTROLLER_NAME;
-        $this->display();
+use Think\Controller;
+class BaseController extends Controller {
+    protected function display($templateFile='',$charset='',$contentType='',$content='',$prefix='') {
+        $this->assign('time', time());
+        $this->view->display($templateFile,$charset,$contentType,$content,$prefix);
     }
-
 
 }
