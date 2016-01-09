@@ -1,148 +1,48 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-<title>新建红包</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="__PUBLIC__/css/pintuer.css">
-<script src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
-<script src="__PUBLIC__/js/pintuer.js"></script>
-<script src="__PUBLIC__/js/respond.js"></script>
-<script src="__LIB__/layer/layer.js"></script>
-</head>
-<body  onkeydown="BindEnter(event)">
+<include file="Public:header" />
+<script type="text/javascript" src="/js/utils.js"></script>
 <script type="text/javascript">
-    function BindEnter(obj)
-    {
-        if(obj.keyCode == 13)
+    region.isAdmin = false;
+    onload = function() {
+        if (!document.all)
         {
-            login();
+            document.forms['theForm'].reset();
         }
     }
+
 </script>
-<div class="container">
-    <div class="bg-sub text-white padding text-center">
-        <h2>新建红包</h2>
+<form action="{:U('hongbao/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
+    <div class="mod_container">
+        <div class="wx_bar">
+            <div class="wx_bar_back"> <a id="back" href="javascript:void(0);"></a> </div>
+            <div class="wx_bar_tit"><b>新建红包</b></div>
+        </div>
+        <div class="wx_wrap">
+            <div class="address_new">
+                <input id="address_regionId" value="" type="hidden">
+                <input id="adid" value="" type="hidden">
+                <p>
+                    <label for="amount"><span class="tit">每份金额：</span>
+                        <input name="amount" type="text" class="inputBg" id="amount" value="5" placeholder="每份金额"/> <span class="">元</span>
+                        <span id="updateTip1" style="color: red; display: none;">请填写每份金额</span> </label>
+                </p>
+                <p>
+                    <label for="total"><span class="tit">总份数：</span>
+                        <input name="total" type="text" class="inputBg"  id="total" value="40" placeholder="总份数"/> <span class="">份</span>
+                        <span id="updateTip2" style="color: red; display: none;">请填写总份数</span> </label>
+                </p>
+
+                <p>
+                    <label for="remark"><span class="tit">说明：</span>
+                        <input name="remark" type="text" class="inputBg"  id="remark" value="凑红包，有福利，你懂得" placeholder="凑红包，有福利，你懂得" />
+                        <span id="updateTip6" style="color: red; display: none;">红包说明</span> </label>
+                </p>
+                <p class="action">
+                    <button class="submit" id="add">凑 红 包</button>
+                </p>
+            </div>
+        </div>
     </div>
-  <div class="x12 float-right bg-white padding">
-
-    <div class="form-group">
-      <div class="field field-icon">
-          <div class="field field-icon"><span class="padding-small-top">每份金额：</span></div>
-          <span class="padding-small-top icon icon-money"></span>
-        <input type="text"  placeholder="" name="phone" value="5" class="input input-big box-shadow-none text-small radius-none input-auto" />
-      </div>
-    </div>
-    <div class="form-group">
-        <div class="field field-icon"><span class="padding-small-top">总份数：</span></div>
-      <div class="field field-icon"> <span class="padding-small-top icon icon-sort-numeric-desc"></span>
-        <input type="text " value="40" class="input radius-none input-big box-shadow-none text-small input-auto" name="verify"   placeholder="" />
-      </div>
-    </div>
-    <div class="form-group">
-        <div class="field field-icon"><span class="padding-small-top">说明：</span></div>
-      <div class="field field-icon"><span class="padding-small-top icon icon-text-height"></span>
-        <input type="text" name="pwd" value="凑红包,有福利,你懂得" placeholder="凑红包,有福利,你懂得" class="input box-shadow-none text-small input-big radius-none input-auto" />
-      </div>
-    </div>
-    <a href="javascript:void(0)"  class="x12 bg-red text-center padding text-white margin-bottom" onClick="login(this)">凑 红 包</a>
-    <div class="x12 margin-top">
-        <br />
-        <b>凑红包玩法</b><br />
-        1. 设置每份金额和份数，发起凑红包<br />
-        2. 邀请朋友参与，一人可凑多份<br />
-        3. 红包凑满后，款项会全部转给发起人<br />
-        4. 系统会根据参与份数，随机抽出幸运星<br />
-    </div>
-  </div>
-</div>
-<script type="text/javascript">
-    var wait=60;
-    function time(o) {
-        if (wait == 0) {
-            o.removeAttribute("disabled");
-            o.value="获取验证码";
-            wait = 30;
-        } else {
-            o.setAttribute("disabled", true);
-            o.value="重新发送(" + wait + ")";
-            wait--;
-            setTimeout(function() {
-                        time(o)
-                    },
-                    1000);
-        }
-    }
-
-    function getyzm(d){
-        var phone=$("input[name='phone']");
-        if(phone.val()==''){
-            layer.tips('手机号不能为空', phone,{tips: [1, '#f60']});
-            phone.focus();
-            return false
-        }
-
-        var telReg = !!phone.val().match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
-        if(telReg == false){
-            layer.tips('手机号格式不对', phone,{tips: [1, '#f60']});
-            phone.focus();
-            return false
-        }
-
-        $.post('__MODULE__/Login/sendsms.html',{phone:phone.val()},function(e){
-            if(e.status==1){
-                layer.msg(e.info);
-                time(d)
-                $(d).text('验证已发送');
-            }else{
-                layer.msg(e.info)
-            }
-        })
-    }
-
-    function verify(id){
-        $("#"+id).attr('src',"{:U('Home/Verify/index')}");
-    }
-
-    function login(d){
-        var phone=$("input[name='phone']")
-        var pwd=$("input[name='pwd']")
-        var verify=$("input[name='verify']")
-        if(phone.val()==''){
-            layer.tips('手机号不能为空', phone,{tips: [1, '#f60']});
-            phone.focus();
-            return false
-        }
-
-        if(pwd.val()==''){
-            layer.tips('密码不能为空', pwd,{tips: [1, '#f60']});
-            pwd.focus();
-            return false
-        }
-
-        if(verify.val()==''){
-            layer.tips('验证码不能为空', verify,{
-                tips:4,
-            });
-
-            verify.focus();
-            return false
-        }
-        $.post(
-			"__MODULE__/Login/reg",
-			{
-				phone:phone.val(),
-				pwd:pwd.val(),
-				verify:verify.val()
-			},function (data){
-				if (data.status == 1) {
-					window.location.href=data.url
-				}else{
-					layer.msg(data.info);
-				}
-			}
-        );
-    }
-</script>
+</form>
 <include file="Public:foot" />
 </body>
 </html>

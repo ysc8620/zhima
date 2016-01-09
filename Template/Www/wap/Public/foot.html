@@ -1,6 +1,8 @@
-<div class="x12" style="height:50px;" xmlns="http://www.w3.org/1999/html"></div>
-<div class="x12 text-center text-white fixed-bottom">
-    <a href="__ROOT__/" class="text-white"><span class="x3 <if condition="CONTROLLER_NAME eq 'Index' && MODULE_NAME eq 'Www'">bg-yellow<else/>bg-red</if> padding"><span class="icon-home padding-small-right"></span>首页</span></a>
-    <a href="{:U('/hongbao')}" class="text-white"><span class="x3 <if condition="CONTROLLER_NAME eq 'Hongbao'">bg-yellow<else/>bg-red</if> padding border-left"><span class="icon-stack-exchange padding-small-right"></span>凑红包</span></a>
-    <a href="{:U('/notes')}" class="text-white"><span class="x3 <if condition="CONTROLLER_NAME eq 'Notes'">bg-yellow<else/>bg-red</if> padding border-left"><span class="icon-comments-o padding-small-right"></span>记录</span></a>
+<div class="footer">
+    <ul>
+        <li><a href="{:U('/')}" class="nav-controller"><i class="fa fa-home"></i>首页</a></li>
+        <li><a href="{:U('/hongbao')}" class="nav-controller"><i class="fa fa-list"></i>凑红包</a></li>
+        <li><a href="{:U('/notes')}" class="nav-controller"><i class="fa fa-trophy"></i>我的记录</a></li>
+        <li><a href="{:U('/user/index')}" class="nav-controller active"><i class="fa fa-user"></i>个人中心</a></li>
+    </ul>
 </div>
