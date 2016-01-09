@@ -10,9 +10,23 @@ namespace Www\Controller;
 class HongbaoController extends BaseController {
     public function index(){
         //define your token
-        $this->selected = CONTROLLER_NAME;
+
+        $this->title = '新建红包';
         $this->display();
     }
 
+    /**
+     * 红包详情
+     */
+    public function detail(){
+        $this->display();
+    }
+
+    /**
+     * 红包认购
+     */
+    public function buy(){
+        $this->display();
+    }
 
 }

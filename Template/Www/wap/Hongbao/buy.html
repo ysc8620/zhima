@@ -1,11 +1,11 @@
 <include file="Public:header" />
-        <style type="text/css">
-            .fixed_nav_item{ width: 50%!important;}
-        </style>
+<style type="text/css">
+    .fixed_nav_item{ width: 50%!important;}
+</style>
 <div class="container">
     <div class="nav_fixed">
-        <a href="{:U('/notes')}" class="fixed_nav_item  nav_cur"><span class="nav_txt">我发起的</span></a>
-        <a href="{:U('/notes/join')}" class="fixed_nav_item  "><span class="nav_txt nav_payment">我参与的</span></a>
+        <a href="{:U('/notes')}" class="fixed_nav_item  "><span class="nav_txt">我发起的</span></a>
+        <a href="{:U('/notes/join')}" class="fixed_nav_item  nav_cur"><span class="nav_txt nav_payment">我参与的</span></a>
     </div>
     <div id="dealliststatus1" >
         <!--//start-->
@@ -13,9 +13,6 @@
             <div class="order_bd">
                 <div class="order_glist">
                     <div class="order_goods">
-                        <div class="order_goods_img">
-                            <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0">
-                        </div>
                         <div class="order_goods_info">
                             <div class="order_goods_name">$200</div>
                             <div class="order_goods_attr">
@@ -33,14 +30,11 @@
             <div class="order_bd">
                 <div class="order_glist">
                     <div class="order_goods">
-                        <div class="order_goods_img">
-                            <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0">
-                        </div>
                         <div class="order_goods_info">
                             <div class="order_goods_name">$200</div>
                             <div class="order_goods_attr">
                                 <div class="order_goods_attr_item">
-                                    <div class="order_goods_price"><span>还在凑</span> <span class="tracking_number"><a href="{:U('/hongbao/detail',array('id'=>1))}">详情>></a></span></div>
+                                    <div class="order_goods_price"><span>已完成</span> <span class="tracking_number"><a href="{:U('/hongbao/detail',array('id'=>1))}">详情>></a></span></div>
                                     2015-12-12 12:12 </div>
                             </div>
                         </div>
@@ -51,9 +45,9 @@
 
         <!--//end-->
 
-            <div id="pager" class="pagebar pagination">
+        <div id="pager" class="pagebar pagination">
             {$page}
-            </div>
+        </div>
 
     </div>
     <div class="express_box" id="invoice" style="display:none;"> </div>
