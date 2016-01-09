@@ -1,0 +1,250 @@
+* { margin:0; padding:0; }
+body {
+  margin:0 auto;
+  min-width: 320px;
+  max-width: 640px;
+  height: 100%;
+  font-size:12px;
+  font-family: Helvetica, STHeiti STXihei, Microsoft JhengHei, Microsoft YaHei, Arial;
+  line-height:1.5;
+  color: #666;
+  -webkit-text-size-adjust: 100% !important;
+  -webkit-user-select: none;
+  user-select: none;
+  background:#f2f2f2;
+}
+li { list-style:none; }
+i, em {
+  font-style: normal;
+}
+a {
+  text-decoration: none;
+  color: #333;
+}
+a:visited, a:active, a:hover {
+  text-decoration: none;
+  outline: 0;
+}
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 0 0 56px 0;
+}
+
+
+.footer {
+  width: 100%;
+  max-width: 640px;
+  height: 56px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
+  overflow: hidden;
+  background-color: #fff;
+  border-top: #eceded;
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+.footer li {
+  float: left;
+  width: 25%;
+  text-align: center;
+  height: 100%;
+}
+.footer a {
+  color: #777;
+  font-size: 13px;
+}
+.footer .nav-controller {
+  position: relative;
+  height: 100%;
+  display: block;
+  padding-top: 10px;
+}
+.footer .nav-controller i {
+  display: block;
+  font-size: 1.5em;
+  margin-bottom: 3px;
+}
+.footer a.active {
+  color: #DF2127;
+}
+
+.user { margin-top:100px; border-bottom:#ddd 1px solid; }
+.user dl { border-top:#ddd 1px solid; overflow:hidden; }
+.user dt { float:left; width:100%; height:36px; line-height:36px; }
+.user dd { float:left; width:100%; }
+.user dd ul { margin:0 10px; border-top:#ddd 1px solid; }
+.user dd ul li { width:30%; float:left; height:20px; line-height:20px; margin:8px 0; text-align:center; }
+.user dd ul li:nth-child(2) { border-left:#ddd 1px solid; border-right:#ddd 1px solid; }
+
+.order_tab { height:30px; border-bottom:#ddd 1px solid; }
+.order_tab li { width:33%; float:left; height:30px; line-height:30px; text-align:center; background:#fff; }
+.order_tab li:nth-child(2) { border-left:#ddd 1px solid; border-right:#ddd 1px solid; }
+.order_tab li.cur { height:29px; line-height:29px; border-bottom:#DF2127 2px solid; }
+
+.order_list { padding:10px; }
+
+
+.goods_list { padding:10px; }
+.tuan_g {
+  background-color: #FFFFFF;
+  border: 1px solid #CBCBCB;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+.tuan_g_img {
+  display: block;
+  position: relative;
+}
+.tuan_g_img img {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+}
+.tuan_g_info {
+  padding: 7px 10px 10px;
+}
+.tuan_g_name {
+  color: #191919;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.tuan_g_cx {
+  color: #707070;
+  line-height: 18px;
+}
+
+
+.tuan_g_core {
+  color: #FFFFFF;
+  display: block;
+  height: 34px;
+  line-height: 34px;
+  margin-bottom: 5px;
+  position: relative;
+  width: 290px;
+}
+
+.tuan_g_core:before {
+  background-position: -118px 0;
+  content: " ";
+  height: 44px;
+  left: -5px;
+  position: absolute;
+  top: -5px;
+  width: 44px;
+}
+
+
+.tuan_g_price {
+  background-color: #3E3E3E;
+  float: left;
+  height: 34px;
+  margin-left: 10px;
+  overflow: hidden;
+  padding-left: 35px;
+  width: 145px;
+}
+
+.tuan_g_price b {
+  font-size: 18px;
+  font-weight: normal;
+  margin-left: 5px;
+  margin-right: 2px;
+}
+
+.tuan_g_price span {
+  vertical-align: 1px;
+}
+
+
+.tuan_g_btn {
+  background-color: #DF2127;
+  border-bottom-right-radius: 17px;
+  border-top-right-radius: 17px;
+  float: left;
+  height: 34px;
+  line-height: 34px;
+  padding-left: 10px;
+  padding-right: 30px;
+  position: relative;
+}
+
+.tuan_g_btn:after {
+  background-position: -209px -59px;
+  content: " ";
+  height: 11px;
+  position: absolute;
+  right: 12px;
+  top: 11px;
+  width: 7px;
+}
+
+
+.tuan_g_mprice {
+  clear: both;
+  color: #999999;
+  height: 21px;
+  padding-left: 45px;
+}
+
+
+.tuan_mark,
+.tuan_g_core:before,
+.tuan_g_btn:after,
+.tp_lk:after,
+.ti_users_blank:after,
+.ti_users3 .ti_users_blank:after,
+.ti_boss:before {
+  background-image: url("../images/bg_v6.png");
+  background-repeat: no-repeat;
+  background-size: 365px 490px;
+}
+
+
+.tuan_mark {
+  display: block;
+  height: 41px;
+  left: -9px;
+  line-height: 10px;
+  overflow: hidden;
+  padding: 10px 0 11px;
+  position: absolute;
+  text-align: center;
+  top: -6px;
+  width: 41px;
+}
+
+.tuan_mark b, .tuan_mark span {
+  display: block;
+  font-size: 10px;
+  overflow: hidden;
+}
+
+
+.tuan_mark1 {
+  background-position: 0 0;
+}
+
+.tuan_mark1 b {
+  color: #FF4946;
+}
+
+.tuan_mark1 span {
+  overflow: hidden;
+}
+
+
+.tuan_mark2 {
+  background-position: -59px 0;
+}
+
+.tuan_mark2 b {
+  color: #F48600;
+}
