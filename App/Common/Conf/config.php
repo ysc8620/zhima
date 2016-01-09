@@ -12,7 +12,7 @@ $config = array(
     //加密混合值
 	'AUTH_CODE' => 'ZhiMaLe',
     //数据库配置
-    'URL_CASE_INSENSITIVE' => false,
+    'URL_CASE_INSENSITIVE' => true,
     'URL_HTML_SUFFIX' => 'html',
 	
 	/* 'SESSION_OPTIONS'=>array(
