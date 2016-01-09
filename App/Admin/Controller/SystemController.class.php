@@ -37,6 +37,20 @@ class SystemController extends CommonController {
 		}
 	}
 
+    //支付接口列表
+    public function weixin(){
+        if(IS_POST){
+            $post = I('post.');
+            if(F('weixin',$post,CONF_PATH)){
+                $this->success('配置成功');
+            }else{
+                $this->error('配置失败');
+            }
+        }else{
+            $this->display();
+        }
+    }
+
 	//支付接口列表
 	public function payment(){
 		if(IS_POST){

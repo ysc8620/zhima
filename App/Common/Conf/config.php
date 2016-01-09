@@ -43,4 +43,7 @@ $sms_config = file_exists($sms_config) ? include "$sms_config" : array();
 $db_config = dirname(__FILE__).'/db_config.php';
 $db_config = file_exists($db_config) ? include "$db_config" : array();
 
-return array_merge($db_config,$config,$web_config,$pay_config,$sms_config,$upload);
+$weixin_config = dirname(__FILE__).'/weixin.php';
+$weixin_config = file_exists($weixin_config) ? include "$weixin_config" : array();
+
+return array_merge($db_config,$config,$web_config,$pay_config,$sms_config,$upload,$weixin_config);
