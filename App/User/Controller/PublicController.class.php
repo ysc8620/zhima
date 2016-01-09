@@ -11,7 +11,7 @@ use Think\Controller;
 class PublicController extends Controller {
      	public function _initialize(){
 			if(!session('user.uin')){
-				header("location: ".__MODULE__.'/Login/index');
+				header("location: ".U('login/index'));
 			}
 			$this->user = M('user u')
 						->join('LEFT JOIN __REGION__ p ON  p.id=u.province')

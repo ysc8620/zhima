@@ -1,17 +1,19 @@
 <?php
 $config = array(
 	//'配置项'=>'配置值'
-	'URL_MODEL'            =>3,    //2是去除index.php
+	'URL_MODEL'            =>2,    //2是去除index.php
     'DB_FIELDTYPE_CHECK'   =>true,
     'TMPL_STRIP_SPACE'     =>true,
     'OUTPUT_ENCODE'        =>true, // 页面压缩输出
-    'URL_CASE_INSENSITIVE' => true,
-    'MODULE_ALLOW_LIST'    =>    array('Www','Home','User','Admin','Install'),
-    'DEFAULT_MODULE'       =>    'Www',  // 默认模块
-    'URL_HTML_SUFFIX'=>'.html',
+
+    'MODULE_ALLOW_LIST'    =>    array('www','home','user','admin','install'),
+    'DEFAULT_MODULE'       =>    'www',  // 默认模块
+
     //加密混合值
 	'AUTH_CODE' => 'ZhiMaLe',
     //数据库配置
+    'URL_CASE_INSENSITIVE' => true,
+    'URL_HTML_SUFFIX' => 'html',
 	
 	/* 'SESSION_OPTIONS'=>array(
 		'type'=> 'db',//session采用数据库保存

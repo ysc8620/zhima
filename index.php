@@ -56,11 +56,11 @@ function is_mobile_request()
 }
 define('ZMLTPL','wap');
 //如果是手机设备 定义常量
-if(is_mobile_request()==true){
-	//define('ZMLTPL','wap');
-}else{
-	//define('ZMLTPL','default');
-}
+//if(is_mobile_request()==true){
+//	define('ZMLTPL','wap');
+//}else{
+//	define('ZMLTPL','default');
+//}
 // 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
 define('APP_DEBUG',True);
 define('ZHIMALE_V','1.03');

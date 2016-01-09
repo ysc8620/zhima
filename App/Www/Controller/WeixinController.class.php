@@ -8,15 +8,16 @@
 // +----------------------------------------------------------------------
 namespace Www\Controller;
 use Think\Controller;
-class IndexController extends Controller {
+use Wechat\Wx;
+class WeixinController extends Controller {
     public function index(){
-    	//首页幻灯片获取
-    	$this->display();
-		//session('user',null);
-    }
+        //define your token
+        define("TOKEN", "weixin");
+        $wechatObj = new Wx();
+        $wechatObj->valid();
 
-    public function test(){
-        echo 'ok';
 
     }
+
+
 }

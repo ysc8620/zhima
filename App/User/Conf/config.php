@@ -3,6 +3,9 @@ $config = array(
 	'SHOW_PAGE_TRACE'=>0,
 	'TMPL_DETECT_THEME' => 1, 
 	'DEFAULT_THEME'        =>ZMLTPL,  //默认模板
+
+    'URL_CASE_INSENSITIVE' => true,
+    'URL_HTML_SUFFIX' => 'html',
 	
 	'TMPL_PARSE_STRING'=>array(
 		'__CSS__'=> __ROOT__.'/Template/User/'.ZMLTPL.'/Public/style/',
