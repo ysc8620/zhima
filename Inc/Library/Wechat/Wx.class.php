@@ -80,8 +80,13 @@ class Wx
                 cookie('openid',$fromUsername,array('expire'=>time()+2592000));
                 // 用户关注
                 if($event == 'subscribe'){
+                    f_log("fromUserName=$fromUsername&11111", ROOT_PATH.'/weixin_api.log');
+                    try{
+                        $user = M('user')->where(array('openid'=>$fromUsername))->find();
+                    }catch (Exception $e){
+                        f_log("fromUserName=$fromUsername&11111".$e->getMessage(), ROOT_PATH.'/weixin_api.log');
+                    }
 
-                    $user = M('user')->where(array('openid'=>$fromUsername))->find();
                     f_log("fromUserName=$fromUsername&11111", ROOT_PATH.'/weixin_api.log');
                     if(! $user ){
                         f_log("fromUserName=$fromUsername&2222", ROOT_PATH.'/weixin_api.log');
