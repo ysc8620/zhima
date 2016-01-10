@@ -31,7 +31,6 @@ class BaseController extends Controller {
             if($openid){
                 // 用户登录
                 $user = M('user')->find(array('openid'=>$openid));
-
                 print_r($user);
                 die();
                 if( $user ){;
