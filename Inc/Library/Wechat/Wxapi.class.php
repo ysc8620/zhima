@@ -44,8 +44,8 @@ class Wxapi
         self::init();
 
         $state = urlencode($_SERVER['REQUEST_URI']);
-
-        $redirect_uri = "http://" . $_SERVER['HTTP_HOST'] . "/weixin/oauth.html";
+        $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $redirect_uri = "http://" . $_SERVER['HTTP_HOST'] . "/weixin/oauth.html?url=".urlencode($url);
         $redirect_uri = urlencode($redirect_uri);
         $url="https://open.weixin.qq.com/connect/oauth2/authorize?appid=".self::$appid."&redirect_uri=".$redirect_uri."&response_type=code&scope=snsapi_userinfo&state=".$state."#wechat_redirect";
         header("location:".$url."");

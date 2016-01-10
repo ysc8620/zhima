@@ -42,7 +42,7 @@ class WeixinController extends Controller {
             session('openid', $data['openid']);
             session('access_token', $data['access_token']);
 
-            header("location: ".U('/weixin/userinfo').'?url='.$_GET['code']. '&token='.$data['access_token']);
+            header("location: ".U('/weixin/userinfo').'?url='.$_GET['url']. '&token='.$data['access_token']);
             exit();
         }
     }
