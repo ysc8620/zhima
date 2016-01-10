@@ -17,13 +17,13 @@ class Wx
     }
 
     public function responseMsg()
-    {f_log("fromUserName=&0000=====");
+    {f_log("fromUserName=&0000=====" , ROOT_PATH.'/weixin_api.log');
         //get post data, May be due to the different environments
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
         //extract post data
         if (!empty($postStr)){
-            f_log("fromUserName=&0000");
+            f_log("fromUserName=&0000" , ROOT_PATH.'/weixin_api.log');
             /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
                the best way is to check the validity of xml by yourself */
             libxml_disable_entity_loader(true);
@@ -35,7 +35,7 @@ class Wx
 
             $time = time();
 
-            f_log("fromUserName=$fromUsername&8888");
+            f_log("fromUserName=$fromUsername&8888" , ROOT_PATH.'/weixin_api.log');
             $textTpl = "<xml>
                             <ToUserName><![CDATA[%s]]></ToUserName>
                             <FromUserName><![CDATA[%s]]></FromUserName>
@@ -66,7 +66,7 @@ class Wx
                          </Articles>
                          <FuncFlag>0</FuncFlag>
                          </xml>";
-            f_log("fromUserName=$fromUsername&9999");
+            f_log("fromUserName=$fromUsername&9999" , ROOT_PATH.'/weixin_api.log');
 //            if(!empty( $keyword ))
 //            {
 //                $msgType = "text";
@@ -76,14 +76,14 @@ class Wx
 //            }else{
 //                echo "Input something...";
 //            }
-            f_log("fromUserName=$fromUsername&55555");
+            f_log("fromUserName=$fromUsername&55555" , ROOT_PATH.'/weixin_api.log');
             // 事件消息
             if ($msgType == 'event') {
                 $event = $postObj->Event;
-                f_log("fromUserName=$fromUsername&66666");
+                f_log("fromUserName=$fromUsername&66666" , ROOT_PATH.'/weixin_api.log');
                 session('openid', $fromUsername);
                 cookie('openid',$fromUsername,array('expire'=>time()+2592000));
-                f_log("fromUserName=$fromUsername&77777");
+                f_log("fromUserName=$fromUsername&77777" , ROOT_PATH.'/weixin_api.log');
                 // 用户关注
                 if($event == 'subscribe'){
                     f_log("fromUserName=$fromUsername&wwwwww");
@@ -107,7 +107,7 @@ class Wx
                             )
                         );
                     }
-                    f_log("fromUserName=$fromUsername&11111111111111");
+                    f_log("fromUserName=$fromUsername&11111111111111" , ROOT_PATH.'/weixin_api.log');
                     $weixin = F('weixin','',CONF_PATH);
                     $contentStr = htmlspecialchars_decode($weixin['weixin_regMsg']);
                     if($contentStr){
