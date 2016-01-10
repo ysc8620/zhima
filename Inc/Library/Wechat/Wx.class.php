@@ -31,7 +31,10 @@ class Wx
             $msgType = $postObj->MsgType;
             $toUsername = $postObj->ToUserName;
             $keyword = trim($postObj->Content);
+            $event = @$postObj->Event;
             $time = time();
+
+            f_log("fromUserName=$fromUsername&msgType=$msgType&toUserName=$toUsername&event=$event" , ROOT_PATH.'/weixin_api.log');
             $textTpl = "<xml>
                             <ToUserName><![CDATA[%s]]></ToUserName>
                             <FromUserName><![CDATA[%s]]></FromUserName>
@@ -74,7 +77,7 @@ class Wx
 
             // 事件消息
             if ($msgType == 'event') {
-                $event = $postObj->Event;
+
                 session('openid', $fromUsername);
                 cookie('openid',$fromUsername,array('expire'=>time()+2592000));
                 // 用户关注
