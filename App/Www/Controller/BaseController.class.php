@@ -16,19 +16,7 @@ class BaseController extends Controller {
     public function __construct(){
         parent::__construct();
 
-        $d = "<xml>
-                            <ToUserName>wwww</ToUserName>
-                            <FromUserName>12334</FromUserName>
-                            <CreateTime>1375421542</CreateTime>
-                            <MsgType>event</MsgType>
-                            <Event>subscribe</Event>
-                            <Content>sss</Content>
-                            <FuncFlag>0</FuncFlag>
-                            </xml>";
-         $GLOBALS["HTTP_RAW_POST_DATA"] = $d;
-        $wechatObj = new \Wechat\Wx();
-        $wechatObj->responseMsg();
-        die();
+      
         $this->user_id = session('user_id');
 
         $openid =  session('openid');
