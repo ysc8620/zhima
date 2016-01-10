@@ -10,7 +10,6 @@ namespace Www\Controller;
 use Think\Controller;
 class IndexController extends BaseController {
     public function index(){
-
         redirect(U("/hongbao"));
     	//首页幻灯片获取
     	$this->display();

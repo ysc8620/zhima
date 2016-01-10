@@ -310,3 +310,23 @@ function curl_get($url){
     curl_close($ch);
     return $res;
 }
+
+/**
+ * @param $word
+ * 日志记录
+ * @param string $log_name
+ */
+function  f_log($word, $log_name="./log.log")
+{
+
+    $fp = fopen($log_name,"a");
+
+    flock($fp, LOCK_EX) ;
+
+    fwrite($fp,"执行日期：".strftime("%Y-%m-%d-%H:%M:%S",time())."=".$word."\r\n");
+
+    flock($fp, LOCK_UN);
+
+    fclose($fp);
+
+}

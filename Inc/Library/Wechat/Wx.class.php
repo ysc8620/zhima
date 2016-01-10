@@ -3,9 +3,6 @@
  * 微信服务器回调处理
  */
 namespace Wechat;
-
-
-
 class Wx
 {
     public function valid()
@@ -31,31 +28,83 @@ class Wx
             libxml_disable_entity_loader(true);
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $fromUsername = $postObj->FromUserName;
+            $msgType = $postObj->MsgType;
             $toUsername = $postObj->ToUserName;
             $keyword = trim($postObj->Content);
             $time = time();
             $textTpl = "<xml>
-							<ToUserName><![CDATA[%s]]></ToUserName>
-							<FromUserName><![CDATA[%s]]></FromUserName>
-							<CreateTime>%s</CreateTime>
-							<MsgType><![CDATA[%s]]></MsgType>
-							<Content><![CDATA[%s]]></Content>
-							<FuncFlag>0</FuncFlag>
-							</xml>";
-            if(!empty( $keyword ))
-            {
-                $msgType = "text";
-                $contentStr = "Welcome to wechat world!";
-                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                echo $resultStr;
-            }else{
-                echo "Input something...";
-            }
+                            <ToUserName><![CDATA[%s]]></ToUserName>
+                            <FromUserName><![CDATA[%s]]></FromUserName>
+                            <CreateTime>%s</CreateTime>
+                            <MsgType><![CDATA[%s]]></MsgType>
+                            <Content><![CDATA[%s]]></Content>
+                            <FuncFlag>0</FuncFlag>
+                            </xml>";
+            $imageTpl = "<xml>
+                         <ToUserName><![CDATA[%s]]></ToUserName>
+                         <FromUserName><![CDATA[%s]]></FromUserName>
+                         <CreateTime>%s</CreateTime>
+                         <MsgType><![CDATA[%s]]></MsgType>
+                         <ArticleCount>%s</ArticleCount>
+                         <Articles>
+                         %s
+                         </Articles>
+                         <FuncFlag>0</FuncFlag>
+                         </xml>";
+            $newsTpl = "<xml>
+                         <ToUserName><![CDATA[%s]]></ToUserName>
+                         <FromUserName><![CDATA[%s]]></FromUserName>
+                         <CreateTime>%s</CreateTime>
+                         <MsgType><![CDATA[%s]]></MsgType>
+                         <ArticleCount>%s</ArticleCount>
+                         <Articles>
+                         %s
+                         </Articles>
+                         <FuncFlag>0</FuncFlag>
+                         </xml>";
+//            if(!empty( $keyword ))
+//            {
+//                $msgType = "text";
+//                $contentStr = "Welcome to wechat world!";
+//                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+//                echo $resultStr;
+//            }else{
+//                echo "Input something...";
+//            }
 
-        }else {
-            echo "";
-            exit;
+            // 事件消息
+            if ($msgType == 'event') {
+                $event = $postObj->Event;
+                session('openid', $fromUsername);
+                cookie('openid',$fromUsername,array('expire'=>time()+2592000));
+                // 用户关注
+                if($event == 'subscribe'){
+                    $user = M('user')->find(array('openid'=>$fromUsername));
+                    if(! $user ){
+                        M('user')->add(
+                            array(
+                                'openid' => $fromUsername,
+                                'create_time' => time(),
+                                'subscribe' => 1,
+                                'subscribe_time'=>time()
+                            )
+                        );
+                    }
+                    $contentStr = F('weixin.weixin_regMsg');
+                    $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
+                    echo $resultStr;
+                    exit;
+                }elseif($event == 'unsubscribe'){
+                    M('user')->where(array('openid'=>$fromUsername))->save(array('subscribe'=>0));
+                    session('openid', '');
+                }
+            // 普通消息处理
+            }else{
+                //
+            }
         }
+        echo "";
+        exit;
     }
 
     private function checkSignature()
@@ -82,4 +131,6 @@ class Wx
             return false;
         }
     }
+
+
 }
