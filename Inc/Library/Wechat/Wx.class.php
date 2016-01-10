@@ -76,14 +76,15 @@ class Wx
             // 事件消息
             if ($msgType == 'event') {
                 $event = $postObj->Event;
-                f_log("fromUserName=$fromUsername&66666=$event" , ROOT_PATH.'/weixin_api.log');
                 session('openid', $fromUsername);
                 cookie('openid',$fromUsername,array('expire'=>time()+2592000));
                 // 用户关注
                 if($event == 'subscribe'){
-                    f_log("fromUserName=$fromUsername&wwwwww", ROOT_PATH.'/weixin_api.log');
+
                     $user = M('user')->where(array('openid'=>$fromUsername))->find();
+                    f_log("fromUserName=$fromUsername&11111", ROOT_PATH.'/weixin_api.log');
                     if(! $user ){
+                        f_log("fromUserName=$fromUsername&2222", ROOT_PATH.'/weixin_api.log');
                         M('user')->add(
                             array(
                                 'openid' => $fromUsername,
@@ -92,7 +93,9 @@ class Wx
                                 'subscribe_time'=>time()
                             )
                         );
+                        f_log("fromUserName=$fromUsername&3333", ROOT_PATH.'/weixin_api.log');
                     }else{
+                        f_log("fromUserName=$fromUsername&4444", ROOT_PATH.'/weixin_api.log');
                         M('user')->where(array('uin'=>$user['uin']))->save(
                             array(
                                 'openid' => $fromUsername,
@@ -101,6 +104,7 @@ class Wx
                                 'subscribe_time'=>time()
                             )
                         );
+                        f_log("fromUserName=$fromUsername&5555", ROOT_PATH.'/weixin_api.log');
                     }
                     f_log("fromUserName=$fromUsername&11111111111111" , ROOT_PATH.'/weixin_api.log');
                     $weixin = F('weixin','',CONF_PATH);
