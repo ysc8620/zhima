@@ -16,7 +16,7 @@ class BaseController extends Controller {
     public function __construct(){
         parent::__construct();
 
-      
+
         $this->user_id = session('user_id');
 
         $openid =  session('openid');
