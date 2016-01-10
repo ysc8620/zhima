@@ -23,13 +23,10 @@ class WeixinController extends Controller {
         f_log($data , ROOT_PATH.'/weixin_api.log');
 
         $weixin = F('weixin','',CONF_PATH);
-        f_log("fromUserName=&0000==1bbb1===" , ROOT_PATH.'/weixin_api.log');
         //define your token
-        define("TOKEN", $weixin['weixin_token'] , ROOT_PATH.'/weixin_api.log');
-        f_log("fromUserName=&0000==111===" , ROOT_PATH.'/weixin_api.log');
+        define("TOKEN", $weixin['weixin_token']);
         $wechatObj = new Wx();
         $wechatObj->valid();
-        f_log("fromUserName=&0000===222==" , ROOT_PATH.'/weixin_api.log');
         $wechatObj->responseMsg();
     }
 
