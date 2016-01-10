@@ -25,7 +25,7 @@ class WeixinController extends Controller {
         $weixin = F('weixin','',CONF_PATH);
         //define your token
         define("TOKEN", $weixin['weixin_token']);
-        $wechatObj = new Wx();
+        $wechatObj = new \Wechat\Wx();
         $wechatObj->valid();
         $wechatObj->responseMsg();
     }

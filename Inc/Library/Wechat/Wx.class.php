@@ -5,6 +5,7 @@
 namespace Wechat;
 class Wx
 {
+
     public function valid()
     {
         $echoStr = $_GET["echostr"];
@@ -81,11 +82,10 @@ class Wx
                 // 用户关注
                 if($event == 'subscribe'){
                     f_log("fromUserName=$fromUsername&11111", ROOT_PATH.'/weixin_api.log');
-                    try{
+
                         $user = M('user')->where(array('openid'=>$fromUsername))->find();
-                    }catch (Exception $e){
-                        f_log("fromUserName=$fromUsername&11111".$e->getMessage(), ROOT_PATH.'/weixin_api.log');
-                    }
+
+
 
                     f_log("fromUserName=$fromUsername&11111", ROOT_PATH.'/weixin_api.log');
                     if(! $user ){
