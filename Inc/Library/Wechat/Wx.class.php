@@ -6,6 +6,11 @@ namespace Wechat;
 class Wx
 {
 
+    public function test(){
+        $user = M('user')->where(array('openid'=>'obb1AuBzVPvw8NE8UZ2gc0web854'))->find();
+        print_r($user);
+        die('===============');
+    }
     public function valid()
     {
         $echoStr = $_GET["echostr"];

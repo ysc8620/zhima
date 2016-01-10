@@ -15,8 +15,10 @@ class BaseController extends Controller {
      */
     public function __construct(){
         parent::__construct();
-
-
+        echo 'ok';
+$s = new \Wechat\Wx();
+        $s->test();
+die();
         $this->user_id = session('user_id');
 
         $openid =  session('openid');
