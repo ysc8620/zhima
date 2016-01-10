@@ -26,13 +26,12 @@ class BaseController extends Controller {
 
 
         // 系统获取当前用户
-       // if( ! $this->user_id ){
+        if( ! $this->user_id ){
 
             if($openid){
                 // 用户登录
-                $user = M('user')->find(array('openid'=>$openid));
-                print_r($user);
-                die();
+                $user = M('user')->where(array('openid'=>$openid))->find();
+
                 if( $user ){;
                     session('user_id', $user['user_id']);
                     $this->user_id = $user['user_id'];
@@ -54,7 +53,7 @@ class BaseController extends Controller {
                 \Wechat\Wxapi::authorize();
                 exit();
             }
-     //   }
+        }
     }
 
     protected function display($templateFile='',$charset='',$contentType='',$content='',$prefix='') {

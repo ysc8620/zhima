@@ -56,7 +56,7 @@ class WeixinController extends Controller {
             }
 
             if($user){
-                $user_info = M('user')->find(array('openid'=>session('openid')));
+                $user_info = M('user')->where(array('openid'=>session('openid')))->find();
                 if($user_info){
                     $data['name'] = $user['nickname'];
                     $data['openid'] = $user['openid'];

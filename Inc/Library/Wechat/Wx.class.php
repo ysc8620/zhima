@@ -79,7 +79,7 @@ class Wx
                 cookie('openid',$fromUsername,array('expire'=>time()+2592000));
                 // 用户关注
                 if($event == 'subscribe'){
-                    $user = M('user')->find(array('openid'=>$fromUsername));
+                    $user = M('user')->where(array('openid'=>$fromUsername))->find();
                     if(! $user ){
                         M('user')->add(
                             array(
@@ -90,9 +90,14 @@ class Wx
                             )
                         );
                     }
-                    $contentStr = F('weixin.weixin_regMsg');
-                    $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
-                    echo $resultStr;
+                    $weixin = F('weixin','',CONF_PATH);
+                    $contentStr = $weixin['weixin_regMsg'];
+                    if($contentStr){
+                        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
+                        echo $resultStr;
+                    }else{
+                        echo "";
+                    }
                     exit;
                 }elseif($event == 'unsubscribe'){
                     M('user')->where(array('openid'=>$fromUsername))->save(array('subscribe'=>0));

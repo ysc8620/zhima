@@ -22,7 +22,7 @@ class Wxapi
     static public function getAccessToken(){
         self::init();
 
-        $wexintoken = F('weixintoken');
+        $wexintoken = F('weixintoken','',CONF_PATH);
         if($wexintoken['access_token'] && time() < ($wexintoken['access_token_time'] + 7100) ){
             return $wexintoken['access_token'];
         }
@@ -35,7 +35,7 @@ class Wxapi
         $data['access_token'] = $info['access_token'];
         $data['access_token_time'] = time();
 
-        F('weixintoken', $data);
+        F('weixintoken', $data,CONF_PATH);
         return $info['access_token'];
     }
 
