@@ -10,7 +10,7 @@
     }
 
 </script>
-<form action="{:U('hongbao/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
+<form action="{:U('/hongbao/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
     <div class="mod_container">
         <div class="wx_bar">
             <div class="wx_bar_back"> <a id="back" href="javascript:void(0);"></a> </div>
@@ -34,7 +34,7 @@
                 <p>
                     <label for="remark"><span class="tit">说明：</span>
                         <input name="remark" type="text" class="inputBg"  id="remark" value="凑红包，有福利，你懂得" placeholder="凑红包，有福利，你懂得" />
-                        <span id="updateTip6" style="color: red; display: none;">红包说明</span> </label>
+                        <span id="updateTip3" style="color: red; display: none;">红包说明</span> </label>
                 </p>
                 <p class="action">
                     <button class="submit" id="add">凑 红 包</button>
@@ -44,5 +44,49 @@
     </div>
 </form>
 <include file="Public:foot" />
+<script type="text/javascript">
+    
+    function checkHongBao(){
+        var amount = $('input[name="amount"]').val();
+        var reg = new RegExp("^[0-9]*$");
+        if(!reg.test(amount)){
+            $('#updateTip1').text('请填写整数金额.');
+            $('#updateTip1').show();
+            return false;
+        }
+
+        if(amount > 200 || amount < 1){
+            $('#updateTip1').text('请输入1-200之间金额.');
+            $('#updateTip1').show();
+            return false;
+        }
+
+        $('#updateTip1').hide();
+
+
+        var total = $('input[name="total"]').val();
+        var reg = new RegExp("^[0-9]*$");
+        if(!reg.test(total)){
+            $('#updateTip2').text('请填写整数份额.');
+            $('#updateTip2').show();
+            return false;
+        }
+
+        if(total > 200 || total < 1){
+            $('#updateTip2').text('请输入1-200之间份额.');
+            $('#updateTip2').show();
+            return false;
+        }
+
+        if(amount * total > 200){
+            $('#updateTip2').text('总金额不能超过200元.');
+            $('#updateTip2').show();
+            return false;
+        }
+
+        $('#updateTip2').hide();
+        return true;
+    }
+</script>
 </body>
 </html>
