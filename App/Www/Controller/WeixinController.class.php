@@ -41,6 +41,7 @@ class WeixinController extends Controller {
             $data = \Wechat\Wxapi::get_openid($_GET['code']);
             session('openid', $data['openid']);
             session('access_token', $data['access_token']);
+            cookie('openid',$data['openid'],array('expire'=>time()+2592000));
 
             header("location: ".U('/weixin/userinfo').'?url='.$_GET['url']. '&token='.$data['access_token']);
             exit();
@@ -130,7 +131,7 @@ class WeixinController extends Controller {
         if(empty($url)){
             $url = '/';
         }
-      
+
         header("location:".$url."");
         exit();
     }
