@@ -81,7 +81,7 @@ class Wx
                 cookie('openid',$fromUsername,array('expire'=>time()+2592000));
                 // 用户关注
                 if($event == 'subscribe'){
-                    f_log("fromUserName=$fromUsername&wwwwww");
+                    f_log("fromUserName=$fromUsername&wwwwww", ROOT_PATH.'/weixin_api.log');
                     $user = M('user')->where(array('openid'=>$fromUsername))->find();
                     if(! $user ){
                         M('user')->add(
