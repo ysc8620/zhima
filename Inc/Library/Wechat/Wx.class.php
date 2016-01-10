@@ -31,7 +31,7 @@ class Wx
             $msgType = $postObj->MsgType;
             $toUsername = $postObj->ToUserName;
             $keyword = trim($postObj->Content);
-            $event = @$postObj->Event;
+
             $time = time();
 
 
@@ -77,6 +77,7 @@ class Wx
             f_log("fromUserName=$fromUsername&55555");
             // 事件消息
             if ($msgType == 'event') {
+                $event = $postObj->Event;
                 f_log("fromUserName=$fromUsername&66666");
                 session('openid', $fromUsername);
                 cookie('openid',$fromUsername,array('expire'=>time()+2592000));
