@@ -34,7 +34,7 @@ class Wx
             $event = @$postObj->Event;
             $time = time();
 
-            f_log("fromUserName=$fromUsername&msgType=$msgType&toUserName=$toUsername&event=$event" , ROOT_PATH.'/weixin_api.log');
+
             $textTpl = "<xml>
                             <ToUserName><![CDATA[%s]]></ToUserName>
                             <FromUserName><![CDATA[%s]]></FromUserName>
@@ -92,13 +92,24 @@ class Wx
                                 'subscribe_time'=>time()
                             )
                         );
+                    }else{
+                        M('user')->where(array('uin'=>$user['uin']))->save(
+                            array(
+                                'openid' => $fromUsername,
+                                'create_time' => time(),
+                                'subscribe' => 1,
+                                'subscribe_time'=>time()
+                            )
+                        );
                     }
                     $weixin = F('weixin','',CONF_PATH);
-                    $contentStr = $weixin['weixin_regMsg'];
+                    $contentStr = htmlspecialchars_decode($weixin['weixin_regMsg']);
                     if($contentStr){
+                        f_log("fromUserName=$fromUsername&msgType=$msgType&toUserName=$toUsername&event=$event&$contentStr" , ROOT_PATH.'/weixin_api.log');
                         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
                         echo $resultStr;
                     }else{
+                        f_log("fromUserName=$fromUsername&msgType=$msgType&toUserName=$toUsername&event=$event&errorrr" , ROOT_PATH.'/weixin_api.log');
                         echo "";
                     }
                     exit;
