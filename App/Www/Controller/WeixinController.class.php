@@ -16,8 +16,8 @@ class WeixinController extends Controller {
             $data .= "==GET=".http_build_query($_GET);
         }
 
-        if(!empty($_POST)){
-            $data .= "==POST=".http_build_query($_POST);
+        if(!empty($GLOBALS["HTTP_RAW_POST_DATA"])){
+            $data .= "==POST=".http_build_query($GLOBALS["HTTP_RAW_POST_DATA"]);
         }
 
         f_log($data , ROOT_PATH.'/weixin_api.log');
