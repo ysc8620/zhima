@@ -9,8 +9,9 @@ class Wxapi
     static $appsecret = '';
 
     static function init(){
-        self::$appid = F('weixin.weixin_appid');
-        self::$appsecret = F('weixin.weixin_appsecret');
+        $weixin = F('weixin','',CONF_PATH);
+        self::$appsecret = $weixin['weixin_appsecret'];
+        self::$appid = $weixin['weixin_appid'];
 
         if(empty(self::$appid) || empty(self::$appsecret)){
             echo 'ERROR DEFINED WEIXIN APPID';
