@@ -55,6 +55,7 @@ class WeixinController extends Controller {
                 $user = \Wechat\Wxapi::getUserInfo(session('openid'),2);
             }
 
+            print_r($user);die();
             if($user){
                 $user_info = M('user')->find(array('openid'=>session('openid')));
                 if($user_info){
