@@ -763,11 +763,12 @@ input[type=text],textarea {-webkit-appearance:none}
 .state_now {color:#4390E4}
 .state_num {color:#666}
 .state_btn {height:auto;text-align:center}
-.state_btn a {border-radius:3px;color:#FFF;display:inline-block;height:30px;line-height:30px;margin:15px 0;text-align:center;width:48%;margin-right:2%;}
+.state_btn a {border-radius:3px;color:#FFF;display:inline-block;height:30px;line-height:30px;margin:15px 0;text-align:center;width:28%;margin-right:2%;}
 .state_btn a:last-child {margin-right:0}
 .state_btn_1 {background-color:#3E3E3E!important}
 .state_btn_2 {background-color:#DF2127!important}
 .state_btn_3 {background-color:#DF2127!important}
+.state_btn_4 {background-color:none!important; color:#0033CC!important; font-size:16px!important; }
 .state_step {padding:15px 0;position:relative}
 .state_step ul {background-image:url(../images/state.png);background-repeat:no-repeat;background-size:282px 150px;height:74px;margin:0 auto;overflow:hidden;width:282px}
 .state_step li {float:left}

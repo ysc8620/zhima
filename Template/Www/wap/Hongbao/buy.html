@@ -1,66 +1,70 @@
 <include file="Public:header" />
-<style type="text/css">
-    .fixed_nav_item{ width: 50%!important;}
-</style>
 <div class="container">
-    <div class="nav_fixed">
-        <a href="{:U('/notes')}" class="fixed_nav_item  "><span class="nav_txt">我发起的</span></a>
-        <a href="{:U('/notes/join')}" class="fixed_nav_item  nav_cur"><span class="nav_txt nav_payment">我参与的</span></a>
-    </div>
-    <div id="dealliststatus1" >
-        <!--//start-->
-        <div class="order">
-            <div class="order_bd">
-                <div class="order_glist">
-                    <div class="order_goods">
-                        <div class="order_goods_info">
-                            <div class="order_goods_name">$200</div>
-                            <div class="order_goods_attr">
-                                <div class="order_goods_attr_item">
-                                    <div class="order_goods_price"><span>还在凑</span> <span class="tracking_number"><a href="{:U('/hongbao/detail',array('id'=>1))}">详情>></a></span></div>
-                                    2015-12-12 12:12 </div>
-                            </div>
+    <div class="mod_container">
+        <div id="detailCon" class="wx_wrap">
+            <div class="">
+                <div class="my_head hongbao_bg">
+                    <div class="my_head_pic">
+                        <img width="130" height="130" src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0" class="my_head_img">
+                    </div>
+                    <div class="my_head_info">
+                        <h4 class="my_head_name ">不带你玩</h4>
+                    </div>
+
+                    <div class="clear"></div>
+
+                </div>
+                <div class="hongbao_info">
+                    <span class="hongbao_user">王苏蕴发起了一个凑红包</span><br />
+                    <span class="hongbao_remark">红包凑齐后，随机抽出一名幸运星</span>
+                </div>
+
+                <div class="hongbao_info">
+                    <span class="hongbao_user">目标金额￥200元</span>
+                </div>
+
+                <div class="hongbao_jindu">
+                    <div class="hongbao_jindu_bg">
+                        <div class="hongbao_jindu_f">
+                            &nbsp;
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                <div class="hongbao_info">
+                    <span class="hongbao_remark">每份5元，共40份，还差20份凑成。</span><br />
+                </div>
 
-        <div class="order">
-            <div class="order_bd">
-                <div class="order_glist">
-                    <div class="order_goods">
-                        <div class="order_goods_info">
-                            <div class="order_goods_name">$200</div>
-                            <div class="order_goods_attr">
-                                <div class="order_goods_attr_item">
-                                    <div class="order_goods_price"><span>已完成</span> <span class="tracking_number"><a href="{:U('/hongbao/detail',array('id'=>1))}">详情>></a></span></div>
-                                    2015-12-12 12:12 </div>
+                <!--//start -->
+                <div class="order ">
+                    <div class="wx_wrap">
+                        <div class="address_new">
+                            <div class="hongbao_info">
+                                <span class="hongbao_remark">您需要支付：￥5.00元</span><br />
                             </div>
+                            <p >
+                                <label for="total"><span class="tit"></span>
+                                    <input name="total" type="text" class="inputBg"  id="total" style="width: 160px; margin: 0 auto; text-align: center" value="40" placeholder="总份数"/> <span class="">份</span>
+                                    <span id="updateTip2" style="color: red; display: none;"></span> </label>
+                            </p>
+
+                            <p class="action">
+                                <button class="submit" id="add">凑 红 包</button>
+                            </p>
                         </div>
                     </div>
                 </div>
+
+
+
+                <!--//end-->
+
+                <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/buy',array('id'=>$id))}">追加凑红包</a> </div>
+                <div class="state_btn"> </div>
             </div>
+
         </div>
-
-        <!--//end-->
-
-        <div id="pager" class="pagebar pagination">
-            {$page}
-        </div>
-
     </div>
-    <div class="express_box" id="invoice" style="display:none;"> </div>
 </div>
 <include file="Public:foot" />
-<script type="Text/Javascript" language="JavaScript">
-    <!--
-    function selectPage(sel)
-    {
-        sel.form.submit();
-    }
-    //-->
-</script>
 </body>
 </html>
-

@@ -19,6 +19,10 @@ class HongbaoController extends BaseController {
      * 红包详情
      */
     public function detail(){
+        $this->title ="凑红包详情";
+        $id = I('get.id');
+
+        $this->id = $id;
         $this->display();
     }
 
@@ -26,6 +30,7 @@ class HongbaoController extends BaseController {
      * 红包认购
      */
     public function buy(){
+        $this->title ="追加凑红包";
         $this->display();
     }
 
