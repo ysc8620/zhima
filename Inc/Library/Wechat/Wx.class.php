@@ -23,6 +23,7 @@ class Wx
 
         //extract post data
         if (!empty($postStr)){
+            f_log("fromUserName=&0000");
             /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
                the best way is to check the validity of xml by yourself */
             libxml_disable_entity_loader(true);
@@ -34,7 +35,7 @@ class Wx
 
             $time = time();
 
-
+            f_log("fromUserName=$fromUsername&8888");
             $textTpl = "<xml>
                             <ToUserName><![CDATA[%s]]></ToUserName>
                             <FromUserName><![CDATA[%s]]></FromUserName>
@@ -65,6 +66,7 @@ class Wx
                          </Articles>
                          <FuncFlag>0</FuncFlag>
                          </xml>";
+            f_log("fromUserName=$fromUsername&9999");
 //            if(!empty( $keyword ))
 //            {
 //                $msgType = "text";
