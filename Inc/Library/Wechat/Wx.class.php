@@ -116,6 +116,11 @@ class Wx
             // 普通消息处理
             }else{
                 //
+                if($keyword == 'test'){
+                    $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', '逗你玩');
+                    echo $resultStr;
+                    exit();
+                }
             }
         }
         echo "";
