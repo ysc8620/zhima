@@ -46,6 +46,12 @@ class WeixinController extends Controller {
         }
     }
 
+    function test(){
+        echo 'ok';
+        $data = \Wechat\Wxapi::send_wxmsg('obb1AuBzVPvw8NE8UZ2gc0web854','测试消息','http://hb.kakaapp.com','你收到消息了吗哈哈','http://hb.kakaapp.com/images/hongbao_bg.png');
+        print_r($data);
+    }
+
     function userinfo(){
         if(session('openid')){
             if($_GET['token'] && session('openid')){

@@ -80,6 +80,44 @@ class Wxapi
     }
 
     /**
+     * @param $openid
+     * @param $w_title
+     * @param $w_url
+     * @param $w_description
+     * @param string $picurl
+     * @return mixed
+     */
+    static  public function send_wxmsg($openid,$w_title,$w_url,$w_description,$picurl='' )
+    {
+
+        $accessToken = self::getAccessToken();
+
+        $url = 'https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='.$accessToken;
+
+        $w_url = $w_url;
+        $post_msg = '{
+           "touser":"'.$openid.'",
+           "msgtype":"news",
+           "news":{
+               "articles": [
+                {
+                    "title":"'.$w_title.'",
+                    "description":"'.$w_description.'",
+                    "url":"'.$w_url.'",
+                    "picurl":"'.$picurl.'"
+                }
+                ]
+           }
+       }';
+
+        $ret_json = self::httpPost($url, $post_msg);
+        $ret = json_decode($ret_json);
+
+        return $ret->errmsg ;
+
+    }
+
+    /**
      *
      * @param $url
      * @param null $data
