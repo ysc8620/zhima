@@ -21,9 +21,9 @@ class WeixinController extends Controller {
         }
 
         f_log($data , ROOT_PATH.'/weixin_api.log');
-
+        $weixin = F('weixin','',CONF_PATH);
         //define your token
-        define("TOKEN", F('weixin.weixin_token'));
+        define("TOKEN", $weixin['weixin_token']);
         $wechatObj = new Wx();
         $wechatObj->valid();
 
