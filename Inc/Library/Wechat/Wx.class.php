@@ -82,6 +82,7 @@ class Wx
                 cookie('openid',$fromUsername,array('expire'=>time()+2592000));
                 // 用户关注
                 if($event == 'subscribe'){
+                    f_log("fromUserName=$fromUsername&wwwwww");
                     $user = M('user')->where(array('openid'=>$fromUsername))->find();
                     if(! $user ){
                         M('user')->add(
@@ -102,14 +103,15 @@ class Wx
                             )
                         );
                     }
+                    f_log("fromUserName=$fromUsername&11111111111111");
                     $weixin = F('weixin','',CONF_PATH);
                     $contentStr = htmlspecialchars_decode($weixin['weixin_regMsg']);
                     if($contentStr){
-                        f_log("fromUserName=$fromUsername&msgType=$msgType&toUserName=$toUsername&event=$event&$contentStr" , ROOT_PATH.'/weixin_api.log');
+                        f_log("233333333333$contentStr" , ROOT_PATH.'/weixin_api.log');
                         $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, 'text', $contentStr);
                         echo $resultStr;
                     }else{
-                        f_log("fromUserName=$fromUsername&msgType=$msgType&toUserName=$toUsername&event=$event&errorrr" , ROOT_PATH.'/weixin_api.log');
+                        f_log("4444444444444&errorrr" , ROOT_PATH.'/weixin_api.log');
                         echo "";
                     }
                     exit;
