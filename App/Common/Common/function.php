@@ -311,6 +311,7 @@ function curl_get($url){
     return $res;
 }
 
+
 /**
  * @param $word
  * 日志记录

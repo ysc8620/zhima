@@ -5,12 +5,6 @@
 namespace Wechat;
 class Wx
 {
-
-    public function test(){
-        $user = M('user')->where(array('openid'=>'obb1AuBzVPvw8NE8UZ2gc0web854'))->find();
-        print_r($user);
-        die('===============');
-    }
     public function valid()
     {
         $echoStr = $_GET["echostr"];
@@ -129,9 +123,9 @@ class Wx
                     }
                     exit;
                 }elseif($event == 'unsubscribe'){
-                    M('user')->where(array('openid'=>$fromUsername))->save(array('subscribe'=>0));
                     f_log("fromUserName=$fromUsername&unsubscribe", ROOT_PATH.'/weixin_api.log');
                     session('openid', '');
+                    M('user')->where(array('openid'=>$fromUsername))->save(array('subscribe'=>0));
                 }
             // 普通消息处理
             }else{
