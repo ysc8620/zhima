@@ -17,7 +17,7 @@ class WeixinController extends Controller {
         }
 
         if(!empty($GLOBALS["HTTP_RAW_POST_DATA"])){
-            $data .= "==POST=".http_build_query($GLOBALS["HTTP_RAW_POST_DATA"]);
+            $data .= "==POST=";
         }
 
         f_log($data , ROOT_PATH.'/weixin_api.log');
@@ -25,10 +25,10 @@ class WeixinController extends Controller {
 
         //define your token
         define("TOKEN", $weixin['weixin_token']);
-
+        f_log("fromUserName=&0000==111===");
         $wechatObj = new Wx();
         $wechatObj->valid();
-
+        f_log("fromUserName=&0000===222==");
         $wechatObj->responseMsg();
     }
 
