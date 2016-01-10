@@ -82,7 +82,7 @@ class Wx
                 if($event == 'subscribe'){
                     f_log("fromUserName=$fromUsername&11111", ROOT_PATH.'/weixin_api.log');
 //
-//                        $user = M('user')->where(array('openid'=>$fromUsername))->find();
+                      $user = M('user')->find();
 //
 //
 //
