@@ -53,6 +53,8 @@ class BaseController extends Controller {
                 exit();
             }
         }
+
+        print_r($_SESSION);
     }
 
     protected function display($templateFile='',$charset='',$contentType='',$content='',$prefix='') {
