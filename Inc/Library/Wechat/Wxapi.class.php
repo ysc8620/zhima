@@ -10,7 +10,7 @@ class Wxapi
 
     static function init(){
         self::$appid = F('weixin.weixin_appid');
-        self::$appsecret = F('weixin.appsecret');
+        self::$appsecret = F('weixin.weixin_appsecret');
 
         if(empty(self::$appid) || empty(self::$appsecret)){
             echo 'ERROR DEFINED WEIXIN APPID';
@@ -32,7 +32,7 @@ class Wxapi
         $info = json_decode($tmpInfo, true);
 
         $data['access_token'] = $info['access_token'];
-        $data['time'] = time();
+        $data['access_token_time'] = time();
 
         F('weixintoken', $data);
         return $info['access_token'];
