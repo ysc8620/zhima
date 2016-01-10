@@ -17,7 +17,7 @@ class Wx
     }
 
     public function responseMsg()
-    {
+    {f_log("fromUserName=&0000=====");
         //get post data, May be due to the different environments
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
