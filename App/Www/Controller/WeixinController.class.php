@@ -130,6 +130,8 @@ class WeixinController extends Controller {
         if(empty($url)){
             $url = '/';
         }
+        echo $url;
+        die();
         header("location:".$url."");
         exit();
     }
