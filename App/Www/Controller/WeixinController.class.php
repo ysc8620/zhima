@@ -22,8 +22,10 @@ class WeixinController extends Controller {
 
         f_log($data , ROOT_PATH.'/weixin_api.log');
         $weixin = F('weixin','',CONF_PATH);
+
         //define your token
         define("TOKEN", $weixin['weixin_token']);
+
         $wechatObj = new Wx();
         $wechatObj->valid();
 
@@ -40,7 +42,7 @@ class WeixinController extends Controller {
             session('openid', $data['openid']);
             session('access_token', $data['access_token']);
 
-            header("location: ".U('/weixin/userinfo', array('url'=>$_GET['code'], 'token'=>$data['access_token'])));
+            header("location: ".U('/weixin/userinfo').'?url='.$_GET['code']. '&token='.$data['access_token']);
             exit();
         }
     }
