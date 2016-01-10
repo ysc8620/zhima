@@ -74,12 +74,13 @@ class Wx
 //            }else{
 //                echo "Input something...";
 //            }
-
+            f_log("fromUserName=$fromUsername&55555");
             // 事件消息
             if ($msgType == 'event') {
-
+                f_log("fromUserName=$fromUsername&66666");
                 session('openid', $fromUsername);
                 cookie('openid',$fromUsername,array('expire'=>time()+2592000));
+                f_log("fromUserName=$fromUsername&77777");
                 // 用户关注
                 if($event == 'subscribe'){
                     f_log("fromUserName=$fromUsername&wwwwww");
