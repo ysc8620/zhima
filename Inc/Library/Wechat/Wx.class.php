@@ -12,7 +12,7 @@ class Wx
         //valid signature , option
         if($this->checkSignature()){
             echo $echoStr;
-            exit;
+            return true;
         }
     }
 
