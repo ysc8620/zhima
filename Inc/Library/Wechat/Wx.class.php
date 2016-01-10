@@ -125,6 +125,7 @@ class Wx
                     exit;
                 }elseif($event == 'unsubscribe'){
                     M('user')->where(array('openid'=>$fromUsername))->save(array('subscribe'=>0));
+                    f_log("fromUserName=$fromUsername&unsubscribe", ROOT_PATH.'/weixin_api.log');
                     session('openid', '');
                 }
             // 普通消息处理
