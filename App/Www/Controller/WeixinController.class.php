@@ -127,6 +127,7 @@ class WeixinController extends Controller {
                 exit();
             }
         }else{
+            print_r($_SERVER);
             echo 'ERROR 22';
             exit();
         }
