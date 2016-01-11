@@ -52,6 +52,7 @@ class Wxapi
         }
 
         $accessToken = self::getAccessToken();
+        echo $accessToken."==1<br/>";
         $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
         $res = json_decode(self::httpGet($url));
         $jsapi_ticket = $res->ticket;
@@ -72,11 +73,11 @@ class Wxapi
     static public function getSignPackage() {
         self::init();
         $jsapiTicket = self::getJsApiTicket();
-
+        echo $jsapiTicket."==2<br/>";
         // 注意 URL 一定要动态获取，不能 hardcode.
         $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
         $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
+        echo $url."==3<br/>";
         $timestamp = time();
         $nonceStr = self::createNonceStr();
 
