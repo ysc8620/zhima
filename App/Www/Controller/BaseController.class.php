@@ -56,8 +56,15 @@ class BaseController extends Controller {
             }
         }
 
+        $weixin = F('weixin','',CONF_PATH);
+        $appsecret = $weixin['weixin_appsecret'];
+        $appid = $weixin['weixin_appid'];
+
+
+        $this->tims = time();
+        $this->appid = $appid;
         // 获取分享页面信息
-        $this->signPackage = \Wechat\Wxapi::getSignPackage();
+        $this->signPackage = \Wechat\Wxapi::getSignature($this->tims);
     }
 
     protected function display($templateFile='',$charset='',$contentType='',$content='',$prefix='') {

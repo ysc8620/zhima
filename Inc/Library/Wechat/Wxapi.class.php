@@ -90,15 +90,65 @@ class Wxapi
         "signature" => $signature,
         "rawString" => $string
         );
-        echo $timestamp."<br/>";
-        echo date("Y-m-d H:i:s", $timestamp)."<br/>";
-        echo date("Y-m-d H:i:s")."<br/>";
-        print_r($signPackage);
+
         return $signPackage;
+    }
 
+/////////////////////////////////////////////////////////////
+    static public function getSignature($timestamp='1499992323' ) {
 
+        $jsapiTicket = self::getJsApiTicketa();
+
+        // 注意 URL 一定要动态获取，不能 hardcode.
+        //$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        /*
+        if(($pos=strrpos($_SERVER[REQUEST_URI], "from"))!==false){
+            $uri=substr($_SERVER[REQUEST_URI],0,$pos-1);
+        }else{
+            $uri=$_SERVER[REQUEST_URI];
+        }*/
+
+        $url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."";
+
+        $nonceStr = $timestamp;//$this->createNonceStr();
+
+        // 这里参数的顺序要按照 key 值 ASCII 码升序排序
+        $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
+
+        $signature = sha1($string);
+
+        return $signature;
+    }
+    static  public function getJsApiTicketa() {
+        // jsapi_ticket 应该全局存储与更新，以下代码以写入到文件中做示例
+
+        if(empty($_SESSION['jsapi_ticket']) ||  (time()-intval($_SESSION['jsapi_ticket_time'])>7000) ){
+
+            $accessToken = self::getAccessToken();
+
+            $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
+
+            $res = json_decode(self::httpGet($url));
+
+            $jsapi_ticket = $res->ticket;
+
+            if ($jsapi_ticket) {
+
+                //setcookie("jsapi_ticket",$jsapi_ticket,time()+7000,'/');
+                $_SESSION['jsapi_ticket']=$jsapi_ticket;
+                $_SESSION['jsapi_ticket_time']=time();
+            }
+
+            return $jsapi_ticket;
+
+        }else{
+
+            return $_SESSION['jsapi_ticket'];
+        }
 
     }
+
+    ////////////////////////////////
 
     /**
      * 获取随机字符串

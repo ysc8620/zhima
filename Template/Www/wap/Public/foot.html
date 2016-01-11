@@ -21,10 +21,10 @@
      */
     wx.config({
         debug: true,
-        appId: '{$signPackage.appId}',
-        timestamp: '{$signPackage.timestamp}',
-        nonceStr: '{$signPackage.nonceStr}',
-        signature: '{$signPackage.signature}',
+        appId: '{$appid}',
+        timestamp: '{$tims}',
+        nonceStr: '{$tims}',
+        signature: '{$signPackage}',
         jsApiList: [
         // 所有要调用的 API 都要加到这个列表中
             'checkJsApi',
