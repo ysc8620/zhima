@@ -48,7 +48,7 @@ class Wxapi
 
         $wexintoken = F('weixinjstoken','',CONF_PATH);
         if($wexintoken['jsapi_ticket'] && time() < (intval($wexintoken['jsapi_ticket_time']) + 7000) ){
-            return $wexintoken['access_token'];
+            return $wexintoken['jsapi_ticket'];
         }
 
         $accessToken = self::getAccessToken();
@@ -94,6 +94,9 @@ class Wxapi
         "rawString" => $string
         );
         return $signPackage;
+
+
+     
     }
 
     /**
