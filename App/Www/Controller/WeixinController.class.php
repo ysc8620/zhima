@@ -123,11 +123,11 @@ class WeixinController extends Controller {
                     session('user_id', $uin);
                 }
             }else{
-                echo 'ERROR';
+                echo 'ERROR 11';
                 exit();
             }
         }else{
-            echo 'ERROR';
+            echo 'ERROR 22';
             exit();
         }
 
