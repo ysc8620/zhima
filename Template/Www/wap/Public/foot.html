@@ -27,9 +27,78 @@
         signature: '{$signPackage.signature}',
         jsApiList: [
         // 所有要调用的 API 都要加到这个列表中
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo'
     ]
     });
+    var title = "测试分享接口";
+    var link = "http://hb.kakaapp.com/";
+    var imgUrl = "http://hb.kakaapp.com/images/hongbao_bg.png";
+    var desc = "测试描述信息";
+    function statis(id, state){
+        alert('id='+id+',state='+state);
+    }
     wx.ready(function () {
         // 在这里调用 API
+        wx.onMenuShareTimeline({//朋友圈
+            title: title, // 分享标题
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                statis(2,1);
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                statis(2,2);
+            }
+        });
+        wx.onMenuShareAppMessage({//好友
+            title: title, // 分享标题
+            desc: desc, //
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                statis(1,1);
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                statis(1,2);
+            }
+        });
+
+        wx.onMenuShareQQ({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                statis(4,1);
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                statis(4,2);
+            }
+        });
+        wx.onMenuShareWeibo({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                statis(3,1);
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                statis(3,2);
+            }
+        });
     });
 </script>
