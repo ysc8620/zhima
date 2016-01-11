@@ -23,7 +23,7 @@ class Wxapi
         self::init();
 
         $wexintoken = F('weixintoken','',CONF_PATH);
-        if($wexintoken['access_token'] && time() < ($wexintoken['access_token_time'] + 7100) ){
+        if($wexintoken['access_token'] && time() < (intval($wexintoken['access_token_time']) + 7000) ){
             return $wexintoken['access_token'];
         }
 
@@ -39,8 +39,79 @@ class Wxapi
         return $info['access_token'];
     }
 
+    /**
+     * 获取js ticket
+     */
+    static public function getJsApiTicket() {
+        // jsapi_ticket 应该全局存储与更新，以下代码以写入到文件中做示例
+        self::init();
+
+        $wexintoken = F('weixinjstoken','',CONF_PATH);
+        if($wexintoken['jsapi_ticket'] && time() < (intval($wexintoken['jsapi_ticket_time']) + 7000) ){
+            return $wexintoken['access_token'];
+        }
+
+        $accessToken = self::getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=$accessToken";
+        $res = json_decode(self::httpGet($url));
+        $jsapi_ticket = $res->ticket;
+
+        if ($jsapi_ticket) {
+            $data['jsapi_ticket'] = $jsapi_ticket;
+            $data['jsapi_ticket_time'] = time();
+            F('weixinjstoken', $data,CONF_PATH);
+        }
+
+        return $jsapi_ticket;
+    }
+
+    /**
+     * 获取js 签名信息
+     * @return array
+     */
+    static public function getSignPackage() {
+        self::init();
+        $jsapiTicket = self::getJsApiTicket();
+
+        // 注意 URL 一定要动态获取，不能 hardcode.
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+        $timestamp = time();
+        $nonceStr = self::createNonceStr();
+
+        // 这里参数的顺序要按照 key 值 ASCII 码升序排序
+        $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
+
+        $signature = sha1($string);
+
+        $signPackage = array(
+        "appId"     => self::$appid,
+        "nonceStr"  => $nonceStr,
+        "timestamp" => $timestamp,
+        "url"       => $url,
+        "signature" => $signature,
+        "rawString" => $string
+        );
+        return $signPackage;
+    }
+
+    /**
+     * 获取随机字符串
+     * @param int $length
+     * @return string
+     */
+    static private function createNonceStr($length = 16) {
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $str = "";
+        for ($i = 0; $i < $length; $i++) {
+            $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+        }
+        return $str;
+    }
+
     // 获取网页用户授权
-    static function authorize(){
+    static public function authorize(){
         self::init();
 
         $state = urlencode($_SERVER['REQUEST_URI']);

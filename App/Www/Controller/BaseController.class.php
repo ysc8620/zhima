@@ -52,6 +52,9 @@ class BaseController extends Controller {
                 exit();
             }
         }
+
+        // 获取分享页面信息
+        $this->signPackage = \Wechat\Wxapi::getSignPackage();
     }
 
     protected function display($templateFile='',$charset='',$contentType='',$content='',$prefix='') {
