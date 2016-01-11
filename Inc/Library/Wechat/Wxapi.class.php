@@ -80,6 +80,7 @@ class Wxapi
 
         // 这里参数的顺序要按照 key 值 ASCII 码升序排序
         $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
+        echo $string;
 
         $signature = sha1($string);
 
