@@ -20,6 +20,9 @@ class BaseController extends Controller {
         $openid =  session('openid');
         if(!$openid){
             $openid = cookie('openid');
+            if($openid){
+                session('openid', $openid);
+            }
         }
 
 
