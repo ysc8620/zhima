@@ -90,6 +90,7 @@ class Wxapi
         "signature" => $signature,
         "rawString" => $string
         );
+        echo date("Y-m-d H:i:s")."<br/>";
         print_r($signPackage);
         return $signPackage;
 
