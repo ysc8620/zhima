@@ -98,7 +98,7 @@ $this->signPackage = $signPackage;
 </head>
 
 <body>
-
+ssssssssssssssssssssssssssssss<br />
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
     wx.config({
@@ -174,5 +174,6 @@ $this->signPackage = $signPackage;
     });
 </script>
 
+sssssssssssssssssssss
 </body>
 </html>
