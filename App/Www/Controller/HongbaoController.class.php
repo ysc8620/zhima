@@ -31,12 +31,12 @@ class HongbaoController extends BaseController {
             $remark = I('post.remark','','htmlspecialchars');
 
             if($amount < 1 || $total < 1 || $total > 200 || $amount > 200){
-                $this->error('红包金额范围在1-200元之间.',U('/hongbao'));
+                $this->error('红包范围在1-200之间.',U('/hongbao'));
                 return false;
             }
 
             if($amount * $total > 200 || $amount * $total <1){
-                $this->error('红包金额范围在1-200元之间.',U('/hongbao'));
+                $this->error('红包范围在1-200之间.',U('/hongbao'));
                 return false;
             }
             // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
@@ -75,12 +75,16 @@ class HongbaoController extends BaseController {
             $this->error('没找到红包详情', U('/notes'));
         }
         $this->user = M('user')->find($this->hongbao['user_id']);
-        $order_list = M('hongbao_order')->where(array('number_no'=>$id,'state'=>2))->select();
+        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id,'state'=>2),'_logic'=>'or',array(array('state'=>1,'addtime'=>array('gt', time()-1800)))))->select();
+
+
         if($order_list){
             foreach($order_list as $k=>$order){
                 $order_list[$k]['user'] = M('user')->find($order['hongbao_user_id']);
             }
         }
+
+        $this->order_list = $order_list;
         $this->id = $id;
         $this->display();
     }
@@ -89,6 +93,9 @@ class HongbaoController extends BaseController {
      * 红包认购
      */
     public function buy(){
+        $this->sign = md5(microtime(true));
+        session('sign', $this->sign);
+
         $this->title ="追加凑红包";
         $id = I('get.id',0, 'strval');
         if($id < 1){
@@ -100,6 +107,50 @@ class HongbaoController extends BaseController {
         }
         $this->user = M('user')->find($this->hongbao['user_id']);
         $this->display();
+    }
+
+    public function order(){
+        $sign = I('post.sign');
+        $id = I('post.id','','strval');
+
+
+        $hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
+        if(!$hongbao){
+            $this->error('没找到红包详情', U('/notes'));
+        }
+
+        if($sign != session('sign')){
+            $this->error('请不要重复提交.',U('/hongbao/buy',array('id'=>$id)));
+        }else{
+            session('sign', microtime(true));
+        }
+
+        $total = I('post.num', 0, 'intval');
+        $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1,'addtime'=>array('lt', time()-1800)))->sum('total_amount'));
+
+        if($total < 1 || ($total + $hongbao['total_num']) > $hongbao['total_part']){
+            $this->error('你已超过红包份额限制,请重新设置份额.',U('/hongbao/buy',array('id'=>$id)));
+            return false;
+        }
+        $data = array(
+            'hongbao_id' => $hongbao['id'],
+            'hongbao_user_id' => $hongbao['user_id'],
+            'number_no' =>$hongbao['number_no'],
+            'user_id' => $this->user_id,
+            'part_num' => $total,
+            'part_amount' =>$hongbao['part_amount'],
+            'total_amount' => $hongbao['part_amount'] * $total,
+            'addtime' => time(),
+            'state' => 1,
+        );
+        $rs = M('hongbao_order')->add($data);
+        if($rs){
+            $this->success('操作成功.',U('/hongbao/detail',array('id'=>$id)));
+            return true;
+        }else{
+            $this->error('操作失败，请重试.',U('/hongbao/buy',array('id'=>$id)));
+            return false;
+        }
     }
 
 }

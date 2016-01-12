@@ -50,7 +50,8 @@
                                         <div class="order_goods_name">{$order.user.name}</div>
                                         <div class="order_goods_attr">
                                             <div class="order_goods_attr_item">{$order.addtime|date="Y-m-d H:i:s",###}
-                                                <div class="order_goods_price"><span>￥{$order.total_amount}元</span></div>
+                                                <div class="order_goods_price">
+                                                    <span><if condition="$order.state eq 1">待支付<elseif condition="$order.state eq 2"/>已支付<span>￥{$order.total_amount}元</span></div>
                                             </div>
                                         </div>
                                     </a>

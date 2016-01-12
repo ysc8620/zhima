@@ -33,7 +33,9 @@
                 <div class="hongbao_info">
                     <span class="hongbao_remark">每份{$hongbao.part_amount}元，共{$hongbao.total_part}份，还差{$hongbao[total_part]-$hongbao[total_num]}份凑成。</span><br />
                 </div>
-
+                <form action="{:U('/hongbao/order')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
+                    <input type="hidden" name="id" value="{$hongbao.number_no}" />
+                    <input type="hidden" name="sign" value="{$sign}" />
                 <!--//start -->
                 <div class="order ">
                     <div class="wx_wrap">
@@ -42,8 +44,8 @@
                                 <span class="hongbao_remark">您需要支付：￥{$hongbao.part_amount}元</span><br />
                             </div>
                             <div style="text-align: center">
-                                <label for="total"><span class="tit"></span>
-                                    <input name="total" type="text" class="inputBg"  id="total" style="width: 160px; margin: 0 auto; text-align: center" value="1" placeholder="总份数"/> <span class="" style="line-height: 36px; font-size:16px;">份</span>
+                                <label for="num"><span class="tit"></span>
+                                    <input name="num" type="text" class="inputBg"  id="num" style="width: 160px; margin: 0 auto; text-align: center" value="1" placeholder="总份数"/> <span class="" style="line-height: 36px; font-size:16px;">份</span>
                                     <span id="updateTip2" style="color: red; display: none;"></span> </label>
                             </div>
 
@@ -53,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-
+                </form>
 
 
                 <!--//end-->
