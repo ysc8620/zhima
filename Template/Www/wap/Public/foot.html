@@ -45,7 +45,7 @@
                 'onMenuShareWeibo'
             ],
             success: function (res) {
-                alert(JSON.stringify(res));
+                // alert(JSON.stringify(res));
             }
         });
 
@@ -56,16 +56,16 @@
             imgUrl: 'http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0',
 
             trigger: function (res) {
-                alert('用户点击发送给朋友');
+                //alert('用户点击发送给朋友');
             },
             success: function (res) {
-                alert('已分享');
+                //alert('已分享');
             },
             cancel: function (res) {
-                alert('已取消');
+                //alert('已取消');
             },
             fail: function (res) {
-                alert(JSON.stringify(res));
+                //alert(JSON.stringify(res));
             }
         };
         wx.onMenuShareAppMessage(shareData);
@@ -74,6 +74,6 @@
         wx.onMenuShareWeibo(shareData);
     });
     wx.error(function (res) {
-        alert(res.errMsg);
+        // alert(res.errMsg);
     });
 </script>
