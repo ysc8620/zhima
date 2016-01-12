@@ -9,7 +9,12 @@
 namespace User\Controller;
 use Think\Controller;
 class IndexController extends PublicController {
+
     public function index(){
+        $this->display();
+    }
+
+    public function test(){
 		//投资统计
 		$uin 			= session('user.uin');
 		$j 				= date(j); 						//获取当前月份天数

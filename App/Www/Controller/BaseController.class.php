@@ -13,9 +13,12 @@ class BaseController extends Controller {
     /**
      * 系统初始化
      */
-    public function __construct(){
-        parent::__construct();
+    public function _initialize(){
+
         $this->user_id = session('user_id');
+
+        $this->user_id = 2;
+        return true;
 
         $openid =  session('openid');
         if(!$openid){

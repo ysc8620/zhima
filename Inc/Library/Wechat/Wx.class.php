@@ -111,6 +111,7 @@ class Wx
                     exit;
                 }elseif($event == 'unsubscribe'){
                     session('openid', '');
+                    cookie('openid', '');
                     M('user')->where("openid='$fromUsername'")->save(array('subscribe'=>0));
                 }
             // 普通消息处理

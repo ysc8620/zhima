@@ -197,7 +197,7 @@ body {color:#666;font-size:12px;line-height:1.5}
 .order_goods_num_disabled .num {color:#BBB}
 .order_goods_num_disabled .plus:before {background:none repeat scroll 0 0 #938F8E}
 .order_goods_num_disabled .plus:after {background:none repeat scroll 0 0 #938F8E}
-.order_goods_price {color:#DF2127;float:right;font-size:14px;height:22px;line-height:22px}
+.order_goods_price {color:#DF2127;float:right;font-size:13px;height:22px;line-height:22px}
 .order_goods_price i {font-size:12px}
 .order_plist {border-top:1px solid #D7D7D7;padding-bottom:10px}
 .order_promo_info {padding:10px 0 0}
@@ -581,8 +581,8 @@ input[type=text],textarea {-webkit-appearance:none}
 .order_goods {padding:15px 0;padding-left:75px;font-size:11px;border-bottom:1px solid #D7D7D7;min-height:90px}
 .order_goods_img {position:absolute;top:15px;left:0}
 .order_goods_img img {display:block;width:60px;height:60px;border:1px solid #D7D7D7}
-.order_goods_name {max-height:30px;color:#000;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:5px;line-height:26px; font-size:18px; color:#444; font-weight:bold;}
-.order_goods_attr {color:#666; font-size:14px}
+.order_goods_name {max-height:30px;color:#000;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:5px;line-height:26px; font-size:16px; color:#444; }
+.order_goods_attr {color:#666; font-size:13px}
 .order_goods_refund {color:#d00}
 .order_goods_price {float:right}
 .order_goods_price i {font-size:12px}
@@ -1448,7 +1448,7 @@ i, em {font-style: normal;}
 .tips .tips_ico, .mt_g_price:before, .mt_g_price i:before, .st_ico, .ht_btn_go:after, .kt_btn:after, .pp_list_words:before, .pp_list_item:nth-child(1) .pp_list_words:before, .pp_list_item:nth-child(2):after, .pp_list_more:after, .step_more:after, .pp_list_blank:before, .support_lk:after, .yy_hd, .say_state:before, .tm:before, .td_lk:after, .pp_users_dot, .tips_opt a:after, .pp_vipuser_tit, .mt_shop:before, .vip .pp_users_sale span, .support_tit:before, .fixopt_home:after, .fixopt_share:after, .mr_commander:after {background-image: url(../images/bg_v7.png);background-repeat: no-repeat;-webkit-background-size: 365px 490px;background-size: 365px 490px;}
 a {text-decoration: none;color: #333;}
 .td2_hb .td2_hb_txt{margin-left: 20px;box-sizing: border-box;display: inline-block;float: left;margin-top: -18px;}
-.guanzhu { position:fixed; width:100%; height:50px; line-height:50px; bottom:60px; background:#666; color:#fff; text-align:center; font-size:14px; box-shadow:0 0 2px #333; }
+.guanzhu { position:fixed; width:100%; height:50px; line-height:50px; bottom:60px; background:#666; color:#fff; text-align:center; font-size:14px; box-shadow:0 0 2px #333; max-width: 640px}
 .guanzhu a { padding:4px 10px; background:#DF2127; color:#fff; border-radius:5px; }
 .guanzhu span { float:right; padding-right:10px; line-height:30px; }
 .guanzhu span i { font-size:16px; }
