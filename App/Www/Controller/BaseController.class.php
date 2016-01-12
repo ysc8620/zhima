@@ -61,12 +61,7 @@ class BaseController extends Controller {
         $appid = $weixin['weixin_appid'];
 
 
-        $this->tims = time();
-        $this->appid = $appid;
-        // 获取分享页面信息
-        // $this->signPackage = \Wechat\Wxapi::getSignature($this->tims);
-
-        $jssdk = new JSSDK( $appid , $appsecret);
+        $jssdk = new JSSDK("wx0bfc93135bf3062e", "b8e588b6eb3530f1d5efad7ea3f1359e");
         $signPackage = $jssdk->GetSignPackage();
 
         $this->signPackage = $signPackage;
@@ -163,3 +158,4 @@ class JSSDK {
         return $res;
     }
 }
+
