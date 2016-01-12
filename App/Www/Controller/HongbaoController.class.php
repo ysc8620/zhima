@@ -65,8 +65,22 @@ class HongbaoController extends BaseController {
      */
     public function detail(){
         $this->title ="凑红包详情";
-        $id = I('get.id');
 
+        $id = I('get.id',0, 'intval');
+        if($id < 1){
+            $this->error('请选择查看的红包', U('/notes'));
+        }
+        $this->hongbao = M('hongbao')->find(array('number_no'=>$id));
+        if(!$this->hongbao){
+            $this->error('没找到红包详情', U('/notes'));
+        }
+        $this->user = M('user')->find($this->hongbao['user_id']);
+        $order_list = M('hongbao_order')->where(array('number_no'=>$id,'state'=>2))->select();
+        if($order_list){
+            foreach($order_list as $k=>$order){
+                $order_list[$k]['user'] = M('user')->find($order['hongbao_user_id']);
+            }
+        }
         $this->id = $id;
         $this->display();
     }
