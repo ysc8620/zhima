@@ -50,7 +50,11 @@
                             </div>
 
                             <p class="action">
+                                <if condition="$hongbao.state eq 1">
                                 <button class="submit" id="add">凑 红 包</button>
+                                    <else/>
+                                    <button class="submit" id="add#" disabled><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3" />已过期<elseif condition="$hongbao.state eq 4" />已退款<else />已关闭</if></button>
+                                    </if>
                             </p>
                         </div>
                     </div>

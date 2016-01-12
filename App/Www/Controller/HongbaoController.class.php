@@ -76,8 +76,6 @@ class HongbaoController extends BaseController {
         }
         $this->user = M('user')->find($this->hongbao['user_id']);
         $order_list = M('hongbao_order')->where(array(array('number_no'=>$id,'state'=>2),'_logic'=>'or',array(array('state'=>1,'addtime'=>array('gt', time()-1800)))))->select();
-
-
         if($order_list){
             foreach($order_list as $k=>$order){
                 $order_list[$k]['user'] = M('user')->find($order['hongbao_user_id']);
