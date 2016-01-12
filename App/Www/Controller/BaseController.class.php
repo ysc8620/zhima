@@ -61,8 +61,7 @@ class BaseController extends Controller {
         $appid = $weixin['weixin_appid'];
 
 
-        $jssdk = new JSSDK("wx0bfc93135bf3062e", "b8e588b6eb3530f1d5efad7ea3f1359e");
-        $signPackage = $jssdk->GetSignPackage();
+        $signPackage = \Wechat\Wxapi::getSignPackage();
 
         $this->signPackage = $signPackage;
     }
