@@ -9,27 +9,55 @@
 namespace Www\Controller;
 class HongbaoController extends BaseController {
     public function index(){
-        //define your token
 
+        //define your token
+        $this->sign = md5(microtime(true));
+        session('sign', $this->sign);
         $this->title = '新建红包';
         $this->display();
     }
 
     public function add(){
-
         do{
+            $sign = I('post.sign');
+
+            if($sign != session('sign')){
+                $this->error('请不要重复提交.',U('/hongbao'));
+            }else{
+                session('sign', microtime(true));
+            }
             $amount = I('post.amount',0,'intval');
             $total = I('post.total',0,'intval');
             $remark = I('post.remark','','htmlspecialchars');
 
-           // if($amount < 1 || $total < 1 || $total > 200 || $amount > 200){
+            if($amount < 1 || $total < 1 || $total > 200 || $amount > 200){
                 $this->error('红包金额范围在1-200元之间.',U('/hongbao'));
                 return false;
-           // }
+            }
+
+            if($amount * $total > 200 || $amount * $total <1){
+                $this->error('红包金额范围在1-200元之间.',U('/hongbao'));
+                return false;
+            }
+            // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
+            $data['number_no'] = get_order_sn();
+            $data['user_id'] = $this->user_id;
+            $data['part_amount'] = $amount;
+            $data['total_amount'] = $total * $amount;
+            $data['total_part'] = $total;
+            $data['remark'] = $remark;
+            $data['addtime'] = time();
+            $data['state'] = 1;
+
+            $re = M('hongbao')->add($data);
+            if($re){
+                $this->success('红包创建成功', U('/notes'));
+                exit();
+            }else{
+                $this->error('红包创建失败', U('/hongbao'));
+            }
         }while(false);
-
-
-        M('hongbao')->add($data);
+        $this->error('红包创建失败', U('/hongbao'));
     }
 
     /**

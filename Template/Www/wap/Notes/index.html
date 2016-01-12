@@ -10,44 +10,27 @@
     <div id="dealliststatus1" >
         <!--//start-->
         <div class="order">
+            <volist name="list" id="item">
             <!--//-->
             <div class="order_bd">
                 <div class="order_glist">
                     <div class="order_goods">
                         <div class="order_goods_img">
-                            <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0">
+                            <img src="{$user.header}" alt="{$user.name}" title="{$user.name}" />
                         </div>
                         <div class="order_goods_info">
-                            <div class="order_goods_name">$200</div>
+                            <div class="order_goods_name">￥{$item.part_amount}</div>
                             <div class="order_goods_attr">
                                 <div class="order_goods_attr_item">
-                                    <div class="order_goods_price"><span>还在凑</span> <span class="tracking_number"><a href="{:U('/hongbao/detail',array('id'=>1))}">详情>></a></span></div>
-                                    2015-12-12 12:12 </div>
+                                    <div class="order_goods_price"><span><if condition="$item.state eq 1">还在凑<elseif condition="$item.state eq 2" />已完成<elseif condition="$item.state eq 3" />已过期<elseif condition="$item.state eq 4" />已退款<elseif condition="$item.state eq 5" />已关闭</if></span> <span class="tracking_number"><a href="{:U('/hongbao/detail',array('id'=>$item['id']))}">详情>></a></span></div>
+                                    {$item.addtime|date="Y-m-d H:i:s",###} </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </volist>
 
-            <!--//-->
-            <div class="order_bd">
-                <div class="order_glist">
-                    <div class="order_goods">
-                        <div class="order_goods_img">
-                            <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0">
-                        </div>
-                        <div class="order_goods_info">
-                            <div class="order_goods_name">$200</div>
-                            <div class="order_goods_attr">
-                                <div class="order_goods_attr_item">
-                                    <div class="order_goods_price"><span>还在凑</span> <span class="tracking_number"><a href="{:U('/hongbao/detail',array('id'=>1))}">详情>></a></span></div>
-                                    2015-12-12 12:12 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--//-->
         </div>
 
         <!--//end-->

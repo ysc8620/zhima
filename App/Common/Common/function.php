@@ -319,15 +319,20 @@ function curl_get($url){
  */
 function  f_log($word, $log_name="./log.log")
 {
-
     $fp = fopen($log_name,"a");
-
     flock($fp, LOCK_EX) ;
-
     fwrite($fp,"执行日期：".strftime("%Y-%m-%d-%H:%M:%S",time())."=".$word."\r\n");
-
     flock($fp, LOCK_UN);
-
     fclose($fp);
+}
 
+//function get_order_sn()
+//{
+//    /* 选择一个随机的方案 */
+//    mt_srand((double) microtime() * 1000000);
+//    return date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
+//}
+
+function get_order_sn(){
+    return date('YmdHi').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
 }
