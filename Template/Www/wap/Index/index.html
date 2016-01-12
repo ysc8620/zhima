@@ -1,72 +1,92 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-<title>
-<Zml:title/>
-</title>
-<meta name="keywords" content="<Zml:keywords />"/>
-<meta name="description" content="<Zml:description />"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="__PUBLIC__/css/pintuer.css">
-<link rel="stylesheet" href="__THEME__/default/css/zml.css">
-<script src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
-<script src="__PUBLIC__/js/pintuer.js"></script>
-<script src="__PUBLIC__/js/respond.js"></script>
-<script src="__PUBLIC__/js/TouchSlide.1.1.source.js"></script>
-<script src="__PUBLIC__/lib/layer_m/layer.m.js"></script>
-</head>
-<body class="bg">
-<div class="x12">
-  <!-- 引入头部文件 -->
-  <include file="Public/header"/>
-  <!-- 幻灯开始 -->
-  <div class="x12 margin-big-bottom bg-white margin-top">
-    <div id="focus" class="focus">
-      <div class="hd">
-        <ul>
-        </ul>
-      </div>
-      <div class="bd">
-        <ul class="list-unstyle">
-          <adlist type="1">
-            <li><a href="{$zml.url}"><img _src="{:cut_image($zml['img'],320,120)}"
-                                                      src="{:cut_image($zml['img'],320,120)}"
-                                                      class="img-responsive"/></a></li>
-          </adlist>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <script type="text/javascript">
-        TouchSlide({
-            slideCell:"#focus",
-            titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
-            mainCell:".bd ul",
-            effect:"left",
-            autoPlay:true, //自动播放
-            autoPage:true, //自动分页
-            switchLoad:"_src" //切换加载，真实图片路径为"_src"
+<include file="Public:header" />
+<script type="text/javascript" src="/js/utils.js"></script>
+<script type="text/javascript">
+    onload = function() {
+        if (!document.all)
+        {
+            document.forms['theForm'].reset();
+        }
+    }
 
-        });
-
-    </script>
-  <!-- 幻灯结束 -->
-  <!-- 项目列表 -->
-  <div class="x12 padding-small"> <span class="x3 bg-sub text-white padding-small text-center">预热...</span>
-    <hr class="bg-sub" style="margin:0"/>
-    <!-- 循环开始 -->
-    <itemlist end="1" status="1" num="10" progress="1">
-      <div class="x12 bg-white padding margin-top"> <span class="x12 margin-small-bottom">
-        <h4>{$zml.name}</h4>
-        </span> <a href="{$zml.url}"> <img src="{:cut_image($zml['cover_img'],580,270)}" class="img-responsive"/> </a> <span class="x12 margin-top">
-        <div class="progress progress-small progress-striped active">
-          <div class="progress-bar bg-sub" style="width:50%;"></div>
+</script>
+<form action="{:U('/hongbao/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
+    <div class="mod_container">
+        <div class="wx_bar">
+            <div class="wx_bar_back"> <a id="back" href="javascript:void(0);"></a> </div>
+            <div class="wx_bar_tit"><b>新建红包</b></div>
         </div>
-        </span> <span class="x12 margin-top text-small padding-bottom height"> <span class="x3"> <span class="x6">完成:</span> <span class="x6 text-red">90%</span> </span> <span class="x6"> <span class="x4">目标:</span> <span class="x8 text-red">{$zml.raising_money}</span> </span> <span class="x3" style="margin-top:-6px"> <a href="{$zml.url}" class="button button-small bg-dot fadein-right">支持</a> </span> </span> </div>
-    </itemlist>
-    <!-- 循环结束 -->
-  </div>
-</div>
-<include file="Public/foot"/>
+        <div class="wx_wrap">
+            <div class="address_new">
+                <input id="address_regionId" value="" type="hidden">
+                <input id="adid" value="" type="hidden">
+                <p>
+                    <label for="amount"><span class="tit">每份金额：</span>
+                        <input name="amount" type="text" class="inputBg" id="amount" value="5" placeholder="每份金额"/> <span class="">元</span>
+                        <span id="updateTip1" style="color: red; display: none;">请填写每份金额</span> </label>
+                </p>
+                <p>
+                    <label for="total"><span class="tit">总份数：</span>
+                        <input name="total" type="text" class="inputBg"  id="total" value="40" placeholder="总份数"/> <span class="">份</span>
+                        <span id="updateTip2" style="color: red; display: none;">请填写总份数</span> </label>
+                </p>
+
+                <p>
+                    <label for="remark"><span class="tit">说明：</span>
+                        <input name="remark" type="text" class="inputBg"  id="remark" value="凑红包，有福利，你懂得" placeholder="凑红包，有福利，你懂得" />
+                        <span id="updateTip3" style="color: red; display: none;">红包说明</span> </label>
+                </p>
+                <p class="action">
+                    <button class="submit" id="add">凑 红 包</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</form>
+<include file="Public:foot" />
+<script type="text/javascript">
+
+    function checkHongBao(){
+        var amount = $('input[name="amount"]').val();
+        var reg = new RegExp("^[1-9][0-9]*$");
+        if(!reg.test(amount)){
+            $('#updateTip1').text('请填写整数金额.');
+            $('#updateTip1').show();
+            return false;
+        }
+
+        if(amount > 200 || amount < 1){
+            $('#updateTip1').text('请输入1-200之间金额.');
+            $('#updateTip1').show();
+            return false;
+        }
+
+        $('#updateTip1').hide();
+
+
+        var total = $('input[name="total"]').val();
+        if(!reg.test(total)){
+            $('#updateTip2').text('请填写整数份额.');
+            $('#updateTip2').show();
+            return false;
+        }
+
+        if(total > 200 || total < 1){
+            $('#updateTip2').text('请输入1-200之间份额.');
+            $('#updateTip2').show();
+            return false;
+        }
+
+        $('#updateTip2').hide();
+
+        if(amount * total > 200){
+            $('#updateTip2').text('总金额不能超过200元.');
+            $('#updateTip2').show();
+            return false;
+        }
+
+        $('#updateTip2').hide();
+        return true;
+    }
+</script>
 </body>
 </html>
