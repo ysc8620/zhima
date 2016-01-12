@@ -25,8 +25,8 @@
 
                 <div class="hongbao_jindu">
                     <div class="hongbao_jindu_bg">
-                        <div class="hongbao_jindu_f">
-                            &nbsp;
+                        <div class="hongbao_jindu_f" style="color:#fff; text-align:center; width: {:ceil($hongbao[total_num]/$hongbao[total_part]*100)}%">
+                            {:ceil($hongbao[total_num]/$hongbao[total_part]*100)}%
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                 </div>
                 </volist>
                 <!--//end-->
-                <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/buy',array('id'=>$hongbao.number_no))}">追加凑红包</a> </div>
+                <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/buy',array('id'=>$hongbao[number_no]))}">追加凑红包</a> </div>
                 <div class="state_btn"> </div>
             </div>
 

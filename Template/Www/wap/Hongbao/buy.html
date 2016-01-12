@@ -5,33 +5,33 @@
             <div class="">
                 <div class="my_head hongbao_bg">
                     <div class="my_head_pic">
-                        <img width="130" height="130" src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0" class="my_head_img">
+                        <img width="130" height="130" src="{$user.header}" class="my_head_img">
                     </div>
                     <div class="my_head_info">
-                        <h4 class="my_head_name ">不带你玩</h4>
+                        <h4 class="my_head_name ">{$user.name}</h4>
                     </div>
 
                     <div class="clear"></div>
 
                 </div>
                 <div class="hongbao_info">
-                    <span class="hongbao_user">王苏蕴发起了一个凑红包</span><br />
+                    <span class="hongbao_user">{$user.name}发起了一个凑红包</span><br />
                     <span class="hongbao_remark">红包凑齐后，随机抽出一名幸运星</span>
                 </div>
 
                 <div class="hongbao_info">
-                    <span class="hongbao_user">目标金额￥200元</span>
+                    <span class="hongbao_user">目标金额￥{$hongbao.total_amount}元</span>
                 </div>
 
                 <div class="hongbao_jindu">
                     <div class="hongbao_jindu_bg">
-                        <div class="hongbao_jindu_f">
-                            &nbsp;
+                        <div class="hongbao_jindu_f" style="color:#fff; text-align:center; width: {:ceil($hongbao[total_num]/$hongbao[total_part]*100)}%">
+                            {:ceil($hongbao[total_num]/$hongbao[total_part]*100)}%
                         </div>
                     </div>
                 </div>
                 <div class="hongbao_info">
-                    <span class="hongbao_remark">每份5元，共40份，还差20份凑成。</span><br />
+                    <span class="hongbao_remark">每份{$hongbao.part_amount}元，共{$hongbao.total_part}份，还差{$hongbao[total_part]-$hongbao[total_num]}份凑成。</span><br />
                 </div>
 
                 <!--//start -->
@@ -39,13 +39,13 @@
                     <div class="wx_wrap">
                         <div class="address_new">
                             <div class="hongbao_info">
-                                <span class="hongbao_remark">您需要支付：￥5.00元</span><br />
+                                <span class="hongbao_remark">您需要支付：￥{$hongbao.part_amount}元</span><br />
                             </div>
-                            <p >
+                            <div style="text-align: center">
                                 <label for="total"><span class="tit"></span>
-                                    <input name="total" type="text" class="inputBg"  id="total" style="width: 160px; margin: 0 auto; text-align: center" value="40" placeholder="总份数"/> <span class="">份</span>
+                                    <input name="total" type="text" class="inputBg"  id="total" style="width: 160px; margin: 0 auto; text-align: center" value="1" placeholder="总份数"/> <span class="" style="line-height: 36px; font:16px;">份</span>
                                     <span id="updateTip2" style="color: red; display: none;"></span> </label>
-                            </p>
+                            </div>
 
                             <p class="action">
                                 <button class="submit" id="add">凑 红 包</button>
@@ -58,7 +58,7 @@
 
                 <!--//end-->
 
-                <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/buy',array('id'=>$id))}">追加凑红包</a> </div>
+                <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/detail',array('id'=>$hongbao[number_no]))}">返回红包详情</a> </div>
                 <div class="state_btn"> </div>
             </div>
 

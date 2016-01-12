@@ -66,11 +66,11 @@ class HongbaoController extends BaseController {
     public function detail(){
         $this->title ="凑红包详情";
 
-        $id = I('get.id',0, 'intval');
+        $id = I('get.id',0, 'strval');
         if($id < 1){
             $this->error('请选择查看的红包', U('/notes'));
         }
-        $this->hongbao = M('hongbao')->find(array('number_no'=>$id));
+        $this->hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
         if(!$this->hongbao){
             $this->error('没找到红包详情', U('/notes'));
         }
@@ -90,6 +90,15 @@ class HongbaoController extends BaseController {
      */
     public function buy(){
         $this->title ="追加凑红包";
+        $id = I('get.id',0, 'strval');
+        if($id < 1){
+            $this->error('请选择查看的红包', U('/notes'));
+        }
+        $this->hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
+        if(!$this->hongbao){
+            $this->error('没找到红包详情', U('/notes'));
+        }
+        $this->user = M('user')->find($this->hongbao['user_id']);
         $this->display();
     }
 
