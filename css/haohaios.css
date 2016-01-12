@@ -85,7 +85,7 @@ li {padding:0;margin:0;list-style:none}
 .categories dd h3 { height:24px; border-bottom:#eee 1px solid; font-size:14px; }
 .categories dd p { line-height:24px; }
 .categories dd p a { margin-right:10px; white-space:nowrap; }
-.nav_fixed {position:fixed;background-color:#fff;height:40px;width:100%;font-size:15px;text-align:center;z-index:9999;top:0;max-width:640px}
+.nav_fixed {position:fixed;background-color:#fff;height:40px;width:100%;font-size:13px;text-align:center;z-index:9999;top:0;max-width:640px}
 .fixed_nav_item {height:40px;line-height:40px;width:33.33%;float:left;display:block;box-sizing:border-box;border-right:1px solid #ccc;border-bottom:1px solid #ccc}
 .nav_cur {border-bottom:2px solid #DF2127;color:red}
 .goods-wrapper {width:100%;padding:15px;overflow:hidden}
@@ -197,7 +197,7 @@ body {color:#666;font-size:12px;line-height:1.5}
 .order_goods_num_disabled .num {color:#BBB}
 .order_goods_num_disabled .plus:before {background:none repeat scroll 0 0 #938F8E}
 .order_goods_num_disabled .plus:after {background:none repeat scroll 0 0 #938F8E}
-.order_goods_price {color:#DF2127;float:right;font-size:13px;height:22px;line-height:22px}
+.order_goods_price {color:#DF2127;float:right;font-size:12px;height:22px;line-height:22px}
 .order_goods_price i {font-size:12px}
 .order_plist {border-top:1px solid #D7D7D7;padding-bottom:10px}
 .order_promo_info {padding:10px 0 0}
