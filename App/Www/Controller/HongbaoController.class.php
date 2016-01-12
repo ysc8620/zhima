@@ -100,6 +100,10 @@ class HongbaoController extends BaseController {
             $this->error('请选择查看的红包', U('/notes'));
         }
         $this->hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
+
+        $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1,'addtime'=>array('gt', time()-1800)))->sum('total_amount'));
+
+        print_r($total_amount);
         if(!$this->hongbao){
             $this->error('没找到红包详情', U('/notes'));
         }
@@ -124,9 +128,9 @@ class HongbaoController extends BaseController {
         }
 
         $total = I('post.num', 0, 'intval');
-        $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1,'addtime'=>array('lt', time()-1800)))->sum('total_amount'));
+        $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1,'addtime'=>array('gt', time()-1800)))->sum('total_amount'));
 
-        if($total < 1 || ($total + $hongbao['total_num']) > $hongbao['total_part']){
+        if($total < 1 || ($total_amount + $total + $hongbao['total_num']) > $hongbao['total_part']){
             $this->error('你已超过红包份额限制,请重新设置份额.',U('/hongbao/buy',array('id'=>$id)));
             return false;
         }
