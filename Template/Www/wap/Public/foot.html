@@ -11,11 +11,10 @@
 <script>
     wx.config({
         appId: '{$signPackage.appId}',
-        timestamp: {$signPackage.timestamp},
-            nonceStr: '{$signPackage.nonceStr}',
-            signature: '{$signPackage.signature}',
-
-            jsApiList: [
+        timestamp: '{$signPackage.timestamp}',
+        nonceStr: '{$signPackage.nonceStr}',
+        signature: '{$signPackage.signature}',
+        jsApiList: [
         'checkJsApi',
         'onMenuShareTimeline',
         'onMenuShareAppMessage',
@@ -50,13 +49,9 @@
             }
         });
 
-        var g_title="测试分享接口333333333";
-        var g_link= "http://hb.kakaapp.com/";
-        var g_imgUrl="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0";
-        var g_desc= "测试描述信息222222222";
         var shareData = {
-            title: '测试分享接口333333333',
-            desc: '测试描述信息222222222',
+            title: '哈哈好了测试分享接口',
+            desc: '测试描述信息',
             link: 'http://hb.kakaapp.com/',
             imgUrl: 'http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0',
 

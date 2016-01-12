@@ -56,13 +56,7 @@ class BaseController extends Controller {
             }
         }
 
-        $weixin = F('weixin','',CONF_PATH);
-        $appsecret = $weixin['weixin_appsecret'];
-        $appid = $weixin['weixin_appid'];
-
-
         $signPackage = \Wechat\Wxapi::getSignPackage();
-
         $this->signPackage = $signPackage;
     }
 
