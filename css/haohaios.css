@@ -52,7 +52,7 @@ ul {padding:0;margin:0}
 li {padding:0;margin:0;list-style:none}
 .container {position:relative;width:100%;max-width:640px;min-height:100%;margin:0 auto;padding:0 0 56px;overflow-x:hidden;background-color:#eceded}
 .btn-ghost {width:100%;padding:8px 10px;outline:0;border:1px solid #396;color:#396;background:transparent;-webkit-border-radius:3px;border-radius:3px}
-.footer {width:100%;max-width:640px;height:56px;position:fixed;bottom:0;left:50%;-webkit-transform:translate3d(-50%,0,0);transform:translate3d(-50%,0,0);overflow:hidden;background-color:#fff;border-top:#eceded;-webkit-box-shadow:0 0 4px rgba(0,0,0,.2);box-shadow:0 0 4px rgba(0,0,0,.2);z-index:99999;}
+.footer {width:100%;max-width:640px;height:56px;position:fixed; top:100px; bottom:-1px;left:50%;-webkit-transform:translate3d(-50%,0,0);transform:translate3d(-50%,0,0);overflow:hidden;background-color:#fff;border-top:#eceded;-webkit-box-shadow:0 0 4px rgba(0,0,0,.2);box-shadow:0 0 4px rgba(0,0,0,.2);z-index:99999;}
 .footer li {float:left;width:25%;text-align:center;height:100%}
 .footer a {color:#777;font-size:13px}
 .footer a:hover,.footer a:focus {color:#777;font-size:13px}
