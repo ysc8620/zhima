@@ -6,109 +6,78 @@
         <li><a href="{:U('/notes')}" class="nav-controller <if condition="MODULE_NAME eq 'User'">active</if>"><i class="fa fa-user"></i>个人中心</a></li>
     </ul>
 </div>
-<script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script type="text/javascript">
-    /*
-     * 注意：
-     * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
-     * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
-     * 3. 常见问题及完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
-     *
-     * 开发中遇到问题详见文档“附录5-常见错误及解决办法”解决，如仍未能解决可通过以下渠道反馈：
-     * 邮箱地址：weixin-open@qq.com
-     * 邮件主题：【微信JS-SDK反馈】具体问题
-     * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
-     */
+
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
     wx.config({
-        debug: true,
         appId: '{$appid}',
-        timestamp: '{$tims}',
-        nonceStr: '{$tims}',
-        signature: '{$signPackage}',
-        jsApiList: [
-        // 所有要调用的 API 都要加到这个列表中
-            'checkJsApi',
+        timestamp: {$tims},
+    nonceStr: '{$tims}',
+            signature: '{$signPackage}',
+            jsApiList: [
+        'checkJsApi',
         'onMenuShareTimeline',
         'onMenuShareAppMessage',
         'onMenuShareQQ',
         'onMenuShareWeibo'
     ]
     });
-
-
-
-    var g_title="测试分享接口333333333";
-    var g_link= "http://hb.kakaapp.com/";
-    var g_imgUrl="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0";
-    var g_desc= "测试描述信息222222222";
-
-    function statis(id, state){
-        alert('id='+id+',state='+state);
-    }
+    /*
+     * 注意：
+     * 1. 所有的JS接口只能在公众号绑定的域名下调用，公众号开发者需要先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+     * 2. 如果发现在 Android 不能分享自定义内容，请到官网下载最新的包覆盖安装，Android 自定义分享接口需升级至 6.0.2.58 版本及以上。
+     * 3. 完整 JS-SDK 文档地址：http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+     *
+     * 如有问题请通过以下渠道反馈：
+     * 邮箱地址：weixin-open@qq.com
+     * 邮件主题：【微信JS-SDK反馈】具体问题
+     * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
+     */
     wx.ready(function () {
-        // 在这里调用 API
-        wx.onMenuShareTimeline({//朋友圈
-            title: "测试分享接口", // 分享标题
-            link: "http://hb.kakaapp.com/", // 分享链接
-            imgUrl: "http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0", // 分享图标
-            success: function () {
-                // 用户确认分享后执行的回调函数
-                statis(2,1);
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-                statis(2,2);
-            }
-        });
-        wx.onMenuShareAppMessage({//好友
-            title: "测试分享接口", // 分享标题
-            desc: "测试描述信息", //
-            link: "http://hb.kakaapp.com/", // 分享链接
-            imgUrl: "http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0", // 分享图标
-            type: '', // 分享类型,music、video或link，不填默认为link
-            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-            success: function () {
-                // 用户确认分享后执行的回调函数
-                statis(1,1);
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-                statis(1,2);
+        // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
+        wx.checkJsApi({
+            jsApiList: [
+                'getNetworkType',
+                'previewImage',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo'
+            ],
+            success: function (res) {
+                alert(JSON.stringify(res));
             }
         });
 
-        wx.onMenuShareQQ({
-            title: g_title, // 分享标题
-            desc: g_desc, // 分享描述
-            link: g_link, // 分享链接
-            imgUrl: g_imgUrl, // 分享图标
-            success: function () {
-                // 用户确认分享后执行的回调函数
-                statis(4,1);
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-                statis(4,2);
-            }
-        });
-        wx.onMenuShareWeibo({
-            title: g_title, // 分享标题
-            desc: g_desc, // 分享描述
-            link: g_link, // 分享链接
-            imgUrl: g_imgUrl, // 分享图标
-            success: function () {
-                // 用户确认分享后执行的回调函数
-                statis(3,1);
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-                statis(3,2);
-            }
-        });
+        var g_title="测试分享接口333333333";
+        var g_link= "http://hb.kakaapp.com/";
+        var g_imgUrl="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0";
+        var g_desc= "测试描述信息222222222";
+        var shareData = {
+            title: '测试分享接口333333333',
+            desc: '测试描述信息222222222',
+            link: 'http://hb.kakaapp.com/',
+            imgUrl: 'http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0',
 
-        wx.error(function(res){
-            // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-            alert("errorMSG:"+res);
-        });
+            trigger: function (res) {
+                alert('用户点击发送给朋友');
+            },
+            success: function (res) {
+                alert('已分享');
+            },
+            cancel: function (res) {
+                alert('已取消');
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        };
+        wx.onMenuShareAppMessage(shareData);
+        wx.onMenuShareTimeline(shareData);
+        wx.onMenuShareQQ(shareData);
+        wx.onMenuShareWeibo(shareData);
+    });
+    wx.error(function (res) {
+        alert(res.errMsg);
     });
 </script>
