@@ -15,6 +15,23 @@ class HongbaoController extends BaseController {
         $this->display();
     }
 
+    public function add(){
+
+        do{
+            $amount = I('post.amount',0,'intval');
+            $total = I('post.total',0,'intval');
+            $remark = I('post.remark','','htmlspecialchars');
+
+           // if($amount < 1 || $total < 1 || $total > 200 || $amount > 200){
+                $this->error('红包金额范围在1-200元之间.',U('/hongbao'));
+                return false;
+           // }
+        }while(false);
+
+
+        M('hongbao')->add($data);
+    }
+
     /**
      * 红包详情
      */
