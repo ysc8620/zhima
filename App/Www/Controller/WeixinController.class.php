@@ -9,6 +9,7 @@
 namespace Www\Controller;
 use Think\Controller;
 use Wechat\Wx;
+require_once ROOT_PATH .'/Inc/Library/Wxpay/Weixinpay.class.php';
 class WeixinController extends Controller {
     public function index(){
         $data = date("Y-m-d H:i:s==");
@@ -48,8 +49,8 @@ class WeixinController extends Controller {
 
     function test(){
         echo 'ok';
-        $data = \Wechat\Wxapi::send_wxmsg('obb1AuBzVPvw8NE8UZ2gc0web854','测试消息','http://hb.kakaapp.com','你收到消息了吗哈哈','http://hb.kakaapp.com/images/hongbao_bg.png');
-        print_r($data);
+        //$data = \Wechat\Wxapi::send_wxmsg('obb1AuBzVPvw8NE8UZ2gc0web854','测试消息','http://hb.kakaapp.com','你收到消息了吗哈哈','http://hb.kakaapp.com/images/hongbao_bg.png');
+       // print_r($data);
     }
 
     function userinfo(){
@@ -147,8 +148,52 @@ class WeixinController extends Controller {
     public function pay(){
         $id = I('post.id','', 'strval');
         if($id){
+            $order = M('hongbao_order')->where(array('order_sn'=>$id))->find();
+            if($order){
+                $hongbao = M('hongbao')->where(array('member_no'=>$order['member_no']))->find();
+                if($hongbao['state'] != 1){
+                    $this->error("红包不能支付", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                    exit();
+                }
+
+                if($hongbao['total_part'] == $hongbao['total_num']){
+                    $this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                    exit();
+                }
+
+                if($hongbao['addtime'] + 86400 < time() ){
+                    $this->error("红包已经过期", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                    exit();
+                }
+
+                if($order['state'] == 1){
+                    $data['body'] = "凑红包";
+                    $data['attach'] = "凑红包";
+                    $data['order_sn'] = $order['order_sn'] ;
+                    $data['total_fee'] = $order['total_amount'];
+                    $data['time_start'] = data('YmdHis');
+                    $data['time_expire'] =  date("YmdHis", time() + 600);
+                    $data['goods_tag'] = "WXG";
+                    $d = new \Weixinpay();
+                    $jsApiParameters = $d->pay($data);
+                    $this->jsApiParameters = $jsApiParameters;
+                    $this->display();
+                    return true;
+                }else{
+                    $this->error("红包状态不能支付", U('/hongbao/info', array('id'=>$order['order_no'])));
+                    exit();
+                }
+            }
 
         }
+        $this->error("红包状态不能支付", U('/notes/'));
+        exit();
+    }
+
+    public function notify(){
+
+        $d = new \Weixinpay();
+        $d->notify();
     }
 
 }

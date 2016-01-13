@@ -24,6 +24,8 @@ class PayNotifyCallBack extends WxPayNotify
 			&& $result["return_code"] == "SUCCESS"
 			&& $result["result_code"] == "SUCCESS")
 		{
+
+
 			return true;
 		}
 		return false;

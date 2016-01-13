@@ -47,4 +47,5 @@ class NotesController extends BaseController {
         $this->display();
     }
 
+
 }

@@ -155,4 +155,8 @@ class HongbaoController extends BaseController {
         }
     }
 
+    public function info(){
+
+    }
+
 }
