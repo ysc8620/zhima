@@ -1,5 +1,4 @@
 <?php
-echo '---------';
 ini_set('date.timezone','Asia/Shanghai');
 //error_reporting(E_ERROR);
 $weixin_path = dirname(__FILE__);
@@ -41,7 +40,7 @@ printf_info($order);
 $jsApiParameters = $tools->GetJsApiParameters($order);
 
 //获取共享收货地址js函数参数
-$editAddress = $tools->GetEditAddressParameters();
+// $editAddress = $tools->GetEditAddressParameters();
 
 //③、在支持成功回调通知中处理成功之后的事宜，见 notify.php
 /**
@@ -86,6 +85,7 @@ $editAddress = $tools->GetEditAddressParameters();
         }
     </script>
     <script type="text/javascript">
+        /*
         //获取共享地址
         function editAddress()
         {
@@ -116,7 +116,7 @@ $editAddress = $tools->GetEditAddressParameters();
                 editAddress();
             }
         };
-
+*/
     </script>
 </head>
 <body>
