@@ -9,7 +9,7 @@
 namespace Www\Controller;
 use Think\Controller;
 use Wechat\Wx;
-require_once ROOT_PATH .'/Inc/Library/Wxpay/jsapi.php';
+
 class WeixinController extends Controller {
     public function index(){
         $data = date("Y-m-d H:i:s==");
@@ -174,10 +174,11 @@ class WeixinController extends Controller {
                     $data['time_start'] = date('YmdHis');
                     $data['time_expire'] =  date("YmdHis", time() + 600);
                     $data['goods_tag'] = "WXG";
-                    $d = new \Weixinpay();
-                    $jsApiParameters = $d->pay($data);
-                    $this->jsApiParameters = $jsApiParameters;
-                    $this->display();
+//                    $d = new \Weixinpay();
+//                    $jsApiParameters = $d->pay($data);
+//                    $this->jsApiParameters = $jsApiParameters;
+//                    $this->display();
+                    require_once ROOT_PATH .'/Inc/Library/Wxpay/jsapi.php';
                     return true;
                 }else{
                     $this->error("红包状态不能支付", U('/hongbao/info', array('id'=>$order['order_no'])));
