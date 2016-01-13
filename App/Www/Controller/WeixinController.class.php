@@ -141,4 +141,14 @@ class WeixinController extends Controller {
         exit();
     }
 
+    /**
+     * 支付接口
+     */
+    public function pay(){
+        $id = I('post.id','', 'strval');
+        if($id){
+
+        }
+    }
+
 }

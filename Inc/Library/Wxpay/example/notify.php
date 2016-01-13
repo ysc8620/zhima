@@ -1,13 +1,13 @@
 <?php
 ini_set('date.timezone','Asia/Shanghai');
 error_reporting(E_ERROR);
-
-require_once "../lib/WxPay.Api.php";
-require_once '../lib/WxPay.Notify.php';
-require_once 'log.php';
+$path = dirname(__FILE__);
+require_once $path . "/../lib/WxPay.Api.php";
+require_once $path . '/../lib/WxPay.Notify.php';
+require_once $path .'/log.php';
 
 //初始化日志
-$logHandler= new CLogFileHandler("../logs/".date('Y-m-d').'.log');
+$logHandler= new CLogFileHandler($path . "/../logs/".date('Y-m-d').'.log');
 $log = Log::Init($logHandler, 15);
 
 class PayNotifyCallBack extends WxPayNotify
