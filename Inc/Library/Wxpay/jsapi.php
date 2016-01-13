@@ -17,7 +17,6 @@ function printf_info($data)
         echo "<font color='#00ff55;'>$key</font> : $value <br/>";
     }
 }
-print_r($data);die();
 //①、获取用户openid
 $tools = new JsApiPay();
 $openId = $tools->GetOpenid();
