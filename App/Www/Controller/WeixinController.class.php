@@ -162,7 +162,7 @@ class WeixinController extends Controller {
                     $this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
                     exit();
                 }
-     
+
                 if(($hongbao['addtime'] + 86400) < time() ){
                     $this->error("红包已经过期", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
                     exit();
