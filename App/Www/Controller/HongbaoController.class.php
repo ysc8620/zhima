@@ -138,6 +138,7 @@ class HongbaoController extends BaseController {
             'hongbao_id' => $hongbao['id'],
             'hongbao_user_id' => $hongbao['user_id'],
             'number_no' =>$hongbao['number_no'],
+            'order_sn' =>get_order_sn(),
             'user_id' => $this->user_id,
             'part_num' => $total,
             'part_amount' =>$hongbao['part_amount'],
@@ -147,7 +148,8 @@ class HongbaoController extends BaseController {
         );
         $rs = M('hongbao_order')->add($data);
         if($rs){
-            $this->success('操作成功.',U('/hongbao/detail',array('id'=>$id)));
+            redirect(U('/weixin/pay', array('id'=>$data['order_sn'])));
+            // $this->success('操作成功.',U('/hongbao/detail',array('id'=>$id)));
             return true;
         }else{
             $this->error('操作失败，请重试.',U('/hongbao/buy',array('id'=>$id)));
