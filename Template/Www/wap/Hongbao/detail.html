@@ -40,18 +40,18 @@
                     <div class="order_bd">
                         <div class="order_glist">
                             <div class="order_item">
-                                <a href="goods.php?id=6" class="order_goods" style="float:left;border-bottom:none;">
+                                <a href="{:U('/weixin/pay',array('id'=>$order['order_sn']))}" class="order_goods" style="float:left;border-bottom:none;">
                                     <div class="order_goods_img">
                                         <img src="{$order.user.header}">
                                     </div>
                                 </a>
                                 <div class="order_goods_info">
-                                    <a class="order_goods" href="goods.php?id=6">
+                                    <a class="order_goods" href="{:U('/weixin/pay',array('id'=>$order['order_sn']))}">
                                         <div class="order_goods_name">{$order.user.name}</div>
                                         <div class="order_goods_attr">
                                             <div class="order_goods_attr_item">{$order.addtime|date="Y-m-d H:i:s",###}
                                                 <div class="order_goods_price">
-                                                    <span><if condition="$order.state eq 1"><span style="color: #0000ff"><a href="{:U('/weixin/pay',array('id'=>$order['order_sn']))}">待支付</a></span><elseif condition="$order.state eq 2"/><span style="color: green">已支付</span><elseif condition="$order.state"/><span style="color: #000">未支付</span><elseif condition="$order.state eq 4"/><span style="color: #000">已退款</span></if></span> &nbsp;
+                                                    <span><if condition="$order.state eq 1"><span style="color: #0000ff">待支付</span><elseif condition="$order.state eq 2"/><span style="color: green">已支付</span><elseif condition="$order.state"/><span style="color: #000">未支付</span><elseif condition="$order.state eq 4"/><span style="color: #000">已退款</span></if></span> &nbsp;
                                                     <span>￥{$order.total_amount}元</span></div>
                                             </div>
                                         </div>
