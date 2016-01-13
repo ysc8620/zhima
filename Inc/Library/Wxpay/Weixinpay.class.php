@@ -1,4 +1,5 @@
 <?php
+echo '---------';
 ini_set('date.timezone','Asia/Shanghai');
 //error_reporting(E_ERROR);
 $weixin_path = dirname(__FILE__);
@@ -42,9 +43,6 @@ $jsApiParameters = $tools->GetJsApiParameters($order);
 //获取共享收货地址js函数参数
 $editAddress = $tools->GetEditAddressParameters();
 
-
-print_r($jsApiParameters);
-print_r($editAddress);
 //③、在支持成功回调通知中处理成功之后的事宜，见 notify.php
 /**
  * 注意：
@@ -65,7 +63,7 @@ print_r($editAddress);
         {
             WeixinJSBridge.invoke(
                     'getBrandWCPayRequest',
-                    <?php echo $jsApiParameters; ?>,
+            <?php echo $jsApiParameters; ?>,
                     function(res){
                         WeixinJSBridge.log(res.err_msg);
                         alert(res.err_code+res.err_desc+res.err_msg);
@@ -86,6 +84,39 @@ print_r($editAddress);
                 jsApiCall();
             }
         }
+    </script>
+    <script type="text/javascript">
+        //获取共享地址
+        function editAddress()
+        {
+            WeixinJSBridge.invoke(
+                    'editAddress',
+            <?php echo $editAddress; ?>,
+                    function(res){
+                        var value1 = res.proviceFirstStageName;
+                        var value2 = res.addressCitySecondStageName;
+                        var value3 = res.addressCountiesThirdStageName;
+                        var value4 = res.addressDetailInfo;
+                        var tel = res.telNumber;
+
+                        alert(value1 + value2 + value3 + value4 + ":" + tel);
+                    }
+            );
+        }
+
+        window.onload = function(){
+            if (typeof WeixinJSBridge == "undefined"){
+                if( document.addEventListener ){
+                    document.addEventListener('WeixinJSBridgeReady', editAddress, false);
+                }else if (document.attachEvent){
+                    document.attachEvent('WeixinJSBridgeReady', editAddress);
+                    document.attachEvent('onWeixinJSBridgeReady', editAddress);
+                }
+            }else{
+                editAddress();
+            }
+        };
+
     </script>
 </head>
 <body>
