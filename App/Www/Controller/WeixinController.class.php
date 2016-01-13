@@ -149,8 +149,10 @@ class WeixinController extends Controller {
         $id = I('id','', 'strval');
         if($id){
             $order = M('hongbao_order')->where(array('order_sn'=>$id))->find();
+
             if($order){
-                $hongbao = M('hongbao')->where(array('member_no'=>$order['member_no']))->find();
+                $hongbao = M('hongbao')->where(array('number_no'=>$order['number_no']))->find();
+
                 if($hongbao['state'] != 1){
                     $this->error("红包不能支付", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
                     exit();
@@ -160,8 +162,8 @@ class WeixinController extends Controller {
                     $this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
                     exit();
                 }
-
-                if($hongbao['addtime'] + 86400 < time() ){
+     
+                if(($hongbao['addtime'] + 86400) < time() ){
                     $this->error("红包已经过期", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
                     exit();
                 }

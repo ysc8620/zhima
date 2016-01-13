@@ -71,11 +71,12 @@ class HongbaoController extends BaseController {
             $this->error('请选择查看的红包', U('/notes'));
         }
         $this->hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
+
         if(!$this->hongbao){
             $this->error('没找到红包详情', U('/notes'));
         }
         $this->user = M('user')->find($this->hongbao['user_id']);
-        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id,'state'=>2),'_logic'=>'or',array(array('state'=>1,'addtime'=>array('gt', time()-1800)))))->select();
+        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id,'state'=>array('in',array(1,2)))))->select();
         if($order_list){
             foreach($order_list as $k=>$order){
                 $order_list[$k]['user'] = M('user')->find($order['hongbao_user_id']);
@@ -103,7 +104,6 @@ class HongbaoController extends BaseController {
 
         $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1,'addtime'=>array('gt', time()-1800)))->sum('total_amount'));
 
-        print_r($total_amount);
         if(!$this->hongbao){
             $this->error('没找到红包详情', U('/notes'));
         }
