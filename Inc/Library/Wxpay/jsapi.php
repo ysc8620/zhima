@@ -34,6 +34,8 @@ $input->SetGoods_tag($data['goods_tag']);
 $input->SetNotify_url("http://hb.kakaapp.com/weixin/notify.html");
 $input->SetTrade_type("JSAPI");
 $input->SetOpenid($openId);
+
+print_r($input);die();
 $order = WxPayApi::unifiedOrder($input);
 //echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
 //printf_info($order);
