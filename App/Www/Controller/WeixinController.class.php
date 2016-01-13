@@ -146,7 +146,7 @@ class WeixinController extends Controller {
      * 支付接口
      */
     public function pay(){
-        $id = I('post.id','', 'strval');
+        $id = I('id','', 'strval');
         if($id){
             $order = M('hongbao_order')->where(array('order_sn'=>$id))->find();
             if($order){
@@ -186,7 +186,7 @@ class WeixinController extends Controller {
             }
 
         }
-        $this->error("红包状态不能支付", U('/notes/'));
+        $this->error("红包状态不能支付", U('/notes'));
         exit();
     }
 
