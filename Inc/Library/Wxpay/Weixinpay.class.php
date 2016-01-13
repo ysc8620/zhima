@@ -34,6 +34,7 @@ class Weixinpay{
         $input->SetNotify_url("http://{$_SERVER[HTTP_HOST]}/weixin/notify.html");
         $input->SetTrade_type("JSAPI");
         $input->SetOpenid($openId);
+
         $order = WxPayApi::unifiedOrder($input);
         $jsApiParameters = $tools->GetJsApiParameters($order);
 

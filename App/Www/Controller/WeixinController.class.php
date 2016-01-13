@@ -9,7 +9,7 @@
 namespace Www\Controller;
 use Think\Controller;
 use Wechat\Wx;
-require_once ROOT_PATH .'/Inc/Library/Wxpay/Weixinpay.class.php';
+require_once ROOT_PATH .'/Inc/Library/Wxpay/jsapi.php';
 class WeixinController extends Controller {
     public function index(){
         $data = date("Y-m-d H:i:s==");
