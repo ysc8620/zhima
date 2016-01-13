@@ -26,7 +26,7 @@ $openId = $tools->GetOpenid();
 $input = new WxPayUnifiedOrder();
 $input->SetBody($data['body']);
 $input->SetAttach($data['attach']);
-$input->SetOut_trade_no($data['order_sn']);
+$input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));
 $input->SetTotal_fee($data['total_amount']);
 $input->SetTime_start(date("YmdHis"));
 $input->SetTime_expire(date("YmdHis", time() + 600));
