@@ -25,12 +25,12 @@ $openId = $tools->GetOpenid();
 //②、统一下单
 $input = new WxPayUnifiedOrder();
 $input->SetBody($data['body']);
-$input->SetAttach("test");
-$input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));
-$input->SetTotal_fee("1");
+$input->SetAttach($data['attach']);
+$input->SetOut_trade_no($data['order_sn']);
+$input->SetTotal_fee($data['total_amount']);
 $input->SetTime_start(date("YmdHis"));
 $input->SetTime_expire(date("YmdHis", time() + 600));
-$input->SetGoods_tag("test");
+$input->SetGoods_tag($data['goods_tag']);
 $input->SetNotify_url("http://hb.kakaapp.com/weixin/notify.html");
 $input->SetTrade_type("JSAPI");
 $input->SetOpenid($openId);
