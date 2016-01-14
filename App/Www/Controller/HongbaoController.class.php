@@ -102,7 +102,7 @@ class HongbaoController extends BaseController {
         }
         $this->hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
 
-        $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1,'addtime'=>array('gt', time()-1800)))->sum('total_amount'));
+        // $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1,'addtime'=>array('gt', time()-1800)))->sum('total_amount'));
 
         if(!$this->hongbao){
             $this->error('没找到红包详情', U('/notes'));
@@ -160,5 +160,4 @@ class HongbaoController extends BaseController {
     public function info(){
 
     }
-
 }
