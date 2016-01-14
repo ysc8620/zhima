@@ -34,9 +34,15 @@ class NotesController extends BaseController {
         $page = I('request.p',1);
         $page = $page<1?1:$page;
 
-        $this->list = M('hongbao')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
+        $list = M('hongbao_order')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
+        if($list){
+            foreach($list as $i=>$item){
+                $list[$i]['hongbao'] = M('hongbao')->find($item['hongbao_id']);
+                $list[$i]['user'] = M('user')->find($item['user_id']);
+            }
+        }
         $total = M('hongbao_order')->where(array('user_id'=>$this->user_id))->count();
-
+        $this->list = $list;
         $Page              = new \Think\Page($total,10); // 实例化分页类 传入总记录数和每页显示的记录数(20)
         $Page->rollPage = 5;
         $Page->setConfig('prev','上一页');

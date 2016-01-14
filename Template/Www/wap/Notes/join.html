@@ -10,18 +10,20 @@
     <div id="dealliststatus1" >
         <!--//start-->
         <div class="order">
+            <volist name="list" id="item">
             <div class="order_bd">
                 <div class="order_glist">
                     <div class="order_goods">
-                        <a class="order_goods" href="{:U('/hongbao/detail',array('id'=>$item['number_no']))}">
+                        <a class="" href="{:U('/hongbao/detail',array('id'=>$item['number_no']))}">
                             <div class="order_goods_img">
                                 <img src="{$item.user.header}" alt="{$item.user.name}" title="{$item.user.name}" />
                             </div>
+
                             <div class="order_goods_info">
-                                <div class="order_goods_name">￥{$item.part_amount}</div>
+                                <div class="order_goods_name">￥{$item.total_amount}</div>
                                 <div class="order_goods_attr">
                                     <div class="order_goods_attr_item">
-                                        <div class="order_goods_price"><span><if condition="$item.state eq 1"><if condition="$item['addtime']+86400 > time()">还在凑<else/>已过期</if><elseif condition="$item.state eq 2" />已完成<elseif condition="$item.state eq 3" />已过期<elseif condition="$item.state eq 4" />已退款<elseif condition="$item.state eq 5" />已关闭</if></span></div>
+                                        <div class="order_goods_price"><if condition="$item.state eq 1"><if condition="$item['addtime']+86400 gt time()"><span style="color: blue">待支付</span><else/><span style="color: gray">已过期</span></if><elseif condition="$item.state eq 2" /><span style="color: #008200" >已完成</span><elseif condition="$item.state eq 3" /><span style="color: gray">已过期</span><elseif condition="$item.state eq 4" /><span style="color: #000000" >已退款</span><elseif condition="$item.state eq 5" /><span style="color: #000000" >已关闭</span></if></div>
                                         {$item.addtime|date="Y-m-d H:i:s",###} </div>
                                 </div>
                             </div>
@@ -30,24 +32,7 @@
                 </div>
             </div>
 
-            <div class="order_bd">
-                <div class="order_glist">
-                    <div class="order_goods">
-
-                            <div class="order_goods_img">
-                                <img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0">
-                            </div>
-                        <div class="order_goods_info">
-                            <div class="order_goods_name">$200</div>
-                            <div class="order_goods_attr">
-                                <div class="order_goods_attr_item">
-                                    <div class="order_goods_price"><span>已完成</span> <span class="tracking_number"><a href="{:U('/hongbao/detail',array('id'=>1))}">详情>></a></span></div>
-                                    2015-12-12 12:12 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           </volist>
         </div>
 
         <!--//end-->

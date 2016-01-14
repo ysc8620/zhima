@@ -46,16 +46,16 @@
                                     </div>
                                 </a>
                                 <div class="order_goods_info">
-                                    <a class="order_goods" href="{:U('/weixin/pay',array('id'=>$order['order_sn']))}">
-                                        <div class="order_goods_name">{$order.user.name}</div>
-                                        <div class="order_goods_attr">
-                                            <div class="order_goods_attr_item">{$order.addtime|date="Y-m-d H:i:s",###}
-                                                <div class="order_goods_price">
-                                                    <span><if condition="$order.state eq 1"> <if condition="$hongbao.addtime + 86400 gt time()"><span style="color: #0000ff">待支付</span><else/></if><elseif condition="$order.state eq 2"/><span style="color: green">已支付</span><elseif condition="$order.state eq 3"/><span style="color: #000">已过期</span><elseif condition="$order.state eq 4"/><span style="color: #000">已退款</span></if></span> &nbsp;
-                                                    <span>￥{$order.total_amount}元</span></div>
-                                            </div>
+                                    <div class="order_goods_name">{$order.user.name}</div>
+                                    <div class="order_goods_attr">
+                                        <div class="order_goods_attr_item">{$order.addtime|date="Y-m-d H:i:s",###}
+                                            <div class="order_goods_price">
+                                                <span>￥{$order.total_amount}元</span>
+                                                
+                                                <span><if condition="$order.state eq 1"> <if condition="$hongbao.addtime + 86400 gt time()"><span style="color: #0000ff">待支付</span><else/></if><elseif condition="$order.state eq 2"/><span style="color: green">已支付</span><elseif condition="$order.state eq 3"/><span style="color: #000">已过期</span><elseif condition="$order.state eq 4"/><span style="color: #000">已退款</span></if></span> &nbsp;
+                                               </div>
                                         </div>
-                                    </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -64,13 +64,13 @@
                 </volist>
                 <!--//end-->
                 <if condition="$hongbao.state eq 1">
-                    <if condition="$hongbao.addtime + 86400 gt time()">
+                    <if condition="$hongbao[addtime]+86400 gt time()">
                         <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/buy',array('id'=>$hongbao[number_no]))}">追加凑红包</a> </div>
                     <else/>
-                        <div class="state_btn">已过期</div>
+                        <div class="state_btn"><a class="state_btn_4">已过期</a></div>
                     </if>
                 </if>
-               <div class="state_btn"><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3" />已过期<elseif condition="$hongbao.state eq 4" />已退款<else />已关闭</if></div>
+               <div class="state_btn"><a class="state_btn_4"><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3" />已过期<elseif condition="$hongbao.state eq 4" />已退款</if></a></div>
             </div>
 
         </div>
