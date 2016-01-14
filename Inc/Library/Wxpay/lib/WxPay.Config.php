@@ -2,7 +2,7 @@
 /**
 * 	配置账号信息
 */
-
+define('THDIPAHT', dirname(dirname(__FILE__)));
 class WxPayConfig
 {
 	//=======【基本信息设置】=====================================
