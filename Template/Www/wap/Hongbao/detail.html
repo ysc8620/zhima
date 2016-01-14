@@ -64,9 +64,13 @@
                 </volist>
                 <!--//end-->
                 <if condition="$hongbao.state eq 1">
-                <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/buy',array('id'=>$hongbao[number_no]))}">追加凑红包</a> </div>
+                    <if condition="$hongbao.addtime + 86400 > time()">
+                        <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/buy',array('id'=>$hongbao[number_no]))}">追加凑红包</a> </div>
+                    <else/>
+                        <div class="state_btn">已过期</div>
+                    </if>
                 </if>
-                    <div class="state_btn"><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3" />已过期<elseif condition="$hongbao.state eq 4" />已退款<else />已关闭</if></div>
+               <div class="state_btn"><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3" />已过期<elseif condition="$hongbao.state eq 4" />已退款<else />已关闭</if></div>
             </div>
 
         </div>

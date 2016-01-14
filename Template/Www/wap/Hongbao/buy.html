@@ -36,24 +36,30 @@
                 <form action="{:U('/hongbao/order')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
                     <input type="hidden" name="id" value="{$hongbao.number_no}" />
                     <input type="hidden" name="sign" value="{$sign}" />
+                    <input type="hidden" name="part_amount" value="{$hongbao.part_amount}" />
+                    <input type="hidden" name="max_total" value="{$max_total}" />
                 <!--//start -->
                 <div class="order ">
                     <div class="wx_wrap">
                         <div class="address_new">
                             <div class="hongbao_info">
-                                <span class="hongbao_remark">您需要支付：￥{$hongbao.part_amount}元</span><br />
+                                <span class="hongbao_remark">您需要支付：￥<span class="part_amount">{$hongbao.part_amount}</span>元</span><br />
                             </div>
                             <div style="text-align: center">
                                 <label for="num"><span class="tit"></span>
-                                    <input name="num" type="text" class="inputBg"  id="num" style="width: 160px; margin: 0 auto; text-align: center" value="1" placeholder="总份数"/> <span class="" style="line-height: 36px; font-size:16px;">份</span>
+                                    <input type="button" value="-"><input name="num" type="text" class="inputBg"  id="num" style="width: 160px; margin: 0 auto; text-align: center" value="1" placeholder="总份数"/><input type="button" value="+"> <span class="" style="line-height: 36px; font-size:16px;">份</span>
                                     <span id="updateTip2" style="color: red; display: none;"></span> </label>
                             </div>
 
                             <p class="action">
                                 <if condition="$hongbao.state eq 1">
-                                <button class="submit" id="add">凑 红 包</button>
+                                    <if condition="$hongbao.addtime+86400 > time()">
+                                <button type="submit" class="submit" id="add">凑 红 包</button>
+                                        <else/>
+                                        <button class="submit" disabled id="add">已 过 期</button>
+                                    </if>
                                     <else/>
-                                    <button class="submit" id="add#" disabled><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3" />已过期<elseif condition="$hongbao.state eq 4" />已退款<else />已关闭</if></button>
+                                    <button class="submit" id="add" disabled><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3" />已过期<elseif condition="$hongbao.state eq 4" />已退款<else />已关闭</if></button>
                                     </if>
                             </p>
                         </div>
@@ -72,5 +78,10 @@
     </div>
 </div>
 <include file="Public:foot" />
+<script type="text/javascript">
+    function checkHongBao(this){
+
+    }
+</script>
 </body>
 </html>
