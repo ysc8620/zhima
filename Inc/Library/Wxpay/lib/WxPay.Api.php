@@ -164,7 +164,7 @@ class WxPayApi
         $inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 
         $inputObj->SetSign();//签名
-        $xml = $inputObj->ToXml();
+        $xml = $inputObj->ToXml();echo $xml;die();
         $startTimeStamp = self::getMillisecond();//请求开始时间
         $response = self::postXmlCurl($xml, $url, true, $timeOut);
         $result = WxPayResults::Init($response);
