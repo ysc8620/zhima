@@ -21,7 +21,6 @@ function printf_info($data)
 $tools = new JsApiPay();
 $openId = $tools->GetOpenid();
 
-echo "---".$openId."====<br/>";
 //②、统一下单
 $input = new WxPayUnifiedOrder();
 $input->SetBody($data['body']);
@@ -36,8 +35,8 @@ $input->SetTrade_type("JSAPI");
 $input->SetOpenid($openId);
 
 $order = WxPayApi::unifiedOrder($input);
-echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
-printf_info($order);
+//echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
+//printf_info($order);
 $jsApiParameters = $tools->GetJsApiParameters($order);
 
 //获取共享收货地址js函数参数
