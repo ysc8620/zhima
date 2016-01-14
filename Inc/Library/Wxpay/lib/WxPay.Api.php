@@ -159,7 +159,7 @@ class WxPayApi
         }
         $inputObj->SetWxappid(WxPayConfig::APPID);//公众账号ID
         $inputObj->SetMch_id(WxPayConfig::MCHID);//商户号
-        $inputObj->SetTotal_num(1);
+        $inputObj->SetTotal_num('1');
         $inputObj->SetClient_ip('127.0.0.1');
         $inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 
