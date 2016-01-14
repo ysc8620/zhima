@@ -210,7 +210,7 @@ class WeixinController extends Controller {
             'mch_billno' => get_order_sn(),
             'send_name' => '凑红包',
             're_openid' => 'obb1AuBzVPvw8NE8UZ2gc0web854',
-            'total_amount' => 2,
+            'total_amount' => 100,
             'wishing' => '恭喜您获得测试红包一个',
             'act_name' => '测试红包',
             'remark' =>'凑红包'
