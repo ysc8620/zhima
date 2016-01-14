@@ -53,7 +53,7 @@
 
                             <p class="action">
                                 <if condition="$hongbao.state eq 1">
-                                    <if condition="$hongbao.addtime+86400 > time()">
+                                    <if condition="$hongbao.addtime+86400 gt time()">
                                 <button type="submit" class="submit" id="add">凑 红 包</button>
                                         <else/>
                                         <button class="submit" disabled id="add">已 过 期</button>
@@ -66,10 +66,7 @@
                     </div>
                 </div>
                 </form>
-
-
                 <!--//end-->
-
                 <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/detail',array('id'=>$hongbao[number_no]))}">返回红包详情</a> </div>
                 <div class="state_btn"> </div>
             </div>
@@ -79,8 +76,8 @@
 </div>
 <include file="Public:foot" />
 <script type="text/javascript">
-    function checkHongBao(this){
-
+    function checkHongBao(_this){
+        return true;
     }
 </script>
 </body>

@@ -23,7 +23,7 @@
                             <div class="order_goods_name">￥{$item.part_amount}</div>
                             <div class="order_goods_attr">
                                 <div class="order_goods_attr_item">
-                                    <div class="order_goods_price"><span><if condition="$item.state eq 1"><if condition="$item['addtime']+86400 > time()">还在凑<else/>已过期</if><elseif condition="$item.state eq 2" />已完成<elseif condition="$item.state eq 3" />已过期<elseif condition="$item.state eq 4" />已退款<elseif condition="$item.state eq 5" />已关闭</if></span></div>
+                                    <div class="order_goods_price"><span><if condition="$item.state eq 1"><if condition="($item['addtime']+86400) gt time()">还在凑<else/>已过期</if><elseif condition="$item.state eq 2" />已完成<elseif condition="$item.state eq 3" />已过期<elseif condition="$item.state eq 4" />已退款<elseif condition="$item.state eq 5" />已关闭</if></span></div>
                                     {$item.addtime|date="Y-m-d H:i:s",###} </div>
                             </div>
                         </div>
