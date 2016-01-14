@@ -42,6 +42,7 @@ class WxPayDataBase
 	**/
 	public function IsSignSet()
 	{
+        print_r($this->values);
 		return array_key_exists('sign', $this->values);
 	}
 
