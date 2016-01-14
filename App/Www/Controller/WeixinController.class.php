@@ -9,7 +9,7 @@
 namespace Www\Controller;
 use Think\Controller;
 use Wechat\Wx;
-require_once ROOT_PATH .'/Inc/Library/Wxpay/Weixinpay.class.php';
+require_once ROOT_PATH .'/Inc/Library/Wxpay/weixin.php';
 class WeixinController extends Controller {
     public function index(){
         $data = date("Y-m-d H:i:s==");
@@ -176,12 +176,9 @@ class WeixinController extends Controller {
                     $data['time_start'] = date('YmdHis');
                     $data['time_expire'] =  date("YmdHis", time() + 600);
                     $data['goods_tag'] = "WXG";
-//                    $d = new \Weixinpay();
-//                    $jsApiParameters = $d->pay($data);
-//                    $this->jsApiParameters = $jsApiParameters;
-//                    $this->display();
-                    require_once ROOT_PATH .'/Inc/Library/Wxpay/jsapi.php';
-                    return true;
+
+                    $this->jsApiParameters = jsapipay($data);
+                    $this->display();
                 }else{
                     $this->error("红包状态不能支付", U('/hongbao/info', array('id'=>$order['order_no'])));
                     exit();
@@ -193,10 +190,18 @@ class WeixinController extends Controller {
         exit();
     }
 
+    /**
+     * 异步回调
+     */
     public function notify(){
+        notify();
+    }
 
-        $d = new \Weixinpay();
-        $d->notify();
+    /**
+     * 订单退款
+     */
+    function refund(){
+        refund(array('transaction_id'=> '1007370008201601132684551338', 'total_fee'=>1, 'refund_fee'=>1));
     }
 
 }

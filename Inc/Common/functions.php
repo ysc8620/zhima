@@ -1604,3 +1604,15 @@ function think_filter(&$value){
 function in_array_case($value,$array){
     return in_array(strtolower($value),array_map('strtolower',$array));
 }
+
+/**
+ *
+ */
+function pay($pay_id){
+
+}
+
+// 生成支付记录
+function create_pay(){
+
+}
