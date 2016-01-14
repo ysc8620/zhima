@@ -85,7 +85,7 @@ function refund($data = array()){
     $input->SetOut_refund_no(get_order_sn());
     $input->SetOp_user_id(WxPayConfig::MCHID);
 
-    print_r($input);die();
+    //print_r($input);die();
     printf_info(WxPayApi::refund($input));
     exit();
 }
