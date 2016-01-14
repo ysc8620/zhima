@@ -90,6 +90,28 @@ function refund($data = array()){
     exit();
 }
 
+/**
+ * 退单
+ * $transaction_id 微信订单号
+ * $out_trade_no 系统订单号
+ * $total_fee 订单金额
+ * $refund_fee 退款金额
+ *
+ */
+function sendHongBao($data = array()){
+    $input = new WxSendHongBao();
+    $input->SetMch_billno($data['mch_billno']); // 红包编号
+    $input->SetSend_name($data['send_name']);   // 发送人
+    $input->SetRe_openid($data['re_openid']);   // 接收人
+    $input->SetTotal_amount($data['total_amount']);  // 发送金额
+    $input->SetWishing($data['wishing']);  // 祝福语
+    $input->SetAct_name($data['act_name']); // 活动名称
+    $input->SetRemark($data['remark']);  // 备注
+    //print_r($input);die();
+    printf_info(WxPayApi::sendHongbao($input));
+    exit();
+}
+
 class PayNotifyCallBack extends WxPayNotify
 {
     //查询订单

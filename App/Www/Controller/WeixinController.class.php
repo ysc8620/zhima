@@ -205,4 +205,15 @@ class WeixinController extends Controller {
         refund(array('transaction_id'=> '1007370008201601132684551338', 'total_fee'=>1, 'refund_fee'=>1));
     }
 
+    function sendhonebao(){
+        sendHongBao(array(
+            'mch_billno' => get_order_sn(),
+            'send_name' => '凑红包',
+            're_openid' => 'obb1AuBzVPvw8NE8UZ2gc0web854',
+            'total_amount' => 2,
+            'wishing' => '恭喜您获得测试红包一个',
+            'act_name' => '测试红包',
+            'remark' =>'凑红包'
+        ));
+    }
 }

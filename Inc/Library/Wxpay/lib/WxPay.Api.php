@@ -128,6 +128,51 @@ class WxPayApi
 		return $result;
 	}
 
+    /**
+     *
+     * 申请退款，WxPayRefund中out_trade_no、transaction_id至少填一个且
+     * out_refund_no、total_fee、refund_fee、op_user_id为必填参数
+     * appid、mchid、spbill_create_ip、nonce_str不需要填入
+     * @param WxPayRefund $inputObj
+     * @param int $timeOut
+     * @throws WxPayException
+     * @return 成功时返回，其他抛异常
+     */
+    public static function sendHongbao($inputObj, $timeOut = 6)
+    {
+        $url = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
+        //检测必填参数
+        if(!$inputObj->IsMch_billno() ){
+            throw new WxPayException("发送红包中，却少必填mch_billno！");
+        }elseif (!$inputObj->IsSend_name()) {
+            throw new WxPayException("退款申请接口中，却少必填send_name！");
+        }else if(!$inputObj->IsRe_openid()){
+            throw new WxPayException("退款申请接口中，缺少必填参数re_openid！");
+        }else if(!$inputObj->IsTotal_amount()){
+            throw new WxPayException("退款申请接口中，缺少必填参数total_amount！");
+        }else if(!$inputObj->IsWishing()){
+            throw new WxPayException("退款申请接口中，缺少必填参数wishing！");
+        }else if(!$inputObj->IsAct_name()){
+            throw new WxPayException("退款申请接口中，缺少必填参数act_name！");
+        }else if(!$inputObj->IsRemark()){
+            throw new WxPayException("退款申请接口中，缺少必填参数remark！");
+        }
+        $inputObj->SetWxappid(WxPayConfig::APPID);//公众账号ID
+        $inputObj->SetMch_id(WxPayConfig::MCHID);//商户号
+        $inputObj->SetTotal_num(1);
+        $inputObj->SetClient_ip('127.0.0.1');
+        $inputObj->SetNonce_str(self::getNonceStr());//随机字符串
+
+        $inputObj->SetSign();//签名
+        $xml = $inputObj->ToXml();
+        $startTimeStamp = self::getMillisecond();//请求开始时间
+        $response = self::postXmlCurl($xml, $url, true, $timeOut);
+        $result = WxPayResults::Init($response);
+        self::reportCostTime($url, $startTimeStamp, $result);//上报请求花费时间
+
+        return $result;
+    }
+
 	/**
 	 * 
 	 * 申请退款，WxPayRefund中out_trade_no、transaction_id至少填一个且
