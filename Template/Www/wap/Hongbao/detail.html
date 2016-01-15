@@ -1,4 +1,4 @@
-<include file="Public:header" />
+<include file="Public:header" xmlns="http://www.w3.org/1999/html"/>
 <div class="container">
     <div class="mod_container">
         <div id="detailCon" class="wx_wrap">
@@ -40,11 +40,12 @@
                     <div class="order_bd">
                         <div class="order_glist">
                             <div class="order_item">
-                                <a href="{:U('/weixin/pay',array('id'=>$order['order_sn']))}" class="order_goods" style="float:left;border-bottom:none;">
+                                <a href="<if condition='$order.state eq 1 and $hongbao.addtime + 86400 gt time()'>{:U('/weixin/pay',array('id'=>$order['order_sn']))}<else/>javascript:void(0)</if>" class="order_goods" style="float:left;border-bottom:none;">
                                     <div class="order_goods_img">
                                         <img src="{$order.user.header}">
                                     </div>
                                 </a>
+                                <a href="<if condition='$order.state eq 1 and $hongbao.addtime + 86400 gt time()'>{:U('/weixin/pay',array('id'=>$order['order_sn']))}<else/>javascript:void(0)</if>" class="order_goods" style="float:left;border-bottom:none;">
                                 <div class="order_goods_info">
                                     <div class="order_goods_name">{$order.user.name}</div>
                                     <div class="order_goods_attr">
@@ -57,6 +58,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                         </div>
                     </div>
