@@ -12,13 +12,11 @@ require_once ROOT_PATH .'/Inc/Library/Wxpay/weixin.php';
 class AutoController extends Controller {
     // 自动发送红包
     function sendhongbao(){
+        set_time_limit(0);
+
         $hongbao_list = M('hongbao')->where(array('state'=>2, 'is_send_hongbao'=>0))->select();
         foreach($hongbao_list as $hongbao){
-//            $order_list = M('hongbao_order')->where(array('state'=>2))->select();
-//            foreach($order_list as $order){
-//
-//            }
-            $data = array(
+            $bao = array(
                 'mch_billno' =>get_order_sn(),
                 'send_name' => '凑红包',
                 're_openid' =>$hongbao['openid'],
@@ -27,9 +25,21 @@ class AutoController extends Controller {
                 'act_name'=> '凑红包',
                 'remark' => '凑红包',
             );
-            $data = sendHongBao($data);
-            M('hongbao')->where(array('id'=>$hongbao['id']))->save(array('is_send_hongbao'=>1));
+            $send = $bao;
+            $send['user_id'] = $hongbao['user_id'];
+            $send['addtime'] = time();
+            $hongbao_id = M('hongbao_send')->add($send);
+            if($hongbao_id){
+                $data = sendHongBao($bao);
+                if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
+                    M('hongbao')->where(array('id'=>$hongbao['id']))->save(array('is_send_hongbao'=>1, 'hongbao_id'=>$hongbao_id, 'hongbao_sn'=>$bao['mch_billno'], 'hongbao_time'=>time()));
+                    M('hongbao_send')->where(array("id"=>$hongbao_id))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
+                }else{
+                    M('hongbao_send')->where(array("id"=>$hongbao_id))->save(array('state'=>3));
+                }
+            }
         }
+        die('ok');
     }
 
     function autoclose(){

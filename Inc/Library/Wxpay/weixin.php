@@ -111,8 +111,7 @@ function sendHongBao($data = array()){
     $input->SetAct_name($data['act_name']); // 活动名称
     $input->SetRemark($data['remark']);  // 备注
     //print_r($input);die();
-    printf_info(WxPayApi::sendHongbao($input));
-    exit();
+    return WxPayApi::sendHongbao($input);
 }
 
 class PayNotifyCallBack extends WxPayNotify
