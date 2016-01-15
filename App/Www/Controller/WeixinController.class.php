@@ -184,8 +184,8 @@ class WeixinController extends Controller {
                     $data['time_start'] = date('YmdHis');
                     $data['time_expire'] =  date("YmdHis", time() + 600);
                     $data['goods_tag'] = "WXG";
-                    $openid = session('openid')?session('openid'):cookie('openid');
-                    $data['openid'] = $openid;
+                    // $openid = ;//session('openid')?session('openid'):cookie('openid');
+                    $data['openid'] = $order['openid'];
 
                     $this->user = M('user')->find($hongbao['user_id']);
 
