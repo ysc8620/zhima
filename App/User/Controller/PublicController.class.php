@@ -18,7 +18,7 @@ class PublicController extends Controller {
                 exit();
             }
              $this->user = M('user')->find($this->user_id);
-
+            $this->title = $this->user['name']."个人中心";
              /*
 			if(!session('user.uin')){
 				header("location: ".U('login/index'));
