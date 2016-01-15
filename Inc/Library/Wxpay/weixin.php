@@ -130,7 +130,6 @@ class PayNotifyCallBack extends WxPayNotify
         {
             f_log(http_build_query($result),dirname(__FILE__).'/mylog.log');
 
-
             $result['addtime'] = time();
             $id = M('pay_log')->add($result);
 
