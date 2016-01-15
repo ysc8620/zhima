@@ -180,7 +180,7 @@ class WeixinController extends Controller {
                     $data['time_expire'] =  date("YmdHis", time() + 600);
                     $data['goods_tag'] = "WXG";
 
-                    $this->jsApiParameters = jsapipay($data);
+                    $this->jsApiParameters = jsapipay($data, true);
                     $this->display();
                     exit();
                 }else{
