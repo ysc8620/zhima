@@ -158,6 +158,31 @@ class PayNotifyCallBack extends WxPayNotify
                         $data['state'] = 2;
                     }
                     M('hongbao')->where("id='{$order['hongbao_id']}'")->save($data);
+
+                    if($data['state'] == 2){
+                        $bao = array(
+                            'mch_billno' =>get_order_sn(),
+                            'send_name' => '凑红包',
+                            're_openid' =>$hongbao['openid'],
+                            'total_amount' => $hongbao['total_amount'] * 0.99 * 100,
+                            'wishing' => '恭喜您！您在凑红包发起的凑红包已经完成。',
+                            'act_name'=> '凑红包',
+                            'remark' => '凑红包',
+                        );
+                        $send = $bao;
+                        $send['user_id'] = $hongbao['user_id'];
+                        $send['addtime'] = time();
+                        $hongbao_id = M('hongbao_send')->add($send);
+                        if($hongbao_id){
+                            $data = sendHongBao($bao);
+                            if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
+                                M('hongbao')->where(array("id={$hongbao['id']}"))->save(array('is_send_hongbao'=>1, 'hongbao_id'=>$hongbao_id, 'hongbao_sn'=>$bao['mch_billno'], 'hongbao_time'=>time()));
+                                M('hongbao_send')->where(array("id=$hongbao_id"))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
+                            }else{
+                                M('hongbao_send')->where(array("id=$hongbao_id"))->save(array('state'=>3));
+                            }
+                        }
+                    }
                 }
 
             }
