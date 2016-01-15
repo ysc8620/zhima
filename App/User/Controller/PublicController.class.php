@@ -11,6 +11,9 @@ use Think\Controller;
 class PublicController extends Controller {
      	public function _initialize(){
              $this->user_id = session('user_id');
+            if(empty($this->user_id)){
+                $this->user_id = cookie('user_id');
+            }
 
              #$this->user_id = 2;
             if(empty($this->user_id)){
