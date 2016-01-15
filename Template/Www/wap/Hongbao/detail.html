@@ -49,9 +49,10 @@
                                     <div class="order_goods_name">{$order.user.name}</div>
                                     <div class="order_goods_attr">
                                         <div class="order_goods_attr_item">{$order.addtime|date="Y-m-d H:i:s",###}
-                                            <div class="order_goods_price">
+                                            <div class="order_goods_price" style="text-align: right">
                                                 <span>￥{$order.total_amount}元</span>
-                                                <span><if condition="$order.state eq 1"> <if condition="$hongbao.addtime + 86400 gt time()"><span style="color: #0000ff">待支付</span><else/></if><elseif condition="$order.state eq 2"/><span style="color: green">已支付</span><elseif condition="$order.state eq 3"/><span style="color: #000">已过期</span><elseif condition="$order.state eq 4"/><span style="color: #000">已退款</span></if></span> &nbsp;
+                                                <span><if condition="$order.state eq 1"> <if condition="$hongbao.addtime + 86400 gt time()"><span style="color: #0000ff">待支付</span><else/></if><elseif condition="$order.state eq 2"/><span style="color: green">已支付</span><elseif condition="$order.state eq 3"/><span style="color: #000">已过期</span><elseif condition="$order.state eq 4"/><span style="color: #000">已退款</span></if></span>
+                                                <if condition="$order.is_star eq 1"><i class="fa fa-star"></i> 幸运星</if>
                                                </div>
                                         </div>
                                     </div>
