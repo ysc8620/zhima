@@ -12,7 +12,7 @@ class PublicController extends Controller {
      	public function _initialize(){
              $this->user_id = session('user_id');
 
-             $this->user_id = 2;
+             #$this->user_id = 2;
 
              $this->user = M('user')->find($this->user_id);
 
