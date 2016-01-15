@@ -172,7 +172,7 @@ class WeixinController extends Controller {
                     $data['body'] = "凑红包";
                     $data['attach'] = "凑红包";
                     $data['order_sn'] = $order['order_sn'] ;
-                    $data['total_fee'] = 2;//$order['total_amount'];
+                    $data['total_fee'] = $order['total_amount'];
                     $data['time_start'] = date('YmdHis');
                     $data['time_expire'] =  date("YmdHis", time() + 600);
                     $data['goods_tag'] = "WXG";
