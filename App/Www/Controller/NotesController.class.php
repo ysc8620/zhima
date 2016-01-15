@@ -38,7 +38,7 @@ class NotesController extends BaseController {
         if($list){
             foreach($list as $i=>$item){
                 $list[$i]['hongbao'] = M('hongbao')->find($item['hongbao_id']);
-                $list[$i]['user'] = M('user')->find($item['user_id']);
+                $list[$i]['user'] = M('user')->find($list[$i]['hongbao']['user_id']);
             }
         }
         $total = M('hongbao_order')->where(array('user_id'=>$this->user_id))->count();
