@@ -13,7 +13,10 @@ class PublicController extends Controller {
              $this->user_id = session('user_id');
 
              #$this->user_id = 2;
-
+            if(empty($this->user_id)){
+                \Wechat\Wxapi::authorize();
+                exit();
+            }
              $this->user = M('user')->find($this->user_id);
 
              /*
