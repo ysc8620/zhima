@@ -81,7 +81,7 @@ class HongbaoController extends BaseController {
         $order_list = M('hongbao_order')->where(array(array('number_no'=>$id,'state'=>array('in',array(1,2)))))->select();
         if($order_list){
             foreach($order_list as $k=>$order){
-                $order_list[$k]['user'] = M('user')->find($order['hongbao_user_id']);
+                $order_list[$k]['user'] = M('user')->find($order['user_id']);
             }
         }
 
