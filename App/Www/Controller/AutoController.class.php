@@ -28,6 +28,7 @@ class AutoController extends Controller {
             $send = $bao;
             $send['user_id'] = $hongbao['user_id'];
             $send['addtime'] = time();
+            $send['hongbao_id'] = $hongbao['id'];
             $hongbao_id = M('hongbao_send')->add($send);
             if($hongbao_id){
                 $data = sendHongBao($bao);

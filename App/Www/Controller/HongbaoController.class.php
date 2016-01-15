@@ -40,6 +40,7 @@ class HongbaoController extends BaseController {
                 return false;
             }
             // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
+            $user = M('user')->find($this->user_id);
             $data['number_no'] = get_order_sn();
             $data['user_id'] = $this->user_id;
             $data['part_amount'] = $amount;
@@ -48,6 +49,7 @@ class HongbaoController extends BaseController {
             $data['remark'] = $remark;
             $data['addtime'] = time();
             $data['state'] = 1;
+            $data['openid'] = $user['openid'];
 
             $re = M('hongbao')->add($data);
             if($re){
@@ -134,6 +136,8 @@ class HongbaoController extends BaseController {
             $this->error('你已超过红包份额限制,请重新设置份额.',U('/hongbao/buy',array('id'=>$id)));
             return false;
         }
+
+        $user = M('user')->find($this->user_id);
         $data = array(
             'hongbao_id' => $hongbao['id'],
             'hongbao_user_id' => $hongbao['user_id'],
@@ -145,6 +149,7 @@ class HongbaoController extends BaseController {
             'total_amount' => $hongbao['part_amount'] * $total,
             'addtime' => time(),
             'state' => 1,
+            'openid' => $user['openid']
         );
         $rs = M('hongbao_order')->add($data);
         if($rs){
