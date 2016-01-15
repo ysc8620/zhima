@@ -36,7 +36,7 @@ class WeixinController extends Controller {
      */
     function oauth(){
         $web_openid = session('openid');
-        if(isset($_GET['code']) && empty($web_openid)){
+        if(isset($_GET['code']) ){
             $data = \Wechat\Wxapi::get_openid($_GET['code']);
             session('openid', $data['openid']);
             session('access_token', $data['access_token']);
