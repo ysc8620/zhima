@@ -144,8 +144,6 @@ class PayNotifyCallBack extends WxPayNotify
                 );
                 M('hongbao_order')->where("id='{$order['id']}'")->save($order_data);
 
-
-
                 $hongbao = M('hongbao')->where("id='{$order['hongbao_id']}'")->find();
                 if($hongbao){
                     $data = array(
@@ -155,6 +153,9 @@ class PayNotifyCallBack extends WxPayNotify
                         'total_user' => $hongbao['total_user'] + 1
                     );
 
+                    if($hongbao['state'] > 1){
+                        return true;
+                    }
                     if($data['total_num'] >= $hongbao['total_part'] || $data['total_pay_amount'] >= $hongbao['total_amount']){
                         $data['state'] = 2;
                     }
