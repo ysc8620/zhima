@@ -137,6 +137,10 @@ class PayNotifyCallBack extends WxPayNotify
             $result['out_trade_no'];
             $order = M('hongbao_order')->where("order_sn='{$result['out_trade_no']}'")->find();
             if($order){
+                // 重复操作
+                if($order['state'] > 1){
+                    return true;
+                }
                 $order_data = array(
                     'pay_id' => $id,
                     'pay_time' => time(),
@@ -162,7 +166,7 @@ class PayNotifyCallBack extends WxPayNotify
                         return true;
                     }
                     // 设置幸运星
-                    if($data['state'] ==2 ){
+                    if($data['state'] == 2 ){
                         $list = M('hongbao_order')->where("hongbao_id='{$order['hongbao_id']}' AND state=2")->select();
                         if($list){
                             $ids = array();
