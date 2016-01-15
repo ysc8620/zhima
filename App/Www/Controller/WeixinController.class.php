@@ -186,7 +186,14 @@ class WeixinController extends Controller {
                     $data['goods_tag'] = "WXG";
                     $openid = session('openid')?session('openid'):cookie('openid');
                     $data['openid'] = $openid;
-                    $this->jsApiParameters = jsapipay($data, false);
+
+                    $this->user = M('user')->find($hongbao['user_id']);
+
+                    $this->title = "{$this->user['name']}凑红包";
+                    $this->hongbao = $hongbao;
+                    $this->order = $order;
+
+                    // $this->jsApiParameters = jsapipay($data, false);
                     $this->display();
                     exit();
                 }else{

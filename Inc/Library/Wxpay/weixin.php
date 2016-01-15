@@ -132,6 +132,8 @@ class PayNotifyCallBack extends WxPayNotify
              file_put_contents(dirname(__FILE__).'/mylog.log', date("Y-m-d H:i:s === ").http_build_query($result));
             $result['addtime'] = time();
             $id = M('pay_log')->add($result);
+
+
             // 更改order 状态
             // 更改 hongbao状态
             $result['out_trade_no'];
