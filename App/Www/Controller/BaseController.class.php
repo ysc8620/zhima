@@ -36,8 +36,8 @@ class BaseController extends Controller {
                 $user = M('user')->where(array('openid'=>$openid))->find();
 
                 if( $user ){;
-                    session('user_id', $user['user_id']);
-                    $this->user_id = $user['user_id'];
+                    session('user_id', $user['uin']);
+                    $this->user_id = $user['uin'];
 
                     if($user['wx_last_time'] < time() - 86400){
                         if($user['subscribe']){

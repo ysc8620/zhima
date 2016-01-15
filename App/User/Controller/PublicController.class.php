@@ -11,8 +11,23 @@ use Think\Controller;
 class PublicController extends Controller {
      	public function _initialize(){
              $this->user_id = session('user_id');
-            if(empty($this->user_id)){
-                $this->user_id = cookie('user_id');
+             #$this->user_id = 2;
+
+             #return true;
+             $openid =  session('openid');
+             if(!$openid){
+                 $openid = cookie('openid');
+                 if($openid){
+                     session('openid', $openid);
+                 }
+             }
+            if($openid && empty($this->user_id)){
+                $user = M('user')->where(array('openid'=>$openid))->find();
+
+                if( $user ){;
+                    session('user_id', $user['uin']);
+                    $this->user_id = $user['uin'];
+                }
             }
 
              #$this->user_id = 2;
@@ -20,7 +35,7 @@ class PublicController extends Controller {
                 \Wechat\Wxapi::authorize();
                 exit();
             }
-             $this->user = M('user')->find($this->user_id);
+            $this->user = M('user')->find($this->user_id);
             $this->title = $this->user['name']."个人中心";
              /*
 			if(!session('user.uin')){
