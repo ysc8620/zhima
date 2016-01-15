@@ -153,14 +153,14 @@ class PayNotifyCallBack extends WxPayNotify
                         'total_user' => $hongbao['total_user'] + 1
                     );
 
-                    if($hongbao['state'] > 1){
-                        return true;
-                    }
+
                     if($data['total_num'] >= $hongbao['total_part'] || $data['total_pay_amount'] >= $hongbao['total_amount']){
                         $data['state'] = 2;
                     }
                     M('hongbao')->where("id='{$order['hongbao_id']}'")->save($data);
-
+                    if($hongbao['state'] > 1){
+                        return true;
+                    }
                     // 设置幸运星
                     if($data['state'] ==2 ){
                         $list = M('hongbao_order')->where("hongbao_id='{$order['hongbao_id']}' AND state=2")->select();
