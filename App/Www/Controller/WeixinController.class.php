@@ -170,12 +170,12 @@ class WeixinController extends Controller {
                     $this->error("红包已经过期", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
                     exit();
                 }
-
+                print_r($order);die();
                 if($order['state'] == 1){
                     $data['body'] = "凑红包";
                     $data['attach'] = "凑红包";
                     $data['order_sn'] = $order['order_sn'] ;
-                    $data['total_fee'] = $order['total_amount'];
+                    $data['total_fee'] = $order['total_amount'] *100;
                     $data['time_start'] = date('YmdHis');
                     $data['time_expire'] =  date("YmdHis", time() + 600);
                     $data['goods_tag'] = "WXG";
