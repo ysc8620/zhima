@@ -128,7 +128,9 @@ class PayNotifyCallBack extends WxPayNotify
             && $result["return_code"] == "SUCCESS"
             && $result["result_code"] == "SUCCESS")
         {
-             file_put_contents(dirname(__FILE__).'/mylog.log', date("Y-m-d H:i:s === ").http_build_query($result));
+            f_log(http_build_query($result),dirname(__FILE__).'/mylog.log');
+
+
             $result['addtime'] = time();
             $id = M('pay_log')->add($result);
 
