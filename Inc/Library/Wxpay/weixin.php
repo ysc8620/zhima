@@ -132,7 +132,6 @@ class PayNotifyCallBack extends WxPayNotify
             $result['addtime'] = time();
             $id = M('pay_log')->add($result);
 
-
             // 更改order 状态
             // 更改 hongbao状态
             $result['out_trade_no'];
@@ -159,6 +158,7 @@ class PayNotifyCallBack extends WxPayNotify
                     }
                     M('hongbao')->where("id='{$order['hongbao_id']}'")->save($data);
 
+                    // 自动发送红包
                     if($data['state'] == 2){
                         $bao = array(
                             'mch_billno' =>get_order_sn(),

@@ -31,7 +31,9 @@ class AutoController extends Controller {
             $hongbao_id = M('hongbao_send')->add($send);
             if($hongbao_id){
                 $data = sendHongBao($bao);
-                if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
+                if(array_key_exists("return_code", $data)
+                    && array_key_exists("result_code", $data) &&
+                    $data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
                     M('hongbao')->where(array('id'=>$hongbao['id']))->save(array('is_send_hongbao'=>1, 'hongbao_id'=>$hongbao_id, 'hongbao_sn'=>$bao['mch_billno'], 'hongbao_time'=>time()));
                     M('hongbao_send')->where(array("id"=>$hongbao_id))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
                 }else{
