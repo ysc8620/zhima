@@ -186,7 +186,7 @@ class WeixinController extends Controller {
                     $data['goods_tag'] = "WXG";
                     $openid = session('openid')?session('openid'):cookie('openid');
                     $data['openid'] = $openid;
-                    $this->jsApiParameters = jsapipay($data, false);
+                    $this->jsApiParameters = jsapipay($data, true);
                     $this->display();
                     exit();
                 }else{
