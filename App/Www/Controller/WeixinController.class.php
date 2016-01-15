@@ -232,4 +232,19 @@ class WeixinController extends Controller {
             'remark' =>'凑红包'
         ));
     }
+
+    function test1(){
+        $list = M('hongbao_order')->where("hongbao_id='1' AND state=2")->select();
+        $ids = array();
+        foreach($list as $r){
+            $ids[] = $r['id'];
+        }
+        $k = array_rand($ids);
+        $id = $ids[$k];
+        echo $k."<br/>";
+        print_r($ids);
+        echo "<br/>";
+        print_r($id);
+         M('hongbao_order')->where("id=$id")->save(array('is_star'=>1));
+    }
 }

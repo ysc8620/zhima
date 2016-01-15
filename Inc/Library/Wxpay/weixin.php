@@ -144,6 +144,8 @@ class PayNotifyCallBack extends WxPayNotify
                 );
                 M('hongbao_order')->where("id='{$order['id']}'")->save($order_data);
 
+
+
                 $hongbao = M('hongbao')->where("id='{$order['hongbao_id']}'")->find();
                 if($hongbao){
                     $data = array(
@@ -158,6 +160,21 @@ class PayNotifyCallBack extends WxPayNotify
                     }
                     M('hongbao')->where("id='{$order['hongbao_id']}'")->save($data);
 
+                    // 设置幸运星
+                    if($data['state'] ==2 ){
+                        $list = M('hongbao_order')->where("hongbao_id='{$order['hongbao_id']}' AND state=2")->select();
+                        if($list){
+                            $ids = array();
+                            foreach($list as $r){
+                                $ids[] = $r['id'];
+                            }
+                            $k = array_rand($ids);
+                            $id = $ids[$k];
+                            if($id){
+                                M('hongbao_order')->where("id='$id'")->save(array('is_star'=>1));
+                            }
+                        }
+                    }
                     // 自动发送红包
                     if($data['state'] == 2){
                         $bao = array(
@@ -176,10 +193,10 @@ class PayNotifyCallBack extends WxPayNotify
                         if($hongbao_id){
                             $data = sendHongBao($bao);
                             if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
-                                M('hongbao')->where(array("id={$hongbao['id']}"))->save(array('is_send_hongbao'=>1, 'hongbao_id'=>$hongbao_id, 'hongbao_sn'=>$bao['mch_billno'], 'hongbao_time'=>time()));
-                                M('hongbao_send')->where(array("id=$hongbao_id"))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
+                                M('hongbao')->where(array("id='{$hongbao['id']}'"))->save(array('is_send_hongbao'=>1, 'hongbao_id'=>$hongbao_id, 'hongbao_sn'=>$bao['mch_billno'], 'hongbao_time'=>time()));
+                                M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
                             }else{
-                                M('hongbao_send')->where(array("id=$hongbao_id"))->save(array('state'=>3));
+                                M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>3));
                             }
                         }
                     }

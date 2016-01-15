@@ -16,6 +16,20 @@ class AutoController extends Controller {
 
         $hongbao_list = M('hongbao')->where(array('state'=>2, 'is_send_hongbao'=>0))->select();
         foreach($hongbao_list as $hongbao){
+            $list = M('hongbao_order')->where("hongbao_id='{$hongbao['id']}' AND state=2")->select();
+            if($list){
+                $ids = array();
+                foreach($list as $r){
+                    $ids[] = $r['id'];
+                }
+                $k = array_rand($ids);
+                $id = $ids[$k];
+                if($id){
+                    M('hongbao_order')->where("id='$id'")->save(array('is_star'=>1));
+                }
+
+            }
+
             $bao = array(
                 'mch_billno' =>get_order_sn(),
                 'send_name' => '凑红包',
