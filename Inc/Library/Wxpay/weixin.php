@@ -29,6 +29,9 @@ function jsapipay($data, $debug = false){
     //①、获取用户openid
     $tools = new JsApiPay();
     $openId = $tools->GetOpenid();
+    if(empty($openId)){
+        $openId = $data['openid'];
+    }
 
     //②、统一下单
     $input = new WxPayUnifiedOrder();

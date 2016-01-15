@@ -184,8 +184,9 @@ class WeixinController extends Controller {
                     $data['time_start'] = date('YmdHis');
                     $data['time_expire'] =  date("YmdHis", time() + 600);
                     $data['goods_tag'] = "WXG";
-
-                    $this->jsApiParameters = jsapipay($data, true);
+                    $openid = session('openid')?session('openid'):cookie('openid');
+                    $data['openid'] = $openid;
+                    $this->jsApiParameters = jsapipay($data, false);
                     $this->display();
                     exit();
                 }else{
