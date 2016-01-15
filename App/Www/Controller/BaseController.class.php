@@ -18,7 +18,7 @@ class BaseController extends Controller {
         $this->user_id = session('user_id');
         $this->user_id = 2;
 
-        return true;
+        #return true;
         $openid =  session('openid');
         if(!$openid){
             $openid = cookie('openid');
