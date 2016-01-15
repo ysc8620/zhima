@@ -193,7 +193,7 @@ class WeixinController extends Controller {
                     $this->hongbao = $hongbao;
                     $this->order = $order;
 
-                    $this->jsApiParameters = jsapipay($data, true);
+                    $this->jsApiParameters = jsapipay($data, false);
                     $this->display();
                     exit();
                 }else{
