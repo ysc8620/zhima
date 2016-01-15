@@ -40,13 +40,12 @@
                     <div class="order_bd">
                         <div class="order_glist">
                             <div class="order_item">
-                                <a href="<if condition='$order.state eq 1 and $hongbao.addtime + 86400 gt time()'>{:U('/weixin/pay',array('id'=>$order['order_sn']))}<else/>javascript:void(0)</if>" class="order_goods" style="float:left;border-bottom:none;">
+                                <a href="<if condition='$order[state] eq 1 and $hongbao[addtime] + 86400 gt time()'>{:U('/weixin/pay',array('id'=>$order['order_sn']))}<else/>javascript:void(0)</if>" class="order_goods" style="float:left;border-bottom:none;">
                                     <div class="order_goods_img">
                                         <img src="{$order.user.header}">
                                     </div>
                                 </a>
                                 <div class="order_goods_info">
-                                    
                                     <div class="order_goods_name">{$order.user.name}</div>
                                     <div class="order_goods_attr">
                                         <div class="order_goods_attr_item">{$order.addtime|date="Y-m-d H:i:s",###}
