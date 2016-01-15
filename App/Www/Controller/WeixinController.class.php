@@ -158,7 +158,7 @@ class WeixinController extends Controller {
                     exit();
                 }
 
-                if($hongbao['total_part'] == $hongbao['total_num']){
+                if($hongbao['total_part'] <= $hongbao['total_num']){
                     $this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
                     exit();
                 }
