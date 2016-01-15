@@ -45,7 +45,7 @@ class WeixinController extends Controller {
             header("location: ".U('/weixin/userinfo').'?url='.$_GET['url']. '&token='.$data['access_token']);
             exit();
         }else{
-            header("location: ".$_GET['url']);
+            header("location: ".U('/weixin/userinfo').'?url='.$_GET['url']);
             exit();
         }
     }
