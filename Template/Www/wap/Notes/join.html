@@ -14,7 +14,7 @@
             <div class="order_bd">
                 <div class="order_glist">
                     <div class="order_goods">
-                        <a class="" href="<if condition="$item.state eq 1"><if condition="$item['addtime']+86400 gt time()">{:U('/weixin/pay',array('id'=>$item['order_sn']))}<else />{:U('/hongbao/detail',array('id'=>$item['number_no']))}</if>">
+                        <a class="" href="<if condition="$item.state eq 1 and $item['addtime']+86400 gt time()">{:U('/weixin/pay',array('id'=>$item['order_sn']))}<else />{:U('/hongbao/detail',array('id'=>$item['number_no']))}</if>">
                             <div class="order_goods_img">
                                 <img src="{$item.user.header}" alt="{$item.user.name}" title="{$item.user.name}" />
                             </div>
@@ -31,7 +31,6 @@
                     </div>
                 </div>
             </div>
-
            </volist>
         </div>
 
