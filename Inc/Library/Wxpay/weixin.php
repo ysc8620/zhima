@@ -126,9 +126,37 @@ class PayNotifyCallBack extends WxPayNotify
             && $result["return_code"] == "SUCCESS"
             && $result["result_code"] == "SUCCESS")
         {
-            // file_put_contents(dirname(__FILE__).'/mylog.log', date("Y-m-d H:i:s === ").http_build_query($result));
+             file_put_contents(dirname(__FILE__).'/mylog.log', date("Y-m-d H:i:s === ").http_build_query($result));
             $result['addtime'] = time();
-            M('pay_log')->add($result);
+            $id = M('pay_log')->add($result);
+            // 更改order 状态
+            // 更改 hongbao状态
+            $result['out_trade_no'];
+            $order = M('hongbao_order')->where("order_sn='{$result['out_trade_no']}'")->find();
+            if($order){
+                $order_data = array(
+                    'pay_id' => $id,
+                    'pay_time' => time(),
+                    'state' => 2
+                );
+                M('hongbao_order')->where("id='{$order['id']}'")->save($order_data);
+
+                $hongbao = M('hongbao')->where("id='{$order['hongbao_id']}'")->find();
+                if($hongbao){
+                    $data = array(
+                        'update_time' => time(),
+                        'total_num' => $hongbao['total_num'] + $order['part_num'],
+                        'total_pay_amount' => $hongbao['total_pay_amount'] + $order['total_amount'],
+                        'total_user' => $hongbao['total_user'] + 1
+                    );
+
+                    if($data['total_num'] == $hongbao['total_part'] || $data['total_pay_amount'] == $hongbao['total_amount']){
+                        $data['state'] = 2;
+                    }
+                    M('hongbao')->where("id='{$order['hongbao_id']}'")->save($data);
+                }
+
+            }
             return true;
         }
         return false;
