@@ -243,9 +243,9 @@ class Wxapi
 
     static public function create_menu($data){
         self::init();
-
+        $ACCESS_TOKEN = self::getAccessToken();
         $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$ACCESS_TOKEN;
-
+        $tmpInfo = self::httpPost($url, $data);
         $arr= json_decode($tmpInfo,true);
         return $arr;
     }

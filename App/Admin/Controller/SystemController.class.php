@@ -182,4 +182,142 @@ class SystemController extends CommonController {
 			$this->display();
 		}
 	}
+
+    /**
+     * 微信菜单
+     */
+    public function menu(){
+        $pid_list = M('weixin_menu')->where(array('parent_id'=>0))->order('sort_order asc')->select();
+        $this->assign('pid_list',$pid_list);
+
+        $lists = $pid_list;
+
+        foreach ($lists as $key => $value) {
+            $lists[$key]['lower'] = M('weixin_menu')->where(array('parent_id'=>$value['cat_id']))->order('sort_order asc')->select();
+
+        }
+        //print_r($lists);
+        $this->assign('lists',$lists);
+        $this->display();
+    }
+
+    /**
+     * 微信菜单编辑
+     */
+    public function menu_add(){
+        if (IS_POST) {
+            $http_post 		= I('post.');
+            $data['cat_name'] 	= $http_post['cat_name'];
+            $data['parent_id'] 	= $http_post['parent_id'];
+            $data['sort_order'] 	= $http_post['sort_order'];
+            $data['weixin_type'] 	= $http_post['weixin_type'];
+            $data['links'] 	= $http_post['links'];
+
+            $add = M('weixin_menu')->add($data);
+
+            if ($add) {
+                $this->success('添加成功!');
+            }else{
+                $this->error('添加失败!');
+            }
+        }else{
+            $lists = M('weixin_menu')->where(array('parent_id'=>0))->select();
+            $this->assign('lists',$lists);
+            $this->display();
+        }
+    }
+
+    public function menu_edit(){
+        $http_get 	= I('get.');
+        $http_post 	= I('post.');
+
+        if (IS_POST) {
+            $data['cat_name'] 	= $http_post['cat_name'];
+            $data['parent_id'] 	= $http_post['parent_id'];
+            $data['sort_order'] 	= $http_post['sort_order'];
+            $data['weixin_type'] 	= $http_post['weixin_type'];
+            $data['links'] 	= $http_post['links'];
+
+            $delete = M('weixin_menu')->where(array('cat_id'=>$http_get['id']))->setField($data);
+
+            if ($delete) {
+                $this->ajaxReturn(array('info'=>'更新成功!','id'=>$http_post['id'],'status'=>1));
+            }else{
+                $this->ajaxReturn(array('info'=>'更新失败!','status'=>0));
+            }
+        }else{
+
+            $info = M('weixin_menu')->where(array('cat_id'=>$http_get['id']))->find();
+            $this->assign('info',$info);
+
+            $lists = M('weixin_menu')->where(array('parent_id'=>0))->select();
+            $this->assign('lists',$lists);
+            $this->display('menu_add');
+        }
+    }
+
+    function menu_del(){
+        if (IS_POST) {
+            $http_post 	= I('post.');
+            $sub 		= M('weixin_menu')->where(array('parent_id'=>$http_post['id']))->find();
+            if($sub){
+                $this->error('还有下级分类，先删除一级分类');
+            }
+
+            $delete = M('weixin_menu')->where(array('cat_id'=>$http_post['id']))->delete();
+            if ($delete) {
+                $this->success('删除成功');
+            }else{
+                $this->error('删除失败');
+            }
+        }
+    }
+
+    function menu_post(){
+        $keyword = array();
+        //$sql="SELECT cat_id, cat_name, weixin_type, links, weixin_key as wkey FROM weixin_menu WHERE parent_id = 0 order by sort_order ASC,cat_id desc";
+        $topmemu = M('weixin_menu')->field("cat_id, cat_name, weixin_type, links, weixin_key as wkey")->where(array('parent_id'=>0))->order("sort_order, cat_id desc")->select();
+        foreach ($topmemu as $key) {
+            //$sql="SELECT cat_id, cat_name, weixin_type, links, weixin_key as wkey FROM ". $GLOBALS['hhs']->table('weixin_menu') ." WHERE parent_id =". $key['cat_id']."  order by sort_order ASC,cat_id desc";
+            $nextmenu = $topmemu = M('weixin_menu')->field("cat_id, cat_name, weixin_type, links, weixin_key as wkey")->where(array('parent_id'=>$key['cat_id']))->order("sort_order, cat_id desc")->select();
+            if(count($nextmenu) != 0){//没有下级栏目
+                foreach ($nextmenu as $key2) {
+                    if($key2['weixin_type']>0){
+                        $kk[] = array('type' => 'view', 'name' => $key2['cat_name'], 'url' => $key2['links']);
+                    }else{
+                        $kk[] = array('type' => 'click', 'name' => $key2['cat_name'], 'key' => $key2['wkey']);
+                    }
+                }
+                $keyword['button'][] = array('name' => $key['cat_name'], 'sub_button' => $kk);
+                $kk = '';
+            }else{
+                if($key['weixin_type']>0){
+                    $keyword['button'][] = array('type' => 'view', 'name' => $key['cat_name'], 'url' => $key['links']);
+                }else{
+                    $keyword['button'][] = array('type' => 'click', 'name' => $key['cat_name'], 'key' => $key['wkey']);
+                }
+            }
+        }
+        $data = json_encode($keyword);
+         $d = preg_replace("#\\\u([0-9a-f]+)#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", $data);
+
+        $msg = \Wechat\Wxapi::create_menu($d);
+
+        if ($msg['errmsg'] == 'ok') {
+
+            echo 'ok!';
+
+            exit;
+
+        } else {
+
+            echo 'false!';
+
+            exit;
+
+        }
+
+    }
+
+
 }

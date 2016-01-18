@@ -1,0 +1,1 @@
+<?php	return array ( 'access_token' => 'aBy9q_iihtvWbZfyzSWlPHtbt8OQGB6301NnC4s3UMzN5qoSP7qN6wXlYLvX2WVNFeZqvXwE2GOuWAW1knX9P6iiCKsVb6qhu9XEH1NhDgkJMXbAJAFIT', 'access_token_time' => 1453129737, );?>
