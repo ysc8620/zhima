@@ -302,7 +302,7 @@ class SystemController extends CommonController {
          $d = preg_replace("#\\\u([0-9a-f]+)#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", $data);
 
         $msg = \Wechat\Wxapi::create_menu($d);
-
+        print_r($msg);
         if ($msg['errmsg'] == 'ok') {
 
             echo 'ok!';
