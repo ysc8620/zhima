@@ -53,6 +53,12 @@ class HongbaoController extends BaseController {
 
             $re = M('hongbao')->add($data);
             if($re){
+                $user_amount = $data['total_amount'] * 0.99;
+                $msg =  "您发起的凑红包成功啦！<br/>
+                众筹标题：{$remark}<br/>
+众筹额度：￥{$data['total_amount']}元！<br/>
+红包成功后会通过微信红包打给你,其中已扣除1%的微信支付手续费,扣除后金额为{$user_amount}元";
+                \Wechat\Wxapi::send_wxmsg($user['openid'],'众筹状态提醒',U('/hongbao/detail',array('id'=>$data['number_no']),true,true),$msg );
                 $this->success('红包创建成功', U('/notes'));
                 exit();
             }else{
