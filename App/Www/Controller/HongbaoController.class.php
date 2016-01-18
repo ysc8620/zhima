@@ -162,7 +162,8 @@ class HongbaoController extends BaseController {
         }
     }
 
-    public function info(){
-
+    public function remark(){
+        $this->title ="凑红包玩法";
+        $this->display();
     }
 }
