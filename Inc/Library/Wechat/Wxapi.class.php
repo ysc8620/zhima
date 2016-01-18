@@ -239,7 +239,15 @@ class Wxapi
         $ret = json_decode($ret_json);
 
         return $ret->errmsg ;
+    }
 
+    static public function create_menu($data){
+        self::init();
+
+        $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$ACCESS_TOKEN;
+
+        $arr= json_decode($tmpInfo,true);
+        return $arr;
     }
 
     /**
