@@ -134,11 +134,13 @@
 
     function pay(id){alert(333);
         $.ajax({
-            type: "post",
-            url: "{:U('/weixin/pay1')}",
-            data: 'id='+id,
-            dataType: "json",
-            success: function (data) {
+            type:'post',
+            url:"{:U('/weixin/pay1')}",
+            async:false,
+            cache:false,
+            data:{id:id},
+            dataType:'json',
+            success:function(result){
                 alert(111);
                 if(result.error==0){
                     callpay(result.data);
