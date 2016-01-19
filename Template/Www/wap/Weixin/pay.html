@@ -1,12 +1,11 @@
 <include file="Public:header" />
 <script type="text/javascript">
-    var jsApiParameters = {};
     //调用微信JS api 支付
-    function jsApiCall()
+    function jsApiCall(data)
     {
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
-                jsApiParameters,
+                data,
                 function(res){
                     //WeixinJSBridge.log(res.err_msg);
                     // alert(res.err_code+res.err_desc+res.err_msg);
@@ -15,7 +14,7 @@
         );
     }
 
-    function callpay()
+    function callpay(data)
     {
         if (typeof WeixinJSBridge == "undefined"){
             if( document.addEventListener ){
@@ -25,7 +24,7 @@
                 document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
             }
         }else{
-            jsApiCall();
+            jsApiCall(data);
         }
     }
 </script>
@@ -131,22 +130,27 @@
 </div>
 <include file="Public:foot" />
 
-        <script type="text/javascript">
+<script type="text/javascript">
 
-            function pay(id){
-                alert("{:U('/weixin/pay1')}"+id);
-                $.ajax({
-                    type: "POST",
-                    url: "{:U('/weixin/pay1')}",
-                    data: "id="+id,
-                    success: function(data){
-                        alert( "Data Saved: " + data );
-                       // jsApiParameters = data;
-                       // jsApiCall();
-                    }
-                });
-            }
-        </script>
+    function pay(id){
+        Ajax.call("{:U('/weixin/pay1')}", 'id='+id, done_response, 'POST', 'JSON');
+    }
+
+    function done_response(){
+
+    }
+
+    function done_response(result){
+        if(result.error==0){
+                callpay(result.data);
+
+        }else if(result.error==1){
+            alert(result.message);
+
+        }
+
+    }
+</script>
 
 </body>
 </html>
