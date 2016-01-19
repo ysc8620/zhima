@@ -142,13 +142,13 @@
             dataType:'html',
             success:function(result){
                 alert(111);
-//                if(result.error==0){
-//                    callpay(result.data);
-//
-//                }else if(result.error==1){
-//                    alert(result.message);
-//
-//                }
+                if(result.error==0){
+                    callpay(result.data);
+
+                }else if(result.error==1){
+                    alert(result.message);
+
+                }
             }
         });
     }
