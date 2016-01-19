@@ -214,79 +214,80 @@ class WeixinController extends Controller {
             'message'=>'',
             'data'=>''
         );
-  
+
         do{
-        $id = I('id','', 'strval');
-        if($id){
-            $order = M('hongbao_order')->where(array('order_sn'=>$id))->find();
+            $id = I('id','', 'strval');
+            if($id){
+                $order = M('hongbao_order')->where(array('order_sn'=>$id))->find();
 
-            if($order){
-                $hongbao = M('hongbao')->where(array('number_no'=>$order['number_no']))->find();
+                if($order){
+                    $hongbao = M('hongbao')->where(array('number_no'=>$order['number_no']))->find();
 
-                if($hongbao['state'] != 1){
-                    #$this->error("红包不能支付", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                    $json['error'] = 1;
-                    $json['message'] = "红包不能支付";
-                    break;
-                }
-
-                if($hongbao['total_part'] <= $hongbao['total_num']){
-                    #$this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                    $json['error'] = 1;
-                    $json['message'] = "红包已经凑齐";
-                    break;
-                }
-
-                if(($hongbao['addtime'] + 86400) < time() ){
-                    #$this->error("红包已经过期", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                    $json['error'] = 1;
-                    $json['message'] = "红包已经过期";
-                    break;
-                }
-
-                if($order['state'] == 1){
-                    $amount = ceil($order['total_amount'] *100);
-                    if($amount < 1){
-                        #$this->error("红包金额不对能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
+                    if($hongbao['state'] != 1){
+                        #$this->error("红包不能支付", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
                         $json['error'] = 1;
-                        $json['message'] = "红包金额不对能支付";
+                        $json['message'] = "红包不能支付";
                         break;
                     }
-                    $data['body'] = "凑红包";
-                    $data['attach'] = "凑红包";
-                    $data['order_sn'] = $order['order_sn'] ;
-                    $data['total_fee'] = $amount;
-                    $data['time_start'] = date('YmdHis');
-                    $data['time_expire'] =  date("YmdHis", time() + 600);
-                    $data['goods_tag'] = "WXG";
-                    // $openid = ;//session('openid')?session('openid'):cookie('openid');
-                    $data['openid'] = $order['openid'];
 
-                    $this->user = M('user')->find($hongbao['user_id']);
+                    if($hongbao['total_part'] <= $hongbao['total_num']){
+                        #$this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                        $json['error'] = 1;
+                        $json['message'] = "红包已经凑齐";
+                        break;
+                    }
 
-                    $this->title = "{$this->user['name']}凑红包";
-                    $this->hongbao = $hongbao;
-                    $this->order = $order;
-                    $this->id = $id;
-                    $this->jsApiParameters = jsapipay($data, false);
+                    if(($hongbao['addtime'] + 86400) < time() ){
+                        #$this->error("红包已经过期", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                        $json['error'] = 1;
+                        $json['message'] = "红包已经过期";
+                        break;
+                    }
 
-                    $json['data'] = json_decode($this->jsApiParameters);
-                    break;
-                }else{
-                    //$this->error("红包状态不能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
-                    $json['error'] = 1;
-                    $json['message'] = "红包状态不能支付";
-                    break;
+                    if($order['state'] == 1){
+                        $amount = ceil($order['total_amount'] *100);
+                        if($amount < 1){
+                            #$this->error("红包金额不对能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
+                            $json['error'] = 1;
+                            $json['message'] = "红包金额不对能支付";
+                            break;
+                        }
+                        $data['body'] = "凑红包";
+                        $data['attach'] = "凑红包";
+                        $data['order_sn'] = $order['order_sn'] ;
+                        $data['total_fee'] = $amount;
+                        $data['time_start'] = date('YmdHis');
+                        $data['time_expire'] =  date("YmdHis", time() + 600);
+                        $data['goods_tag'] = "WXG";
+                        // $openid = ;//session('openid')?session('openid'):cookie('openid');
+                        $data['openid'] = $order['openid'];
+
+                        $this->user = M('user')->find($hongbao['user_id']);
+
+                        $this->title = "{$this->user['name']}凑红包";
+                        $this->hongbao = $hongbao;
+                        $this->order = $order;
+                        $this->id = $id;
+                        $this->jsApiParameters = jsapipay($data, false);
+
+                        $json['data'] = json_decode($this->jsApiParameters);
+                        break;
+                    }else{
+                        //$this->error("红包状态不能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
+                        $json['error'] = 1;
+                        $json['message'] = "红包状态不能支付";
+                        break;
+                    }
                 }
-            }
 
-        }
-        #$this->error("红包状态不能支付", U('/notes'));
-            $json['error'] = 1;
-            $json['message'] = "红包状态不能支付";
-            break;
+            }
+            #$this->error("红包状态不能支付", U('/notes'));
+                $json['error'] = 1;
+                $json['message'] = "红包状态不能支付";
+                break;
         }while(false);
         echo json_encode($json);
+        die();
     }
 
 
