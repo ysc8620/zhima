@@ -27,10 +27,13 @@ function printf_info($data)
 function jsapipay($data, $debug = false){
     // C('weixin.weixin_')
     //①、获取用户openid
-    $tools = new JsApiPay();
-    $openId = $tools->GetOpenid();
+//    $tools = new JsApiPay();
+//    $openId = $tools->GetOpenid();
     if(empty($openId)){
         $openId = $data['openid'];
+    }else{
+        echo "empty openid";
+        die();
     }
 
     //②、统一下单
