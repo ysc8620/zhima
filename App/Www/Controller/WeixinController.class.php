@@ -268,9 +268,9 @@ class WeixinController extends Controller {
                         $this->hongbao = $hongbao;
                         $this->order = $order;
                         $this->id = $id;
-                        $this->jsApiParameters = jsapipay($data, false);
+                        #$this->jsApiParameters = jsapipay($data, false);
 
-                        $json['data'] = json_decode($this->jsApiParameters);
+                        $json['data'] = json_decode($data;
                         break;
                     }else{
                         //$this->error("红包状态不能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
