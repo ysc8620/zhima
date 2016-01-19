@@ -214,6 +214,8 @@ class WeixinController extends Controller {
             'message'=>'',
             'data'=>''
         );
+        echo json_encode($json);
+        die();
         do{
         $id = I('id','', 'strval');
         if($id){
@@ -224,22 +226,22 @@ class WeixinController extends Controller {
 
                 if($hongbao['state'] != 1){
                     #$this->error("红包不能支付", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                    $data['error'] = 1;
-                    $data['message'] = "红包不能支付";
+                    $json['error'] = 1;
+                    $json['message'] = "红包不能支付";
                     break;
                 }
 
                 if($hongbao['total_part'] <= $hongbao['total_num']){
                     #$this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                    $data['error'] = 1;
-                    $data['message'] = "红包已经凑齐";
+                    $json['error'] = 1;
+                    $json['message'] = "红包已经凑齐";
                     break;
                 }
 
                 if(($hongbao['addtime'] + 86400) < time() ){
                     #$this->error("红包已经过期", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                    $data['error'] = 1;
-                    $data['message'] = "红包已经过期";
+                    $json['error'] = 1;
+                    $json['message'] = "红包已经过期";
                     break;
                 }
 
@@ -247,8 +249,8 @@ class WeixinController extends Controller {
                     $amount = ceil($order['total_amount'] *100);
                     if($amount < 1){
                         #$this->error("红包金额不对能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
-                        $data['error'] = 1;
-                        $data['message'] = "红包金额不对能支付";
+                        $json['error'] = 1;
+                        $json['message'] = "红包金额不对能支付";
                         break;
                     }
                     $data['body'] = "凑红包";
@@ -269,23 +271,23 @@ class WeixinController extends Controller {
                     $this->id = $id;
                     $this->jsApiParameters = jsapipay($data, false);
 
-                    $data['data'] = json_decode($this->jsApiParameters);
+                    $json['data'] = json_decode($this->jsApiParameters);
                     break;
                 }else{
                     //$this->error("红包状态不能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
-                    $data['error'] = 1;
-                    $data['message'] = "红包状态不能支付";
+                    $json['error'] = 1;
+                    $json['message'] = "红包状态不能支付";
                     break;
                 }
             }
 
         }
         #$this->error("红包状态不能支付", U('/notes'));
-            $data['error'] = 1;
-            $data['message'] = "红包状态不能支付";
+            $json['error'] = 1;
+            $json['message'] = "红包状态不能支付";
             break;
         }while(false);
-        echo json_encode($data);
+        echo json_encode($json);
     }
 
 
