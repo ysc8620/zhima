@@ -269,6 +269,8 @@ class WeixinController extends Controller {
                         $this->order = $order;
                         $this->id = $id;
                         $this->jsApiParameters = jsapipay($data, false);
+                        var_dump($this->jsApiParameters);
+                        die();
 
                         $json['data'] = $this->jsApiParameters;
                         break;
