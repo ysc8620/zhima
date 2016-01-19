@@ -219,24 +219,28 @@ class WeixinController extends Controller {
 
                 if($hongbao['state'] != 1){
                     #$this->error("红包不能支付", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                    exit(1);
+                    echo '1';
+                    exit();
                 }
 
                 if($hongbao['total_part'] <= $hongbao['total_num']){
                     #$this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                    exit(1);
+                    echo '1';
+                    exit();
                 }
 
                 if(($hongbao['addtime'] + 86400) < time() ){
                     #$this->error("红包已经过期", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                    exit(1);
+                    echo '1';
+                    exit();
                 }
 
                 if($order['state'] == 1){
                     $amount = ceil($order['total_amount'] *100);
                     if($amount < 1){
                         #$this->error("红包金额不对能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
-                        exit(1);
+                        echo '1';
+                        exit();
                     }
                     $data['body'] = "凑红包";
                     $data['attach'] = "凑红包";
@@ -259,13 +263,15 @@ class WeixinController extends Controller {
                     exit();
                 }else{
                     #$this->error("红包状态不能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
-                    exit(1);
+                    echo '1';
+                    exit();
                 }
             }
 
         }
         #$this->error("红包状态不能支付", U('/notes'));
-        exit(1);
+        echo '1';
+        exit();
     }
 
 
