@@ -60,6 +60,13 @@ class AutoController extends Controller {
     }
 
     function autoclose(){
+        //
+        $list = M('hongbao')->where(array('state'=>1, 'addtime'=>array('lt', time()-86400)))->select();
+        if($list){
+            foreach($list as $row){
+                //
 
+            }
+        }
     }
 }
