@@ -134,14 +134,15 @@
         <script type="text/javascript">
 
             function pay(id){
+                alert('xxx')
                 $.ajax({
                     type: "POST",
                     url: "{:U('/weixin/pay1')}",
                     data: "id="+id,
                     success: function(data){
-                        alert( "Data Saved: " + msg );
-                        jsApiParameters = data;
-                        jsApiCall();
+                        alert( "Data Saved: " + data );
+                       // jsApiParameters = data;
+                       // jsApiCall();
                     }
                 });
             }
