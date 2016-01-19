@@ -33,10 +33,27 @@
                 <div class="hongbao_info">
                     <span class="hongbao_remark">每份{$hongbao.part_amount}元，共{$hongbao.total_part}份，还差{$hongbao[total_part]-$hongbao[total_num]}份凑成。</span><br />
                 </div>
-                <div class="ptit">红包记录 </div>
+                <div class="address_new">
+
+                    <p class="action">
+                        <if condition="$hongbao.state eq 1">
+                            <if condition="$hongbao[addtime]+86400 gt time()">
+                                    <a  href="{:U('/hongbao/buy',array('id'=>$hongbao[number_no]))}"><button class="submit" style="width: 100px; margin: 0 auto; text-align: center">凑</button></a>
+                                <else/>
+                                <button class="submit" disabled style="width: 100px; margin: 0 auto; text-align: center">已过期</button>
+                            </if>
+                            <else />
+                            <button class="submit" disabled style="width: 100px; margin: 0 auto; text-align: center"><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3" />已过期<elseif condition="$hongbao.state eq 4" />已退款</if></button>
+                        </if>
+
+                    </p>
+                </div>
+                <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/remark')}">红包玩法</a> </div>
+
+                <div class="ptit"><i style="font-size:14px;" class="fa fa-info-circle"></i> 凑齐后,会根据参与金额,随机产生一名幸运星</div>
                 <!--//start -->
-                <volist name="order_list" id="order">
-                <div class="order ">
+                <volist name="order_list" id="order" key="i">
+                <div class="order " <if condition="$i gt 5">data-role="order" style="display:none"</if>>
                     <div class="order_bd">
                         <div class="order_glist">
                             <div class="order_item">
@@ -62,20 +79,19 @@
                     </div>
                 </div>
                 </volist>
-                <!--//end-->
-                <if condition="$hongbao.state eq 1">
-                    <if condition="$hongbao[addtime]+86400 gt time()">
-                        <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/buy',array('id'=>$hongbao[number_no]))}">追加凑红包</a> </div>
-                    <else/>
-                        <div class="state_btn"><a class="state_btn_4">已过期</a></div>
-                    </if>
-                </if>
-               <div class="state_btn"><a class="state_btn_4"><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3" />已过期<elseif condition="$hongbao.state eq 4" />已退款</if></a></div>
-            </div>
 
+                <div class="view_all"><i style="font-size:16px; line-height: 20px;" class="fa fa-angle-double-down"></i>查看全部参与者</div>
+                <!--//end-->
+
+        </div>
         </div>
     </div>
 </div>
 <include file="Public:foot" />
+ <script type="text/javascript">
+     $('.view_all').click(function(){
+         $('[data-role="order"]').toggle();
+     });
+ </script>
 </body>
 </html>
