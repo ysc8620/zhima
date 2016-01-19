@@ -116,6 +116,18 @@ class HongbaoController extends BaseController {
             $this->error('没找到红包详情', U('/notes'));
         }
         $this->user = M('user')->find($this->user_id);
+
+        $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
+
+        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id)))->order("is_star DESC, field(state,2,1,4,3),addtime desc")->select();
+        if($order_list){
+            foreach($order_list as $k=>$order){
+                $order_list[$k]['user'] = M('user')->find($order['user_id']);
+            }
+        }
+
+        $this->order_list = $order_list;
+
         $this->display();
     }
 

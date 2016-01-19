@@ -15,7 +15,7 @@
 
                 </div>
                 <div class="hongbao_info">
-                    <span class="hongbao_user">{$user.name}发起了一个凑红包</span><br />
+                    <span class="hongbao_user">{$hongbao_user.name}发起了一个凑红包</span><br />
                     <span class="hongbao_remark">红包凑齐后，随机抽出一名幸运星</span>
                 </div>
 
@@ -67,10 +67,45 @@
                 </div>
                 </form>
                 <!--//end-->
-                <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/detail',array('id'=>$hongbao[number_no]))}">返回详情</a> </div>
-            </div>
+                <div style="color: red; text-align: center; margin: 0 auto; padding-top: 6px;">如果24小时内没有凑足,系统会自动退款</div>
+                </div>
 
+            <div class="ptit"><i style="font-size:14px;" class="fa fa-info-circle"></i> 凑齐后,会根据参与金额,随机产生一名幸运星</div>
+            <!--//start -->
+            <volist name="order_list" id="order" key="i">
+                <div class="order " <if condition="$i gt 5">data-role="order" style="display:none"</if>>
+                <div class="order_bd">
+                    <div class="order_glist">
+                        <div class="order_item">
+                            <a href="<if condition='$order[state] eq 1 and $hongbao[addtime] + 86400 gt time()'>{:U('/weixin/pay',array('id'=>$order['order_sn']))}<else/>javascript:void(0)</if>" class="order_goods" style="float:left;border-bottom:none;">
+                                <div class="order_goods_img">
+                                    <img src="{$order.user.header}">
+                                </div>
+                            </a>
+                            <div class="order_goods_info">
+                                <div class="order_goods_name">{$order.user.name}</div>
+                                <div class="order_goods_attr">
+                                    <div class="order_goods_attr_item">{$order.addtime|date="Y-m-d H:i:s",###}
+                                        <div class="order_goods_price" style="text-align: right">
+                                            <span>￥{$order.total_amount}元</span>
+                                            <span><if condition="$order.state eq 1"> <if condition="$hongbao.addtime + 86400 gt time()"><span style="color: #0000ff">待支付</span><else/></if><elseif condition="$order.state eq 2"/><span style="color: green">已支付</span><elseif condition="$order.state eq 3"/><span style="color: #000">已过期</span><elseif condition="$order.state eq 4"/><span style="color: #000">已退款</span></if></span>
+                                            <if condition="$order.is_star eq 1"><br /><i class="fa fa-star"></i> 幸运星</if>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
+        </volist>
+        <if condition="count($order_list) gt 5">
+            <div class="view_all"><i style="font-size:16px; line-height: 20px;" class="fa fa-angle-double-down"></i>查看全部参与者</div>
+            <!--//end-->
+        </if>
+        <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/detail',array('id'=>$hongbao[number_no]))}">返回详情</a> </div>
+
+    </div>
     </div>
 </div>
 <include file="Public:foot" />
