@@ -1,11 +1,12 @@
 <include file="Public:header" />
 <script type="text/javascript">
+    var jsApiParameters = {};
     //调用微信JS api 支付
     function jsApiCall()
     {
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
-                {$jsApiParameters},
+                jsApiParameters,
                 function(res){
                     //WeixinJSBridge.log(res.err_msg);
                     // alert(res.err_code+res.err_desc+res.err_msg);
@@ -110,7 +111,7 @@
                                 <p class="action">
                                     <if condition="$hongbao.state eq 1">
                                         <if condition="$hongbao[addtime]+86400 gt time()">
-                                            <button type="submit" class="submit" onclick="callpay()"  id="add">立即支付</button>
+                                            <button type="submit" class="submit" onclick="pay('{$id}')"  id="add">立即支付</button>
                                             <else/>
                                             <button class="submit" disabled id="add">已 过 期</button>
                                         </if>
@@ -129,6 +130,22 @@
     </div>
 </div>
 <include file="Public:foot" />
+
+        <script type="text/javascript">
+
+            function pay(id){
+                $.ajax({
+                    type: "POST",
+                    url: "{:U('/weixin/pay1')}",
+                    data: "id="+id,
+                    success: function(data){
+                        //alert( "Data Saved: " + msg );
+                        jsApiParameters = data;
+                        jsApiCall();
+                    }
+                });
+            }
+        </script>
 
 </body>
 </html>
