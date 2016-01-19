@@ -141,7 +141,7 @@
             data:{id:id},
             dataType:'html',
             success:function(result){
-                alert(111);
+                alert(result.data);
                 if(result.error==0){
                     callpay(result.data);
 
