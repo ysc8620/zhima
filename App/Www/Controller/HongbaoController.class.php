@@ -136,9 +136,9 @@ class HongbaoController extends BaseController {
         }
 
         $total = I('post.num', 0, 'intval');
-        $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1))->sum('total_amount'));
+       // $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1))->sum('total_amount'));
 
-        if($total < 1 || ($total_amount + $total + $hongbao['total_num']) > $hongbao['total_part']){
+        if($total < 1 || ( $total + $hongbao['total_num']) > $hongbao['total_part']){
             $this->error('你已超过红包份额限制,请重新设置份额.',U('/hongbao/buy',array('id'=>$id)));
             return false;
         }
