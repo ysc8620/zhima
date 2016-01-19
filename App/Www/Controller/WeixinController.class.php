@@ -214,8 +214,7 @@ class WeixinController extends Controller {
             'message'=>'',
             'data'=>''
         );
-        echo json_encode($json);
-        die();
+  
         do{
         $id = I('id','', 'strval');
         if($id){
