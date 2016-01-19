@@ -29,7 +29,7 @@ function jsapipay($data, $debug = false){
     //①、获取用户openid
 //    $tools = new JsApiPay();
 //    $openId = $tools->GetOpenid();
-    if(empty($openId)){
+    if(!empty($data['openid'])){
         $openId = $data['openid'];
     }else{
         echo "empty openid";
