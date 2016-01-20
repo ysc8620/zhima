@@ -166,22 +166,22 @@ class HongbaoController extends BaseController {
             }
 
             $user = M('user')->find($this->user_id);
-            $hongbao_order = M('hongbao_order')->where(array('user_id'=>$this->user_id, 'state'=>1, 'hongbao_id'=>$hongbao['id']))->find();
-            if($hongbao_order){
-                $data = array(
-                    'addtime' => time(),
-                    'part_num' => $total,
-                    'total_amount'=>$hongbao['part_amount'] * $total
-                );
-                $rs = M('hongbao_order')->where(array('id'=>$hongbao_order['id']))->save($data);
-                if($rs){
-                    $json['data'] = $hongbao_order['order_sn'];
-                    break;
-                }else{
-                    $json['error'] = 1;
-                    $json['message'] = '操作失败，请重试.';
-                }
-            }
+//            $hongbao_order = M('hongbao_order')->where(array('user_id'=>$this->user_id, 'state'=>1, 'hongbao_id'=>$hongbao['id']))->find();
+//            if($hongbao_order){
+//                $data = array(
+//                    'addtime' => time(),
+//                    'part_num' => $total,
+//                    'total_amount'=>$hongbao['part_amount'] * $total
+//                );
+//                $rs = M('hongbao_order')->where(array('id'=>$hongbao_order['id']))->save($data);
+//                if($rs){
+//                    $json['data'] = $hongbao_order['order_sn'];
+//                    break;
+//                }else{
+//                    $json['error'] = 1;
+//                    $json['message'] = '操作失败，请重试.';
+//                }
+//            }
             $data = array(
                 'hongbao_id' => $hongbao['id'],
                 'hongbao_user_id' => $hongbao['user_id'],
