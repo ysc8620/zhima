@@ -178,7 +178,8 @@ class PayNotifyCallBack extends WxPayNotify
                             $k = array_rand($ids);
                             $id = $ids[$k];
                             if($id){
-                                $user_info = M('user')->find($r['user_id']);
+                                $order_info = M('hongbao_order')->find($id);
+                                $user_info = M('user')->find($order_info['user_id']);
                                 M('hongbao_order')->where("id='$id'")->save(array('is_star'=>1));
                             }
                         }
@@ -221,14 +222,14 @@ $msg = "幸运星就是你！没想到吧
                             }else{
                                 M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>3));
                                 $user_amount = $hongbao['total_amount'] * 0.98;
-$msg = "你发起的凑红包成功啦！
-众筹标题：{$hongbao['remark']}
-众筹进度：￥{$hongbao['total_amount']}已成功！
-幸运星：{$user_info['name']}
-红包将会在1~3个工作内，通过微信红包打给你，
-其中已扣除2%的微信支付手续费，扣除后金额为{$user_amount}元。
-因为微信支付到我们的账户需要1~3个工作日，我们
-的账户预存垫付的现金不足，暂时不能实时转账，希望
+$msg = "你发起的凑红包成功啦！\n
+众筹标题：{$hongbao['remark']}\n
+众筹进度：￥{$hongbao['total_amount']}已成功！\n
+幸运星：{$user_info['name']}\n
+红包将会在1~3个工作内，通过微信红包打给你，\n
+其中已扣除2%的微信支付手续费，扣除后金额为{$user_amount}元。\n
+因为微信支付到我们的账户需要1~3个工作日，我们\n
+的账户预存垫付的现金不足，暂时不能实时转账，希望\n
 理解。资金安全请你放心，如果有疑问请联系客服。";
                                 \Wechat\Wxapi::send_wxmsg($hongbao['openid'],'众筹状态提醒',U('/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
                                 $sys_openid = "obb1AuA79tIJ-BGY7HA38FXAJwoc";

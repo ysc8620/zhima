@@ -22,12 +22,12 @@
                 <input id="adid" value="" type="hidden">
                 <p>
                     <label for="amount"><span class="tit">每份金额：</span>
-                        <input name="amount" type="number" class="inputBg" id="amount" value="5" placeholder="每份金额"/> <span class="">元</span>
+                        <input name="amount" type="number" class="inputBg" id="amount" maxlength="4" value="1" placeholder="每份金额"/> <span class="">元</span>
                         <span id="updateTip1" style="color: red; display: none;">请填写每份金额</span> </label>
                 </p>
                 <p>
                     <label for="total"><span class="tit">总份数：</span>
-                        <input name="total" type="number" class="inputBg"  id="total" value="40" placeholder="总份数"/> <span class="">份</span>
+                        <input name="total" type="number" class="inputBg"  id="total" maxlength="3" value="10" placeholder="总份数"/> <span class="">份</span>
                         <span id="updateTip2" style="color: red; display: none;">请填写总份数</span> </label>
                 </p>
 
@@ -40,8 +40,7 @@
                     <button class="submit" id="add">凑 红 包</button>
                 </p>
             </div>
-            <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/remark')}">红包玩法</a> </div>
-
+            <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/remark')}">凑红包玩法?</a> </div>
         </div>
     </div>
 </form>
@@ -50,7 +49,7 @@
 
     function checkHongBao(){
         var amount = $('input[name="amount"]').val();
-        var reg = new RegExp("^[1-9][0-9]*$");
+        var reg = new RegExp("^[0-9]\.?[0-9]*$");
         if(!reg.test(amount)){
             layer.msg('请填写整数金额.', function(){});
             return false;
@@ -61,7 +60,7 @@
             return false;
         }
 
-        $('#updateTip1').hide();
+        // $('#updateTip1').hide();
 
 
         var total = $('input[name="total"]').val();

@@ -68,6 +68,11 @@ class BaseController extends Controller {
         // if(!$this->user_id)
     }
 
+    protected function error($message,$jumpUrl){
+        session('error_message', $message);
+        redirect($jumpUrl);
+    }
+
     protected function display($templateFile='',$charset='',$contentType='',$content='',$prefix='') {
         $this->assign('time', time());
         $this->view->display($templateFile,$charset,$contentType,$content,$prefix);

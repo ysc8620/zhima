@@ -9,8 +9,6 @@
 namespace Www\Controller;
 class HongbaoController extends BaseController {
     public function index(){
-
-        //define your token
         $this->sign = md5(microtime(true));
         session('sign', $this->sign);
         $this->title = '新建红包';
@@ -53,13 +51,7 @@ class HongbaoController extends BaseController {
 
             $re = M('hongbao')->add($data);
             if($re){
-//                $user_amount = $data['total_amount'] * 0.99;
-//                $msg =  "您发起的凑红包成功啦！\n
-//                众筹标题：{$remark}\n
-//众筹额度：￥{$data['total_amount']}元！\n
-//红包成功后会通过微信红包打给你,其中已扣除1%的微信支付手续费,扣除后金额为{$user_amount}元";
-//                \Wechat\Wxapi::send_wxmsg($user['openid'],'众筹状态提醒',U('/hongbao/detail',array('id'=>$data['number_no']),true,true),$msg );
-                $this->success('红包创建成功', U('/notes'));
+                redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
                 exit();
             }else{
                 $this->error('红包创建失败', U('/hongbao'));
@@ -83,15 +75,23 @@ class HongbaoController extends BaseController {
         if(!$this->hongbao){
             $this->error('没找到红包详情', U('/notes'));
         }
+        $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
         $this->user = M('user')->find($this->user_id);
 
+        $percentage = ceil($this->hongbao[total_num]/$this->hongbao[total_part]*100);
+        $this->percentage = $percentage>100?100:$percentage;
+
+        $difference = $this->hongbao[total_part]-$this->hongbao[total_num];
+        $this->difference = $difference < 0?0:$difference;
+
+        $this->title = "{$this->hongbao_user['name']}发起的凑红包";
         $this->share_title = "凑红包, 有福利, 你懂得";
         $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         $this->share_imgUrl = "http://hb.kakaapp.com/images/logo.jpg";
         $this->share_desc = "凑红包, 有福利, 你懂得.";
 
 
-        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id)))->order("is_star DESC, field(state,2,1,4,3),addtime desc")->select();
+        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2,3,4)))))->order("is_star DESC, field(state,2,4,3),addtime desc")->select();
         if($order_list){
             foreach($order_list as $k=>$order){
                 $order_list[$k]['user'] = M('user')->find($order['user_id']);

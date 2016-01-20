@@ -61,7 +61,7 @@
                     <div class="clear"></div>
                 </div>
                 <div class="hongbao_info">
-                    <span class="hongbao_user">{$user.name}发起了一个凑红包</span><br />
+                    <span class="hongbao_user">{$hongbao_user.name}发起了一个凑红包</span><br />
                     <span class="hongbao_remark">红包凑齐后，随机抽出一名幸运星</span>
                 </div>
 
@@ -72,12 +72,12 @@
                 <div class="hongbao_jindu">
                     <div class="hongbao_jindu_bg">
                         <div class="hongbao_jindu_f" style="color:#fff; text-align:center; width: {:ceil($hongbao[total_num]/$hongbao[total_part]*100)}%">
-                            {:ceil($hongbao[total_num]/$hongbao[total_part]*100)}%
+                            {$percentage}%
                         </div>
                     </div>
                 </div>
                 <div class="hongbao_info">
-                    <span class="hongbao_remark">每份{$hongbao.part_amount}元，共{$hongbao.total_part}份，还差{$hongbao[total_part]-$hongbao[total_num]}份凑成。</span><br />
+                    <span class="hongbao_remark">每份{$hongbao.part_amount}元，共{$hongbao.total_part}份，还差{$difference}份凑成。</span><br />
                 </div>
                 <div class="address_new detail_block" data-role="detail_default">
                     <p class="action">
@@ -117,7 +117,7 @@
                                 <p class="action">
                                     <if condition="$hongbao.state eq 1">
                                         <if condition="$hongbao[addtime]+86400 gt time()">
-                                            <button type="button" onclick="set_order()" class="submit" style="width: 100px; margin: 0 auto;" id="add">凑 1 份</button>
+                                            <button type="button" onclick="set_order()" class="submit cou_num" style="width: 100px; margin: 0 auto;" id="add">凑 1 份</button>
                                             <else/>
                                             <button class="submit" disabled id="add">已 过 期</button>
                                         </if>
@@ -138,7 +138,7 @@
                         </div>
                 </div>
                 <!--//end-->
-                <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/remark')}">红包玩法</a> </div>
+                <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/remark')}">凑红包玩法?</a> </div>
 
                 <div class="ptit"><i style="font-size:14px;" class="fa fa-info-circle"></i> 凑齐后,会根据参与金额,随机产生一名幸运星</div>
                 <!--//start -->
@@ -174,6 +174,7 @@
                 <div class="view_all"><i style="font-size:16px; line-height: 20px;" class="fa fa-angle-double-down"></i>查看全部参与者</div>
                 <!--//end-->
                 </if>
+            <div class="state_btn"> <a class='state_btn_4' href="{:U('/notes')}">我的记录</a> </div>
         </div>
         </div>
     </div>
@@ -257,6 +258,7 @@
         var part_amount = parseInt($('input[name="part_amount"]').val());
         if(num > 1){
             $('input[name="num"]').val( num-1 );
+            $('.cou_num').text( '凑 '+(num-1)+' 份');
             $('span.part_amount').text( (num-1) * part_amount);
             $('input.jia').attr('disabled', false);
         }else{
@@ -270,6 +272,7 @@
         var part_amount = parseInt($('input[name="part_amount"]').val());
         if(num < total){
             $('input[name="num"]').val( num+1 );
+            $('.cou_num').text( '凑 '+(num+1)+' 份');
             $('span.part_amount').text( (num+1) * part_amount);
             $('input.jian').attr('disabled', false);
         }else{
@@ -283,6 +286,7 @@
     var num = parseInt($('input[name="num"]').val());
     var part_amount = parseInt($('input[name="part_amount"]').val());
 
+    $('.cou_num').text( '凑 '+num+' 份');
     $('span.part_amount').text( (num) * part_amount);
 </script>
 </body>
