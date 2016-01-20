@@ -61,7 +61,7 @@ class WeixinController extends Controller {
 因为微信支付到我们的账户需要1~3个工作日，我们\n
 的账户预存垫付的现金不足，暂时不能实时转账，希望\n
 理解。资金安全请你放心，如果有疑问请联系客服。";
-        $data = \Wechat\Wxapi::send_wxmsg('obb1AuBzVPvw8NE8UZ2gc0web854','测试消息','http://hb.kakaapp.com',$msg,'http://hb.kakaapp.com/images/hongbao_bg.png');
+        $data = \Wechat\Wxapi::send_wxmsg('obb1AuBzVPvw8NE8UZ2gc0web854','测试消息','http://hb.kakaapp.com',$msg,'http://hb.kakaapp.com/images/logo.jpg');
         print_r($data);
     }
 
