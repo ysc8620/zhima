@@ -316,7 +316,7 @@ class WeixinController extends Controller {
 的账户预存垫付的现金不足，暂时不能实时转账，希望\n
 理解。资金安全请你放心，如果有疑问请联系客服。";
 
-        sendHongBao(array(
+        $r = sendHongBao(array(
             'mch_billno' => get_order_sn(),
             'send_name' => '凑红包',
             're_openid' => 'obb1AuBzVPvw8NE8UZ2gc0web854',
@@ -325,6 +325,7 @@ class WeixinController extends Controller {
             'act_name' => '测试红包',
             'remark' =>'凑红包'
         ));
+        var_dump($r);
     }
 
     function test1(){
