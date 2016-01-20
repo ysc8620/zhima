@@ -160,8 +160,6 @@ class PayNotifyCallBack extends WxPayNotify
                         'total_pay_amount' => $hongbao['total_pay_amount'] + $order['total_amount'],
                         'total_user' => $hongbao['total_user'] + 1
                     );
-
-
                     if($data['total_num'] >= $hongbao['total_part'] || $data['total_pay_amount'] >= $hongbao['total_amount']){
                         $data['state'] = 2;
                     }

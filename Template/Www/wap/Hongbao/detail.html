@@ -1,4 +1,34 @@
-<include file="Public:header" xmlns="http://www.w3.org/1999/html"/>
+<include file="Public:header"/>
+<script type="text/javascript">
+    //调用微信JS api 支付
+    function jsApiCall(data)
+    {
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                data,
+                function(res){
+                    //WeixinJSBridge.log(res.err_msg);
+                    // alert(res.err_code+res.err_desc+res.err_msg);
+                    // window.location.href = "/notes.html";
+                    alert('支付成功');
+                }
+        );
+    }
+
+    function callpay(data)
+    {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall(data);
+        }
+    }
+</script>
 <div class="container">
     <div class="mod_container">
         <div id="detailCon" class="wx_wrap">
@@ -10,9 +40,7 @@
                         <div class="my_head_info">
                             <h4 class="my_head_name ">{$user.name}</h4>
                         </div>
-
                     <div class="clear"></div>
-
                 </div>
                 <div class="hongbao_info">
                     <span class="hongbao_user">{$user.name}发起了一个凑红包</span><br />
@@ -33,12 +61,11 @@
                 <div class="hongbao_info">
                     <span class="hongbao_remark">每份{$hongbao.part_amount}元，共{$hongbao.total_part}份，还差{$hongbao[total_part]-$hongbao[total_num]}份凑成。</span><br />
                 </div>
-                <div class="address_new">
-
+                <div class="address_new detail_block" data-role="detail_default">
                     <p class="action">
                         <if condition="$hongbao.state eq 1">
                             <if condition="$hongbao[addtime]+86400 gt time()">
-                                    <a  href="{:U('/hongbao/buy',array('id'=>$hongbao[number_no]))}"><button class="submit" style="width: 100px; margin: 0 auto; text-align: center">凑</button></a>
+                                    <a  href="{:U('/hongbao/buy',array('id'=>$hongbao[number_no]))}"><button class="submit" onclick="set_buy()" style="width: 100px; margin: 0 auto; text-align: center">凑</button></a>
                                 <else/>
                                 <button class="submit" disabled style="width: 100px; margin: 0 auto; text-align: center">已过期</button>
                             </if>
@@ -48,6 +75,52 @@
 
                     </p>
                 </div>
+
+                <!--//start-->
+                <div data-role="detail_buy" class="hidden detail_block" style="display: none;">
+                <form action="{:U('/hongbao/order')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
+                    <input type="hidden" name="id" value="{$hongbao.number_no}" />
+                    <input type="hidden" name="sign" value="{$sign}" />
+                    <input type="hidden" name="part_amount" value="{$hongbao.part_amount}" />
+                    <input type="hidden" name="max_total" value="{$hongbao['total_part']-$hongbao['total_num']}" />
+                    <!--//start -->
+                    <div class="order ">
+                        <div class="wx_wrap">
+                            <div class="address_new">
+                                <div class="hongbao_info">
+                                    <span class="hongbao_remark">您需要支付：￥<span class="part_amount">{$hongbao.part_amount}</span>元</span><br />
+                                </div>
+                                <div style="text-align: center">
+                                    <label for="num"><span class="tit"></span>
+                                        <input type="button" class="jian" value="-" style="width: 30px; margin-right: 2px;"><input name="num" type="number" class="inputBg" readonly id="num" style="width: 100px; margin: 0 auto; text-align: center" value="1" placeholder="总份数"/><input class="jia" style="width: 30px; margin-left: 2px;" type="button" value="+"> <span class="" style="line-height: 36px; font-size:16px;">份</span>
+                                        <span id="updateTip2" style="color: red; display: none;"></span> </label>
+                                </div>
+
+                                <p class="action">
+                                    <if condition="$hongbao.state eq 1">
+                                        <if condition="$hongbao[addtime]+86400 gt time()">
+                                            <button type="button" onclick="set_order()" class="submit" style="width: 100px; margin: 0 auto;" id="add">凑 1 份</button>
+                                            <else/>
+                                            <button class="submit" disabled id="add">已 过 期</button>
+                                        </if>
+                                        <else/>
+                                        <button class="submit" id="add" disabled><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3" />已过期<elseif condition="$hongbao.state eq 4" />已退款<else />已关闭</if></button>
+                                    </if>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+                <div class="address_new detail_block" data-role="detail_pay" style="display: none">
+                    <input type="hidden" name="pay_id" value="" />
+                    <div class="address_new" data-role="detail_default">
+                        <p class="action">
+                           <button class="submit" onclick="set_pay()" style="width: 100px; margin: 0 auto; text-align: center">微信支付</button>
+                        </p>
+                        </div>
+                </div>
+                <!--//end-->
                 <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/remark')}">红包玩法</a> </div>
 
                 <div class="ptit"><i style="font-size:14px;" class="fa fa-info-circle"></i> 凑齐后,会根据参与金额,随机产生一名幸运星</div>
@@ -57,11 +130,10 @@
                     <div class="order_bd">
                         <div class="order_glist">
                             <div class="order_item">
-                                <a href="<if condition='$order[state] eq 1 and $hongbao[addtime] + 86400 gt time()'>{:U('/weixin/pay',array('id'=>$order['order_sn']))}<else/>javascript:void(0)</if>" class="order_goods" style="float:left;border-bottom:none;">
-                                    <div class="order_goods_img">
-                                        <img src="{$order.user.header}">
-                                    </div>
-                                </a>
+                                <div class="order_goods_img">
+                                        <img src="{$order.user.header}" alt="{$order.user.name}" style="max-width: 100px; max-height: 100px;" />
+                                 </div>
+
                                 <div class="order_goods_info">
                                     <div class="order_goods_name">{$order.user.name}</div>
                                     <div class="order_goods_attr">
@@ -93,5 +165,70 @@
          $('[data-role="order"]').toggle();
      });
  </script>
+
+<script type="text/javascript">
+    /**
+     * 打开选择
+     */
+    function set_buy(){
+        $('.detail_block').hide();
+        $('[data-role="detail_buy"]').show();
+    }
+
+    /**
+     * 生成支付订单
+     */
+    function set_order(){
+        var id = $('input[name="id"]').val();
+        var num = $('input[name="num"]').val();
+
+        $.ajax({
+            type:'post',
+            url:"{:U('/hongbao/order')}",
+            async:false,
+            cache:false,
+            data:{id:id, num:num},
+            dataType:'json',
+            success:function(result){
+                //alert(result.data);
+                if(result.error==0){
+                    // callpay(result.data);
+                    $('input[name="pay_id"]').val(result.data);
+                    $('.detail_block').hide();
+                    $('[data-role="detail_pay"]').show();
+                }else if(result.error==1){
+                    alert(result.message);
+                    return false;
+                }
+            }
+        });
+
+    }
+
+    function set_pay(){
+        var id = $('input[name="pay_id"]').val();
+        if(id.length < 1){
+            alert('没有支付订单');
+            return false;
+        }
+        $.ajax({
+            type:'post',
+            url:"{:U('/weixin/pay')}",
+            async:false,
+            cache:false,
+            data:{id:id},
+            dataType:'json',
+            success:function(result){
+                //alert(result.data);
+                if(result.error==0){
+                    callpay(result.data);
+
+                }else if(result.error==1){
+                    alert(result.message);
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>

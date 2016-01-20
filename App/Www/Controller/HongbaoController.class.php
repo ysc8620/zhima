@@ -119,7 +119,7 @@ class HongbaoController extends BaseController {
 
         $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
 
-        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id)))->order("is_star DESC, field(state,2,1,4,3),addtime desc")->select();
+        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id)))->order("is_star DESC, field(state,2,4,3,1),addtime desc")->select();
         if($order_list){
             foreach($order_list as $k=>$order){
                 $order_list[$k]['user'] = M('user')->find($order['user_id']);
@@ -132,52 +132,87 @@ class HongbaoController extends BaseController {
     }
 
     public function order(){
-        $sign = I('post.sign');
+        // $sign = I('post.sign');
         $id = I('post.id','','strval');
-
-
-        $hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
-        if(!$hongbao){
-            $this->error('没找到红包详情', U('/notes'));
-        }
-
-        if($sign != session('sign')){
-            $this->error('请不要重复提交.',U('/hongbao/buy',array('id'=>$id)));
-        }else{
-            session('sign', microtime(true));
-        }
-
-        $total = I('post.num', 0, 'intval');
-       // $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1))->sum('total_amount'));
-
-        if($total < 1 || ( $total + $hongbao['total_num']) > $hongbao['total_part']){
-            $this->error('你已超过红包份额限制,请重新设置份额.',U('/hongbao/buy',array('id'=>$id)));
-            return false;
-        }
-
-        $user = M('user')->find($this->user_id);
-        $data = array(
-            'hongbao_id' => $hongbao['id'],
-            'hongbao_user_id' => $hongbao['user_id'],
-            'number_no' =>$hongbao['number_no'],
-            'order_sn' =>get_order_sn(),
-            'user_id' => $this->user_id,
-            'part_num' => $total,
-            'part_amount' =>$hongbao['part_amount'],
-            'total_amount' => $hongbao['part_amount'] * $total,
-            'addtime' => time(),
-            'state' => 1,
-            'openid' => $user['openid']
+        $json = array(
+            'error' => 0,
+            'message' => '',
+            'data'=>''
         );
-        $rs = M('hongbao_order')->add($data);
-        if($rs){
-            redirect(U('/weixin/pay', array('id'=>$data['order_sn'])));
-            // $this->success('操作成功.',U('/hongbao/detail',array('id'=>$id)));
-            return true;
-        }else{
-            $this->error('操作失败，请重试.',U('/hongbao/buy',array('id'=>$id)));
-            return false;
-        }
+        do{
+            $hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
+            if(!$hongbao){
+                // $this->error('没找到红包详情', U('/notes'));
+                $json['error'] = 1;
+                $json['message'] = '没找到红包详情';
+                break;
+            }
+
+//            if($sign != session('sign')){
+//                $this->error('请不要重复提交.',U('/hongbao/buy',array('id'=>$id)));
+//            }else{
+//                session('sign', microtime(true));
+//            }
+
+            $total = I('post.num', 0, 'intval');
+           // $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1))->sum('total_amount'));
+
+            if($total < 1 || ( $total + $hongbao['total_num']) > $hongbao['total_part']){
+//                $this->error('你已超过红包份额限制,请重新设置份额.',U('/hongbao/buy',array('id'=>$id)));
+//                return false;
+                $json['error'] = 1;
+                $json['message'] = '你已超过红包份额限制,请重新设置份额.';
+                break;
+            }
+
+            $user = M('user')->find($this->user_id);
+            $hongbao_order = M('hongbao_order')->where(array('user_id'=>$this->user_id, 'state'=>1))->find();
+            if($hongbao_order){
+                $data = array(
+                    'addtime' => time(),
+                    'part_num' => $total,
+                    'total_amount'=>$hongbao['part_amount'] * $total
+                );
+                $rs = M('hongbao_order')->where(array('id'=>$hongbao_order['id']))->save($data);
+                if($rs){
+                    $json['data'] = $hongbao_order['order_sn'];
+                    break;
+                }else{
+                    $json['error'] = 1;
+                    $json['message'] = '操作失败，请重试.';
+                }
+            }
+            $data = array(
+                'hongbao_id' => $hongbao['id'],
+                'hongbao_user_id' => $hongbao['user_id'],
+                'number_no' =>$hongbao['number_no'],
+                'order_sn' =>get_order_sn(),
+                'user_id' => $this->user_id,
+                'part_num' => $total,
+                'part_amount' =>$hongbao['part_amount'],
+                'total_amount' => $hongbao['part_amount'] * $total,
+                'addtime' => time(),
+                'state' => 1,
+                'openid' => $user['openid']
+            );
+            $rs = M('hongbao_order')->add($data);
+
+            if($rs){
+//                redirect(U('/weixin/pay', array('id'=>$data['order_sn'])));
+//                // $this->success('操作成功.',U('/hongbao/detail',array('id'=>$id)));
+//                return true;
+
+                $json['data'] = $data['order_sn'];
+                break;
+            }else{
+//                $this->error('操作失败，请重试.',U('/hongbao/buy',array('id'=>$id)));
+//                return false;
+                $json['error'] = 1;
+                $json['message'] = '操作失败，请重试.';
+                break;
+            }
+        }while(false);
+        echo json_encode($json);
     }
 
     public function remark(){

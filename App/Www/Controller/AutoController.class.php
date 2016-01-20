@@ -16,6 +16,10 @@ class AutoController extends Controller {
 
         $hongbao_list = M('hongbao')->where(array('state'=>2, 'is_send_hongbao'=>0))->select();
         foreach($hongbao_list as $hongbao){
+            $hongbao_send = M('hongbao_send')->find();
+
+            continue;
+
             $list = M('hongbao_order')->where("hongbao_id='{$hongbao['id']}' AND state=2")->select();
             if($list){
                 $ids = array();
