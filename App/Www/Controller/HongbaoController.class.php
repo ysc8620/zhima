@@ -166,7 +166,7 @@ class HongbaoController extends BaseController {
             }
 
             $user = M('user')->find($this->user_id);
-            $hongbao_order = M('hongbao_order')->where(array('user_id'=>$this->user_id, 'state'=>1))->find();
+            $hongbao_order = M('hongbao_order')->where(array('user_id'=>$this->user_id, 'state'=>1, 'hongbao_id'=>$hongbao['id']))->find();
             if($hongbao_order){
                 $data = array(
                     'addtime' => time(),
