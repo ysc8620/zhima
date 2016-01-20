@@ -76,19 +76,21 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="hongbao_info">
                     <span class="hongbao_remark">每份{$hongbao.part_amount}元，共{$hongbao.total_part}份，还差{$difference}份凑成。</span><br />
                 </div>
                 <div class="address_new detail_block" data-role="detail_default">
-                    <p class="action">
-                        <if condition="$hongbao.state eq 1">
-                            <if condition="$hongbao[addtime]+86400 gt time()">
-                                    <button class="submit" onclick="set_buy()" style="width: 100px; margin: 0 auto; text-align: center">凑</button>
-                                <else/>
-                                <button class="submit" disabled style="width: 100px; margin: 0 auto; text-align: center">已过期</button>
+                    <p class="action" style="text-align: center">
+                        <if condition="$hongbao.state eq 1 and $hongbao[addtime]+86400 gt time()">
+                            <if condition="$hongbao['total_part']-$hongbao['total_num']-$wait_total lt 1">
+                                <span style="clear: both; margin: 8px 0; line-height: 22px;">最后{$wait_total}份正在支付<br/></span>
+                                <img src="/images/cou_f.png" style="width: 80px; clear: both;"  />
+                                <else />
+                                <img src="/images/cou.png" style="width: 80px;" onclick="set_buy()" />
                             </if>
-                            <else />
-                            <button class="submit" disabled style="width: 100px; margin: 0 auto; text-align: center"><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3" />已过期<elseif condition="$hongbao.state eq 4" />已退款</if></button>
+                        <else />
+                            <button class="submit" disabled style="width: 100px; margin: 0 auto; text-align: center"><if condition="$hongbao.state eq 2">已完成<elseif condition="$hongbao.state eq 3 or $hongbao.state eq 1" />已过期<elseif condition="$hongbao.state eq 4" />已退款</if></button>
                         </if>
 
                     </p>
@@ -187,6 +189,7 @@
  </script>
 
 <script type="text/javascript">
+
     /**
      * 打开选择
      */
@@ -210,14 +213,13 @@
             data:{id:id, num:num},
             dataType:'json',
             success:function(result){
-                //alert(result.data);
                 if(result.error==0){
                     // callpay(result.data);
                     $('input[name="pay_id"]').val(result.data);
                     $('.detail_block').hide();
                     $('[data-role="detail_pay"]').show();
                 }else if(result.error==1){
-                    alert(result.message);
+                    layer.msg(result.message, function(){});
                     return false;
                 }
             }
@@ -231,7 +233,7 @@
         }
 
         if(id.length < 1){
-            alert('没有支付订单');
+            layer.msg('没有支付订单', function(){});
             return false;
         }
         $.ajax({
@@ -242,12 +244,11 @@
             data:{id:id},
             dataType:'json',
             success:function(result){
-                //alert(result.data);
                 if(result.error==0){
                     callpay(result.data);
 
                 }else if(result.error==1){
-                    alert(result.message);
+                    layer.msg(result.message, function(){});
                 }
             }
         });

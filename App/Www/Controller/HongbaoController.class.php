@@ -84,6 +84,9 @@ class HongbaoController extends BaseController {
         $difference = $this->hongbao[total_part]-$this->hongbao[total_num];
         $this->difference = $difference < 0?0:$difference;
 
+        $this->wait_total = M('hongbao_order')->where(array("hongbao_id"=>$this->hongbao['id'], "state"=>1, "addtime"=>array('gt', time()-30)))->sum('part_num');
+        $this->wait_total = intval($this->wait_total);
+
         $this->title = "{$this->hongbao_user['name']}发起的凑红包";
         $this->share_title = "凑红包, 有福利, 你懂得";
         $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -163,8 +166,10 @@ class HongbaoController extends BaseController {
 
             $total = I('post.num', 0, 'intval');
            // $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1))->sum('total_amount'));
+            $total_num = M('hongbao_order')->where(array("hongbao_id"=>$hongbao['id'], "state"=>1, "addtime"=>array('gt', time()-30)))->sum('part_num');
+            $total_num = intval($total_num);
 
-            if($total < 1 || ( $total + $hongbao['total_num']) > $hongbao['total_part']){
+            if($total < 1 || ( $total + $hongbao['total_num']+$total_num) > $hongbao['total_part']){
 //                $this->error('你已超过红包份额限制,请重新设置份额.',U('/hongbao/buy',array('id'=>$id)));
 //                return false;
                 $json['error'] = 1;
