@@ -306,11 +306,7 @@ class WeixinController extends Controller {
     }
 
     function sendhonebao(){
-        $msg = "你发起的凑红包成功啦！\n
-众筹进度：￥100已成功！\n
-幸运星：乐圣昌\n
-红包将会在1~3个工作内，通过微信红包打给你，\n
-其中已扣除2%的微信支付手续费，扣除后金额为100元。";
+        $msg = "你发起的凑红包成功啦！\n众筹进度：￥100已成功！\n幸运星：乐圣昌\n红包将会在1~3个工作内，通过微信红包打给你.\n";
 echo strlen($msg)."<br/>";
         $r = sendHongBao(array(
             'mch_billno' => get_order_sn(),
