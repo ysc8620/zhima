@@ -199,6 +199,7 @@ class PayNotifyCallBack extends WxPayNotify
                         $send['addtime'] = time();
                         $hongbao_id = M('hongbao_send')->add($send);
                         if($hongbao_id){
+                            M('hongbao')->where(array("id='{$hongbao['id']}'"))->save(array('hongbao_id'=>$hongbao_id, 'hongbao_sn'=>$bao['mch_billno'], 'hongbao_time'=>time()));
                             $data = sendHongBao($bao);
                             if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
                                 M('hongbao')->where(array("id='{$hongbao['id']}'"))->save(array('is_send_hongbao'=>1, 'hongbao_id'=>$hongbao_id, 'hongbao_sn'=>$bao['mch_billno'], 'hongbao_time'=>time()));

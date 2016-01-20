@@ -84,6 +84,13 @@ class HongbaoController extends BaseController {
             $this->error('没找到红包详情', U('/notes'));
         }
         $this->user = M('user')->find($this->user_id);
+
+        $this->share_title = "凑红包, 有福利, 你懂得";
+        $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $this->share_imgUrl = "http://hb.kakaapp.com/images/logo.jpg";
+        $this->share_desc = "凑红包, 有福利, 你懂得.";
+
+
         $order_list = M('hongbao_order')->where(array(array('number_no'=>$id)))->order("is_star DESC, field(state,2,1,4,3),addtime desc")->select();
         if($order_list){
             foreach($order_list as $k=>$order){
