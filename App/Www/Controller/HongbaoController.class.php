@@ -173,7 +173,7 @@ class HongbaoController extends BaseController {
 //                $this->error('你已超过红包份额限制,请重新设置份额.',U('/hongbao/buy',array('id'=>$id)));
 //                return false;
                 $json['error'] = 1;
-                $json['message'] = '你已超过红包份额限制,请重新设置份额.';
+                $json['message'] = '被人抢先一步了。由于有人在您之前支付，剩余的份数小于您想要购买的份数了，请重新确认参与份数.';
                 break;
             }
 

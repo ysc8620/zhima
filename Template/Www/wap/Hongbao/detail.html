@@ -131,14 +131,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="address_new detail_block" data-role="detail_pay" style="display: none">
-                    <input type="hidden" name="pay_id" value="" />
-                    <div class="address_new" data-role="detail_default">
-                        <p class="action">
-                           <button class="submit" onclick="set_pay()" style="width: 100px; margin: 0 auto; text-align: center">微信支付</button>
-                        </p>
-                        </div>
-                </div>
                 <!--//end-->
                 <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/remark')}">凑红包玩法?</a> </div>
 
@@ -215,9 +207,7 @@
             success:function(result){
                 if(result.error==0){
                     // callpay(result.data);
-                    $('input[name="pay_id"]').val(result.data);
-                    $('.detail_block').hide();
-                    $('[data-role="detail_pay"]').show();
+                    set_pay(result.data);
                 }else if(result.error==1){
                     layer.msg(result.message, function(){});
                     return false;
