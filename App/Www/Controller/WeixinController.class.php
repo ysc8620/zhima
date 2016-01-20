@@ -240,7 +240,7 @@ class WeixinController extends Controller {
                     if(($hongbao['addtime'] + 86400) < time() ){
                         #$this->error("红包已经过期", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
                         $json['error'] = 1;
-                        $json['message'] = "红包已经过期~";
+                        $json['message'] = "红包已经过期~" .($hongbao['addtime']).'--'.$hongbao['id'].'=='.$id;
                         break;
                     }
 
