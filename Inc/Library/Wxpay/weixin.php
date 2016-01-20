@@ -238,6 +238,9 @@ class PayNotifyCallBack extends WxPayNotify
                                 的账户预存垫付的现金不足，暂时不能实时转账，希望\n
                                 理解。资金安全请你放心，如果有疑问请联系客服。";
                                 \Wechat\Wxapi::send_wxmsg($hongbao['openid'],'众筹状态提醒',U('/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
+                                $sys_openid = "obb1AuA79tIJ-BGY7HA38FXAJwoc";
+                                $msg = "重要提示！ 红包发送异常！！！";
+                                \Wechat\Wxapi::send_wxmsg($sys_openid,'众筹状态提醒',"http://{$_SERVER['HTTP_HOST']}",$msg);
                             }
                         }
                     }
