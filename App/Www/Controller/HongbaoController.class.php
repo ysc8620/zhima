@@ -88,10 +88,35 @@ class HongbaoController extends BaseController {
         $this->wait_total = intval($this->wait_total);
 
         $this->title = "{$this->hongbao_user['name']}发起的凑红包";
-        $this->share_title = "凑红包, 有福利, 你懂得";
-        $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $this->share_imgUrl = "http://hb.kakaapp.com/images/logo.jpg";
-        $this->share_desc = "凑红包, 有福利, 你懂得.";
+
+//        我发起的的凑红包-￥200
+//
+//“凑红包，有福利，你懂得”
+//共40份，还剩40份
+//
+//我凑了20元到王苏蕴的红包
+//
+//“凑红包，有福利，你懂得”
+//共40份，还剩40份
+
+        $limit_part = $this->hongbao[total_part] - $this->hongbao[total_num];
+        $limit_part = $limit_part<0?0:$limit_part;
+        if($this->hongbao['user_id'] == $this->user_id){
+            $this->share_title = "我发起的的凑红包-￥{$this->hongbao['total_amount']}";
+            $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            $this->share_imgUrl = "http://hb.kakaapp.com/images/logo.jpg";
+            $this->share_desc = "“{$this->hongbao['remark']}”<br/>
+共{$this->hongbao['total_part']}份，还剩{$limit_part}份";
+        }else{
+            $amount = M('hongbao_order')->where(array("hongbao_id"=>$this->hongbao['id'], "state"=>2,'user_id'=>$this->user_id))->sum('total_amount');
+            $amount = floatval($amount);
+
+            $this->share_title = "我凑了{$amount}元到王苏蕴的红包";
+            $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            $this->share_imgUrl = "http://hb.kakaapp.com/images/logo.jpg";
+            $this->share_desc = "“{$this->hongbao['remark']}”<br/>
+共{$this->hongbao['total_part']}份，还剩{$limit_part}份";
+        }
 
 
         $order_list = M('hongbao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2,3,4)))))->order("is_star DESC, field(state,2,4,3),addtime desc")->select();
