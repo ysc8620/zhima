@@ -228,6 +228,39 @@
             }
         });
     }
+
+    $('input.jian').click(function(){
+        var num = parseInt($('input[name="num"]').val());
+        var part_amount = parseInt($('input[name="part_amount"]').val());
+        if(num > 1){
+            $('input[name="num"]').val( num-1 );
+            $('span.part_amount').text( (num-1) * part_amount);
+            $('input.jia').attr('disabled', false);
+        }else{
+            $('input.jian').attr('disabled', true);
+        }
+    });
+
+    $('input.jia').click(function(){
+        var num = parseInt($('input[name="num"]').val());
+        var total = parseInt($('input[name="max_total"]').val());
+        var part_amount = parseInt($('input[name="part_amount"]').val());
+        if(num < total){
+            $('input[name="num"]').val( num+1 );
+            $('span.part_amount').text( (num+1) * part_amount);
+            $('input.jian').attr('disabled', false);
+        }else{
+            $('input.jia').attr('disabled', true);
+        }
+    });
+    function checkHongBao(_this){
+        return true;
+    }
+
+    var num = parseInt($('input[name="num"]').val());
+    var part_amount = parseInt($('input[name="part_amount"]').val());
+
+    $('span.part_amount').text( (num) * part_amount);
 </script>
 </body>
 </html>
