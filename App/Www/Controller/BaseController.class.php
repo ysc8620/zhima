@@ -14,7 +14,9 @@ class BaseController extends Controller {
      * 系统初始化
      */
     public function _initialize(){
-
+        $msg = "你的凑红包成功啦！\n众筹进度：￥200元\n红包将会在1~3个工作内，通过微信红包打给你.";
+        echo strlen($msg);
+        die();
         $this->user_id = session('user_id');
 //        $this->user_id = 2;
 ////
