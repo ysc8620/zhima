@@ -105,7 +105,7 @@ class HongbaoController extends BaseController {
             $this->share_title = "我发起的的凑红包-￥{$this->hongbao['total_amount']}";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://hb.kakaapp.com/images/logo.jpg";
-            $this->share_desc = "“{$this->hongbao['remark']}”<br/>共{$this->hongbao['total_part']}份，还剩{$limit_part}份";
+            $this->share_desc = "“{$this->hongbao['remark']}”\n共{$this->hongbao['total_part']}份，还剩{$limit_part}份";
         }else{
             $amount = M('hongbao_order')->where(array("hongbao_id"=>$this->hongbao['id'], "state"=>2,'user_id'=>$this->user_id))->sum('total_amount');
             $amount = floatval($amount);
@@ -113,7 +113,7 @@ class HongbaoController extends BaseController {
             $this->share_title = "我凑了{$amount}元到王苏蕴的红包";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://hb.kakaapp.com/images/logo.jpg";
-            $this->share_desc = "“{$this->hongbao['remark']}”<br/>共{$this->hongbao['total_part']}份，还剩{$limit_part}份";
+            $this->share_desc = "“{$this->hongbao['remark']}”\n共{$this->hongbao['total_part']}份，还剩{$limit_part}份";
         }
 
 
