@@ -311,7 +311,7 @@ class WeixinController extends Controller {
 幸运星：乐圣昌\n
 红包将会在1~3个工作内，通过微信红包打给你，\n
 其中已扣除2%的微信支付手续费，扣除后金额为100元。";
-
+echo strlen($msg)."<br/>";
         $r = sendHongBao(array(
             'mch_billno' => get_order_sn(),
             'send_name' => '凑红包',
