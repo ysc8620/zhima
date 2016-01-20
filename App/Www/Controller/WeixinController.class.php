@@ -306,12 +306,22 @@ class WeixinController extends Controller {
     }
 
     function sendhonebao(){
+        $msg = "你发起的凑红包成功啦！\n
+众筹标题：凑红包，有福利，你懂得\n
+众筹进度：￥100已成功！\n
+幸运星：乐圣昌\n
+红包将会在1~3个工作内，通过微信红包打给你，\n
+其中已扣除2%的微信支付手续费，扣除后金额为100元。\n
+因为微信支付到我们的账户需要1~3个工作日，我们\n
+的账户预存垫付的现金不足，暂时不能实时转账，希望\n
+理解。资金安全请你放心，如果有疑问请联系客服。";
+
         sendHongBao(array(
             'mch_billno' => get_order_sn(),
             'send_name' => '凑红包',
             're_openid' => 'obb1AuBzVPvw8NE8UZ2gc0web854',
             'total_amount' => '100',
-            'wishing' => '恭喜您获得测试红包一个',
+            'wishing' => $msg,
             'act_name' => '测试红包',
             'remark' =>'凑红包'
         ));

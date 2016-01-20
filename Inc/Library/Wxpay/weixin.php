@@ -207,16 +207,9 @@ class PayNotifyCallBack extends WxPayNotify
                                 M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
 
                                 $user_amount = $hongbao['total_amount'] * 0.98;
-$msg =  "你发起的凑红包成功啦！
-众筹标题：{$hongbao['remark']}
-众筹进度：￥{$hongbao['total_amount']}已成功！
-幸运星：{$user_info['name']}
-红包已经通过微信红包打给你，其中已扣除2%微信支付手续费，扣除后金额为{$user_amount}元";
+$msg =  "你发起的凑红包成功啦！\n众筹标题：{$hongbao['remark']}\n众筹进度：￥{$hongbao['total_amount']}已成功！\n幸运星：{$user_info['name']}\n红包已经通过微信红包打给你，其中已扣除2%微信支付手续费，扣除后金额为{$user_amount}元";
 \Wechat\Wxapi::send_wxmsg($hongbao['openid'],'众筹状态提醒',U('/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
-$msg = "幸运星就是你！没想到吧
-众筹标题：你懂得
-众筹进度：￥{$hongbao['total_amount']}已成功！
-快找发起人要福利吧 :D";
+$msg = "幸运星就是你！没想到吧\n众筹标题：{$hongbao['remark']}\n众筹进度：￥{$hongbao['total_amount']}已成功！\n快找发起人要福利吧 :D";
                                 \Wechat\Wxapi::send_wxmsg($user_info['openid'],'众筹状态提醒',U('/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
 
                             }else{
