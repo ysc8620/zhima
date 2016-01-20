@@ -53,7 +53,7 @@ class WeixinController extends Controller {
     function test(){
         echo 'ok';
         $msg = "你发起的凑红包成功啦！
-        
+
 众筹标题：凑红包，有福利，你懂得
 
 众筹进度：￥200已成功！
