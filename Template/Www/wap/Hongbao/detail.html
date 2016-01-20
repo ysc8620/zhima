@@ -65,7 +65,7 @@
                     <p class="action">
                         <if condition="$hongbao.state eq 1">
                             <if condition="$hongbao[addtime]+86400 gt time()">
-                                    <a  href="{:U('/hongbao/buy',array('id'=>$hongbao[number_no]))}"><button class="submit" onclick="set_buy()" style="width: 100px; margin: 0 auto; text-align: center">凑</button></a>
+                                    <button class="submit" onclick="set_buy()" style="width: 100px; margin: 0 auto; text-align: center">凑</button>
                                 <else/>
                                 <button class="submit" disabled style="width: 100px; margin: 0 auto; text-align: center">已过期</button>
                             </if>
@@ -212,7 +212,7 @@
         }
         $.ajax({
             type:'post',
-            url:"{:U('/weixin/pay')}",
+            url:"{:U('/weixin/pay1')}",
             async:false,
             cache:false,
             data:{id:id},
