@@ -62,7 +62,7 @@ class BaseController extends Controller {
         $this->signPackage = $signPackage;
         $this->share_title = "凑红包, 有福利, 你懂得";
         $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $this->share_imgUrl = "http://wx.qlogo.cn/mmopen/ajNVdqHZLLDAfibueE3xW0ibPC0MhkhV35kxMBhyv63ZAyHibvQMCm2eJBo5qkltkQiaRgMfLpDE0REA427OwjdxTQ/0";
+        $this->share_imgUrl = "http://hb.kakaapp.com/images/logo.jpg";
         $this->share_desc = "凑红包, 有福利, 你懂得.";
 
         // if(!$this->user_id)
