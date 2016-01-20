@@ -206,36 +206,30 @@ class PayNotifyCallBack extends WxPayNotify
                                 M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
 
                                 $user_amount = $hongbao['total_amount'] * 0.98;
-                                $msg =  "你发起的凑红包成功啦！\n
-                            众筹标题：{$hongbao['remark']}\n
-                            众筹进度：￥{$hongbao['total_amount']}已成功！\n
-                            幸运星：{$user_info['name']}\n
-                            红包已经通过微信红包打给你，其中已扣除2%微信支付手续费，扣除后金额为{$user_amount}元";
-                                \Wechat\Wxapi::send_wxmsg($hongbao['openid'],'众筹状态提醒',U('/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
-                                $msg = "
-                                幸运星就是你！没想到吧\n\n
-
-                                众筹标题：你懂得\n
-                                众筹进度：￥{$hongbao['total_amount']}已成功！\n
-                            快找发起人要福利吧 :D";
+$msg =  "你发起的凑红包成功啦！
+众筹标题：{$hongbao['remark']}
+众筹进度：￥{$hongbao['total_amount']}已成功！
+幸运星：{$user_info['name']}
+红包已经通过微信红包打给你，其中已扣除2%微信支付手续费，扣除后金额为{$user_amount}元";
+\Wechat\Wxapi::send_wxmsg($hongbao['openid'],'众筹状态提醒',U('/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
+$msg = "幸运星就是你！没想到吧
+众筹标题：你懂得
+众筹进度：￥{$hongbao['total_amount']}已成功！
+快找发起人要福利吧 :D";
                                 \Wechat\Wxapi::send_wxmsg($user_info['openid'],'众筹状态提醒',U('/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
 
                             }else{
                                 M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>3));
                                 $user_amount = $hongbao['total_amount'] * 0.98;
-                                $msg = "你发起的凑红包成功啦！\n\n
-
-                                众筹标题：{$hongbao['remark']}\n
-                                众筹进度：￥{$hongbao['total_amount']}已成功！\n\n
-
-                                幸运星：{$user_info['name']}\n\n
-
-                                红包将会在1~3个工作内，通过微信红包打给你，\n
-                                其中已扣除2%的微信支付手续费，扣除后金额为{$user_amount}元。\n\n
-
-                                因为微信支付到我们的账户需要1~3个工作日，我们\n
-                                的账户预存垫付的现金不足，暂时不能实时转账，希望\n
-                                理解。资金安全请你放心，如果有疑问请联系客服。";
+$msg = "你发起的凑红包成功啦！
+众筹标题：{$hongbao['remark']}
+众筹进度：￥{$hongbao['total_amount']}已成功！
+幸运星：{$user_info['name']}
+红包将会在1~3个工作内，通过微信红包打给你，
+其中已扣除2%的微信支付手续费，扣除后金额为{$user_amount}元。
+因为微信支付到我们的账户需要1~3个工作日，我们
+的账户预存垫付的现金不足，暂时不能实时转账，希望
+理解。资金安全请你放心，如果有疑问请联系客服。";
                                 \Wechat\Wxapi::send_wxmsg($hongbao['openid'],'众筹状态提醒',U('/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
                                 $sys_openid = "obb1AuA79tIJ-BGY7HA38FXAJwoc";
                                 $msg = "重要提示！ 红包发送异常！！！";

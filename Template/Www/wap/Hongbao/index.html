@@ -52,14 +52,12 @@
         var amount = $('input[name="amount"]').val();
         var reg = new RegExp("^[1-9][0-9]*$");
         if(!reg.test(amount)){
-            $('#updateTip1').text('请填写整数金额.');
-            $('#updateTip1').show();
+            layer.msg('请填写整数金额.', function(){});
             return false;
         }
 
         if(amount > 200 || amount < 1){
-            $('#updateTip1').text('请输入1-200之间金额.');
-            $('#updateTip1').show();
+            layer.msg('请输入1-200之间金额.', function(){});
             return false;
         }
 
@@ -68,26 +66,19 @@
 
         var total = $('input[name="total"]').val();
         if(!reg.test(total)){
-            $('#updateTip2').text('请填写整数份额.');
-            $('#updateTip2').show();
+            layer.msg('请填写整数份额.', function(){});
             return false;
         }
 
         if(total > 200 || total < 1){
-            $('#updateTip2').text('请输入1-200之间份额.');
-            $('#updateTip2').show();
+            layer.msg('请输入1-200之间份额.', function(){});
             return false;
         }
-
-        $('#updateTip2').hide();
 
         if(amount * total > 200){
-            $('#updateTip2').text('总金额不能超过200元.');
-            $('#updateTip2').show();
+            layer.msg('总金额不能超过200元.', function(){});
             return false;
         }
-
-        $('#updateTip2').hide();
         return true;
     }
 </script>
