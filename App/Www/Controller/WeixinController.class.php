@@ -307,7 +307,6 @@ class WeixinController extends Controller {
 
     function sendhonebao(){
         $msg = "你发起的凑红包成功啦！\n
-众筹标题：凑红包，有福利，你懂得\n
 众筹进度：￥100已成功！\n
 幸运星：乐圣昌\n
 红包将会在1~3个工作内，通过微信红包打给你，\n
