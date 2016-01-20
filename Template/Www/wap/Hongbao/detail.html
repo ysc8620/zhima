@@ -78,7 +78,7 @@
 
                 <!--//start-->
                 <div data-role="detail_buy" class="hidden detail_block" style="display: none;">
-                <form action="{:U('/hongbao/order')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
+
                     <input type="hidden" name="id" value="{$hongbao.number_no}" />
                     <input type="hidden" name="sign" value="{$sign}" />
                     <input type="hidden" name="part_amount" value="{$hongbao.part_amount}" />
@@ -110,7 +110,6 @@
                             </div>
                         </div>
                     </div>
-                </form>
                 </div>
                 <div class="address_new detail_block" data-role="detail_pay" style="display: none">
                     <input type="hidden" name="pay_id" value="" />
