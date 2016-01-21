@@ -82,13 +82,13 @@
     }
 
     function remark(){
-        var index = layer.alert((" 1. 发起凑红包 <br />"+
-                "2. 邀请朋友参与 <br/>"+
-                "3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>"+
-                "4. 系统会根据参与份数，随机抽出幸运星"), {
-            //icon: 1,
-            shadeClose: true,
+        layer.open({
             title: '凑红包玩法?'
+            ,content: (" <span style='text-align: left'> 1. 发起凑红包 <br />"+
+                    "2. 邀请朋友参与 <br/>"+
+                    "3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>"+
+                    "4. 系统会根据参与份数，随机抽出幸运星</span>")
+            ,btn: ['知道了']
         });
     }
 </script>
