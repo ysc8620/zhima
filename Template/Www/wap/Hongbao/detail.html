@@ -12,21 +12,22 @@
                     // window.location.href = "/notes.html";
                    // alert('支付成功');
 
-                    window.location.reload();
-                    return false;
+//                    window.location.reload();
+//                    return false;
                     switch (res.err_msg){
 
                         case 'get_brand_wcpay_request:cancel':
                             // location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
-                                alert('取消');
+//                                alert('取消');
                             break;
                         case 'get_brand_wcpay_request:fail':
                             //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
-                            alert('错误');
+//                            alert('错误');
                             break;
                         case 'get_brand_wcpay_request:ok':
                             // location.href="/?_a=done&order_sn=<?php echo $order_sn;?>&ac=<?php echo $authcode?>";
-                            alert('成功');
+                            //alert('成功');
+                            $("#shareit1").show();
                             break;
                     }
                 }
@@ -48,7 +49,6 @@
     }
 </script>
 <div class="container">
-    <a id="share_btn" href="####">分享到朋友圈</a>
     <div class="mod_container">
         <div id="detailCon" class="wx_wrap">
             <div class="">
