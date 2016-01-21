@@ -24,16 +24,16 @@ class HongbaoController extends BaseController {
             }else{
                 session('sign', microtime(true));
             }
-            $amount = I('post.amount',0,'intval');
+            $amount = I('post.amount',0,'floatval');
             $total = I('post.total',0,'intval');
             $remark = I('post.remark','','htmlspecialchars');
 
-            if($amount < 1 || $total < 1 || $total > 200 || $amount > 200){
+            if($amount < 0 || $total < 1 || $amount > 200){
                 $this->error('红包范围在1-200之间.',U('/hongbao'));
                 return false;
             }
 
-            if($amount * $total > 200 || $amount * $total <1){
+            if($amount * $total > 200 || $amount * $total <0){
                 $this->error('红包范围在1-200之间.',U('/hongbao'));
                 return false;
             }
