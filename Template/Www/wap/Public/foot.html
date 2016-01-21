@@ -6,7 +6,7 @@
         <li><a href="{:U('/user')}" class="nav-controller <if condition="MODULE_NAME eq 'User'">active</if>"><i class="fa fa-user"></i>个人中心</a></li>
     </ul>
 </div>-->
-<if condition="$subscribe">
+<if condition="!$subscribe">
 <div class="guanzhu" style="z-index:99999;"><a href="http://mp.weixin.qq.com/s?__biz=MzA5MTI1MDU0MQ==&mid=407379164&idx=1&sn=36875cf462b6eac57c8ed70893cd6e47#rd">您还未关注我们，立即去关注</a></div>
 </if>
  <if condition="session('error_message')">

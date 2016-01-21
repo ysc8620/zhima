@@ -134,7 +134,7 @@ class BaseController extends Controller {
             $user = M('user')->find($this->user_id);
 
             if( $user ){
-                echo $user['subscribe'].'-';
+                // echo $user['subscribe'].'-';
                 session('subscribe', $user['subscribe']);
             }
         }
