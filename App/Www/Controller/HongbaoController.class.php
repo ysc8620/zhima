@@ -112,6 +112,7 @@ class HongbaoController extends BaseController {
         $this->hongbao_amount = $this->hongbao['total_amount'] * 0.98;
         if($this->hongbao['state'] == 2){
             $total_user = M('hongbao_order')->where(array('hongbao_id'=>$this->hongbao['id'], 'state'=>2))->group('user_id')->count();
+            print_r($total_user);
             $this->total_user = intval($total_user);
             $this->use_time = $this->time2Units($this->hongbao['hongbao_time'] - $this->hongbao['addtime']);
 
