@@ -130,6 +130,12 @@ class BaseController extends Controller {
                 \Wechat\Wxapi::authorize();
                 exit();
             }
+        }else{
+            $user = M('user')->where(array('openid'=>$openid))->find();
+
+            if( $user ){
+                session('subscribe', $user['subscribe']);
+            }
         }
 
         $signPackage = \Wechat\Wxapi::getSignPackage();
