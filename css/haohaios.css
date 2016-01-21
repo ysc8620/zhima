@@ -1448,7 +1448,7 @@ i, em {font-style: normal;}
 .tips .tips_ico, .mt_g_price:before, .mt_g_price i:before, .st_ico, .ht_btn_go:after, .kt_btn:after, .pp_list_words:before, .pp_list_item:nth-child(1) .pp_list_words:before, .pp_list_item:nth-child(2):after, .pp_list_more:after, .step_more:after, .pp_list_blank:before, .support_lk:after, .yy_hd, .say_state:before, .tm:before, .td_lk:after, .pp_users_dot, .tips_opt a:after, .pp_vipuser_tit, .mt_shop:before, .vip .pp_users_sale span, .support_tit:before, .fixopt_home:after, .fixopt_share:after, .mr_commander:after {background-image: url(../images/bg_v7.png);background-repeat: no-repeat;-webkit-background-size: 365px 490px;background-size: 365px 490px;}
 a {text-decoration: none;color: #333;}
 .td2_hb .td2_hb_txt{margin-left: 20px;box-sizing: border-box;display: inline-block;float: left;margin-top: -18px;}
-.guanzhu { position:fixed; width:100%; height:50px; line-height:50px; bottom:60px; background:#666; color:#fff; text-align:center; font-size:14px; box-shadow:0 0 2px #333; max-width: 640px}
+.guanzhu { position:fixed; width:100%; height:50px; line-height:50px; bottom:0px; background:#666; color:#fff; text-align:center; font-size:14px; box-shadow:0 0 2px #333; max-width: 640px}
 .guanzhu a { padding:4px 10px; background:#DF2127; color:#fff; border-radius:5px; }
 .guanzhu span { float:right; padding-right:10px; line-height:30px; }
 .guanzhu span i { font-size:16px; }
