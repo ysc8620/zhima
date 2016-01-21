@@ -110,7 +110,11 @@ class HongbaoController extends BaseController {
             $amount = M('hongbao_order')->where(array("hongbao_id"=>$this->hongbao['id'], "state"=>2,'user_id'=>$this->user_id))->sum('total_amount');
             $amount = floatval($amount);
 
-            $this->share_title = "我凑了{$amount}元到{$this->hongbao_user['name']}的红包";
+            if($amount <= 0 ){
+                $this->share_title = "{$this->hongbao_user['name']}发起的凑红包-￥{$this->hongbao['total_amount']}";
+            }else{
+                $this->share_title = "我凑了{$amount}元到{$this->hongbao_user['name']}的红包";
+            }
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://hb.kakaapp.com/images/logo.jpg";
             $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_part']}份，还剩{$limit_part}份";
