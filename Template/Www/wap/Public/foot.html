@@ -6,7 +6,10 @@
         <li><a href="{:U('/user')}" class="nav-controller <if condition="MODULE_NAME eq 'User'">active</if>"><i class="fa fa-user"></i>个人中心</a></li>
     </ul>
 </div>-->
-<if condition="session('error_message')">
+<if condition="$subscribe">
+<div class="guanzhu" style="z-index:99999;"><a href="http://mp.weixin.qq.com/s?__biz=MzIyNTAzODM1Ng==&mid=400296581&idx=1&sn=52804ce4534eb251ecef1c3fce499f21">您还未关注我们，立即去关注</a></div>
+</if>
+ <if condition="session('error_message')">
 <script type="text/javascript">
     layer.msg("{:session('error_message')}", function(){});
 </script>
