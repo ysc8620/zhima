@@ -1620,3 +1620,5 @@ a {text-decoration: none;color: #333;}
     filter: alpha(opacity=65);
     cursor: default;
 }
+
+.layermcont{text-align: left!important;}
