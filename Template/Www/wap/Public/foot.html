@@ -1,11 +1,11 @@
-<div class="footer">
+{*<div class="footer">
     <ul>
         <li><a href="{:U('/')}" class="nav-controller <if condition="CONTROLLER_NAME eq 'Index' && MODULE_NAME eq 'Www'">active</if>"><i class="fa fa-home"></i>首页</a></li>
         <li><a href="{:U('/hongbao')}" class="nav-controller <if condition="CONTROLLER_NAME eq 'Hongbao'">active</if>"><i class="fa fa-list"></i>凑红包</a></li>
         <li><a href="{:U('/notes')}" class="nav-controller <if condition="CONTROLLER_NAME eq 'Notes'">active</if>"><i class="fa fa-trophy"></i>我的记录</a></li>
         <li><a href="{:U('/user')}" class="nav-controller <if condition="MODULE_NAME eq 'User'">active</if>"><i class="fa fa-user"></i>个人中心</a></li>
     </ul>
-</div>
+</div>*}
 <if condition="session('error_message')">
 <script type="text/javascript">
     layer.msg("{:session('error_message')}", function(){});

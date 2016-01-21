@@ -1,11 +1,15 @@
 <include file="Public:header" />
+<script type="text/javascript" src="/js/lc_switch.min.js"></script>
         <style type="text/css">
             .fixed_nav_item{ width: 50%!important;}
         </style>
 <div class="container">
     <div class="nav_fixed">
-        <a href="{:U('/notes')}" class="fixed_nav_item  nav_cur"><span class="nav_txt">我发起的</span></a>
-        <a href="{:U('/notes/join')}" class="fixed_nav_item  "><span class="nav_txt nav_payment">我参与的</span></a>
+        <a href="{:U('/notes')}" class="fixed_nav_item  nav_cur" style="width: 100%!important;"><span class="nav_txt">我的记录</span></a>
+    </div>
+    <div id="dealliststatus1">
+        <span style="float: left;">只看我发起的</span>
+        <span style="float: right"><input type="checkbox" name="check-1" value="4" class="lcs_check" autocomplete="off" /></span>
     </div>
     <div id="dealliststatus1" >
         <!--//start-->
@@ -44,7 +48,18 @@
     </div>
     <div class="express_box" id="invoice" style="display:none;"> </div>
 </div>
+
 <include file="Public:foot" />
+<script type="text/javascript">
+    $(document).ready(function(e) {
+        $('input').lc_switch();
+        // triggered each time a field changes status
+        $('body').delegate('.lcs_check', 'lcs-statuschange', function() {
+            var status = ($(this).is(':checked')) ? 'checked' : 'unchecked';
+            console.log('field changed status: '+ status );
+        });
+    });
+</script>
 </body>
 </html>
 
