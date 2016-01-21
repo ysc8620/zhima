@@ -60,6 +60,40 @@ class HongbaoController extends BaseController {
         $this->error('红包创建失败', U('/hongbao'));
     }
 
+    function time2Units ($time)
+    {
+        $year   = floor($time / 60 / 60 / 24 / 365);
+        $time  -= $year * 60 * 60 * 24 * 365;
+        $month  = floor($time / 60 / 60 / 24 / 30);
+        $time  -= $month * 60 * 60 * 24 * 30;
+        $week   = floor($time / 60 / 60 / 24 / 7);
+        $time  -= $week * 60 * 60 * 24 * 7;
+        $day    = floor($time / 60 / 60 / 24);
+        $time  -= $day * 60 * 60 * 24;
+        $hour   = floor($time / 60 / 60);
+        $time  -= $hour * 60 * 60;
+        $minute = floor($time / 60);
+        $time  -= $minute * 60;
+        $second = $time;
+        $elapse = '';
+
+        $unitArr = array('年'  =>'year', '个月'=>'month',  '周'=>'week', '天'=>'day',
+            '小时'=>'hour', '分钟'=>'minute', '秒'=>'second'
+        );
+
+        foreach ( $unitArr as $cn => $u )
+        {
+            if ( $$u > 0 )
+            {
+                $elapse = $$u . $cn;
+                break;
+            }
+        }
+
+        return $elapse;
+    }
+
+
     /**
      * 红包详情
      */
@@ -74,6 +108,14 @@ class HongbaoController extends BaseController {
 
         if(!$this->hongbao){
             $this->error('没找到红包详情', U('/notes'));
+        }
+        $this->hongbao_amount = $this->hongbao['total_amount'] * 0.98;
+        if($this->hongbao['state'] == 2){
+            $total_user = M('hongbao_order')->where(array('hongbao_id'=>$this->hongbao['id'], 'state'=>2))->group('user_id')->count();
+            $this->total_user = intval($total_user);
+            $this->use_time = $this->time2Units($this->hongbao['hongbao_time'] - $this->hongbao['addtime']);
+
+
         }
         $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
         $this->user = M('user')->find($this->user_id);
