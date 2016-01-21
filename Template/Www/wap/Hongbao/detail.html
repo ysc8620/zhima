@@ -66,7 +66,23 @@
                     <span class="hongbao_user">{$hongbao_user.name}发起了一个凑红包</span><br />
                     <span class="hongbao_remark">{$hongbao.remark}</span>
                 </div>
+                <php>if ($hongbao.state == 2):</php>
+                <div class="hongbao_info">
+                    <i style="font-size:28px; vertical-align: middle; color: green" class="fa fa-check-circle"></i> <font style="font-size: 18px; font-weight: bold; color: #555">凑齐啦！</font>
+               <br />
+                    <p style="font-size: 38px; padding: 14px 0; line-height: 48px; font-weight: bold">￥{$hongbao.total_amount}</p>
+                        <span>每份{$hongbao.part_amount}元，共{$hongbao.total_part}份</span><br />
+                    <span>{$total_user}人参加，{$use_time}凑齐</span><br />
+                    <php>if($hongbao[user_id] == $user[uin]):</php>
+                    <p style="padding: 12px 20px; text-align: left">
+                        红包将会在1~3个工作日内，通过微信红包打给你，
+                        其中已扣除2%的微信支付手续费，扣除后金额为{$hongbao_amount}元。<br /><br />
 
+                        因为微信支付到我们的账户需要1~3个工作日，我们的账户预存垫付的现金不足，暂时不能实时转账，希望理解，资金安全请你放心，如果您有疑问请联系客服。
+                    </p>
+                    <php>endif;</php>
+                </div>
+               <php>else:</php>
                 <div class="hongbao_info">
                     <span class="hongbao_user">目标金额￥{$hongbao.total_amount}元</span>
                 </div>
@@ -135,7 +151,7 @@
                 </div>
                 <!--//end-->
                 <div class="state_btn"> <a class='state_btn_4' href="javascript:void(0)" onclick="show_remark()">凑红包玩法?</a> </div>
-
+                <php>endif;</php>
                 <div class="ptit"><i style="font-size:14px;" class="fa fa-info-circle"></i> <if condition="$hongbao.state eq 2">幸运星已经产生，快找发起人要福利吧！<else />凑齐后,会根据参与金额,随机产生一名幸运星</if></div>
                 <!--//start -->
                 <volist name="order_list" id="order" key="i">
