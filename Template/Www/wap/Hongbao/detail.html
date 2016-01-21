@@ -132,7 +132,7 @@
                     </div>
                 </div>
                 <!--//end-->
-                <div class="state_btn"> <a class='state_btn_4' href="javascript:void(0)" onclick="remark()">凑红包玩法?</a> </div>
+                <div class="state_btn"> <a class='state_btn_4' href="{:U('/hongbao/remark')}">凑红包玩法?</a> </div>
 
                 <div class="ptit"><i style="font-size:14px;" class="fa fa-info-circle"></i> 凑齐后,会根据参与金额,随机产生一名幸运星</div>
                 <!--//start -->
@@ -183,13 +183,13 @@
 <script type="text/javascript">
 
     function remark(){
-        layer.open({
-            title: '凑红包玩法?'
-            ,content: (" <span style='text-align: left'> 1. 发起凑红包 <br />"+
-                    "2. 邀请朋友参与 <br/>"+
-                    "3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>"+
-                    "4. 系统会根据参与份数，随机抽出幸运星</span>")
-            ,btn: ['知道了']
+        var index = layer.alert((" 1. 发起凑红包 <br />"+
+                "2. 邀请朋友参与 <br/>"+
+                "3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>"+
+                "4. 系统会根据参与份数，随机抽出幸运星"), {
+            //icon: 1,
+            shadeClose: true,
+            title: '红包玩法?'
         });
     }
 
@@ -234,8 +234,7 @@
         }
 
         if(id.length < 1){
-            //layer.msg('没有支付订单', function(){});
-            layer.open({content:'没有支付订单', time:2});
+            layer.msg('没有支付订单', function(){});
             return false;
         }
         $.ajax({
@@ -250,8 +249,7 @@
                     callpay(result.data);
 
                 }else if(result.error==1){
-                    //layer.msg(result.message, function(){});
-                    layer.open({content:result.message, time:2})
+                    layer.msg(result.message, function(){});
                 }
             }
         });

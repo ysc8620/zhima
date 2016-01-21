@@ -51,14 +51,12 @@
         var amount = $('input[name="amount"]').val();
         var reg = new RegExp("^[0-9]\.?[0-9]*$");
         if(!reg.test(amount)){
-            //layer.msg('请填写整数金额.', function(){});
-            layer.open({content:'请填写整数金额', time:2});
+            layer.msg('请填写整数金额.', function(){});
             return false;
         }
 
         if(amount > 200 || amount < 0){
-            //layer.msg('请输入1-200之间金额.', function(){});
-            layer.open({content:'请输入0-200之间金额.', time:2});
+            layer.msg('请输入1-200之间金额.', function(){});
             return false;
         }
 
@@ -67,20 +65,17 @@
 
         var total = $('input[name="total"]').val();
         if(!reg.test(total)){
-            //layer.msg('请填写整数份额.', function(){});
-            layer.open({content:'请填写整数份额.', time:2});
+            layer.msg('请填写整数份额.', function(){});
             return false;
         }
 
         if(total > 200 || total < 1){
-            //layer.msg('请输入1-200之间份额.', function(){});
-            layer.open({content:'请输入0-200之间份额.', time:2});
+            layer.msg('请输入1-200之间份额.', function(){});
             return false;
         }
 
         if(amount * total > 200){
-            //layer.msg('总金额不能超过200元.', function(){});
-            layer.open({content:'总金额不能超过200元.', time:2});
+            layer.msg('总金额不能超过200元.', function(){});
             return false;
         }
         return true;

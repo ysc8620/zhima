@@ -8,8 +8,7 @@
 </div>-->
 <if condition="session('error_message')">
 <script type="text/javascript">
-    //layer.msg("{:session('error_message')}", function(){});
-    layer.open({content:"{:session('error_message')}", time:2});
+    layer.msg("{:session('error_message')}", function(){});
 </script>
 </if>
 <php>
