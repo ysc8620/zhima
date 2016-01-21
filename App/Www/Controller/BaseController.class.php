@@ -41,88 +41,88 @@ class BaseController extends Controller {
                     $this->user_id = $user['uin'];
 
                     if($user['wx_last_time'] < time() - 86400){
-                        try{
-                            $user = \Wechat\Wxapi::getUserInfo($openid, 2);
-                            if($user){
-                                $user_info = M('user')->where(array('openid'=>$openid))->find();
-                                if($user_info){
-                                    $data['name'] = $user['nickname'];
-                                    $data['openid'] = $user['openid'];
-                                    $data['create_time'] = time();
-                                    $data['header'] = $user['headimgurl'];
-                                    $data['sex'] = $user['sex'];
-                                    $data['unionid'] = $user['unionid'];
-                                    $data['wx_province'] = $user['province'];
-                                    $data['wx_city'] = $user['wx_city'];
-                                    $data['wx_country'] = $user['country'];
-                                    if($user['subscribe_time']){
-                                        $data['subscribe_time'] = $user['subscribe_time'];
-                                    }
-
-                                    if(isset($user['subscribe'])){
-                                        $data['subscribe'] = $user['subscribe'];
-                                        session('subscribe', $user['subscribe']);
-                                    }
-
-                                    if(isset($user['groupid'])){
-                                        $data['groupid'] = $user['groupid'];
-                                    }
-
-                                    if(isset($user['remark'])){
-                                        $data['remark'] = $user['remark'];
-                                    }
-
-                                    $data['wx_last_time'] = time();
-
-                                    M('user')->where("uin='".$user_info['uin']."'")->save($data);
-                                    session('user_id', $user_info['uin']);
-                                }else{
-                                    //
-                                    $data['name'] = $user['nickname'];
-                                    $data['openid'] = $user['openid'];
-                                    $data['create_time'] = time();
-                                    $data['header'] = $user['headimgurl'];
-                                    $data['sex'] = $user['sex'];
-                                    $data['unionid'] = $user['unionid'];
-                                    $data['wx_province'] = $user['province'];
-                                    $data['wx_city'] = $user['wx_city'];
-                                    $data['wx_country'] = $user['country'];
-                                    if($user['subscribe_time']){
-                                        $data['subscribe_time'] = $user['subscribe_time'];
-                                    }
-
-                                    if(isset($user['subscribe'])){
-                                        $data['subscribe'] = $user['subscribe'];
-                                        session('subscribe', $user['subscribe']);
-                                    }
-
-                                    if(isset($user['groupid'])){
-                                        $data['groupid'] = $user['groupid'];
-                                    }
-
-                                    if(isset($user['remark'])){
-                                        $data['remark'] = $user['remark'];
-                                    }
-                                    $data['wx_last_time'] = time();
-                                    $uin = M('user')->add($data);
-                                    session('user_id', $uin);
-                                }
-                            }else{
-                                \Wechat\Wxapi::authorize();
-                            }
-                        }catch (\Exception $e){
-                            \Wechat\Wxapi::authorize();
-                            exit();
-                        }
-//                        if($user['subscribe']){
-//                            // 自动获取
-//                            $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-//                            header("Location: ".U("/weixin/userinfo").'?url='.urlencode($url));
-//                        }else{
-//                            // 网页授权
+//                        try{
+//                            $user = \Wechat\Wxapi::getUserInfo($openid, 2);
+//                            if($user){
+//                                $user_info = M('user')->where(array('openid'=>$openid))->find();
+//                                if($user_info){
+//                                    $data['name'] = $user['nickname'];
+//                                    $data['openid'] = $user['openid'];
+//                                    $data['create_time'] = time();
+//                                    $data['header'] = $user['headimgurl'];
+//                                    $data['sex'] = $user['sex'];
+//                                    $data['unionid'] = $user['unionid'];
+//                                    $data['wx_province'] = $user['province'];
+//                                    $data['wx_city'] = $user['wx_city'];
+//                                    $data['wx_country'] = $user['country'];
+//                                    if($user['subscribe_time']){
+//                                        $data['subscribe_time'] = $user['subscribe_time'];
+//                                    }
+//
+//                                    if(isset($user['subscribe'])){
+//                                        $data['subscribe'] = $user['subscribe'];
+//                                        session('subscribe', $user['subscribe']);
+//                                    }
+//
+//                                    if(isset($user['groupid'])){
+//                                        $data['groupid'] = $user['groupid'];
+//                                    }
+//
+//                                    if(isset($user['remark'])){
+//                                        $data['remark'] = $user['remark'];
+//                                    }
+//
+//                                    $data['wx_last_time'] = time();
+//
+//                                    M('user')->where("uin='".$user_info['uin']."'")->save($data);
+//                                    session('user_id', $user_info['uin']);
+//                                }else{
+//                                    //
+//                                    $data['name'] = $user['nickname'];
+//                                    $data['openid'] = $user['openid'];
+//                                    $data['create_time'] = time();
+//                                    $data['header'] = $user['headimgurl'];
+//                                    $data['sex'] = $user['sex'];
+//                                    $data['unionid'] = $user['unionid'];
+//                                    $data['wx_province'] = $user['province'];
+//                                    $data['wx_city'] = $user['wx_city'];
+//                                    $data['wx_country'] = $user['country'];
+//                                    if($user['subscribe_time']){
+//                                        $data['subscribe_time'] = $user['subscribe_time'];
+//                                    }
+//
+//                                    if(isset($user['subscribe'])){
+//                                        $data['subscribe'] = $user['subscribe'];
+//                                        session('subscribe', $user['subscribe']);
+//                                    }
+//
+//                                    if(isset($user['groupid'])){
+//                                        $data['groupid'] = $user['groupid'];
+//                                    }
+//
+//                                    if(isset($user['remark'])){
+//                                        $data['remark'] = $user['remark'];
+//                                    }
+//                                    $data['wx_last_time'] = time();
+//                                    $uin = M('user')->add($data);
+//                                    session('user_id', $uin);
+//                                }
+//                            }else{
+//                                \Wechat\Wxapi::authorize();
+//                            }
+//                        }catch (\Exception $e){
 //                            \Wechat\Wxapi::authorize();
 //                            exit();
 //                        }
+                        if($user['subscribe']){
+                            // 自动获取
+                            $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+                            header("Location: ".U("/weixin/userinfo").'?url='.urlencode($url));
+                        }else{
+                            // 网页授权
+                            \Wechat\Wxapi::authorize();
+                            exit();
+                        }
                     }
                 }
             }else{
@@ -130,10 +130,12 @@ class BaseController extends Controller {
                 \Wechat\Wxapi::authorize();
                 exit();
             }
-        }else{
+        }
+        else{
             $user = M('user')->find($this->user_id);
 
             if( $user ){
+                session('user_id', $user['uin']);
                 // echo $user['subscribe'].'-';
                 session('subscribe', $user['subscribe']);
             }
