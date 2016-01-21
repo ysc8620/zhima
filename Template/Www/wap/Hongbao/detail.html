@@ -132,9 +132,9 @@
                     </div>
                 </div>
                 <!--//end-->
-                <div class="state_btn"> <a class='state_btn_4' href="javascript:void(0)" onclick="remark()">凑红包玩法?</a> </div>
+                <div class="state_btn"> <a class='state_btn_4' href="javascript:void(0)" onclick="show_remark()">凑红包玩法?</a> </div>
 
-                <div class="ptit"><i style="font-size:14px;" class="fa fa-info-circle"></i> 凑齐后,会根据参与金额,随机产生一名幸运星</div>
+                <div class="ptit"><i style="font-size:14px;" class="fa fa-info-circle"></i> <if condition="$hongbao.state eq 2">幸运星已经产生，快找发起人要福利吧！<else />凑齐后,会根据参与金额,随机产生一名幸运星</if></div>
                 <!--//start -->
                 <volist name="order_list" id="order" key="i">
                 <div class="order " <if condition="$i gt 5">data-role="order" style="display:none"</if>>
@@ -152,7 +152,7 @@
                                         <div class="order_goods_attr_item">{$order.addtime|date="Y-m-d H:i:s",###}
                                             <div class="order_goods_price" style="text-align: right">
                                                 <span>￥{$order.total_amount}元</span>
-                                                <span><if condition="$order.state eq 1"> <if condition="$hongbao.addtime + 86400 gt time()"><span style="color: #0000ff" onclick="set_pay('{$order.order_sn}')">待支付</span><else/></if><elseif condition="$order.state eq 2"/><span style="color: green">已支付</span><elseif condition="$order.state eq 3"/><span style="color: #000">已过期</span><elseif condition="$order.state eq 4"/><span style="color: #000">已退款</span></if></span>
+                                                <span><if condition="$order.state eq 1"> <if condition="$hongbao.addtime + 86400 gt time()"><span style="color: #0000ff" onclick="set_pay('{$order.order_sn}')">待支付</span><else/></if><elseif condition="$order.state eq 2"/><elseif condition="$order.state eq 3"/><span style="color: #000">已过期</span><elseif condition="$order.state eq 4"/><span style="color: #000">已退款</span></if></span>
                                                 <if condition="$order.is_star eq 1"><br /><i class="fa fa-star"></i> 幸运星</if>
                                                </div>
                                         </div>
@@ -181,17 +181,17 @@
  </script>
 
 <script type="text/javascript">
-
-    function remark(){
-        var index = layer.alert((" 1. 发起凑红包 <br />"+
-                "2. 邀请朋友参与 <br/>"+
-                "3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>"+
-                "4. 系统会根据参与份数，随机抽出幸运星"), {
-            //icon: 1,
-            shadeClose: true,
-            title: '红包玩法?'
+    function show_remark(){
+        layer.open({
+            title: '凑红包玩法?'
+            ,content: (" <span style='text-align: left'> 1. 发起凑红包 <br />"+
+                    "2. 邀请朋友参与 <br/>"+
+                    "3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>"+
+                    "4. 系统会根据参与份数，随机抽出幸运星</span>")
+            ,btn: ['知道了']
         });
     }
+
 
     /**
      * 打开选择

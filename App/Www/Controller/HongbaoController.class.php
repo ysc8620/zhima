@@ -102,7 +102,7 @@ class HongbaoController extends BaseController {
         $limit_part = $this->hongbao[total_part] - $this->hongbao[total_num];
         $limit_part = $limit_part<0?0:$limit_part;
         if($this->hongbao['user_id'] == $this->user_id){
-            $this->share_title = "我发起的的凑红包-￥{$this->hongbao['total_amount']}";
+            $this->share_title = "我发起的凑红包-￥{$this->hongbao['total_amount']}";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://hb.kakaapp.com/images/logo.jpg";
             $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_part']}份，还剩{$limit_part}份";
