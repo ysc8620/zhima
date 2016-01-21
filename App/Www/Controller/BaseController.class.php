@@ -131,9 +131,10 @@ class BaseController extends Controller {
                 exit();
             }
         }else{
-            $user = M('user')->where(array('openid'=>$openid))->find();
+            $user = M('user')->find($this->user_id);
 
             if( $user ){
+                echo $user['subscribe'].'-';
                 session('subscribe', $user['subscribe']);
             }
         }
