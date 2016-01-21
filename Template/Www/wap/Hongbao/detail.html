@@ -234,7 +234,8 @@
         }
 
         if(id.length < 1){
-            layer.msg('没有支付订单', function(){});
+            //layer.msg('没有支付订单', function(){});
+            layer.open({content:'没有支付订单', time:2});
             return false;
         }
         $.ajax({
@@ -249,7 +250,8 @@
                     callpay(result.data);
 
                 }else if(result.error==1){
-                    layer.msg(result.message, function(){});
+                    //layer.msg(result.message, function(){});
+                    layer.open({content:result.message, time:2})
                 }
             }
         });
