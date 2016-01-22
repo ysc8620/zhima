@@ -143,4 +143,10 @@ class AutoController extends Controller {
         }
         die('ok');
     }
+
+    function test(){
+        print_r($_COOKIE);
+        print_r($_SESSION);
+        echo time();
+    }
 }
