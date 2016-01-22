@@ -101,6 +101,8 @@ class HongbaoController extends BaseController {
         $this->title ="凑红包详情";
 
         $id = I('get.id',0, 'strval');
+
+        $this->show_share = I('get.show_share', 0,'strval');
         if($id < 1){
             $this->error('请选择查看的红包', U('/notes'));
         }
