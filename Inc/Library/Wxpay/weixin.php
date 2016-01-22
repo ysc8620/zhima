@@ -91,9 +91,8 @@ function refund($data = array()){
     $input->SetOut_refund_no(get_order_sn());
     $input->SetOp_user_id(WxPayConfig::MCHID);
 
-    //print_r($input);die();
-    printf_info(WxPayApi::refund($input));
-    exit();
+    return WxPayApi::refund($input);
+
 }
 
 /**
@@ -203,7 +202,7 @@ class PayNotifyCallBack extends WxPayNotify
                             M('hongbao')->where(array("id='{$hongbao['id']}'"))->save(array('hongbao_id'=>$hongbao_id, 'hongbao_sn'=>$bao['mch_billno'], 'hongbao_time'=>time()));
                             $data = sendHongBao($bao);
                             if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
-                                M('hongbao')->where(array("id='{$hongbao['id']}'"))->save(array('is_send_hongbao'=>1, 'hongbao_id'=>$hongbao_id, 'hongbao_sn'=>$bao['mch_billno'], 'hongbao_time'=>time()));
+                                M('hongbao')->where(array("id='{$hongbao['id']}'"))->save(array('is_send_hongbao'=>1));
                                 M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
 
                                 $user_amount = $hongbao['total_amount'] * 0.98;
