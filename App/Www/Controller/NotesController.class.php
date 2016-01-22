@@ -15,12 +15,22 @@ class NotesController extends BaseController {
         $page = $page<1?1:$page;
         $this->is_only = I('request.is_only', 0);
         if($this->is_only){
-            $this->list = M('hongbao')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
+            $list = M('hongbao')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
             $total = M('hongbao')->where(array('user_id'=>$this->user_id))->count();
         }else{
-            $this->list = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}')")->page($page,10)->order("id DESC")->select();
+            $list = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}')")->page($page,10)->order("id DESC")->select();
             $total = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}')")->count();
         }
+
+        // $list = M('hongbao_order')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
+        if($list){
+            foreach($list as $i=>$item){
+                $list[$i]['hongbao'] = M('hongbao')->find($item['hongbao_id']);
+                $list[$i]['user'] = M('user')->find($list[$i]['hongbao']['user_id']);
+            }
+        }
+
+        $this->list = $list;
 
 
         $Page              = new \Think\Page($total,10); // 实例化分页类 传入总记录数和每页显示的记录数(20)
