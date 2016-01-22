@@ -80,15 +80,15 @@ class WeixinController extends Controller {
             if($user){
                 $user_info = M('user')->where(array('openid'=>session('openid')))->find();
                 if($user_info){
-                    $data['name'] = $user['nickname'];
-                    $data['openid'] = $user['openid'];
-                    $data['create_time'] = time();
-                    $data['header'] = $user['headimgurl'];
-                    $data['sex'] = $user['sex'];
-                    $data['unionid'] = $user['unionid'];
-                    $data['wx_province'] = $user['province'];
-                    $data['wx_city'] = $user['wx_city'];
-                    $data['wx_country'] = $user['country'];
+                    //$data['name'] = $user['nickname'];
+                    //$data['openid'] = $user['openid'];
+                    //$data['create_time'] = time();
+                    //$data['header'] = $user['headimgurl']?;
+                    //$data['sex'] = $user['sex'];
+                    //$data['unionid'] = $user['unionid'];
+                    //$data['wx_province'] = $user['province'];
+                    //$data['wx_city'] = $user['wx_city'];
+                    //$data['wx_country'] = $user['country'];
                     if($user['subscribe_time']){
                         $data['subscribe_time'] = $user['subscribe_time'];
                     }
