@@ -80,64 +80,70 @@ class WeixinController extends Controller {
             if($user){
                 $user_info = M('user')->where(array('openid'=>session('openid')))->find();
                 if($user_info){
-                    //$data['name'] = $user['nickname'];
-                    //$data['openid'] = $user['openid'];
-                    //$data['create_time'] = time();
-                    //$data['header'] = $user['headimgurl']?;
-                    //$data['sex'] = $user['sex'];
-                    //$data['unionid'] = $user['unionid'];
-                    //$data['wx_province'] = $user['province'];
-                    //$data['wx_city'] = $user['wx_city'];
-                    //$data['wx_country'] = $user['country'];
-                    if($user['subscribe_time']){
-                        $data['subscribe_time'] = $user['subscribe_time'];
+                    if($user['openid']){
+                        $data['name'] = $user['nickname'];
+                        // $data['openid'] = $user['openid'];
+                        $data['create_time'] = time();
+                        $data['header'] = $user['headimgurl'];
+                        $data['sex'] = $user['sex'];
+                        $data['unionid'] = $user['unionid'];
+                        $data['wx_province'] = $user['province'];
+                        $data['wx_city'] = $user['wx_city'];
+                        $data['wx_country'] = $user['country'];
+                        if($user['subscribe_time']){
+                            $data['subscribe_time'] = $user['subscribe_time'];
+                        }
+
+                        if(isset($user['subscribe'])){
+                            $data['subscribe'] = $user['subscribe'];
+                        }
+
+                        if(isset($user['groupid'])){
+                            $data['groupid'] = $user['groupid'];
+                        }
+
+                        if(isset($user['remark'])){
+                            $data['remark'] = $user['remark'];
+                        }
+
+                        $data['wx_last_time'] = time();
+
+                        M('user')->where("uin='".$user_info['uin']."'")->save($data);
                     }
-
-                    if(isset($user['subscribe'])){
-                        $data['subscribe'] = $user['subscribe'];
-                    }
-
-                    if(isset($user['groupid'])){
-                        $data['groupid'] = $user['groupid'];
-                    }
-
-                    if(isset($user['remark'])){
-                        $data['remark'] = $user['remark'];
-                    }
-
-                    $data['wx_last_time'] = time();
-
-                    M('user')->where("uin='".$user_info['uin']."'")->save($data);
                     session('user_id', $user_info['uin']);
                 }else{
-                    //
-                    $data['name'] = $user['nickname'];
-                    $data['openid'] = $user['openid'];
-                    $data['create_time'] = time();
-                    $data['header'] = $user['headimgurl'];
-                    $data['sex'] = $user['sex'];
-                    $data['unionid'] = $user['unionid'];
-                    $data['wx_province'] = $user['province'];
-                    $data['wx_city'] = $user['wx_city'];
-                    $data['wx_country'] = $user['country'];
-                    if($user['subscribe_time']){
-                        $data['subscribe_time'] = $user['subscribe_time'];
+
+                    if($user['openid']){
+                        //
+                        $data['name'] = $user['nickname'];
+                        $data['openid'] = $user['openid'];
+                        $data['create_time'] = time();
+                        $data['header'] = $user['headimgurl'];
+                        $data['sex'] = $user['sex'];
+                        $data['unionid'] = $user['unionid'];
+                        $data['wx_province'] = $user['province'];
+                        $data['wx_city'] = $user['wx_city'];
+                        $data['wx_country'] = $user['country'];
+                        if($user['subscribe_time']){
+                            $data['subscribe_time'] = $user['subscribe_time'];
+                        }
+
+                        if(isset($user['subscribe'])){
+                            $data['subscribe'] = $user['subscribe'];
+                        }
+
+                        if(isset($user['groupid'])){
+                            $data['groupid'] = $user['groupid'];
+                        }
+
+                        if(isset($user['remark'])){
+                            $data['remark'] = $user['remark'];
+                        }
+                        $data['wx_last_time'] = time();
+                        $uin = M('user')->add($data);
+                        session('user_id', $uin);
                     }
 
-                    if(isset($user['subscribe'])){
-                        $data['subscribe'] = $user['subscribe'];
-                    }
-
-                    if(isset($user['groupid'])){
-                        $data['groupid'] = $user['groupid'];
-                    }
-
-                    if(isset($user['remark'])){
-                        $data['remark'] = $user['remark'];
-                    }
-                    $data['wx_last_time'] = time();
-                    $uin = M('user')->add($data);
-                    session('user_id', $uin);
                 }
             }else{
                 echo 'ERROR 11';
