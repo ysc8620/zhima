@@ -9,7 +9,7 @@
     </div>
     <div id="dealliststatus1">
         <span style="float: left;">只看我发起的</span>
-        <span style="float: right"><input type="checkbox" name="check-1" value="4" class="lcs_check" autocomplete="off" /></span>
+        <span style="float: right"><a href="?is_only=<if condition="$is_only">0<else/>1</if> "><input type="checkbox" name="check-1" value="4" class="lcs_check lcs_on" <if condition="$is_only">checked</if>  autocomplete="off" /></a></span>
     </div>
     <div id="dealliststatus1" >
         <!--//start-->
