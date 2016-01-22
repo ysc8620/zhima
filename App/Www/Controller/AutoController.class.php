@@ -138,6 +138,7 @@ class AutoController extends Controller {
                         }
                     }
                 }
+                M('hongbao')->where(array('id'=>$hongbao['id']))->save(array('is_refund'=>1));
             }
         }
         die('ok');
