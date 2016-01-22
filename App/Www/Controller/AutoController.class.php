@@ -81,8 +81,7 @@ class AutoController extends Controller {
                     }else{
                         $user_info = M('user')->find($star['user_id']);
                     }
-                    $log = "发送红包成功, 红包编号：{$hongbao['id']},发送编号：{$hongbao_send['id']}";
-                    f_log($log, ROOT_PATH.'Runtime/Logs/hongbao.log');
+
                     $user_amount = $hongbao['total_amount'] * 0.98;
                     $msg =  "你发起的凑红包成功啦！
 
@@ -102,10 +101,13 @@ class AutoController extends Controller {
 
 快找发起人要福利吧 :D";
                     \Wechat\Wxapi::send_wxmsg($user_info['openid'],'众筹状态提醒',U('/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
-
+                    $log = "发送红包成功, 红包编号：{$hongbao['id']},发送编号：{$hongbao_send['id']}";
+                    f_log($log, ROOT_PATH.'Runtime/Logs/hongbao.log');
+                    echo $log."<br/>";
                 }else{
                     $log = "发送红包失败, 红包编号：{$hongbao['id']},发送编号：{$hongbao_send['id']}";
                     f_log($log, ROOT_PATH.'Runtime/Logs/hongbao.log');
+                    echo $log."<br/>";
                 }
             }
         }
@@ -123,13 +125,21 @@ class AutoController extends Controller {
                 $order_list = M('hongbao_order')->where(array('hongbao_id'=>$hongbao['id'], 'state'=>2, 'is_refund'=>0))->select();
                 if($order_list){
                     foreach($order_list as $order){
-                        //
-
-                        $rs = refund(array('transaction_id'=> '1007370008201601132684551338', 'total_fee'=>1, 'refund_fee'=>1));
+                        $rs = refund(array('out_trade_no'=>$order['order_sn'], 'total_fee'=>$order['total_amount']*100, 'refund_fee'=>$order['total_amount']*100));
+                        if($rs['return_code'] == 'SUCCESS' && $rs['result_code'] == 'SUCCESS'){
+                            M('hongbao_order')->where(array("id"=>$order['id']))->save(array('is_refund'=>1,'refund_time'=>time()));
+                            $log = "订单退款成功, 红包编号：{$hongbao['id']},订单编号：{$order['id']}";
+                            f_log($log, ROOT_PATH.'Runtime/Logs/refund.log');
+                            echo $log."<br/>";
+                        }else{
+                            $log = "订单退款失败, 红包编号：{$hongbao['id']},订单编号：{$order['id']}";
+                            f_log($log, ROOT_PATH.'Runtime/Logs/refund.log');
+                            echo $log."<br/>";
+                        }
                     }
                 }
             }
         }
-
+        die('ok');
     }
 }

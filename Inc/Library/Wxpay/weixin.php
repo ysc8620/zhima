@@ -147,6 +147,7 @@ class PayNotifyCallBack extends WxPayNotify
                 $order_data = array(
                     'pay_id' => $id,
                     'pay_time' => time(),
+                    'transaction_id'=>$result['transaction_id'],
                     'state' => 2
                 );
                 M('hongbao_order')->where("id='{$order['id']}'")->save($order_data);
