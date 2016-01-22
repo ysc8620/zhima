@@ -25,8 +25,8 @@ class NotesController extends BaseController {
         // $list = M('hongbao_order')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
         if($list){
             foreach($list as $i=>$item){
-                $list[$i]['hongbao'] = M('hongbao')->find($item['hongbao_id']);
-                $list[$i]['user'] = M('user')->find($list[$i]['hongbao']['user_id']);
+                #$list[$i]['hongbao'] = M('hongbao')->find($item['hongbao_id']);
+                $list[$i]['user'] = M('user')->find($item['user_id']);
             }
         }
 
