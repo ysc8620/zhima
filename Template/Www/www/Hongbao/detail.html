@@ -24,54 +24,87 @@
 				<div class="remark">凑红包,有福利,你懂得</div>
 			</div>
 		</ul>
-		<ul>
-			<div class="tit mt20">
-				<div class="title"><font>目标金额：</font>￥200.00元</div>
-			</div>
-		</ul>
-		<ul>
-		 <div class="hongbao_jindu">
-			<div class="hongbao_jindu_bg">
-				<div class="hongbao_jindu_f" style="color:#fff; text-align:center; width: {$percentage}%">
-					{$percentage}%
+		<div class="detail_block hide">
+			<ul >
+				<div class="tit mt20">
+					<div class="title"><font>目标金额：</font>￥200.00元</div>
 				</div>
-			</div>
-			<div class="remark">每份1元, 共20份, 还差20份凑成</div>
+			</ul>
+			<ul>
+				 <div class="hongbao_jindu">
+					<div class="hongbao_jindu_bg">
+						<div class="hongbao_jindu_f" style="color:#fff; text-align:center; width: {$percentage}%">
+							{$percentage}%
+						</div>
+					</div>
+					<div class="remark">每份1元, 共20份, 还差20份凑成</div>
+				</div>
+			</ul>
+			<ul>
+				<div class="tit">
+					<div class="">
+						<img src="/images/cou.png" style=" width:80px;" />
+					</div>
+					<div class="">
+						<a href="">凑红包玩法？</a>
+					</div>
+				</div>
+			</ul>
 		</div>
-		</ul>
-		<ul>
-			<div class="tit">
-				<div class="title"><font class="color_999">您需要支付：</font>￥<font>200.00</font>元</div>
-				<div class=""><input class="jian" type="button" value="-"><input type="text" class="num" readonly="" value="1" /><input class="jia" type="button" value="+" /></div>
-				<div class="remark">份数越多, 成为幸运星的机会就越大哦</div>
-				<div class="">
-					<input type="button" value="凑 1 份" class="btn btn_cou" />
+		<div class="over_block hide">
+			<ul >
+				<div class="tit">
+					<div class="" style="color:#d05343;">最后1份正在支付</div>
+					<div class="">
+						<img src="/images/cou_f.png" style=" width:80px;" />
+					</div>
+					<div class="">
+						<a href="">凑红包玩法？</a>
+					</div>
 				</div>
-				<div class="remark" style="color:#d05343;">如果24小时内没有凑足，系统会自动退款</div>
-			</div>
-		</ul>
+			</ul>
+		</div>
+		<div class="buy_block hide">
+			<ul>
+				<div class="tit">
+					<div class="title"><font class="color_999">您需要支付：</font>￥<font>200.00</font>元</div>
+					<div class="" style="margin:12px 0;"><input class="jian" type="button" value="-"><input type="text" class="num" readonly="" value="1" /><input class="jia" type="button" value="+" /></div>
+					<div class="remark">份数越多, 成为幸运星的机会就越大哦</div>
+					<div class="">
+						<input type="button" value="凑 1 份" class="btn btn_cou" />
+					</div>
+					<div class="remark" style="color:#d05343; margin:12px 0;">如果24小时内没有凑足，系统会自动退款</div>
+				</div>
+			</ul>
+		</div>
 		
-		<ul>
-			<div class="tit">
-				<div class="" style="color:#d05343;">最后1份正在支付</div>
-				<div class="">
-					<img src="/images/cou_f.png" style=" width:80px;" />
+		<div class="success_block">
+			<ul >
+				<div class="tit mt20">
+					<div class="title"><font>目标金额：</font>￥200.00元</div>
 				</div>
-				<div class="">
-					<a href="">凑红包玩法？</a>
+			</ul>
+			<ul >
+				<div class="tit">
+					<div class="">
+						<img src="/images/ok.png" style=" width:80px;" />
+					</div>
+					<div class="title">凑齐啦~</div>
+					<div class="remark">每份5元, 共40份, 1小时30份钟凑齐</div>
 				</div>
-			</div>
-		</ul>
-		<ul>
-			<div class="tit">
-				<div class="">
-					<img src="/images/cou.png" style=" width:80px;" />
+			</ul>
+			<ul>
+				<div class="remark">
+				 <p style="padding: 4px 20px; text-align: left">
+                        红包已经通过微信红包打给你, 其中已扣除2%的微信支付手续费, 扣除后金额为{$hongbao_amount}元.<br /><br />
+                        或者<br /><br />
+                        红包将会在1~2个工作日, 通过微信红包打给你,其中会扣除2%的微信支付手续费,扣除后金额为{$hongbao_amount}元.
+                    </p>
 				</div>
-				<div class="">
-					<a href="">凑红包玩法？</a>
-				</div>
-			</div>
-		</ul>
+			</ul>
+		</div>
+		
+		
 	</div>
 	<div class="order_list">
 		<div class="header bt_line">
@@ -120,6 +153,31 @@
 		<div class="cl"></div>
 	</div>
 	<div class="from"><div class="foot_reamrk">如果24小时内该红包没有凑齐, 系统会自动退款</div></div>
+</div>
+
+<div id="shareit1" style="display: none">
+    <div id="shareit">
+        <img src="/images/share_bg.png" style="height:120px;" class="arrow">
+    </div>
+    <span style="" id="follow">
+        <div style="padding-right: 0px; padding-left: 0px; margin-top: 16px; font-size: 20px; color: #fff" class="text"><p>支付成功</p></div>
+		<div>
+		<img src="/images/ico_xiao.png" style="width:80px;" />
+		</div>
+		<div style="padding: 0px; margin-top: 0px; font-size: 20px; color: #fff" class="text">分享出去，加快进度</div>
+    </span>
+</div>
+
+<div id="error_block" style="display: none">
+<div id="shareit">
+    </div>
+    <span style="" id="follow">
+        <div style="padding-right: 0px; padding-left: 0px; margin-top: 16px; font-size: 20px; color: #fff" class="text"><p>被人抢先一步了...</p></div>
+		<div>
+		<img src="/images/ico_ku.png" style="width:80px;" />
+		</div>
+		<div style="padding: 0px; margin-top: 8px; font-size: 12px; color: #fff" class="text">剩余份数小于您想购买的份数了，请重新确认</div>
+    </span>
 </div>
 </body>
 </html>
