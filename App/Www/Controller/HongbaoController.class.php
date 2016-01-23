@@ -173,7 +173,7 @@ class HongbaoController extends BaseController {
                 $order_list[$k]['user'] = M('user')->find($order['user_id']);
             }
         }
-
+        $this->share_link = U('/hongbao/detail', array('id'=>$id), true,true);
         $this->order_list = $order_list;
         $this->id = $id;
         $this->display();
