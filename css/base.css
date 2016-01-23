@@ -57,8 +57,11 @@ input[type=text],textarea {-webkit-appearance:none}
 .color_999{ color:#999;}
 .mc{ margin:0 auto;}
 .mt20{ margin-top:20px;}
+.mt40{ margin-top:40px!important;}
+.cl{ clear:both;}
 .fr{ float:right;}
 .fl{ float:left;}
+.tl{ text-align:left;}
 .tr{ text-align:right;}
 .hide{display:none!important}
 .show {display:block!important}
@@ -83,8 +86,35 @@ input[type=text],textarea {-webkit-appearance:none}
 .foot_reamrk{ position: absolute; bottom: 20px; color:#9b9b9b; font-size:12px; text-align:center; width:90%;}
 
 /*详情页*/
-.detail_header{background:url(http://wyz.67ge.com/wp-content/uploads/qzlogo.jpg);  
+.detail_header{ height:180px; position:relative; background:url(../images/hb_bg.png);  
 filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  
 -moz-background-size:100% 100%;  
     background-size:100% 100%;  }
+.detail_head_block{ position:absolute; bottom:-30px; text-align:center; margin:0 auto; width:100%;}
+.detail_head_img{    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #fff;
+    display: inline-block;
+    height: 60px;
+    width: 60px;}
 
+
+.from div.tit .title{ font-size:18px;}
+.from div.tit .remark{ color:#999; font-size:14px;}
+
+.hongbao_bg{ background:url(../images/hongbao_bg.png) center bottom no-repeat; height:120px;}
+.hongbao_jindu{ width:100%; clear:both; margin:14px 0;}
+.hongbao_jindu .remark{ text-align:right; text-align:center; font-size:14px; width:80%; margin:6px auto;}
+.hongbao_jindu_bg{ background:url(../images/hongbao_b.png) no-repeat center center; width:80%; margin:0 auto; text-align:center;}
+.hongbao_jindu_f{background:url(../images/hongbao_f.png) repeat-x center center; width:65%;  text-align:left; }
+
+.order_list{ width:100%; background:#fff;}
+.order_list .header{ width:90%; margin:0 auto; font-size:14px; line-height:30px;}
+.order_list .block{ width:90%; margin:0 auto;}
+.order_list .block ul{ width:100%; clear:both; margin:6px 0; }
+.order_list .block .head_img{ width:}
+.order_list .bt_line{border-bottom:1px #ddd solid; }
+.order_list .p6{ padding:2px;}
+.order_list .detail{ height:70px; line-height:24px;padding-top:6px; color:#323232; font-size:14px;}
+.order_list .xiala{ text-align:center; margin:12px auto; font-size:14px; }
+.order_list .xiala div{ cursor:pointer;}
