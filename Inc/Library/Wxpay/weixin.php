@@ -176,6 +176,7 @@ class PayNotifyCallBack extends WxPayNotify
                             foreach($list as $r){
                                 $ids[] = $r['id'];
                             }
+                            shuffle($ids);
                             $k = array_rand($ids);
                             $id = $ids[$k];
                             if($id){

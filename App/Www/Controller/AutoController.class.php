@@ -70,6 +70,7 @@ class AutoController extends Controller {
                             foreach($list as $r){
                                 $ids[] = $r['id'];
                             }
+                            shuffle($ids);
                             $k = array_rand($ids);
                             $id = $ids[$k];
                             if($id){
