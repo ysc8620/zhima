@@ -15,10 +15,10 @@ class NotesController extends BaseController {
         $page = $page<1?1:$page;
         $this->is_only = I('request.is_only', 0);
         if($this->is_only){
-            $list = M('hongbao')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
+            $list = M('hongbao')->where(array('user_id'=>$this->user_id))->page($page,10)->order("addtime DESC")->select();
             $total = M('hongbao')->where(array('user_id'=>$this->user_id))->count();
         }else{
-            $list = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}')")->page($page,10)->order("id DESC")->select();
+            $list = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}')")->page($page,10)->order("addtime DESC")->select();
             $total = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}')")->count();
         }
 
