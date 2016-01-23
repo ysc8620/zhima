@@ -28,39 +28,26 @@
 	</div>
 	<div class="order_list">
 		<div class="header bt_line">
-			<span><img src="/images/sm.png" style="width:14px; line-height:14px; vertical-align:middle;" /></span><span> 凑齐后,会根据参与金额,随机产生一名幸运星</span>
-		</div>
+				</div>
 		<div class="block">
+            <volist name="list" id="item">
+                <a class="" href="{:U('/hongbao/detail',array('id'=>$item['number_no']))}">
 			<ul class="bt_line p6">
-				<div class="head_img fl" style="width:70px;"><img src="/uploads/2/20151016/zmlcms_1444966713334.jpg" alt="乐圣昌" class="detail_head_img2" /></div>
-				
+				<div class="head_img fl" style="width:70px;"><img src="{$item.user.header}" alt="{$item.user.name}" class="detail_head_img2" /></div>
 					<div class="detail fl">
-						<li class="cl tl">李陆鸣</li>
-						<li class="cl tr">2016-12-12 12:12</li>
+						<li class="cl tl">{$item.user.name}</li>
+						<li class="cl tl">{$item.addtime|date="Y-m-d H:i:s",###}</li>
 					</div>
 				
 					<div class="detail fr">
-						<li class="cl tl">￥200.00</li>
-						<li class="cl tr">已完成, 待发红包</li>
+						<li class="cl tr">￥{$item.total_amount}</li>
+						<li class="cl tr"><if condition="$item.state eq 1">还在凑<elseif condition="$item.state eq 2" />已完成, <if condition="$item.is_send_hongbao">已转账<else />待转账</if><elseif condition="$item.state eq 3" />未完成, <if condition="$item.is_refund">已退款<else />待退款</if><else />已关闭</if></li>
 					</div>
 				
 				<div class="cl"></div>
 			</ul>
-			<ul class="bt_line p6">
-				<div class="head_img fl" style="width:70px;"><img src="/uploads/2/20151016/zmlcms_1444966713334.jpg" alt="乐圣昌" class="detail_head_img2" /></div>
-				
-					<div class="detail fl">
-						<li class="cl tl">李陆鸣</li>
-						<li class="cl tr">2016-12-12 12:12</li>
-					</div>
-				
-					<div class="detail fr">
-						<li class="cl tl">￥200.00</li>
-						<li class="cl tr">已完成, 待发红包</li>
-					</div>
-				
-				<div class="cl"></div>
-			</ul>
+                    </a>
+</volist>
 			<div class="cl"></div>
 		</div>
 		<div class="xiala">
