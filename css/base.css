@@ -56,6 +56,7 @@ input[type=text],textarea {-webkit-appearance:none}
 .w90{ width:80%;}
 .color_999{ color:#999;}
 .mc{ margin:0 auto;}
+.mt20{ margin-top:20px;}
 .fr{ float:right;}
 .fl{ float:left;}
 .tr{ text-align:right;}
@@ -80,3 +81,10 @@ input[type=text],textarea {-webkit-appearance:none}
 .from div.tit .amount{ font-size:24px;}
 .from div.tit .amount_remark{ color:#999; font-size:16px;}
 .foot_reamrk{ position: absolute; bottom: 20px; color:#9b9b9b; font-size:12px; text-align:center; width:90%;}
+
+/*详情页*/
+.detail_header{background:url(http://wyz.67ge.com/wp-content/uploads/qzlogo.jpg);  
+filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  
+-moz-background-size:100% 100%;  
+    background-size:100% 100%;  }
+
