@@ -30,7 +30,7 @@
 		</ul>
 		<ul>
 			<div class="tit">
-				<div class="amount">￥<font class="total_amount">10.00</font></div>
+				<div class="amount">￥<font class="total_amount">10</font></div>
 				<div class="amount_remark">总金额最大不能超过200元</div>
 			</div>
 		</ul>
@@ -65,6 +65,17 @@
 </div>
 <include file="Public:foot" />
 <script type="text/javascript">
+
+    $('input[name="amount"]').keyup(function(){
+        var amount = parseFloat($(this).val());
+        var total = parseInt($('input[name="total"]').val());
+        $('.total_amount').text(amount * total);
+    });
+    $('input[name="total"]').keyup(function(){
+        var amount = parseFloat($('input[name="amount"]').val());
+        var total = parseInt($('input[name="total"]').val());
+        $('.total_amount').text(amount * total);
+    });
     function show_remark(){
 //        layer.open({
 //            title: '凑红包玩法?'
