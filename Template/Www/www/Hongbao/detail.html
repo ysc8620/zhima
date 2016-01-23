@@ -128,7 +128,7 @@
 		</div>
         <if condition="count($order_list) gt 5">
 		<div class="xiala">
-			<div class="view_all"><span><img src="/images/xia.png" style="width:12px;"/></span><span class="f12"> 查看全部参与者</span></div>
+			<div class="view_all"><span><img src="/images/xia.png" class="img" style="width:12px;"/></span> <span class="f12">查看全部参与者</span></div>
 		</div>
             </if>
 		<div class="xiala">
@@ -219,6 +219,13 @@
 <script type="text/javascript">
     $('.view_all').click(function(){
         $('[data-role="order"]').toggle();
+        if($('.view_all .f12').text() == '查看全部参与者'){
+            $('.view_all .f12').text('收起全部参与者');
+            $('.view_all .img').attr('src', '/images/shang.png');
+        }else{
+            $('.view_all .f12').text('查看全部参与者');
+            $('.view_all .img').attr('src', '/images/xia.png');
+        }
     });
 </script>
 
