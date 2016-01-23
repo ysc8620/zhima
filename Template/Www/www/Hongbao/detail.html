@@ -1,33 +1,20 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-<meta name="Generator" content="hongbaoos v1.0" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>{$title}</title>
-<meta name="Keywords" content="" />
-<meta name="Description" content="" />
-<link rel="shortcut icon" href="/favicon.ico" />
-<link href="/css/base.css?t={$time}" rel="stylesheet" />
-</head>
-
-<body>
+<include file="Public:header"/>
 <div class="container">
 	<div class="detail_header">
-		<div class="detail_head_block"><img src="/uploads/2/20151016/zmlcms_1444966713334.jpg" alt="乐圣昌" class="detail_head_img" /></div>
+		<div class="detail_head_block"><img src="{$hongbao_user.header}" alt="{$hongbao_user.name}" class="detail_head_img" /></div>
 	</div>
 	<div class="cl"></div>
 	<div class="from mt40 cl">
 		<ul>
 			<div class="tit mt20">
-				<div class="title">乐圣昌发起的凑红包</div>
-				<div class="remark">凑红包,有福利,你懂得</div>
+				<div class="title">{$hongbao_user.name}发起的凑红包</div>
+				<div class="remark">{$hongbao.remark}</div>
 			</div>
 		</ul>
 		<div class="detail_block hide">
 			<ul >
 				<div class="tit mt20">
-					<div class="title"><font>目标金额：</font>￥200.00元</div>
+					<div class="title"><font>目标金额：</font>￥{$hongbao.total_amount}元</div>
 				</div>
 			</ul>
 			<ul>
@@ -37,29 +24,30 @@
 							{$percentage}%
 						</div>
 					</div>
-					<div class="remark">每份1元, 共20份, 还差20份凑成</div>
+					<div class="remark">每份{$hongbao.part_amount}元, 共{$hongbao.total_part}份, 还差{$difference}份凑成</div>
 				</div>
 			</ul>
 			<ul>
 				<div class="tit">
 					<div class="">
-						<img src="/images/cou.png" style=" width:80px;" />
+						<img src="/images/cou.png" onclick="set_buy()" style=" width:80px;" />
 					</div>
 					<div class="">
-						<a href="">凑红包玩法？</a>
+						<a href="javascript:void(0)" onclick="show_remark()">凑红包玩法？</a>
 					</div>
 				</div>
 			</ul>
 		</div>
-		<div class="over_block hide">
+
+		<div class="over_block <if condition='$hongbao.state eq 1 and $hongbao[addtime]+86400 gt time() and $hongbao['total_part']-$hongbao['total_num']-$wait_total lt 1'><else/>hide</if>">
 			<ul >
 				<div class="tit">
-					<div class="" style="color:#d05343;">最后1份正在支付</div>
+					<div class="" style="color:#d05343;">最后{$wait_total}份正在支付</div>
 					<div class="">
 						<img src="/images/cou_f.png" style=" width:80px;" />
 					</div>
 					<div class="">
-						<a href="">凑红包玩法？</a>
+						<a href="javascript:void(0)" onclick="show_remark()">凑红包玩法？</a>
 					</div>
 				</div>
 			</ul>
@@ -93,22 +81,11 @@
 					<div class="remark">每份5元, 共40份, 1小时30份钟凑齐</div>
 				</div>
 			</ul>
-			<ul>
-				<div class="remark">
-				 <p style="padding: 4px 0px; text-align: left">
-                        红包已经通过微信红包打给你, 其中已扣除2%的微信支付手续费, 扣除后金额为{$hongbao_amount}元.<br /><br />
-                        或者<br /><br />
-                        红包将会在1~2个工作日, 通过微信红包打给你,其中会扣除2%的微信支付手续费,扣除后金额为{$hongbao_amount}元.
-                    </p>
-				</div>
-			</ul>
 		</div>
-		
-		
 	</div>
 	<div class="order_list">
 		<div class="header bt_line">
-			<span><img src="/images/sm.png" style="width:14px; line-height:14px; vertical-align:middle;" /></span><span> 凑齐后,会根据参与金额,随机产生一名幸运星</span>
+			<span><img src="/images/sm.png" style="width:14px; line-height:14px; vertical-align:middle;" /></span><span> 凑齐后, 会根据参与金额, 随机产生一名幸运星</span>
 		</div>
 		<div class="block">
 			<ul class="bt_line p6">
@@ -116,11 +93,11 @@
 				
 					<div class="detail fl">
 						<li class="cl tl">李陆鸣</li>
-						<li class="cl tr">2016-12-12 12:12</li>
+						<li class="cl tr">￥200.00</li>
 					</div>
 				
 					<div class="detail fr">
-						<li class="cl tl">￥200.00</li>
+						<li class="cl tl">2016-12-12 12:12</li>
 						<li class="cl tr">已完成, 待发红包</li>
 					</div>
 				
@@ -131,11 +108,11 @@
 				
 					<div class="detail fl">
 						<li class="cl tl">李陆鸣</li>
-						<li class="cl tr">2016-12-12 12:12</li>
+						<li class="cl tr">￥200.00</li>
 					</div>
 				
 					<div class="detail fr">
-						<li class="cl tl">￥200.00</li>
+						<li class="cl tl">2016-12-12 12:12</li>
 						<li class="cl tr">已完成, 待发红包</li>
 					</div>
 				
@@ -156,7 +133,7 @@
 </div>
 
 <div id="shareit1" style="display: none">
-    <div id="shareit">
+    <div id="shareit" style="display: block">
         <img src="/images/share_bg.png" style="height:120px;" class="arrow">
     </div>
     <span style="" id="follow">
@@ -167,17 +144,55 @@
 		<div style="padding: 0px; margin-top: 0px; font-size: 20px; color: #fff" class="text">分享出去，加快进度</div>
     </span>
 </div>
+<script type="text/javascript">
+    //调用微信JS api 支付
+    function jsApiCall(data)
+    {
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                data,
+                function(res){
+                    //WeixinJSBridge.log(res.err_msg);
+                    // alert(res.err_code+'='+res.err_desc+'='+res.err_msg);
+                    // window.location.href = "/notes.html";
+                    // alert('支付成功');
+                    window.location.href="?show_share=1";
+                    return false;
+//                    window.location.reload();
+//                    return false;
+                    switch (res.err_msg){
 
-<div id="error_block" style="display: none">
-<div id="shareit">
-    </div>
-    <span style="" id="follow">
-        <div style="padding-right: 0px; padding-left: 0px; margin-top: 16px; font-size: 20px; color: #fff" class="text"><p>被人抢先一步了...</p></div>
-		<div>
-		<img src="/images/ico_ku.png" style="width:80px;" />
-		</div>
-		<div style="padding: 0px; margin-top: 8px; font-size: 12px; color: #fff" class="text">剩余份数小于您想购买的份数了，请重新确认</div>
-    </span>
-</div>
+                        case 'get_brand_wcpay_request:cancel':
+                            // location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+//                                alert('取消');
+                            break;
+                        case 'get_brand_wcpay_request:fail':
+                            //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+//                            alert('错误');
+                            break;
+                        case 'get_brand_wcpay_request:ok':
+                            // location.href="/?_a=done&order_sn=<?php echo $order_sn;?>&ac=<?php echo $authcode?>";
+                            //alert('成功');
+                            $("#shareit1").show();
+                            break;
+                    }
+                }
+        );
+    }
+
+    function callpay(data)
+    {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall(data);
+        }
+    }
+</script>
 </body>
 </html>
