@@ -336,7 +336,7 @@
 
     $('input.jian').click(function(){
         var num = parseInt($('input[name="num"]').val());
-        var part_amount = parseInt($('input[name="part_amount"]').val());
+        var part_amount = parseFloat($('input[name="part_amount"]').val());
         if(num > 1){
             $('input[name="num"]').val( num-1 );
             $('.cou_num').text( '凑 '+(num-1)+' 份');
@@ -350,7 +350,7 @@
     $('input.jia').click(function(){
         var num = parseInt($('input[name="num"]').val());
         var total = parseInt($('input[name="max_total"]').val());
-        var part_amount = parseInt($('input[name="part_amount"]').val());
+        var part_amount = parseFloat($('input[name="part_amount"]').val());
         if(num < total){
             $('input[name="num"]').val( num+1 );
             $('.cou_num').text( '凑 '+(num+1)+' 份');
@@ -365,7 +365,7 @@
     }
 
     var num = parseInt($('input[name="num"]').val());
-    var part_amount = parseInt($('input[name="part_amount"]').val());
+    var part_amount = parseFloat($('input[name="part_amount"]').val());
 
     $('.cou_num').text( '凑 '+num+' 份');
     $('font.part_amount').text( (num) * part_amount);
