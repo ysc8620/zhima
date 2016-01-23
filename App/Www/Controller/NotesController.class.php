@@ -10,7 +10,7 @@ namespace Www\Controller;
 class NotesController extends BaseController {
     public function index(){
         $this->user = M('user')->find($this->user_id);
-        $this->title = '我发起的';
+        $this->title = '我的记录';
         $page = I('request.p',1);
         $page = $page<1?1:$page;
         $this->is_only = I('request.is_only', 0);
