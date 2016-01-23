@@ -54,7 +54,13 @@ function is_mobile_request()
 	else
 		return false;
 }
-define('ZMLTPL','wap');
+
+if(@$_GET['v'] != 1){
+    define('ZMLTPL','wap');
+}else{
+    define('ZMLTPL','www');
+}
+
 //如果是手机设备 定义常量
 //if(is_mobile_request()==true){
 //	define('ZMLTPL','wap');
