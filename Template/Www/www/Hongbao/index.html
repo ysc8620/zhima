@@ -67,8 +67,8 @@
 <script type="text/javascript">
 
     $('input[name="amount"]').keyup(function(){
-        var amount = parseFloat($(this).val());
-        var total = parseInt($('input[name="total"]').val());
+        var amount = parseFloat($(this).val() == ''?0:$(this).val());
+        var total = parseInt($('input[name="total"]').val() == ''?0:$('input[name="total"]').val());
         if(amount == NaN || total == NaN){
             return false;
         }
