@@ -79,4 +79,4 @@ input[type=text],textarea {-webkit-appearance:none}
 .from div.tit{ line-height:30px; text-align:center; font-size:14px; color:#000; margin:36px auto;}
 .from div.tit .amount{ font-size:24px;}
 .from div.tit .amount_remark{ color:#999; font-size:16px;}
-.foot_reamrk{ position: absolute; bottom: 20px; color:#9b9b9b; font-size:14px; text-align:center; width:90%;}
+.foot_reamrk{ position: absolute; bottom: 20px; color:#9b9b9b; font-size:12px; text-align:center; width:90%;}
