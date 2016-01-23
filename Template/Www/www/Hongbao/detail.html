@@ -44,7 +44,7 @@
 				<div class="tit">
 					<div class="" style="color:#d05343;">最后{$wait_total}份正在支付</div>
 					<div class="">
-						<img src="/images/cou_f.png" style=" width:80px;"  class="detail_head_img2" />
+						<img src="/images/cou_f.png" style=" width:80px;"  />
 					</div>
 					<div class="">
 						<a href="javascript:void(0)" onclick="show_remark()">凑红包玩法？</a>
@@ -108,7 +108,7 @@
 		<div class="block">
             <volist name="order_list" id="order" key="i">
 			<ul class="bt_line p6" <if condition="$i gt 5">data-role="order" style="display:none"</if>>
-				<div class="head_img fl" style="width:70px;"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img" /></div>
+				<div class="head_img fl" style="width:70px;"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img2" /></div>
 
 					<div class="detail fl">
 						<li class="cl tl">{$order.user.name}</li>
