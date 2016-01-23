@@ -83,7 +83,7 @@ input{ border:none; font-size: 14px; text-align:right; margin-right:24px; height
 	width:18px;
 	}
 .btn{ background:#fa6352;  -webkit-border-radius:3px;border-radius:3px; font-size:16px; height:50px; color:#fff; width:100%; text-align:center; margin:0 auto;}
-.from div.tit{ line-height:30px; text-align:center; font-size:14px; color:#000; margin:36px auto;}
+.from div.tit{ line-height:30px; text-align:center; font-size:14px; color:#000; margin:16px auto;}
 .from div.tit .amount{ font-size:24px;}
 .from div.tit .amount_remark{ color:#999; font-size:16px;}
 .foot_reamrk{ position: absolute; bottom: 20px; color:#9b9b9b; font-size:12px; text-align:center; width:90%;}
