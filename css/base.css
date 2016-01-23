@@ -89,7 +89,7 @@ input{ border:none; font-size: 14px; text-align:right; margin-right:24px; height
 .foot_reamrk{ position: absolute; bottom: 20px; color:#9b9b9b; font-size:12px; text-align:center; width:90%;}
 
 /*详情页*/
-.detail_header{ height:180px; position:relative; background:url(../images/hb_bg.png);  
+.detail_header{ height:140px; position:relative; background:url(../images/hb_bg.png);  
 filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%; background-size:100% 100%;  }
 .detail_head_block{ position:absolute; bottom:-30px; text-align:center; margin:0 auto; width:100%;}
 .detail_head_img{    background-repeat: no-repeat;
@@ -103,7 +103,7 @@ filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')
 .from div.tit .title{ font-size:18px;}
 .from div.tit .remark{ color:#999; font-size:14px;}
 
-.hongbao_bg{ background:url(../images/hongbao_bg.png) center bottom no-repeat; height:100px;}
+.hongbao_bg{ background:url(../images/hongbao_bg.png) center bottom no-repeat; height:120px;}
 .hongbao_jindu{ width:100%; clear:both; margin:14px 0;}
 .hongbao_jindu .remark{ text-align:right; text-align:center; font-size:14px; width:80%; margin:6px auto;}
 .hongbao_jindu_bg{ background:url(../images/hongbao_b.png) no-repeat center center; width:80%; margin:0 auto; text-align:center;}
