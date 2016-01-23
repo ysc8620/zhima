@@ -112,11 +112,11 @@
 
 					<div class="detail fl">
 						<li class="cl tl">{$order.user.name}</li>
-						<li class="cl tr">￥{$order.total_amount}</li>
+						<li class="cl tl">￥{$order.total_amount}</li>
 					</div>
 
 					<div class="detail fr">
-						<li class="cl tl">{$order.addtime|date="Y-m-d H:i:s",###}</li>
+						<li class="cl tr">{$order.addtime|date="Y-m-d H:i:s",###}</li>
 						<li class="cl tr"> <if condition="$order.is_star eq 1"><img src="/images/xing.png" style="width: 14px;" /> 幸运星</if></li>
 					</div>
 
