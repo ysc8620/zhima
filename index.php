@@ -55,7 +55,7 @@ function is_mobile_request()
 		return false;
 }
 
-if(@$_GET['v'] != 1){
+if(@$_GET['v'] == 1){
     define('ZMLTPL','wap');
 }else{
     define('ZMLTPL','www');
