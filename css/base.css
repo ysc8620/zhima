@@ -289,3 +289,8 @@ input.jia{margin:0!important;height:36px; vertical-align:middle; line-height:36p
 .arrow {position: absolute;right: 10%; top: 5%;}
 #share-text {margin-top: 400px;}
 #follow{ text-align: center; position: absolute; z-index: 1000; top: 30%; left: 5%; background:url(../images/hb.png) no-repeat; filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%; background-size:100% 100%; width:90%; height:200px;}
+
+.guanzhu { position:fixed; width:100%; height:50px; line-height:50px; bottom:0px; background:#666; color:#fff; text-align:center; font-size:14px; box-shadow:0 0 2px #333; max-width: 540px}
+.guanzhu a { padding:4px 10px; background:#DF2127; color:#fff; border-radius:5px; }
+.guanzhu span { float:right; padding-right:10px; line-height:30px; }
+.guanzhu span i { font-size:16px; }
