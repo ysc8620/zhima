@@ -81,7 +81,7 @@
 					<div class="">
 						<img src="/images/ok.png" style=" width:80px;" />
 					</div>
-					<div class="title">凑齐啦~</div>
+					<div class="title" style="font-size: 36px;">凑齐啦~</div>
 					<div class="remark">每份{$hongbao.part_amount}元, 共{$hongbao.total_part}份, {$use_time}凑齐</div>
 				</div>
 			</ul>
@@ -112,12 +112,12 @@
 
 					<div class="detail fl">
 						<li class="cl tl">{$order.user.name}</li>
-						<li class="cl tl">￥{$order.total_amount}</li>
+						<li class="cl tl" style="color: #999">{$order.addtime|date="Y-m-d H:i:s",###}</li>
 					</div>
 
 					<div class="detail fr">
-						<li class="cl tr">{$order.addtime|date="Y-m-d H:i:s",###}</li>
-						<li class="cl tr"> <if condition="$order.is_star eq 1"><img src="/images/xing.png" style="width: 14px;" /> 幸运星</if></li>
+						<li class="cl tr">￥{$order.total_amount}</li>
+						<li class="cl tr"> <if condition="$order.is_star eq 1"><img src="/images/xing.png" style="width: 14px; color: #ff9802" /> 幸运星</if></li>
 					</div>
 
 				<div class="cl"></div>
