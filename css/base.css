@@ -103,7 +103,7 @@ filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')
 .from div.tit .title{ font-size:18px;}
 .from div.tit .remark{ color:#999; font-size:14px;}
 
-.hongbao_bg{ background:url(../images/hongbao_bg.png) center bottom no-repeat; height:120px;}
+.hongbao_bg{ background:url(../images/hongbao_bg.png) center bottom no-repeat; height:100px;}
 .hongbao_jindu{ width:100%; clear:both; margin:14px 0;}
 .hongbao_jindu .remark{ text-align:right; text-align:center; font-size:14px; width:80%; margin:6px auto;}
 .hongbao_jindu_bg{ background:url(../images/hongbao_b.png) no-repeat center center; width:80%; margin:0 auto; text-align:center;}
