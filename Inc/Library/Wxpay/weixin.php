@@ -162,6 +162,7 @@ class PayNotifyCallBack extends WxPayNotify
                     );
                     if($data['total_num'] >= $hongbao['total_part'] || $data['total_pay_amount'] >= $hongbao['total_amount']){
                         $data['state'] = 2;
+                        $data['success_time'] = time();
                     }
                     M('hongbao')->where("id='{$order['hongbao_id']}'")->save($data);
                     if($hongbao['state'] > 1){
