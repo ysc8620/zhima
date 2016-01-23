@@ -1,4 +1,4 @@
-<include file="Public:header"/>
+<include file="Public:header" />
 <div class="container">
 	<div class="detail_header">
 		<div class="detail_head_block"><img src="{$hongbao_user.header}" alt="{$hongbao_user.name}" class="detail_head_img" /></div>
@@ -11,7 +11,7 @@
 				<div class="remark">{$hongbao.remark}</div>
 			</div>
 		</ul>
-		<div class="detail_block hide">
+		<div class='detail_block hide <if condition="$hongbao[state] eq 1 and $hongbao[total_part]-$hongbao[total_num]-$wait_total gt 0">show</if>' data-role="detail_default">
 			<ul >
 				<div class="tit mt20">
 					<div class="title"><font>目标金额：</font>￥{$hongbao.total_amount}元</div>
@@ -30,7 +30,7 @@
 			<ul>
 				<div class="tit">
 					<div class="">
-						<img src="/images/cou.png" onclick="set_buy()" style=" width:80px;" />
+						<img src="/images/cou.png" onclick="set_buy()" style=" width:80px; cursor: pointer" />
 					</div>
 					<div class="">
 						<a href="javascript:void(0)" onclick="show_remark()">凑红包玩法？</a>
@@ -39,7 +39,7 @@
 			</ul>
 		</div>
 
-		<div class="over_block <if condition='$hongbao.state eq 1 and $hongbao[addtime]+86400 gt time() and $hongbao['total_part']-$hongbao['total_num']-$wait_total lt 1'><else/>hide</if>">
+		<div class="detail_block over_block hide">
 			<ul >
 				<div class="tit">
 					<div class="" style="color:#d05343;">最后{$wait_total}份正在支付</div>
@@ -52,24 +52,28 @@
 				</div>
 			</ul>
 		</div>
-		<div class="buy_block hide">
+		<div class="detail_block buy_block hide" data-role="detail_buy">
+            <input type="hidden" name="id" value="{$hongbao.number_no}" />
+            <input type="hidden" name="sign" value="{$sign}" />
+            <input type="hidden" name="part_amount" value="{$hongbao.part_amount}" />
+            <input type="hidden" name="max_total" value="{$hongbao['total_part']-$hongbao['total_num']}" />
 			<ul>
 				<div class="tit">
-					<div class="title"><font class="color_999">您需要支付：</font>￥<font>200.00</font>元</div>
-					<div class="" style="margin:12px 0;"><input class="jian" type="button" value="-"><input type="text" class="num" readonly="" value="1" /><input class="jia" type="button" value="+" /></div>
+					<div class="title"><font class="color_999">您需要支付：</font>￥<font class="part_amount">{$hongbao.part_amount}</font>元</div>
+					<div class="" style="margin:12px 0;"><input class="jian" type="button" value="-"><input type="text" class="num" name="num" readonly="" value="1" /><input class="jia" type="button" value="+" /></div>
 					<div class="remark">份数越多, 成为幸运星的机会就越大哦</div>
 					<div class="">
-						<input type="button" value="凑 1 份" class="btn btn_cou" />
+						<button type="button"  onclick="set_order()"  class="btn btn_cou cou_num">凑 1 份</button>
 					</div>
 					<div class="remark" style="color:#d05343; margin:12px 0;">如果24小时内没有凑足，系统会自动退款</div>
 				</div>
 			</ul>
 		</div>
-		
-		<div class="success_block">
+
+		<div class="detail_block success_block <if condition="$hongbao.state neq 2 ">hide</if>">
 			<ul >
 				<div class="tit mt20">
-					<div class="title"><font>目标金额：</font>￥200.00元</div>
+					<div class="title"><font>目标金额：</font>￥{$hongbao.total_amount}元</div>
 				</div>
 			</ul>
 			<ul >
@@ -78,51 +82,55 @@
 						<img src="/images/ok.png" style=" width:80px;" />
 					</div>
 					<div class="title">凑齐啦~</div>
-					<div class="remark">每份5元, 共40份, 1小时30份钟凑齐</div>
+					<div class="remark">每份{$hongbao.part_amount}元, 共{$hongbao.total_part}份, {$use_time}凑齐</div>
 				</div>
 			</ul>
+
+    <if condition="$hongbao[user_id] eq $user[uin]">
+            <ul>
+                <div class="tit">
+                    <div class="remark">
+                        <p style="padding: 12px 20px; text-align: left">
+                            红包已经通过微信红包打给你, 其中已扣除2%的微信支付手续费, 扣除后金额为{$hongbao_amount}元.<br /><br />
+                            或者<br /><br />
+                            红包将会在1~2个工作日, 通过微信红包打给你,其中会扣除2%的微信支付手续费,扣除后金额为{$hongbao_amount}元.
+                        </p>
+                    </div>
+                </div>
+            </ul>
+    </if>
 		</div>
 	</div>
 	<div class="order_list">
 		<div class="header bt_line">
-			<span><img src="/images/sm.png" style="width:14px; line-height:14px; vertical-align:middle;" /></span><span> 凑齐后, 会根据参与金额, 随机产生一名幸运星</span>
+			<span><img src="/images/sm.png" style="width:14px; line-height:14px; vertical-align:middle;" /></span><span>  <if condition="$hongbao.state eq 2">幸运星已经产生，快找发起人要福利吧！<else />凑齐后,会根据参与金额,随机产生一名幸运星</if></span>
 		</div>
 		<div class="block">
-			<ul class="bt_line p6">
-				<div class="head_img fl" style="width:70px;"><img src="/uploads/2/20151016/zmlcms_1444966713334.jpg" alt="乐圣昌" class="detail_head_img" /></div>
-				
+            <volist name="order_list" id="order" key="i">
+			<ul class="bt_line p6" <if condition="$i gt 5">data-role="order" style="display:none"</if>>
+				<div class="head_img fl" style="width:70px;"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img" /></div>
+
 					<div class="detail fl">
-						<li class="cl tl">李陆鸣</li>
-						<li class="cl tr">￥200.00</li>
+						<li class="cl tl">{$order.user.name}</li>
+						<li class="cl tr">￥{$order.total_amount}</li>
 					</div>
-				
+
 					<div class="detail fr">
-						<li class="cl tl">2016-12-12 12:12</li>
-						<li class="cl tr">已完成, 待发红包</li>
+						<li class="cl tl">{$order.addtime|date="Y-m-d H:i:s",###}</li>
+						<li class="cl tr"> <if condition="$order.is_star eq 1"><img src="/images/xing.png" style="width: 14px;" /> 幸运星</if></li>
 					</div>
-				
+
 				<div class="cl"></div>
 			</ul>
-			<ul class="bt_line p6">
-				<div class="head_img fl" style="width:70px;"><img src="/uploads/2/20151016/zmlcms_1444966713334.jpg" alt="乐圣昌" class="detail_head_img" /></div>
-				
-					<div class="detail fl">
-						<li class="cl tl">李陆鸣</li>
-						<li class="cl tr">￥200.00</li>
-					</div>
-				
-					<div class="detail fr">
-						<li class="cl tl">2016-12-12 12:12</li>
-						<li class="cl tr">已完成, 待发红包</li>
-					</div>
-				
-				<div class="cl"></div>
-			</ul>
+                </volist>
+
 			<div class="cl"></div>
 		</div>
+        <if condition="count($order_list) gt 5">
 		<div class="xiala">
-			<div><span><img src="/images/xia.png" style="width:12px;"/></span><span class="f12"> 查看全部参与者</span></div>
+			<div class="view_all"><span><img src="/images/xia.png" style="width:12px;"/></span><span class="f12"> 查看全部参与者</span></div>
 		</div>
+            </if>
 		<div class="xiala">
 			<div><a href=""><input type="button" class="btn w120" value="我要凑红包" /></a> <a href=""><input type="button" class="btn w120" value="我的记录" /></a></div>
 			<div class="cl h12"></div>
@@ -142,6 +150,19 @@
 		<img src="/images/ico_xiao.png" style="width:80px;" />
 		</div>
 		<div style="padding: 0px; margin-top: 0px; font-size: 20px; color: #fff" class="text">分享出去，加快进度</div>
+    </span>
+</div>
+
+<div id="shareit2" style="display: none">
+    <div id="shareit" style="display: block">
+        <img src="/images/share_bg.png" style="height:120px;" class="arrow">
+    </div>
+    <span style="" id="follow">
+        <div style="padding-right: 0px; padding-left: 0px; margin-top: 16px; font-size: 20px; color: #fff" class="text"><p>被人抢先一步了...</p></div>
+		<div>
+            <img src="/images/ico_ku.png" style="width:80px;" />
+        </div>
+		<div style="padding: 0px; margin-top: 0px; font-size: 12px; color: #fff" class="text">剩余份数小于您想购买的份数了，请重新确认</div>
     </span>
 </div>
 <script type="text/javascript">
@@ -193,6 +214,141 @@
             jsApiCall(data);
         }
     }
+</script>
+<script type="text/javascript">
+    $('.view_all').click(function(){
+        $('[data-role="order"]').toggle();
+    });
+</script>
+
+<script type="text/javascript">
+
+    //立即分享到微信朋友圈点击事件
+    $("#share_btn").on("click", function() {
+        $("#shareit1").show();
+    });
+
+
+    $("#shareit1").on("click", function(){
+        $("#shareit1").hide();
+    })
+
+    function show_remark(){
+        layer.open({
+            title: '凑红包玩法?'
+            ,content: (" <span style='text-align: left'> 1. 发起凑红包 <br />"+
+                    "2. 邀请朋友参与 <br/>"+
+                    "3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>"+
+                    "4. 系统会根据参与份数，随机抽出幸运星</span>")
+            ,btn: ['知道了']
+        });
+    }
+
+
+    /**
+     * 打开选择
+     */
+    function set_buy(){
+        $('.detail_block').removeClass('show');
+        $('.detail_block').addClass('hide');
+        $('[data-role="detail_buy"]').addClass('show');
+
+    }
+
+    /**
+     * 生成支付订单
+     */
+    function set_order(){
+        var id = $('input[name="id"]').val();
+        var num = $('input[name="num"]').val();
+
+        $.ajax({
+            type:'post',
+            url:"{:U('/hongbao/order')}",
+            async:false,
+            cache:false,
+            data:{id:id, num:num},
+            dataType:'json',
+            success:function(result){
+                if(result.error==0){
+                    // callpay(result.data);
+                    set_pay(result.data);
+                }else if(result.error==1){
+                    layer.msg(result.message, function(){});
+                    return false;
+                }else if(result.error==2){
+                    $("#shareit2").show();
+                }
+            }
+        });
+
+    }
+
+    function set_pay(id){
+        if(!id){
+            var id = $('input[name="pay_id"]').val();
+        }
+
+        if(id.length < 1){
+            layer.msg('没有支付订单', function(){});
+            return false;
+        }
+        $.ajax({
+            type:'post',
+            url:"{:U('/weixin/pay1')}",
+            async:false,
+            cache:false,
+            data:{id:id},
+            dataType:'json',
+            success:function(result){
+                if(result.error==0){
+                    callpay(result.data);
+
+                }else if(result.error==1){
+                    layer.msg(result.message, function(){});
+                }
+            }
+        });
+    }
+
+    $('input.jian').click(function(){
+        var num = parseInt($('input[name="num"]').val());
+        var part_amount = parseInt($('input[name="part_amount"]').val());
+        if(num > 1){
+            $('input[name="num"]').val( num-1 );
+            $('.cou_num').text( '凑 '+(num-1)+' 份');
+            $('font.part_amount').text( (num-1) * part_amount);
+            $('input.jia').attr('disabled', false);
+        }else{
+            $('input.jian').attr('disabled', true);
+        }
+    });
+
+    $('input.jia').click(function(){
+        var num = parseInt($('input[name="num"]').val());
+        var total = parseInt($('input[name="max_total"]').val());
+        var part_amount = parseInt($('input[name="part_amount"]').val());
+        if(num < total){
+            $('input[name="num"]').val( num+1 );
+            $('.cou_num').text( '凑 '+(num+1)+' 份');
+            $('font.part_amount').text( (num+1) * part_amount);
+            $('input.jian').attr('disabled', false);
+        }else{
+            $('input.jia').attr('disabled', true);
+        }
+    });
+    function checkHongBao(_this){
+        return true;
+    }
+
+    var num = parseInt($('input[name="num"]').val());
+    var part_amount = parseInt($('input[name="part_amount"]').val());
+
+    $('.cou_num').text( '凑 '+num+' 份');
+    $('font.part_amount').text( (num) * part_amount);
+    <if condition="$show_share">
+            $("#shareit1").show();
+    </if>
 </script>
 </body>
 </html>
