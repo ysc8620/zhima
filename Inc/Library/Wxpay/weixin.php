@@ -192,7 +192,7 @@ class PayNotifyCallBack extends WxPayNotify
                             'mch_billno' =>get_order_sn(),
                             'send_name' => '凑红包',
                             're_openid' =>$hongbao['openid'],
-                            'total_amount' => $hongbao['total_amount'] * 0.98 * 100,
+                            'total_amount' => floor($hongbao['total_amount'] * 0.98 * 100),
                             'wishing' => '恭喜您！您在凑红包发起的凑红包已经完成。',
                             'act_name'=> '凑红包',
                             'remark' => '凑红包',
@@ -208,7 +208,7 @@ class PayNotifyCallBack extends WxPayNotify
                                 M('hongbao')->where(array("id='{$hongbao['id']}'"))->save(array('is_send_hongbao'=>1));
                                 M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
 
-                                $user_amount = $hongbao['total_amount'] * 0.98;
+                                $user_amount = number_format($hongbao['total_amount'] * 0.98,2);
 $msg =  "你发起的凑红包成功啦！
 
 众筹标题：{$hongbao['remark']}
@@ -230,7 +230,7 @@ $msg = "幸运星就是你！没想到吧
 
                             }else{
                                 M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>3));
-                                $user_amount = $hongbao['total_amount'] * 0.98;
+                                $user_amount = number_format($hongbao['total_amount'] * 0.98,2);
 $msg = "你发起的凑红包成功啦！
 
 众筹标题：{$hongbao['remark']}

@@ -29,7 +29,7 @@ class AutoController extends Controller {
                     'mch_billno' =>get_order_sn(),
                     'send_name' => '凑红包',
                     're_openid' =>$hongbao['openid'],
-                    'total_amount' => $hongbao['total_amount'] * 0.98 * 100,
+                    'total_amount' => floor($hongbao['total_amount'] * 0.98 * 100),
                     'wishing' => '恭喜您！您在凑红包发起的凑红包已经完成。',
                     'act_name'=> '凑红包',
                     'remark' => '凑红包',
@@ -50,7 +50,7 @@ class AutoController extends Controller {
                     'mch_billno' =>$hongbao_send['mch_billno'],
                     'send_name' => '凑红包',
                     're_openid' =>$hongbao['openid'],
-                    'total_amount' => $hongbao['total_amount'] * 0.98 * 100,
+                    'total_amount' => floor($hongbao['total_amount'] * 0.98 * 100),
                     'wishing' => '恭喜您！您在凑红包发起的凑红包已经完成。',
                     'act_name'=> '凑红包',
                     'remark' => '凑红包',
@@ -83,7 +83,7 @@ class AutoController extends Controller {
                         $user_info = M('user')->find($star['user_id']);
                     }
 
-                    $user_amount = $hongbao['total_amount'] * 0.98;
+                    $user_amount = number_format($hongbao['total_amount'] * 0.98,2);
                     $msg =  "你发起的凑红包成功啦！
 
 众筹标题：{$hongbao['remark']}

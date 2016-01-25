@@ -104,8 +104,8 @@
             return false;
         }
 
-        if(amount > 200 || amount < 0){
-            layer.msg('请输入1-200之间金额.', function(){});
+        if(amount > 200 || amount < 2){
+            layer.msg('请输入2-200之内金额.', function(){});
             return false;
         }
 
@@ -123,8 +123,8 @@
             return false;
         }
 
-        if(amount * total > 200){
-            layer.msg('总金额不能超过200元.', function(){});
+        if(amount * total > 200 || amount * total < 2){
+            layer.msg('总金额在2-200元之间.', function(){});
             return false;
         }
         return true;

@@ -28,13 +28,13 @@ class HongbaoController extends BaseController {
             $total = I('post.total',0,'intval');
             $remark = I('post.remark','','htmlspecialchars');
 
-            if($amount < 0 || $total < 1 || $amount > 200){
-                $this->error('红包范围在1-200之间.',U('/hongbao'));
+            if($amount <= 0 || $total < 1 || $amount > 200){
+                $this->error('红包范围在2-200之间.',U('/hongbao'));
                 return false;
             }
 
-            if($amount * $total > 200 || $amount * $total <0){
-                $this->error('红包范围在1-200之间.',U('/hongbao'));
+            if($amount * $total > 200 || $amount * $total <2){
+                $this->error('红包范围在2-200之间.',U('/hongbao'));
                 return false;
             }
             // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
