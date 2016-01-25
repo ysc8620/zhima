@@ -29,7 +29,7 @@
 	<div class="order_list">
 		<div class="header bt_line">
 				</div>
-		<div class="block">
+		<div class="block" style="min-height: 200px;">
             <volist name="list" id="item">
                 <a class="" href="{:U('/hongbao/detail',array('id'=>$item['number_no']))}">
 			<ul class="bt_line p6">
@@ -56,7 +56,7 @@
             </div>
 		</div>
 		<div class="xiala">
-			<div><a href="{:U('/hongbao')}"><input type="button" class="btn w120" value="发起凑红包" /></a> <a href="{:U('/notes')}"><input type="button" class="btn w120" value="我的记录" /></a></div>
+			<div><a href="{:U('/hongbao')}"><input type="button" class="btn w120" value="发起凑红包" /></a> <a href="{:U('/notes')}"  style="margin-left: 20px"><input type="button" class="btn w120" value="我的记录" /></a></div>
 			<div class="cl h12"></div>
 		</div>
 		<div class="cl"></div>

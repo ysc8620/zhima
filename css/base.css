@@ -58,12 +58,14 @@ input[type=text],textarea {-webkit-appearance:none}
 .f12{ font-size:12px;}
 .w120{ width:120px!important;}
 .color_999{ color:#999;}
+.mt10{ margin-top: 12px;}
 .mc{ margin:0 auto;}
 .mt20{ margin-top:20px;}
 .mt40{ margin-top:40px!important;}
 .cl{ clear:both;}
 .fr{ float:right;}
 .fl{ float:left;}
+.tc{ text-align: center;}
 .tl{ text-align:left;}
 .tr{ text-align:right;}
 .hide{display:none!important}

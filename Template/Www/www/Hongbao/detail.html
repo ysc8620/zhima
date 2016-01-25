@@ -33,7 +33,7 @@
                         <button type="button"  onclick="set_buy()" style="font-size: 30px;" class="btn btn_cou">凑</button>
 					</div>
 					<div class="">
-						<a href="javascript:void(0)" onclick="show_remark()">凑红包玩法？</a>
+						<a href="javascript:void(0)" style="margin-top: 10px!important; clear: both; line-height: 36px;" onclick="show_remark()">凑红包玩法？</a>
 					</div>
 				</div>
 			</ul>
@@ -47,7 +47,7 @@
 						<img src="/images/cou_f.png" style=" width:80px;"  />
 					</div>
 					<div class="">
-						<a href="javascript:void(0)" onclick="show_remark()">凑红包玩法？</a>
+						<a href="javascript:void(0)" style="margin-top: 10px!important; clear: both; line-height: 36px;" onclick="show_remark()">凑红包玩法？</a>
 					</div>
 				</div>
 			</ul>
@@ -91,9 +91,11 @@
                 <div class="tit">
                     <div class="remark">
                         <p style="padding: 12px 20px; text-align: left">
-                            红包已经通过微信红包打给你, 其中已扣除2%的微信支付手续费, 扣除后金额为{$hongbao_amount}元.<br /><br />
-                            或者<br /><br />
+                            <if condition="$hongbao.is_send_hongbao">
+                            红包已经通过微信红包打给你, 其中已扣除2%的微信支付手续费, 扣除后金额为{$hongbao_amount}元.
+                            <else />
                             红包将会在1~2个工作日, 通过微信红包打给你,其中会扣除2%的微信支付手续费,扣除后金额为{$hongbao_amount}元.
+                            </if>
                         </p>
                     </div>
                 </div>
@@ -105,7 +107,7 @@
 		<div class="header bt_line">
 			<span><img src="/images/sm.png" style="width:14px; line-height:14px; vertical-align:middle;" /></span><span>  <if condition="$hongbao.state eq 2">幸运星已经产生，快找发起人要福利吧！<else />凑齐后,会根据参与金额,随机产生一名幸运星</if></span>
 		</div>
-		<div class="block">
+		<div class="block" style="min-height: 200px;">
             <volist name="order_list" id="order" key="i">
 			<ul class="bt_line p6" <if condition="$i gt 5">data-role="order" style="display:none"</if>>
 				<div class="head_img fl" style="width:70px;"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img2" /></div>
@@ -132,7 +134,7 @@
 		</div>
             </if>
 		<div class="xiala">
-			<div><a href="{:U('/hongbao')}"><input type="button" class="btn w120" value="发起凑红包" /></a> <a href="{:U('/notes')}"><input type="button" class="btn w120" value="我的记录" /></a></div>
+			<div><a href="{:U('/hongbao')}"><input type="button" class="btn w120" value="发起凑红包" /></a> <a href="{:U('/notes')}" style="margin-left: 20px"><input type="button" class="btn w120" value="我的记录" /></a></div>
 			<div class="cl h12"></div>
 		</div>
 		<div class="cl"></div>
@@ -169,14 +171,14 @@
 <div id="remark_block" style="display: none">
     <div id="shareit">
     </div>
-    <span style="text-align: left; background: #fff; padding: 12px; -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 90%; left: 5%;" id="follow">
-        <p>
+    <span style="text-align: center; background: #fff; padding: 12px; -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 90%; left: 5%;" id="follow">
+        <p style="text-align: left">
             1. 发起凑红包 <br />
             2. 邀请朋友参与 <br/>
             3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>
             4. 系统会根据参与份数，随机抽出幸运星</p>
 
-        <input type="button" class="btn fr" onclick="$('#remark_block').hide();" style="width: 100px; height: 36px; line-height: 36px;" value="知道了" />
+        <input type="button" class="btn mc" onclick="$('#remark_block').hide();" style="width: 80%; height: 36px; margin-top: 12px; line-height: 36px;" value="知 道 了" />
        </span>
 </div>
 <include file="Public:foot" />
@@ -369,7 +371,7 @@
 
     $('.cou_num').text( '凑 '+num+' 份');
     $('font.part_amount').text( (num) * part_amount);
-    <if condition="$show_share">
+    <if condition="$show_share and $hongbao.state eq 1">
             $("#shareit1").show();
     </if>
 </script>
