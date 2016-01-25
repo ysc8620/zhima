@@ -15,14 +15,16 @@ class HongbaoController extends CommonController {
     public function index(){
         $status = I('request.status',0,'intval');
 		$count    = M('hongbao')->count();
-        $page     = new \Think\Page($count,20);
-        $page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%');
-        $show     = $page->show();
-		$limit    = $page->firstRow.','.$page->listRows;
         $where = "state > 0";
         if($status){
             $where .= " AND state ='{$status}'";
         }
+        $counts    = M('hongbao')->where($where)->count();
+        $page     = new \Think\Page($counts,20);
+        $page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%');
+        $show     = $page->show();
+		$limit    = $page->firstRow.','.$page->listRows;
+
         $hongbao_list = M('hongbao')->where($where)->limit($page->firstRow.','.$page->listRows)->order("id DESC")->select();
 		$this->assign('page',$show);
         foreach($hongbao_list as $i=>$hongbao){
