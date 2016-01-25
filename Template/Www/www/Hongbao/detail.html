@@ -367,7 +367,17 @@
             }
         });
     }
+    $('input[name="num"]').keyup(function(){
+        var num = $(this).val();
+        var part_amount = parseFloat($('input[name="part_amount"]').val());
+        if(num == ''){
+            return;
+        }
 
+        $('input[name="num"]').val(num );
+        $('.cou_num').text( '凑 '+(num)+' 份');
+        $('font.part_amount').text( (num) * part_amount);
+    });
     $('input.jian').click(function(){
         var num = parseInt($('input[name="num"]').val());
         var part_amount = parseFloat($('input[name="part_amount"]').val());
