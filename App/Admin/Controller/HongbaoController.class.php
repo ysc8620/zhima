@@ -23,7 +23,7 @@ class HongbaoController extends CommonController {
         if($status){
             $where .= " AND state ='{$status}'";
         }
-        $hongbao_list = M('hongbao')->where($where)->limit($page->firstRow.','.$page->listRows)->select();
+        $hongbao_list = M('hongbao')->where($where)->limit($page->firstRow.','.$page->listRows)->order("id DESC")->select();
 		$this->assign('page',$show);
         foreach($hongbao_list as $i=>$hongbao){
             $hongbao_list[$i]['user'] = M('user')->find($hongbao['user_id']);
@@ -46,7 +46,7 @@ class HongbaoController extends CommonController {
     public function detail(){
         $id = I('request.id', 0, 'intval');
         $hongbao = M('hongbao')->find($id);
-        $order_list = M('hongbao_order')->where(array('hongbao_id'=>$id, 'state'=>array('gt', 1)))->select();
+        $order_list = M('hongbao_order')->where(array('hongbao_id'=>$id, 'state'=>array('gt', 1)))->order("id DESC")->select();
         $hongbao['user'] = M('user')->find($hongbao['user_id']);
         foreach($order_list as $i=>$order){
             $order_list[$i]['user'] = M('user')->find($order['user_id']);
