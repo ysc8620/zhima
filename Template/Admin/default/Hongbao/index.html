@@ -15,7 +15,6 @@
 		<tbody>
 			<tr>
 				<th>创建人</th>
-                <th>红包编号</th>
 				<th>红包总金额</th>
 				<th>份数,金额</th>
                 <th>完成份数,金额</th>
@@ -32,7 +31,6 @@
 			<volist name="hongbao_list" id="vo">
 				<tr  class="height">
 					<td>{$vo.user.name}</td>
-					<td>{$vo.number_no}</td>
 					<td>￥{$vo.total_amount}元</td>
 					<td>{$vo.total_part}个,￥{$vo.part_amount}元</td>
                     <td>{$vo.total_num}个,￥{$vo.total_pay_amount}元</td>
