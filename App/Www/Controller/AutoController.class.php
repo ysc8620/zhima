@@ -110,6 +110,8 @@ class AutoController extends Controller {
                     f_log($log, ROOT_PATH.'Runtime/Logs/hongbao.log');
                     echo $log."<br/>";
                 }
+
+                sleep(5);
             }
         }
         die('ok');
@@ -137,9 +139,11 @@ class AutoController extends Controller {
                             f_log($log, ROOT_PATH.'Runtime/Logs/refund.log');
                             echo $log."<br/>";
                         }
+                        sleep(5);
                     }
                 }
                 M('hongbao')->where(array('id'=>$hongbao['id']))->save(array('is_refund'=>1));
+
             }
         }
         die('ok');
