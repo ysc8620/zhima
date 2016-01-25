@@ -29,7 +29,7 @@
 				<tr  class="height">
                     <td>{$vo.id}</td>
 					<td>{$vo.user.name}</td>
-                    <td><if condition="$vo.state eq 1">还在凑<elseif condition="$vo.state eq 2" />已完成, <if condition="$hongbao.is_send_hongbao eq 1">已发红包<else />待发红包</if><elseif condition="$vo.state eq 3" />未完成, <if condition="$hongbao.is_refund eq 1">已退款<else />待退款</if></if></td>
+                    <td><if condition="$vo.state eq 1">还在凑<elseif condition="$vo.state eq 2" />已完成, <if condition="$vo.is_send_hongbao eq 1">已发红包<else />待发红包</if><elseif condition="$vo.state eq 3" />未完成, <if condition="$vo.is_refund eq 1">已退款<else />待退款</if></if></td>
                     <td>￥{$vo.total_amount}元</td>
 					<td>{$vo.total_part}个,￥{$vo.part_amount}元</td>
                     <td>{$vo.total_num}个,￥{$vo.total_pay_amount}元</td>
