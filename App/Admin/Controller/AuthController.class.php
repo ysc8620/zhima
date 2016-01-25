@@ -171,11 +171,12 @@ class AuthController extends CommonController {
         $M              = M('admin_auth_rule');
 		$where          = array('pid'=>0);
         $count          = $M->where($where)->count();
-        $page           = new \Think\Page($count,10);
+        $page           = new \Think\Page($count,20);
         $page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%');
         $show = $page->show();
         $this->assign('page',$show);
         $rule_list = $M->where($where)->limit($page->firstRow.','.$page->listRows)->order('id asc')->select();
+        //print_r($rule_list);
 		foreach($rule_list as $k=>$v){
 			$rule_list[$k]['sub']=M('admin_auth_rule')->where(array('pid'=>$v['id']))->select();
 		}

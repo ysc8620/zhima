@@ -10,10 +10,7 @@ namespace Admin\Controller;
 use Think\Controller;
 class CommonController extends Controller {
     public function _initialize(){
-		$zhimale_v= curl_get('http://www.zhimale.com/Api/check_v');
-		if($zhimale_v!=ZHIMALE_V){
-			$this->zhimale='有新的版本请到官网下载升级<a class="text-sub" href="http://www.zhimale.com/News/index/id/4.html">点击这里</a>';
-		}
+
         $this->admin_uid        = session('admin_uid');
         $this->admin_username   = session('admin_username');
         if (!session('admin_uid') and !session('admin_username')) {
