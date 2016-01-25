@@ -69,18 +69,13 @@
     $('input[name="amount"]').keyup(function(){
         var amount = parseFloat($(this).val() == ''?0:$(this).val());
         var total = parseInt($('input[name="total"]').val() == ''?0:$('input[name="total"]').val());
-        if(amount == NaN || total == NaN){
-            return false;
-        }
         $('.total_amount').text(amount * total);
+        
     });
     $('input[name="total"]').keyup(function(){
-        var amount = parseFloat($('input[name="amount"]').val());
-        var total = parseInt($('input[name="total"]').val());
+        var amount = parseFloat($('input[name="amount"]').val() == ''?0:$('input[name="amount"]').val());
+        var total = parseInt($('input[name="total"]').val() == ''?0:$('input[name="total"]').val());
 
-        if(amount == NaN || total == NaN){
-            return false;
-        }
         $('.total_amount').text(amount * total);
     });
     function show_remark(){
