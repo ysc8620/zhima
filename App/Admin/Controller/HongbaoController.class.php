@@ -46,7 +46,7 @@ class HongbaoController extends CommonController {
     public function detail(){
         $id = I('request.id', 0, 'intval');
         $hongbao = M('hongbao')->find($id);
-        $order_list = M('hongbao_order')->where(array('hongbao_id'=>$id, 'state'=>array('gt', 1)))->order("id DESC")->select();
+        $order_list = M('hongbao_order')->where(array('hongbao_id'=>$id, 'state'=>array('gt', 1)))->order("is_star DESC, id DESC")->select();
         $hongbao['user'] = M('user')->find($hongbao['user_id']);
         foreach($order_list as $i=>$order){
             $order_list[$i]['user'] = M('user')->find($order['user_id']);
