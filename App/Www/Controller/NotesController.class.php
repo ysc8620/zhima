@@ -18,8 +18,8 @@ class NotesController extends BaseController {
             $list = M('hongbao')->where(array('user_id'=>$this->user_id))->page($page,10)->order("addtime DESC")->select();
             $total = M('hongbao')->where(array('user_id'=>$this->user_id))->count();
         }else{
-            $list = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}')")->page($page,10)->order("addtime DESC")->select();
-            $total = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}')")->count();
+            $list = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}') or user_id='{$this->user_id}'")->page($page,10)->order("addtime DESC")->select();
+            $total = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}') or user_id='{$this->user_id}'")->count();
         }
 
         // $list = M('hongbao_order')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
