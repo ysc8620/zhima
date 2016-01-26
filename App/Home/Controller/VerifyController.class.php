@@ -12,10 +12,11 @@ class VerifyController extends Controller {
     public function index(){
 		ob_clean();
         $Verify 			= new \Think\Verify();
-        $Verify->fontSize 	= 30;
+        $Verify->useCurve   = false;
+        $Verify->fontSize 	= 36;
         $Verify->length   	= 4;
-        $Verify->useNoise 	= false;
-        $Verify->useImgBg 	= true; 
+        $Verify->useNoise 	= true;
+        $Verify->useImgBg 	= false;
         $Verify->entry();
     }
 }

@@ -39,7 +39,26 @@ class HongbaoController extends CommonController {
      * 订单列表
      */
     public function order_list(){
+        $status = I('request.status',0,'intval');
+        $count    = M('hongbao')->count();
+        $where = "state > 0";
+        if($status){
+            $where .= " AND state ='{$status}'";
+        }
+        $counts    = M('hongbao')->where($where)->count();
+        $page     = new \Think\Page($counts,20);
+        $page->setConfig('theme','%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END% %HEADER%');
+        $show     = $page->show();
+        $limit    = $page->firstRow.','.$page->listRows;
 
+        $hongbao_list = M('hongbao')->where($where)->limit($page->firstRow.','.$page->listRows)->order("id DESC")->select();
+        $this->assign('page',$show);
+        foreach($hongbao_list as $i=>$hongbao){
+            $hongbao_list[$i]['user'] = M('user')->find($hongbao['user_id']);
+        }
+        $this->hongbao_count = $count;
+        $this->assign('hongbao_list',$hongbao_list);
+        $this->display();
     }
 
     /**

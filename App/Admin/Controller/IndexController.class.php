@@ -11,11 +11,13 @@ use Think\Controller;
 class IndexController extends CommonController {
     public function index(){
     	//投资比例 饼图数据
-		$reviewed=array('status'=>0);
-		$this->reviewed			=D('User/Item')			->countList($reviewed);			//未处理的项目
-		$this->allin			=D('user_pay')			->where(array('status'=>1))->sum('money');			//成功充值
-		$this->allout			=D('user_withdrawals')	->where(array('status'=>1))->sum('money');			//成功提现
-		$this->withdrawals			=D('user_withdrawals')	->where(array('status'=>0))->count();			//未处理的提现
+
+		$this->wait_send_hongbao_total			= M('hongbao')->where(array('state'=>2, 'is_send_hongbao'=>0))->count();			//待发红包总数
+        $this->wait_rerund_order_total = M('hongbao_order')->where("state=2 AND is_refund=0 AND hongbao_id in(SELECT id FROM zml_hongbao WHERE state = 3)")->count();
+
+		$this->all_amount_total			= M('hongbao_order')			->where(array('state'=>2))->sum('total_amount');			//总付款
+		$this->all_hongbao_total			= M('hongbao')	->where(array('state'=>2, 'is_send_hongbao'=>1))->sum('total_amount');			//总红包
+		$this->all_refund_total		= M('hongbao_order')	->where(array('state'=>2, 'is_refund'=>1))->sum('total_amount');			//未处理的提现
 		
     	$sumup['collect_item'] 	= D('User/ItemCollect')		->countList();							//收藏的项目总数
 		$sumup['with_item']		= D('User/ItemWithOrder')	->countList();							//投资的项目总数
