@@ -18,6 +18,10 @@ class IndexController extends CommonController {
 		$this->all_amount_total			= M('hongbao_order')			->where(array('state'=>2))->sum('total_amount');			//总付款
 		$this->all_hongbao_total			= M('hongbao')	->where(array('state'=>2, 'is_send_hongbao'=>1))->sum('total_amount');			//总红包
 		$this->all_refund_total		= M('hongbao_order')	->where(array('state'=>2, 'is_refund'=>1))->sum('total_amount');			//未处理的提现
+
+        $this->all_count_total = M('hongbao')->count();
+        $this->all_success_total = M('hongbao')->where(array('state'=>2))->count();
+        $this->all_cou_total = M('hongbao')->where(array('state'=>1))->count();
 		
     	$sumup['collect_item'] 	= D('User/ItemCollect')		->countList();							//收藏的项目总数
 		$sumup['with_item']		= D('User/ItemWithOrder')	->countList();							//投资的项目总数
