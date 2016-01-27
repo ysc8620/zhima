@@ -123,10 +123,7 @@
                                     <volist name="order_list" id="order" key="k">
                                         <div class="slot star_list" data-id="{$k+$i-1}" data-star=''><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
                                     </volist>
-                                       </div>
-
-
-                            </div>
+                                </div>
 
                         </div>
                         <!--
@@ -265,7 +262,7 @@
     $(document).ready(function(){
         var machine1 = $("#machine1").slotMachine({
             active	: 0,
-            delay	: 500,
+            delay	: 100,
             default_index: 2
         });
 
