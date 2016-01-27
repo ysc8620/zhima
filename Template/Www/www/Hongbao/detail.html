@@ -412,6 +412,7 @@
                     return false;
                 }else if(result.error==2){
                     $("#error_block").show();
+                    setTimeout(function(){window.location.reload();}, 2000);
                 }
             }
         });
