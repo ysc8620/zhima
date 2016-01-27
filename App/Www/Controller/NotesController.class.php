@@ -15,7 +15,7 @@ class NotesController extends BaseController {
         $page = $page<1?1:$page;
         $this->state = I('request.state', '');
         if($this->state == 'creation'){
-            $list = M('hongbao')->where(array('user_id'=>$this->user_id))->page($page,2)->order("addtime DESC")->select();
+            $list = M('hongbao')->where(array('user_id'=>$this->user_id))->page($page,10)->order("addtime DESC")->select();
             $total = M('hongbao')->where(array('user_id'=>$this->user_id))->count();
         }elseif($this->state == 'star'){
             $list = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}' AND is_star=1)")->page($page,10)->order("addtime DESC")->select();
@@ -37,7 +37,7 @@ class NotesController extends BaseController {
         $this->list = $list;
 
 
-        $Page              = new \Think\Page($total,2); // 实例化分页类 传入总记录数和每页显示的记录数(20)
+        $Page              = new \Think\Page($total,10); // 实例化分页类 传入总记录数和每页显示的记录数(20)
         $Page->rollPage = 5;
         $Page->setConfig('prev','上一页');
         $Page->setConfig('next','下一页');
