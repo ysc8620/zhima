@@ -168,7 +168,7 @@ class HongbaoController extends BaseController {
 
         $this->default_index = 0;
         $cookie_key = 'id'.$id.'_'.$this->user_id;
-        $is_show = cookie($cookie_key);
+       // $is_show = cookie($cookie_key);
         if(!$is_show){
             cookie($cookie_key, 1,array('expire'=>time()+2592000));
         }
