@@ -176,10 +176,12 @@ class HongbaoController extends BaseController {
         $order_list = M('hongbao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2,3,4)))))->order("addtime desc")->select();
         if($order_list){
             foreach($order_list as $k=>$order){
+
+                $order_list[$k]['user'] = M('user')->find($order['user_id']);
                 if($order->is_star == 1){
                     $this->default_index = $k;
+                    $this->star_name =  $order_list[$k]['user']['name'];
                 }
-                $order_list[$k]['user'] = M('user')->find($order['user_id']);
             }
         }
         $this->share_link = U('/hongbao/detail', array('id'=>$id), true,true);

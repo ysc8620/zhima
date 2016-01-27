@@ -219,6 +219,7 @@
 		  * @desc PRIVATE - Reset active element position
 		*/
 		function _resetPosition(i){
+            $('.star_name').text($('.star_name').attr('data-txt'));
 			$container.css("margin-top", _getOffset(typeof(i)=='undefined'?_active.index:i));
 		}
 		
@@ -267,7 +268,6 @@
 				setTimeout(function(){
 					
 					if( _forceStop===false ){
-						alert('1')
 						//Repeat animation
 						_shuffle();
 						
@@ -289,7 +289,6 @@
 						delay /= 2;
 						
 					}else{
-						//alert('sss');
 						//Set animation effects
 						_setAnimationFX("slow", true);
 						
@@ -513,7 +512,6 @@
 		$slot.stop = function( nowOrRepeations ){
 			
 			_forceStop = true;
-			
 			if( settings.repeat!==false && _timer!==null ){
 				
 				clearTimeout(_timer);
