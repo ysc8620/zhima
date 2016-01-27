@@ -173,17 +173,16 @@ class HongbaoController extends BaseController {
             //cookie($cookie_key, 1,array('expire'=>time()+2592000));
         }
         $this->is_show = $is_show?true:false;
-        $this->star_name = '++++';
+        $this->star_name = '';
         $order_list = M('hongbao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2,3,4)))))->order("addtime desc")->select();
         if($order_list){
             foreach($order_list as $k=>$order){
 
                 $user = M('user')->find($order['user_id']);
-                if($order->is_star == 1){
-                    echo '-------------';
-                    print_r($user);
+                if($order[is_star] == 1){
+
                     $this->default_index = $k;
-                    $this->star_name =  $user['name'].'===========';
+                    $this->star_name =  $user['name'];
                 }
                 $order_list[$k]['user'] = $user;
             }
