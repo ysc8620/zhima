@@ -120,6 +120,12 @@
                                     <volist name="order_list" id="order" key="i">
                                         <div class="slot star_list" data-id="{$i-1}" data-star='<if condition="$order.is_star eq 1">1</if>'><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
                                     </volist>
+                                    <volist name="order_list" id="order" key="k">
+                                        <div class="slot star_list" data-id="{$k+$i-1}" data-star=''><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
+                                    </volist>
+                                    <volist name="order_list" id="order" key="k">
+                                        <div class="slot star_list" data-id="{$k+$j+$i-1}" data-star=''><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
+                                    </volist>
                                 </div>
                             </div>
                         </div>
