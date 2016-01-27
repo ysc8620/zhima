@@ -180,7 +180,7 @@ class HongbaoController extends BaseController {
                 $user = M('user')->find($order['user_id']);
                 if($order->is_star == 1){
                     $this->default_index = $k;
-                    $this->star_name =  $user['name'];
+                    $this->star_name =  $user['name'].'===========';
                 }
                 $order_list[$k]['user'] = $user;
             }
