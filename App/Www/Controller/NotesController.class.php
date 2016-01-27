@@ -41,7 +41,7 @@ class NotesController extends BaseController {
         $Page->rollPage = 5;
         $Page->setConfig('prev','上一页');
         $Page->setConfig('next','下一页');
-        $Page->setConfig('theme','%UP_PAGE% %DOWN_PAGE% <li ><a>共 %TOTAL_ROW% 条记录</a></li>');
+        $Page->setConfig('theme','%UP_PAGE% %DOWN_PAGE% <li ><a>第'.$page.'/%TOTAL_PAGE%页,共%TOTAL_ROW%条</a></li>');
         $show  = $Page->show();
         $this->page = $show;
         $this->display();
