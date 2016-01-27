@@ -167,7 +167,7 @@ class HongbaoController extends BaseController {
         }
 
 
-        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2,3,4)))))->order("is_star DESC, field(state,2,4,3),addtime desc")->select();
+        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2,3,4)))))->order("addtime desc")->select();
         if($order_list){
             foreach($order_list as $k=>$order){
                 $order_list[$k]['user'] = M('user')->find($order['user_id']);
