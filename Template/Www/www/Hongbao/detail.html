@@ -5,12 +5,7 @@
     .slotMachine .slot { width: 80px; height: 80px; border-radius: 50%;}
     .default { background:url("/images/giftbox-icon.png")  no-repeat; filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%; background-size:100% 100%;;}
     .default>div{ display:none;}
-     .detail_head_img2{    background-repeat: no-repeat;
-         border-radius: 50%;
-         box-shadow: 0 0 0 2px #fff;
-         display: inline-block;
-         height: 80px;
-         width: 80px;}
+
 </style>
 <script src="/js/jquery.slotmachine.js"></script>
 <div class="container">
@@ -171,7 +166,7 @@
 		<div class="block" style="min-height: 200px;">
             <volist name="order_list" id="order" key="i">
 			<ul class="bt_line p6" <if condition="$i gt 5">data-role="order" style="display:none"</if>>
-				<div class="head_img fl" style="width:50px;"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img2" /></div>
+				<div class="head_img fl" style="width:70px;"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img2" /></div>
 					<div class="detail fl">
 						<li class="cl tl">{$order.user.name}</li>
 						<li class="cl tl" style="color: #999">{$order.addtime|date="Y-m-d H:i:s",###}</li>
