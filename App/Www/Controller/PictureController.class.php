@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 namespace Www\Controller;
 use Think\Controller;
-class PictureController extends Controller {
+class PictureController extends BaseController {
     public function index(){
         $this->display();
     }
