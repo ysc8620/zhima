@@ -15,9 +15,16 @@
 
     #img img{width:200px;}
 
+    a{display:inline-block; width:100px; height:40px; background:red; position:relative; overflow:hidden;}
+    a:hover{background:green;}
+    input{position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0);}
 </style>
+
+
 <div style="margin: 12px 0">
-    <input type="file" value="" />
+    <a href="#">
+        <input type="file" value="浏览" />
+    </a>
 </div>
 <div class="col-lg-12 col-sm-12" style="margin: 12px auto 10px;">
 
