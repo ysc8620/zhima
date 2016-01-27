@@ -6,10 +6,10 @@
     .slotMachineButton:hover { background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fb9e25), color-stop(1, #ffc477) ); background: -moz-linear-gradient( center top, #fb9e25 5%, #ffc477 100% );  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffc477');
         background-color: #fb9e25; }
     .slotMachineButton:active { position: relative; top: 1px; }
-    .slotMachine { width: 100px; height: 100px; overflow: hidden; display: inline-block; text-align: center; border: 2px solid #ccc; background-color: #fff!important; }
+    .slotMachine { width: 100px; height: 100px; overflow: hidden; display: inline-block; text-align: center;}
     .noBorder { border: none !important; background: transparent !important; font: 14px arial;}
     .slotMachine .slot { width: 100px; height: 100px; }
-    .default { background:url("/images/present.png")  no-repeat; filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%; background-size:100% 100%;;}
+    .default { background:url("/images/giftbox-icon.png")  no-repeat; filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%; background-size:100% 100%;;}
     .default div{ display:none;}
 </style>
 <script src="/js/jquery.slotmachine.js"></script>
@@ -119,7 +119,7 @@
                             <div class="clear">
                                 <div id="machine1" class="slotMachine default">
                                     <volist name="order_list" id="order" key="i">
-                                    <div class="slot star_list" data-id="{$i-1}" data-star='<if condition="$order.is_star eq 1">1</if>'><img src="{$order.user.header}" style="height: 100px; width: 100px;" /></div>
+                                    <div class="slot star_list" data-id="{$i-1}" data-star='<if condition="$order.is_star eq 1">1</if>'><img src="{$order.user.header}" class="detail_head_img" style="height: 100px; width: 100px;" /></div>
                                         </volist>
                                 </div>
                             </div>

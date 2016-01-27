@@ -208,6 +208,7 @@
 			}
 			
 			if( fade!==true || speed==="stop" ){
+				_getNext();
 				$slot.add($titles).removeClass("slotMachineGradient");
 			}else{
 				$slot.add($titles).addClass("slotMachineGradient");
@@ -272,7 +273,7 @@
 						
 					}
 					
-				}, delay + 25);
+				}, delay + 2000); // 25
 			
 			//Stop animation after {count} repeats
 			}else{
@@ -323,7 +324,7 @@
 						//Repeat animation
 						_shuffle( count-1 );
 						
-					}, delay + 25);
+					}, delay + 2000); // 25
 					
 				}else{
 					
@@ -377,7 +378,7 @@
 			}
 								
 			//Stop animation NOW!!!!!!!
-			if( nowOrRepeations===true || nowOrRepeations<=1 ){
+			if( nowOrRepeations===true || nowOrRepeations<=1 ){ 
 				
 				_setAnimationFX("slow", true);
 				
@@ -410,18 +411,21 @@
 				
 				//Oncomplete animation
 				setTimeout(function(){
-					
+								
 					_setAnimationFX("stop");
 					
 					_isRunning = false;
 					
-				}, delay + 25);
-				
+				}, delay + 2000); // 25
+				/////////////////////////////
 				setTimeout(function(){
-					_resetPosition(2);
+					if(typeof(settings.default_index) == 'number'){
+						_resetPosition(settings.default_index);
+						}
 					
-				}, delay + 25);
-			
+					
+				}, delay+2000 );
+	
 			//Stop animation sloooooooowly
 			}else{
 				
@@ -462,7 +466,7 @@
 					
 					_timer = _auto( delay );
 					
-				}, delay);
+				}, delay+2000);// =--------------
 				
 			}
 			
@@ -482,8 +486,8 @@
 		
 		//Start auto animation
 		if( settings.repeat!==false ){
-			
-			_auto();
+			setTimeout(function(){
+			_auto();}, 500);
 			
 		}
 		
@@ -548,6 +552,7 @@
 		$slot.active = function(){
 			return _getActive();
 		};
+		
 		
 		/**
 		  * @desc PUBLIC - Check if the machine is doing stuff
