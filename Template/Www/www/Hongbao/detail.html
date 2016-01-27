@@ -118,25 +118,11 @@
                             <div class="clear">
                                 <div id="machine1" class="slotMachine default">
                                     <volist name="order_list" id="order" key="i">
-                                        <div class="slot star_list" data-id="{$i-1}" data-star='<if condition="$order.is_star eq 1">1</if>'><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
+                                        <div class="slot " ><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
                                     </volist>
                                 </div>
 
                         </div>
-                        <!--
-                        <div class="content" style="text-align: center">
-                            <div class="clear">
-                                <div id="machine1" class="slotMachine default">
-                                    <volist name="order_list" id="order" key="i">
-                                        <div class="slot star_list" data-id="{$i-1}" data-star='<if condition="$order.is_star eq 1">1</if>'><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
-                                    </volist>
-                                    <volist name="order_list" id="order" key="k">
-                                        <div class="slot star_list" data-id="{$k+$i-1}" data-star=''><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
-                                    </volist>
-
-                                </div>
-                            </div>
-                        </div>-->
                     </div>
                     <div class="remark" style="font-size: 12px;">点击揭晓</div>
                     <div class="remark" style="color: #ff9802!important"><img src="/images/xing.png" style="width: 14px;" />  幸运星</div>
