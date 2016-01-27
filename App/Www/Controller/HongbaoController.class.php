@@ -177,11 +177,12 @@ class HongbaoController extends BaseController {
         if($order_list){
             foreach($order_list as $k=>$order){
 
-                $order_list[$k]['user'] = M('user')->find($order['user_id']);
+                $user = M('user')->find($order['user_id']);
                 if($order->is_star == 1){
                     $this->default_index = $k;
-                    $this->star_name =  $order_list[$k]['user']['name'];
+                    $this->star_name =  $user['name'];
                 }
+                $order_list[$k]['user'] = $user;
             }
         }
         $this->share_link = U('/hongbao/detail', array('id'=>$id), true,true);
