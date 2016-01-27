@@ -177,10 +177,10 @@ class HongbaoController extends BaseController {
         $order_list = M('hongbao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2,3,4)))))->order("addtime desc")->select();
         if($order_list){
             foreach($order_list as $k=>$order){
-                echo $k.'-';
+
                 $user = M('user')->find($order['user_id']);
                 if($order[is_star] == 1){
-                    echo $k.'=';
+
                     $this->default_index = $k;
                     $this->star_name =  $user['name'];
                 }
