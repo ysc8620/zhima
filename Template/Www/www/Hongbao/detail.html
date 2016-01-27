@@ -291,8 +291,8 @@
     }
 </script>
 <script type="text/javascript">
-        var star_id = $('.star_list[data-star="1"]').attr('data-id');
-        alert(star_id);
+        var star_id = parseInt($('.star_list[data-star="1"]').attr('data-id'));
+        // star_id = 2;
         var machine1 = $("#machine1").slotMachine({
             active	: -1,
             delay	: 500,
