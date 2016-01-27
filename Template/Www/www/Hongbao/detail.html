@@ -1,4 +1,18 @@
 <include file="Public:header" />
+<style>
+    .slotMachineButton { width: 100px; height: 100px; overflow: hidden; display: inline-block; text-align: center; }
+    .slotMachineButton { -moz-box-shadow: inset 0px 1px 0px 0px #fce2c1; -webkit-box-shadow: inset 0px 1px 0px 0px #fce2c1; box-shadow: inset 0px 1px 0px 0px #fce2c1; background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffc477), color-stop(1, #fb9e25) ); background: -moz-linear-gradient( center top, #ffc477 5%, #fb9e25 100% );  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffc477', endColorstr='#fb9e25');
+        background-color: #ffc477; border-radius: 75px; border: 6px solid #eeb44f; display: inline-block; color: #ffffff; font: 700 40px/100px "Microsoft Yahei"; height: 100px; width: 100px; text-decoration: none; text-align: center; text-shadow: 1px 1px 0px #cc9f52; margin-left: 50px; cursor: pointer; }
+    .slotMachineButton:hover { background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fb9e25), color-stop(1, #ffc477) ); background: -moz-linear-gradient( center top, #fb9e25 5%, #ffc477 100% );  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffc477');
+        background-color: #fb9e25; }
+    .slotMachineButton:active { position: relative; top: 1px; }
+    .slotMachine { width: 100px; height: 100px; overflow: hidden; display: inline-block; text-align: center; border: 2px solid #ccc; background-color: #fff!important; }
+    .noBorder { border: none !important; background: transparent !important; font: 14px arial;}
+    .slotMachine .slot { width: 100px; height: 100px; }
+    .default { background:url("/images/present.png")  no-repeat; filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%; background-size:100% 100%;;}
+    .default div{ display:none;}
+</style>
+<script src="/js/jquery.slotmachine.js"></script>
 <div class="container">
 	<div class="detail_header">
 		<div class="detail_head_block"><img src="{$hongbao_user.header}" alt="{$hongbao_user.name}" class="detail_head_img" /></div>
@@ -93,14 +107,26 @@
 			</ul>
 			<ul >
 				<div class="tit">
-					<div class="">
-						<img src="/images/ok.png" style=" width:80px;" />
-					</div>
-					<div class="title" style="font-size: 26px; margin: 6px 0;">凑齐啦~</div>
+					<div class="title" style="font-size: 16px; margin: 6px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 凑齐啦~</div>
 					<div class="remark">每份{$hongbao.part_amount}元, 共{$hongbao.total_part}份, {$use_time}凑齐</div>
 				</div>
 			</ul>
+            <ul>
+                <div class="tit">
+                    <div>
 
+                        <div class="content" style="text-align: center; ">
+                            <div class="clear">
+                                <div id="machine1" class="slotMachine default">
+                                    <volist name="order_list" id="order" key="i">
+                                    <div class="slot star_list" data-id="{$i-1}" data-star='<if condition="$order.is_star eq 1">1</if>'><img src="{$order.user.header}" style="height: 100px; width: 100px;" /></div>
+                                        </volist>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ul>
     <if condition="$hongbao[user_id] eq $user[uin]">
             <ul>
                 <div class="tit">
@@ -143,7 +169,6 @@
             <volist name="order_list" id="order" key="i">
 			<ul class="bt_line p6" <if condition="$i gt 5">data-role="order" style="display:none"</if>>
 				<div class="head_img fl" style="width:70px;"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img2" /></div>
-
 					<div class="detail fl">
 						<li class="cl tl">{$order.user.name}</li>
 						<li class="cl tl" style="color: #999">{$order.addtime|date="Y-m-d H:i:s",###}</li>
@@ -151,7 +176,7 @@
 
 					<div class="detail fr">
 						<li class="cl tr">￥{$order.total_amount}</li>
-						<li class="cl tr" style="color: #ff9802!important"> <if condition="$order.is_star eq 1"><img src="/images/xing.png" style="width: 14px; " /> 幸运星</if></li>
+						<li class="cl tr" style="color: #ff9802!important"> <if condition="$order.is_star eq 2"><img src="/images/xing.png" style="width: 14px; " /> 幸运星</if></li>
 					</div>
 
 				<div class="cl"></div>
@@ -214,6 +239,7 @@
        </span>
 </div>
 <include file="Public:foot" />
+
 <script type="text/javascript">
     //调用微信JS api 支付
     function jsApiCall(data)
@@ -265,6 +291,27 @@
     }
 </script>
 <script type="text/javascript">
+        var star_id = $('.star_list[data-star="1"]').attr('data-id');
+        var machine1 = $("#machine1").slotMachine({
+            active	: -1,
+            delay	: 500,
+            default_index:star_id
+        });
+
+
+        function onComplete($el, active){
+            //$("#machine1Result").text("Index: " + active.index);
+        }
+
+        $("#machine1").click(function(){
+            $(this).removeClass('default');
+            machine1.shuffle(2, onComplete);
+
+            //setTimeout(function(){
+            // machine1.setactive(1);}, 2001);
+        });
+
+
     $('.view_all').click(function(){
         $('[data-role="order"]').toggle();
         if($('.view_all .f12').text() == '查看全部参与者'){
