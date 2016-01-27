@@ -296,3 +296,7 @@ input.jia{margin:0!important;height:36px; vertical-align:middle; line-height:30p
 .guanzhu a { padding:4px 10px; background:#DF2127; color:#fff!important; border-radius:5px; }
 .guanzhu span { float:right; padding-right:10px; line-height:30px; }
 .guanzhu span i { font-size:16px; }
+
+.nav_fixed {background-color:#fff;height:40px;width:100%;font-size:13px;text-align:center;top:0;max-width:640px}
+.fixed_nav_item {height:40px;line-height:40px;width:33.33%;float:left;display:block;box-sizing:border-box;border-right:1px solid #ccc;border-bottom:1px solid #ccc}
+.nav_cur {border-bottom:2px solid #DF2127;color:red}

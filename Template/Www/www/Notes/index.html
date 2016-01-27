@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
 <meta name="Generator" content="hongbaoos v1.0" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -16,16 +16,12 @@
 
 <body>
 <div class="container">
-	
-	<div class="from mt20 cl">
-		<ul class="cl">
-			<div class="tit " style="text-align:left;">
-				 <span style="float: left; line-height:20px;">只看我发起的</span>
-        <span style="float: right; line-height:20px;"><a href="?is_only=<if condition="$is_only">0<else/>1</if> "><input type="checkbox" name="check-1" value="4" class="lcs_check lcs_on" <if condition="$is_only">checked</if>  autocomplete="off" /></a></span>
-				<div style="clear:both"></div>
-			</div>
-		</ul>
-	</div>
+
+    <div class="nav_fixed">
+        <a href="{:U('/notes/index')}" class="fixed_nav_item  <if condition='$state eq ""'>nav_cur</if>"><span class="nav_txt">所有</span></a>
+        <a href="{:U('/notes/index',array('state'=>'creation'))}" class="fixed_nav_item <if condition='$state eq "creation"'>nav_cur</if> "><span class="nav_txt nav_payment">我发起的</span></a>
+        <a href="{:U('/notes/index',array('state'=>'star'))}" class="fixed_nav_item <if condition='$state eq "star"'>nav_cur</if> "><span class="nav_txt nav_payment">我是幸运星</span></a>
+    </div>
 	<div class="order_list">
 		<div class="header bt_line">
 				</div>
