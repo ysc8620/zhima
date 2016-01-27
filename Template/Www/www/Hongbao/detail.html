@@ -1,16 +1,16 @@
 <include file="Public:header" />
 <style>
-    .slotMachineButton { width: 100px; height: 100px; overflow: hidden; display: inline-block; text-align: center; }
-    .slotMachineButton { -moz-box-shadow: inset 0px 1px 0px 0px #fce2c1; -webkit-box-shadow: inset 0px 1px 0px 0px #fce2c1; box-shadow: inset 0px 1px 0px 0px #fce2c1; background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffc477), color-stop(1, #fb9e25) ); background: -moz-linear-gradient( center top, #ffc477 5%, #fb9e25 100% );  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffc477', endColorstr='#fb9e25');
-        background-color: #ffc477; border-radius: 75px; border: 6px solid #eeb44f; display: inline-block; color: #ffffff; font: 700 40px/100px "Microsoft Yahei"; height: 100px; width: 100px; text-decoration: none; text-align: center; text-shadow: 1px 1px 0px #cc9f52; margin-left: 50px; cursor: pointer; }
-    .slotMachineButton:hover { background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fb9e25), color-stop(1, #ffc477) ); background: -moz-linear-gradient( center top, #fb9e25 5%, #ffc477 100% );  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffc477');
-        background-color: #fb9e25; }
-    .slotMachineButton:active { position: relative; top: 1px; }
-    .slotMachine { width: 100px; height: 100px; overflow: hidden; display: inline-block; text-align: center;}
+     .slotMachine { width: 80px; height: 80px;  border-radius: 50%; overflow: hidden; display: inline-block; text-align: center;}
     .noBorder { border: none !important; background: transparent !important; font: 14px arial;}
-    .slotMachine .slot { width: 100px; height: 100px; }
+    .slotMachine .slot { width: 80px; height: 80px; border-radius: 50%;}
     .default { background:url("/images/giftbox-icon.png")  no-repeat; filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  -moz-background-size:100% 100%; background-size:100% 100%;;}
-    .default div{ display:none;}
+    .default>div{ display:none;}
+     .detail_head_img2{    background-repeat: no-repeat;
+         border-radius: 50%;
+         box-shadow: 0 0 0 2px #fff;
+         display: inline-block;
+         height: 80px;
+         width: 80px;}
 </style>
 <script src="/js/jquery.slotmachine.js"></script>
 <div class="container">
@@ -113,18 +113,19 @@
 			</ul>
             <ul>
                 <div class="tit">
-                    <div>
-
-                        <div class="content" style="text-align: center; ">
+                    <div class="remark">
+                        <div class="content" style="text-align: center">
                             <div class="clear">
                                 <div id="machine1" class="slotMachine default">
                                     <volist name="order_list" id="order" key="i">
-                                    <div class="slot star_list" data-id="{$i-1}" data-star='<if condition="$order.is_star eq 1">1</if>'><img src="{$order.user.header}" class="detail_head_img" style="height: 100px; width: 100px;" /></div>
-                                        </volist>
+                                        <div class="slot star_list" data-id="{$i-1}" data-star='<if condition="$order.is_star eq 1">1</if>'><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
+                                    </volist>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="remark" style="font-size: 12px;">点击揭晓</div>
+                    <div class="remark" style="color: #ff9802!important"><img src="/images/xing.png" style="width: 12px; vertical-align: middle" />  幸运星</div>
                 </div>
             </ul>
     <if condition="$hongbao[user_id] eq $user[uin]">
