@@ -111,6 +111,7 @@
 					<div class="remark">每份{$hongbao.part_amount}元, 共{$hongbao.total_part}份, {$use_time}凑齐</div>
 				</div>
 			</ul>
+    <if condition="!$is_show">
             <ul>
                 <div class="tit">
                     <div class="remark">
@@ -128,6 +129,7 @@
                     <div class="remark" style="color: #ff9802!important"><img src="/images/xing.png" style="width: 14px;" />  幸运星</div>
                 </div>
             </ul>
+    </if>
     <if condition="$hongbao[user_id] eq $user[uin]">
             <ul>
                 <div class="tit">
@@ -177,7 +179,7 @@
 
 					<div class="detail fr">
 						<li class="cl tr">￥{$order.total_amount}</li>
-						<li class="cl tr" style="color: #ff9802!important"> <if condition="$order.is_star eq 2"><img src="/images/xing.png" style="width: 14px; " /> 幸运星</if></li>
+						<li class="cl tr" style="color: #ff9802!important"> <if condition="$order.is_star eq 1 and $is_show"><img src="/images/xing.png" style="width: 14px; " /> 幸运星</if></li>
 					</div>
 
 				<div class="cl"></div>
