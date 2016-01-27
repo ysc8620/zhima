@@ -154,7 +154,12 @@
                     <img src="/images/ico_ku.png" style=" width:80px;" />
                 </div>
                 <div class="title" style="font-size: 26px; margin: 6px 0;">失败啦~</div>
-                <div class="remark">每份{$hongbao.part_amount}元, 共{$hongbao.total_part}份, 凑了{$hongbao.total_num}份</div>
+                <div class="remark">总共{$hongbao.total_part}份，凑了{$hongbao.total_num}份，还差{$hongbao.total_part-$hongbao.total_num}份。</div>
+                <div class="remark">
+                    <p style="padding: 12px 20px; text-align: left">
+                    自凑红包发起24小时内，如果没凑齐，系统会自动将已凑的金额原路退款给参与者。谢谢支持。
+                    </p>
+                </div>
             </div>
         </ul>
         </div>
