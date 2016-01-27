@@ -68,11 +68,14 @@
         nonceStr: '{$signPackage.nonceStr}',
         signature: '{$signPackage.signature}',
         jsApiList: [
-            'checkJsApi',
-            'onMenuShareTimeline',
-            'onMenuShareAppMessage',
-            'onMenuShareQQ',
-            'onMenuShareWeibo'
+            /*
+             * 所有要调用的 API 都要加到这个列表中
+             * 这里以图像接口为例
+             */
+            "chooseImage",
+            "previewImage",
+            "uploadImage",
+            "downloadImage"
         ]
     });
 
