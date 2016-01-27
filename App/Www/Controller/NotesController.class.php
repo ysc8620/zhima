@@ -41,7 +41,7 @@ class NotesController extends BaseController {
         $Page->rollPage = 5;
         $Page->setConfig('prev','上一页');
         $Page->setConfig('next','下一页');
-        $Page->setConfig('theme','<span style="font-size:12px; line-height:20px">第'.$page.'/%TOTAL_PAGE%页,共%TOTAL_ROW%条</span> <br/> %UP_PAGE% %DOWN_PAGE%');
+        $Page->setConfig('theme','<span style="font-size:12px; padding-bottom:4px;">第'.$page.'/%TOTAL_PAGE%页,共%TOTAL_ROW%条</span> <br/> %UP_PAGE% %DOWN_PAGE%');
         $show  = $Page->show();
         $this->page = $show;
         $this->display();
