@@ -418,6 +418,7 @@
 				}, delay + 25);
 				
 				setTimeout(function(){
+									alert(settings.default_index);
 					_resetPosition(settings.default_index);
 					
 				}, delay + 25);
