@@ -102,11 +102,11 @@ filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')
     width: 60px;}
 
 .detail_head_img2{    background-repeat: no-repeat;
-    border-radius: 5%;
+    border-radius: 50%;
     box-shadow: 0 0 0 2px #fff;
     display: inline-block;
-    height: 60px;
-    width: 60px;}
+    height: 40px;
+    width: 40px;}
 
 .from div.tit .title{ font-size:18px;}
 .from div.tit .remark{ color:#999; font-size:14px;}
