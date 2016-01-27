@@ -123,12 +123,26 @@
                                     <volist name="order_list" id="order" key="k">
                                         <div class="slot star_list" data-id="{$k+$i-1}" data-star=''><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
                                     </volist>
-                                    <volist name="order_list" id="order" key="k">
-                                        <div class="slot star_list" data-id="{$k+$j+$i-1}" data-star=''><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
+                                       </div>
+
+
+                            </div>
+
+                        </div>
+                        <!--
+                        <div class="content" style="text-align: center">
+                            <div class="clear">
+                                <div id="machine1" class="slotMachine default">
+                                    <volist name="order_list" id="order" key="i">
+                                        <div class="slot star_list" data-id="{$i-1}" data-star='<if condition="$order.is_star eq 1">1</if>'><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
                                     </volist>
+                                    <volist name="order_list" id="order" key="k">
+                                        <div class="slot star_list" data-id="{$k+$i-1}" data-star=''><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
+                                    </volist>
+
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="remark" style="font-size: 12px;">点击揭晓</div>
                     <div class="remark" style="color: #ff9802!important"><img src="/images/xing.png" style="width: 14px;" />  幸运星</div>
@@ -247,6 +261,34 @@
 </div>
 <include file="Public:foot" />
 
+<script>
+    $(document).ready(function(){
+        var machine1 = $("#machine1").slotMachine({
+            active	: 0,
+            delay	: 500,
+            default_index: 2
+        });
+
+
+
+        function onComplete($el, active){
+            switch($el[0].id){
+                case 'machine1':
+                    //$("#machine1Result").text("Index: " + active.index);
+                    break;
+
+            }
+        }
+
+        $(".slotMachine").click(function(){
+            $(this).removeClass('default');
+            machine1.shuffle(3, onComplete);
+
+        })
+    });
+</script>
+
+
 <script type="text/javascript">
     //调用微信JS api 支付
     function jsApiCall(data)
@@ -298,28 +340,28 @@
     }
 </script>
 <script type="text/javascript">
-        var star_id = parseInt($('.star_list[data-star="1"]').attr('data-id'));
-        // star_id = 2;
-        var machine1 = $("#machine1").slotMachine({
-            active	: -1,
-            delay	: 100,
-            default_index:star_id
-        });
-
-
-        function onComplete($el, active){
-            //$("#machine1Result").text("Index: " + active.index);
-        }
-        var bool = true;
-        $("#machine1").click(function(){
-            //if(!bool){return false;}
-            bool = false;
-            $(this).removeClass('default');
-            machine1.shuffle(3, onComplete);
-
-            //setTimeout(function(){
-            // machine1.setactive(1);}, 2001);
-        });
+//        var star_id = parseInt($('.star_list[data-star="1"]').attr('data-id'));
+//        // star_id = 2;
+//        var machine1 = $("#machine1").slotMachine({
+//            active	: -1,
+//            delay	: 100,
+//            default_index:star_id
+//        });
+//
+//
+//        function onComplete($el, active){
+//            //$("#machine1Result").text("Index: " + active.index);
+//        }
+//        var bool = true;
+//        $("#machine1").click(function(){
+//            //if(!bool){return false;}
+//            bool = false;
+//            $(this).removeClass('default');
+//            machine1.shuffle(3, onComplete);
+//
+//            //setTimeout(function(){
+//            // machine1.setactive(1);}, 2001);
+//        });
 
 
     $('.view_all').click(function(){
