@@ -195,7 +195,7 @@
 		*/
 		function _setAnimationFX(speed, fade){
 			$slot.add($titles).removeClass("slotMachineBlurFast slotMachineBlurMedium slotMachineBlurSlow");
-			switch( speed ){
+			/*switch( speed ){
 				case 'fast':
 					$titles.addClass("slotMachineBlurFast");
 					break;
@@ -205,7 +205,8 @@
 				case 'slow':
 					$titles.addClass("slotMachineBlurSlow");
 					break;
-			}
+			}*/
+			$titles.addClass("slotMachineBlurSlow");
 			
 			if( fade!==true || speed==="stop" ){
 				$slot.add($titles).removeClass("slotMachineGradient");
@@ -266,7 +267,7 @@
 				setTimeout(function(){
 					
 					if( _forceStop===false ){
-						
+						alert('1')
 						//Repeat animation
 						_shuffle();
 						
@@ -288,9 +289,9 @@
 						delay /= 2;
 						
 					}else{
-						
+						//alert('sss');
 						//Set animation effects
-						_setAnimationFX("medium", true);
+						_setAnimationFX("slow", true);
 						
 					}
 					
