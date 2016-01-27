@@ -176,7 +176,7 @@
 
 					<div class="detail fr">
 						<li class="cl tr">￥{$order.total_amount}</li>
-						<li class="cl tr" style="color: #ff9802!important"> <if condition="$order.is_star eq 2"><img src="/images/xing.png" style="width: 14px; " /> 幸运星</if></li>
+						<li class="cl tr" style="color: #ff9802!important"> <if condition="$order.is_star eq 1"><img src="/images/xing.png" style="width: 14px; " /> 幸运星</if></li>
 					</div>
 
 				<div class="cl"></div>
@@ -302,8 +302,10 @@
         function onComplete($el, active){
             //$("#machine1Result").text("Index: " + active.index);
         }
-
+        var bool = true;
         $("#machine1").click(function(){
+            if(!bool){return false;}
+            bool = false;
             $(this).removeClass('default');
             machine1.shuffle(2, onComplete);
 
