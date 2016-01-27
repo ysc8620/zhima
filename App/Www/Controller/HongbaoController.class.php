@@ -168,9 +168,9 @@ class HongbaoController extends BaseController {
 
         $this->default_index = 0;
         $cookie_key = 'id'.$id.'_'.$this->user_id;
-       // $is_show = cookie($cookie_key);
+        $is_show = cookie($cookie_key);
         if(!$is_show){
-            //cookie($cookie_key, 1,array('expire'=>time()+2592000));
+            cookie($cookie_key, 1,array('expire'=>time()+2592000));
         }
         $this->is_show = $is_show?true:false;
         $this->star_name = '';
@@ -180,7 +180,6 @@ class HongbaoController extends BaseController {
 
                 $user = M('user')->find($order['user_id']);
                 if($order[is_star] == 1){
-
                     $this->default_index = $k;
                     $this->star_name =  $user['name'];
                 }
