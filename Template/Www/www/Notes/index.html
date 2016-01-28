@@ -18,26 +18,26 @@
 <div class="container">
 
     <div class="nav_fixed">
-        <a href="{:U('/notes/index')}" class="fixed_nav_item  <if condition='$state eq ""'>nav_cur</if>"><span class="nav_txt">所有</span></a>
-        <a href="{:U('/notes/index',array('state'=>'creation'))}" class="fixed_nav_item <if condition='$state eq "creation"'>nav_cur</if> "><span class="nav_txt nav_payment">我发起的</span></a>
-        <a href="{:U('/notes/index',array('state'=>'star'))}" class="fixed_nav_item <if condition='$state eq "star"'>nav_cur</if> "><span class="nav_txt nav_payment">我是幸运星</span></a>
+        <a style="color: #323232!important; font-size: 15px;" href="{:U('/notes/index')}" class="fixed_nav_item  <if condition='$state eq ""'>nav_cur</if>"><span class="nav_txt">所有</span></a>
+        <a style="color: #323232!important; font-size: 15px;" href="{:U('/notes/index',array('state'=>'creation'))}" class="fixed_nav_item <if condition='$state eq "creation"'>nav_cur</if> "><span class="nav_txt nav_payment">我发起的</span></a>
+        <a style="color: #323232!important; font-size: 15px;" href="{:U('/notes/index',array('state'=>'star'))}" class="fixed_nav_item <if condition='$state eq "star"'>nav_cur</if> "><span class="nav_txt nav_payment">我是幸运星</span></a>
     </div>
 	<div class="order_list">
 		<div class="header bt_line">
 				</div>
-		<div class="block" style="min-height: 100px;">
+		<div class="block" style="min-height: 200px;">
             <volist name="list" id="item">
                 <a class="" href="{:U('/hongbao/detail',array('id'=>$item['number_no']))}">
 			<ul class="bt_line p6">
 				<div class="head_img fl" style="width:70px;"><img src="{$item.user.header}" alt="{$item.user.name}" class="detail_head_img2" /></div>
 					<div class="detail fl">
 						<li class="cl tl">{$item.user.name}</li>
-						<li class="cl tl">{$item.addtime|date="Y-m-d H:i:s",###}</li>
+						<li class="cl tl" style="color: #bbb">{$item.addtime|date="Y-m-d H:i:s",###}</li>
 					</div>
 				
 					<div class="detail fr">
 						<li class="cl tr">￥{$item.total_amount}</li>
-						<li class="cl tr"><if condition="$item.state eq 1"><font color="blue">还在凑</font><elseif condition="$item.state eq 2" /><font color="green">已完成,</font> <if condition="$item.is_send_hongbao"><font color="green">已转账</font><else /><font color="red">待转账</font></if><elseif condition="$item.state eq 3" /><font color="red">未完成,</font> <if condition="$item.is_refund"><font color="green">已退款</font><else /><font color="red">待退款</font></if><else />已关闭</if></li>
+						<li class="cl tr"><if condition="$item.state eq 1"><font color="#5171b0">还在凑</font><elseif condition="$item.state eq 2" /><font color="green">已完成,</font> <if condition="$item.is_send_hongbao"><font color="green">已转账</font><else /><font color="red">待转账</font></if><elseif condition="$item.state eq 3" /><font color="red">未完成,</font> <if condition="$item.is_refund"><font color="green">已退款</font><else /><font color="red">待退款</font></if><else />已关闭</if></li>
 					</div>
 				
 				<div class="cl"></div>
@@ -46,6 +46,10 @@
 </volist>
 			<div class="cl"></div>
 		</div>
+        <div class="xiala">
+            <div class="fr" style="margin-left: 12px;"><span style="font-size:12px; padding-bottom:4px;">第{$page}/%TOTAL_PAGE%页,共%TOTAL_ROW%条</span> <br/> </div>
+            <div class="cl">&nbsp;</div>
+        </div>
 		<div class="xiala">
             <div class="fl" style="margin-left: 12px;"><a href="{:U('/hongbao')}"><input type="button" class="btn w120" value="发起凑红包" /></a></div>
 			 <div id="pager" class="pagebar pagination fr" style="margin-right: 12px; text-align: right">

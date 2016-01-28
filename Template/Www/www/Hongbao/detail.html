@@ -116,6 +116,11 @@
                                     <volist name="order_list" id="order" key="i">
                                         <div class="slot " data-id="{$i-1}" ><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
                                     </volist>
+                                    <if condition="count($order_list) lt 3">
+                                        <volist name="order_list" id="order" key="j">
+                                            <div class="slot " data-id="{$i+$j-1}" ><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
+                                        </volist>
+                                    </if>
                                 </div>
 
                         </div>
@@ -168,7 +173,7 @@
 		<div class="header bt_line">
 			<span><img src="/images/sm.png" style="width:14px; line-height:14px; vertical-align:middle;" /></span><span>  <if condition="$hongbao.state eq 2">幸运星已经产生，快找发起人要福利吧！<else />凑齐后,会根据参与金额,随机产生一名幸运星</if></span>
 		</div>
-		<div class="block" style="min-height: 100px;">
+		<div class="block" style="min-height: 200px;">
             <volist name="order_list" id="order" key="i">
 			<ul class="bt_line p6" <if condition="$i gt 5">data-role="order" style="display:none"</if>>
 				<div class="head_img fl" style="width:70px;"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img2" /></div>

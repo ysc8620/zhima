@@ -104,8 +104,8 @@
             return false;
         }
 
-        if(amount > 200 || amount < 2){
-            layer.msg('请输入2-200之内金额.', function(){});
+        if(amount > 200 || amount < 0){
+            layer.msg('请输入200之内金额.', function(){});
             return false;
         }
 

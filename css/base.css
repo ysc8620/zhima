@@ -132,8 +132,9 @@ input.num{ margin:0!important; vertical-align:middle; border:1px #979797 solid; 
 input.jian{ margin:0!important; vertical-align:middle; height:36px; line-height:30px;  background:#fff; border:1px #979797 solid; -webkit-border-radius:3px;border-radius:3px; padding:0 12px;}
 input.jia{margin:0!important;height:36px; vertical-align:middle; line-height:30px; background:#fff; border:1px #979797 solid; -webkit-border-radius:3px;border-radius:3px; padding:0 12px;}
 .pagination{list-style:none;margin:6px 0;padding:0;display:inline-block;vertical-align:bottom;}
-.pagination li{display:inline-block;border:solid 1px #999;border-radius:4px;}
-.pagination a{color:#333;padding:4px 8px;line-height:18px;display:block;transition:all 1s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
+.pagination li{display:inline-block;border:solid 1px #999;border-radius:4px; height: 50px; line-height: 50px;}
+.pagination a{color:#333;padding:0 8px;line-height:50px;display:block;transition:all 1s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
+.pagination a.prev, .pagination a.next{ width: 90px; text-align: center;}
 .pagination .disabled a:link, .pagination .disabled a:visited, .pagination .disabled a:hover{cursor:not-allowed;pointer-events:none;color:#f1f1f1;}
 .pagination .active{pointer-events:none;}
 .pagination .active,.pagination a:hover{background:#f5f5f5;border-radius:4px;transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
@@ -297,6 +298,6 @@ input.jia{margin:0!important;height:36px; vertical-align:middle; line-height:30p
 .guanzhu span { float:right; padding-right:10px; line-height:30px; }
 .guanzhu span i { font-size:16px; }
 
-.nav_fixed {background-color:#fff;height:40px;width:100%;font-size:13px;text-align:center;top:0;max-width:640px}
-.fixed_nav_item {height:40px;line-height:40px;width:33.33%;float:left;display:block;box-sizing:border-box;border-right:1px solid #ccc;border-bottom:1px solid #ccc}
-.nav_cur {border-bottom:2px solid #DF2127;color:red}
+.nav_fixed {background-color:#fff;height:50px;width:100%;font-size:13px;text-align:center;top:0;max-width:640px}
+.fixed_nav_item {height:50px;line-height:50px;width:33.33%;float:left;display:block;box-sizing:border-box;border-right:1px solid #ccc;border-bottom:1px solid #ccc}
+.nav_cur {border-bottom:2px solid #DF2127;color:red; font-weight:bold;}
