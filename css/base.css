@@ -89,7 +89,7 @@ input, button{ border:none; font-size: 18px; text-align:right; margin-right:24px
 .from div.tit{ line-height:20px; text-align:center; font-size:14px; color:#000; margin:12px auto;}
 .from div.tit .amount{ font-size:24px;}
 .from div.tit .amount_remark{ color:#999; font-size:16px;}
-.foot_reamrk{ position: absolute; bottom: 20px; color:#9b9b9b; font-size:12px; text-align:center; width:90%;}
+.foot_reamrk{ position: absolute; bottom: 10px; color:#9b9b9b; font-size:12px; text-align:center; width:90%;}
 
 /*详情页*/
 .detail_header{ height:120px; position:relative; background:url(../images/hb_bg.png);  
