@@ -129,6 +129,27 @@
                     <div class="remark" style="color: #ff9802!important"><img src="/images/xing.png" style="width: 14px;" />  幸运星</div>
                 </div>
             </ul>
+        <else/>
+        <ul>
+            <div class="tit">
+                <div class="remark">
+                    <div class="content" style="text-align: center">
+                        <div class="clear">
+                            <div id="machine" class="slotMachine ">
+                                <volist name="order_list" id="order" key="i">
+                                    <if condition="$order.is_star eq 1">
+                                    <div class="slot " data-id="{$i-1}" ><img src="{$order.user.header}" class="detail_head_img" style="height: 80px; width: 80px;" /></div>
+                                    </if>
+                                </volist>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="remark star_name" style="font-size: 12px;" data-id="{$default_index}" data-txt="{$star_name}">{$star_name}</div>
+                    <div class="remark" style="color: #ff9802!important"><img src="/images/xing.png" style="width: 14px;" />  幸运星</div>
+                </div>
+        </ul>
     </if>
     <if condition="$hongbao[user_id] eq $user[uin]">
             <ul>
