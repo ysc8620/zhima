@@ -36,7 +36,7 @@ class NotesController extends BaseController {
         }
 
         $this->list = $list;
-
+        $this->page = $page;
 
         $Page              = new \Think\Page($total,$limit); // 实例化分页类 传入总记录数和每页显示的记录数(20)
         $Page->rollPage = 5;
@@ -45,7 +45,8 @@ class NotesController extends BaseController {
         $Page->setConfig('theme','%UP_PAGE% %DOWN_PAGE%');
         $show  = $Page->show();
         $this->totalRows = $Page->totalRows;
-        $this->page = $show;
+        $this->total_page = $Page->totalPages;
+        $this->page_show = $show;
         $this->display();
     }
 
