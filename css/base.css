@@ -71,7 +71,7 @@ input[type=text],textarea {-webkit-appearance:none}
 .tr{ text-align:right;}
 .hide{display:none!important}
 .show {display:block!important}
-.container {position:relative;width:100%;max-width:640px;min-height:100%;margin:0 auto;padding:0 0 56px;overflow-x:hidden;background-color:#f5f5f5;}
+.container {position:relative;width:100%;max-width:640px;min-height:100%;margin:0 auto;padding:0 0 6px;overflow-x:hidden;background-color:#f5f5f5;}
 .from{ width: 96%; margin:12px auto; }
 .from div.row{ height: 50px; line-height:650px; -webkit-border-radius:3px;border-radius:3px; background:#fff; position:relative}
 .from  ul{ clear:both; margin-bottom:12px;}
