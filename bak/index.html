@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>jQuery老虎机插件</title>
+<style>
+* { margin: 0; padding: 0;}
+.line { padding: 100px 0px;}
+.slotMachineButton { width: 100px; height: 100px; overflow: hidden; display: inline-block; text-align: center; }
+.slotMachineButton { -moz-box-shadow: inset 0px 1px 0px 0px #fce2c1; -webkit-box-shadow: inset 0px 1px 0px 0px #fce2c1; box-shadow: inset 0px 1px 0px 0px #fce2c1; background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffc477), color-stop(1, #fb9e25) ); background: -moz-linear-gradient( center top, #ffc477 5%, #fb9e25 100% );  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffc477', endColorstr='#fb9e25');
+background-color: #ffc477; border-radius: 75px; border: 6px solid #eeb44f; display: inline-block; color: #ffffff; font: 700 40px/100px "Microsoft Yahei"; height: 100px; width: 100px; text-decoration: none; text-align: center; text-shadow: 1px 1px 0px #cc9f52; margin-left: 50px; cursor: pointer; }
+.slotMachineButton:hover { background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fb9e25), color-stop(1, #ffc477) ); background: -moz-linear-gradient( center top, #fb9e25 5%, #ffc477 100% );  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffc477');
+background-color: #fb9e25; }
+.slotMachineButton:active { position: relative; top: 1px; }
+.slotMachine { width: 100px; height: 100px;    border-radius: 50%;overflow: hidden; display: inline-block; text-align: center; border: 2px solid #fff; background-color: #ffffff; }
+.noBorder { border: none !important; background: transparent !important; font: 14px arial;}
+.slotMachine .slot { width: 100px; height: 100px;   border-radius: 50%;
+    box-shadow: 0 0 0 2px #fff;}
+.slot11 { background-image: url("http://wx.qlogo.cn/mmopen/Q3auHgzwzM4w5c6oKHZmxGE1FicicMatoicicdVia4wLsPWrjCbnK5QANTEr0cA7YaFSxjaJXcviamI01mex1OYpngUA/0"); }
+.slot22 { background-image: url("http://wx.qlogo.cn/mmopen/W1gcydkbJZdmN6CQdH4iaLU5kENWGCOcmNrNckybRTKAVAg6A8TQRVy0h8FMGM9nCElkSyFU8RBY7z5qHtbR4n2VWeLDCB6ne/0"); }
+.slot33 { background-image: url("http://wx.qlogo.cn/mmopen/Q3auHgzwzM59XumrWiauEu49cDpd544W0RrYIr6VVD1LkmOXv5WSHlwqUDH30xIJVundbS2nicMrjADicxUkoQPJg/0"); }
+.slot44 { background-image: url("http://wx.qlogo.cn/mmopen/6tQDiabzdib0o3DZwFaw8p5OshibocMJLo1XA7JxUmPPzSvcIkXE5Y8lMMNwbuy3WwPiaBgg9thtjjvzAwMDEHtzvXicwAFSJ1Clib/0"); }
+.slot55 { background-image: url("http://wx.qlogo.cn/mmopen/Q3auHgzwzM4uafJ1EJspH8FsPflod8sticgSS05tKuh3tWWuF2ubQZJS4Qz3IiahgYlsiaN5mBmQDELaAic8ibgWPMutxIb7rdr9BTCvZ9yCK9z4/0"); }
+.slot66 { background-image: url("http://wx.qlogo.cn/mmopen/ajNVdqHZLLCCtTE0M60dFia2wicWIjFQyRF6vL42Cg7AsxO3XQdFpjRVNoPjxJSHrOjBe2malA8ia1PRSN4GGamYg/0"); }
+
+
+.detail_head_img2{    background-repeat: no-repeat;
+    border-radius: 5%;
+    box-shadow: 0 0 0 2px #fff;
+    display: inline-block;
+    height: 100px;
+    width: 100px;}
+</style>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.slotmachine.js"></script>
+</head>
+
+<body>
+
+
+<div class="menu">
+	<a class="cur" href="index.html">1）演示1</a>
+	<a href="index2.html">2）演示2</a>
+	<a href="index3.html">3）幻灯片</a>
+</div>
+
+<div class="line">
+	<div class="content" style="text-align: center">
+		<div class="clear">
+			<div id="machine1" class="slotMachine">
+				<div class="slot "><img src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM4w5c6oKHZmxGE1FicicMatoicicdVia4wLsPWrjCbnK5QANTEr0cA7YaFSxjaJXcviamI01mex1OYpngUA/0" class="detail_head_img2" /></div>
+				<div class="slot "><img src="http://wx.qlogo.cn/mmopen/W1gcydkbJZdmN6CQdH4iaLU5kENWGCOcmNrNckybRTKAVAg6A8TQRVy0h8FMGM9nCElkSyFU8RBY7z5qHtbR4n2VWeLDCB6ne/0" class="detail_head_img2" /></div>
+				<div class="slot "><img src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM59XumrWiauEu49cDpd544W0RrYIr6VVD1LkmOXv5WSHlwqUDH30xIJVundbS2nicMrjADicxUkoQPJg/0" class="detail_head_img2" /></div>
+				<div class="slot "><img src="http://wx.qlogo.cn/mmopen/6tQDiabzdib0o3DZwFaw8p5OshibocMJLo1XA7JxUmPPzSvcIkXE5Y8lMMNwbuy3WwPiaBgg9thtjjvzAwMDEHtzvXicwAFSJ1Clib/0" class="detail_head_img2" /></div>
+				<div class="slot "><img src="http://wx.qlogo.cn/mmopen/Q3auHgzwzM4uafJ1EJspH8FsPflod8sticgSS05tKuh3tWWuF2ubQZJS4Qz3IiahgYlsiaN5mBmQDELaAic8ibgWPMutxIb7rdr9BTCvZ9yCK9z4/0" class="detail_head_img2" /></div>
+				<div class="slot "><img src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLCCtTE0M60dFia2wicWIjFQyRF6vL42Cg7AsxO3XQdFpjRVNoPjxJSHrOjBe2malA8ia1PRSN4GGamYg/0" class="detail_head_img2" /></div>
+			</div>
+			
+			<div id="slotMachineButton1" class="slotMachineButton">GO!</div>
+		</div>
+		
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){
+	var machine1 = $("#machine1").slotMachine({
+		active	: 0,
+		delay	: 500,
+		default_index: 2
+	});
+	
+
+	
+	function onComplete($el, active){
+		switch($el[0].id){
+			case 'machine1':
+				//$("#machine1Result").text("Index: " + active.index);
+				break;
+		
+		}
+	}
+	
+	$("#slotMachineButton1").click(function(){
+		machine1.shuffle(3, onComplete);
+	
+	})
+});
+</script>
+
+
+</body>
+</html>

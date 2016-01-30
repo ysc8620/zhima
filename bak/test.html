@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>jQuery老虎机插件SlotMachine演示1_dowebok</title>
+<style>
+* { margin: 0; padding: 0;}
+body { background-color: #DCD293;}
+.line { padding: 100px 0px;}
+.slotMachineButton { width: 100px; height: 100px; overflow: hidden; display: inline-block; text-align: center; }
+.slotMachineButton { -moz-box-shadow: inset 0px 1px 0px 0px #fce2c1; -webkit-box-shadow: inset 0px 1px 0px 0px #fce2c1; box-shadow: inset 0px 1px 0px 0px #fce2c1; background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffc477), color-stop(1, #fb9e25) ); background: -moz-linear-gradient( center top, #ffc477 5%, #fb9e25 100% );  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffc477', endColorstr='#fb9e25');
+background-color: #ffc477; border-radius: 75px; border: 6px solid #eeb44f; display: inline-block; color: #ffffff; font: 700 40px/100px "Microsoft Yahei"; height: 100px; width: 100px; text-decoration: none; text-align: center; text-shadow: 1px 1px 0px #cc9f52; margin-left: 50px; cursor: pointer; }
+.slotMachineButton:hover { background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fb9e25), color-stop(1, #ffc477) ); background: -moz-linear-gradient( center top, #fb9e25 5%, #ffc477 100% );  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffc477');
+background-color: #fb9e25; }
+.slotMachineButton:active { position: relative; top: 1px; }
+.slotMachine { width: 100px; height: 100px; overflow: hidden; display: inline-block; text-align: center; border: 5px solid #000; background-color: #ffffff; }
+.noBorder { border: none !important; background: transparent !important; font: 14px arial;}
+.slotMachine .slot { width: 100px; height: 100px; }
+.default { background:url("/test/ico_xiao.png");}
+.default div{ display:none;}
+</style>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery.slotmachine.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+
+<body>
+
+<div class="line">
+	<div class="content" style="text-align: center; ">
+		<div class="clear">
+			<div id="machine1" class="slotMachine default">
+				<div class="slot slot1" style='background-image: url("/test/slot1.png")'></div>
+				<div class="slot slot2" style='background-image: url("/test/slot2.png")'></div>
+				<div class="slot slot3" style='background-image: url("/test/slot3.png")'></div>
+				<div class="slot slot4" style='background-image: url("/test/slot4.png")'></div>
+				<div class="slot slot5" style='background-image: url("/test/slot5.png")'></div>
+				<div class="slot slot6" style='background-image: url("/test/slot6.png")'></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+$(document).ready(function(){
+	var machine1 = $("#machine1").slotMachine({
+		active	: -1,
+		delay	: 500,
+		default_index:4
+	});
+	
+	
+	function onComplete($el, active){
+		//$("#machine1Result").text("Index: " + active.index);
+	}
+	
+	$("#machine1").click(function(){
+	$(this).removeClass('default');
+		machine1.shuffle(2, onComplete);
+		
+		//setTimeout(function(){
+		// machine1.setactive(1);}, 2001);
+	});
+	
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+<!-- 以下是统计和广告，与演示无关，不必理会 -->
+<style>
+.menu { height: 30px; margin-bottom: 30px; padding: 10px; background-color: #d7cb7c; text-align: center;}
+.menu a { display: inline-block; height: 30px; padding: 0 20px; line-height: 30px; font: 12px/30px arial; color: #333; text-decoration: none;}
+.menu a:hover { color: #000; background-color: #fbf5ce;}
+.menu .cur { background-color: #fbf1b1 !important; color: #000;}
+
+.vad { margin: 20px 0 5px; font-family: arial,宋体,sans-serif; text-align:center;}
+.vad a { display: inline-block; height: 36px; line-height: 36px; margin: 0 5px; padding: 0 50px; font-size: 14px; text-align:center; color:#eee; text-decoration: none; background-color: #222;}
+.vad a:hover { color: #fff; background-color: #000;}
+.thead { width: 728px; height: 90px; margin: 0 auto;}
+</style>
+
+
+
+</body>
+</html>
