@@ -18,8 +18,8 @@
 <div class="container">
 
     <div class="nav_fixed">
-        <a style=" font-size: 15px;" href="{:U('/notes/index')}" class="fixed_nav_item  <if condition='$state eq ""'>nav_cur</if>"><span class="nav_txt">我购买的</span></a>
-        <a style="font-size: 15px;" href="{:U('/notes/index',array('state'=>'creation'))}" class="fixed_nav_item <if condition='$state eq "creation"'>nav_cur</if> "><span class="nav_txt nav_payment">我发布的</span></a>
+        <a style=" font-size: 15px;" href="{:U('notes/index')}" class="fixed_nav_item  <if condition='$state eq ""'>nav_cur</if>"><span class="nav_txt">我购买的</span></a>
+        <a style="font-size: 15px;" href="{:U('notes/index',array('state'=>'creation'))}" class="fixed_nav_item <if condition='$state eq "creation"'>nav_cur</if> "><span class="nav_txt nav_payment">我发布的</span></a>
            </div>
 	<div class="order_list">
 		<div class="header bt_line">
@@ -27,7 +27,7 @@
 		<div class="block" style="min-height: 200px;">
             <volist name="list" id="item">
 			        <div class="pic">
-                        <a class="" href="{:U('/zhaopian/detail',array('id'=>$item['number_no']))}"><img src="{$item.user.header}" /></a>
+                        <a class="" href="{:U('zhaopian/detail',array('id'=>$item['number_no']))}"><img src="{$item.user.header}" /></a>
                     </div>
 </volist>
 			<div class="cl"></div>
@@ -36,7 +36,7 @@
             <div class="fr cl" style="margin-right: 12px;"><span style="font-size:12px; ">第{$page}/{$total_page}页,共{$totalRows}条</span> </div>
         </div>
 		<div class="xiala cl">
-            <div class="fl cl" style="margin-left: 12px;"><a href="{:U('/zhaopian')}"><input type="button" class="btn w120" value="发红包照片" /></a></div>
+            <div class="fl cl" style="margin-left: 12px;"><a href="{:U('zhaopian')}"><input type="button" class="btn w120" value="发红包照片" /></a></div>
 			 <div id="pager" class="pagebar pagination fr" style="margin-right: 12px; text-align: right">
             {$page_show}
             </div>
