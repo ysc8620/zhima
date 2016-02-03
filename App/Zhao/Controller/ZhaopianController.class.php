@@ -25,18 +25,51 @@ class ZhaopianController extends BaseController {
                 session('sign', microtime(true));
             }
             $is_rand = I('post.is_rand',0,'intval');
-            $amount = I('post.amount',0,'floatval');
+            $amount = I('post.amount',2,'floatval');
             $remark = I('post.remark','','htmlspecialchars');
             if(!$is_rand){
                 if($amount < 2 || $amount > 200){
-                    $this->error('价格在2-200之间.',U('/hongbao'));
+                    $this->error('价格在2-200之间.',U('/zhaopian'));
                     return false;
                 }
             }
 
+            if(empty($_FILES['imgOne'])){
+                $this->error('请选择要发布的红包照片.',U('/zhaopian'));
+                return false;
+            }
+
+            if($_FILES['imgOne']){
+                $rootPath=C('UPLOAD_PATH');
+                $config = array(
+                    //'maxSize'    =    3145728,
+                    'rootPath'   =>    $rootPath,
+                    'savePath'   =>    $this->user_id . '/',
+                    'saveName'   =>    'zp_'.time().rand(111,999),
+                    'exts'       =>   explode(',',C('UPLOAD_TYPE')),
+                    'autoSub'    =>    true,
+                    'subName'    =>    array('date','Ymd'),
+                );
+
+                $type 	= 'Local';
+                $upload = new \Think\Upload($config,$type);// 实例化上传类
+                $info   =   $upload->upload();
+
+                if(!$info) {
+                    $this->error($upload->getError(),'') ;
+                }else{// 上传成功
+                    $data['pic_url'] = $info['imgOne']['savepath'].$info['imgOne']['savename'];
+                }
+            }
+
+            if(empty($data['pic_url'])){
+                $this->error('请选择要发布的红包照片.',U('/zhaopian'));
+                return false;
+            }
+
             // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
             $user = M('user')->find($this->user_id);
-            $data['number_no'] = get_order_sn();
+            $data['number_no'] = get_order_sn('zp');
             $data['user_id'] = $this->user_id;
             $data['remark'] = $remark;
             $data['is_rand'] = $is_rand;
@@ -47,6 +80,7 @@ class ZhaopianController extends BaseController {
                 $data['min_amount'] = $amount;
                 $data['max_amount'] = 200;
             }
+
             $data['addtime'] = time();
             $data['state'] = 1;
             $data['openid'] = $user['openid'];
@@ -117,7 +151,6 @@ class ZhaopianController extends BaseController {
         $this->user = M('user')->find($this->user_id);
 
 
-
         $this->title = "{$this->hongbao_user['name']}发起的红包照片";
 
 //        我发起的的凑红包-￥200
@@ -178,41 +211,6 @@ class ZhaopianController extends BaseController {
         $this->display();
     }
 
-    /**
-     * 红包认购
-     */
-    public function buy(){
-        $this->sign = md5(microtime(true));
-        session('sign', $this->sign);
-
-        $this->title ="追加凑红包";
-        $id = I('get.id',0, 'strval');
-        if($id < 1){
-            $this->error('请选择查看的红包', U('/notes'));
-        }
-        $this->hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
-
-        // $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1,'addtime'=>array('gt', time()-1800)))->sum('total_amount'));
-
-        if(!$this->hongbao){
-            $this->error('没找到红包详情', U('/notes'));
-        }
-        $this->user = M('user')->find($this->user_id);
-
-        $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
-
-        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id)))->order("is_star DESC, field(state,2,4,3,1),addtime desc")->select();
-        if($order_list){
-            foreach($order_list as $k=>$order){
-                $order_list[$k]['user'] = M('user')->find($order['user_id']);
-            }
-        }
-
-        $this->order_list = $order_list;
-
-        $this->display();
-    }
-
     public function order(){
         // $sign = I('post.sign');
         $id = I('post.id','','strval');
@@ -222,59 +220,34 @@ class ZhaopianController extends BaseController {
             'data'=>''
         );
         do{
-            $hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
-            if(!$hongbao){
+            $zhaopian = M('zhaopian')->where(array('number_no'=>$id))->find();
+            if(!$zhaopian){
                 // $this->error('没找到红包详情', U('/notes'));
                 $json['error'] = 1;
-                $json['message'] = '没找到红包详情';
+                $json['message'] = '没找到红包照片详情';
                 break;
             }
 
-//            if($sign != session('sign')){
-//                $this->error('请不要重复提交.',U('/hongbao/buy',array('id'=>$id)));
-//            }else{
-//                session('sign', microtime(true));
-//            }
-
-            $total = I('post.num', 0, 'intval');
-           // $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1))->sum('total_amount'));
-            $total_num = M('hongbao_order')->where(array("hongbao_id"=>$hongbao['id'], "state"=>1, "addtime"=>array('gt', time()-30)))->sum('part_num');
-            $total_num = intval($total_num);
-
-            if($total < 1 || ( $total + $hongbao['total_num']+$total_num) > $hongbao['total_part']){
-//                $this->error('你已超过红包份额限制,请重新设置份额.',U('/hongbao/buy',array('id'=>$id)));
-//                return false;
-                $json['error'] = 2;
-                $json['message'] = '被人抢先一步了。由于有人在您之前支付，剩余的份数小于您想要购买的份数了，请重新确认参与份数.';
+            $amount = I('post.amount', 0, 'floatval');
+            if($amount > $zhaopian['max_amount'] || $amount< $zhaopian['min_amount']){
+                $json['error'] = 1;
+                $json['message'] = '红包金额不在有效范围内.有效范围'.$zhaopian['min_amount'].'-'.$zhaopian['max_amount'].'之间.';
                 break;
             }
 
+            $zhaopian_order = M('zhaopian_order')->where(array('zhaopian_id'=>$zhaopian['id'], 'user_id'=>$this->user_id,'state'=>2))->find();
+            if($zhaopian_order){
+                $json['error'] = 1;
+                $json['message'] = '你已经购买过该照片,请刷新后访问该照片.';
+                break;
+            }
             $user = M('user')->find($this->user_id);
-//            $hongbao_order = M('hongbao_order')->where(array('user_id'=>$this->user_id, 'state'=>1, 'hongbao_id'=>$hongbao['id']))->find();
-//            if($hongbao_order){
-//                $data = array(
-//                    'addtime' => time(),
-//                    'part_num' => $total,
-//                    'total_amount'=>$hongbao['part_amount'] * $total
-//                );
-//                $rs = M('hongbao_order')->where(array('id'=>$hongbao_order['id']))->save($data);
-//                if($rs){
-//                    $json['data'] = $hongbao_order['order_sn'];
-//                    break;
-//                }else{
-//                    $json['error'] = 1;
-//                    $json['message'] = '操作失败，请重试.';
-//                }
-//            }
             $data = array(
-                'hongbao_id' => $hongbao['id'],
-                'hongbao_user_id' => $hongbao['user_id'],
-                'number_no' =>$hongbao['number_no'],
-                'order_sn' =>get_order_sn(),
+                'zhaopian_id' => $zhaopian['id'],
+                'number_no' =>$zhaopian['number_no'],
+                'order_sn' =>get_order_sn('zo'),
                 'user_id' => $this->user_id,
-                'part_num' => $total,
-                'part_amount' =>$hongbao['part_amount'],
-                'total_amount' => $hongbao['part_amount'] * $total,
+                'amount' => $amount,
                 'addtime' => time(),
                 'state' => 1,
                 'openid' => $user['openid']
@@ -282,25 +255,14 @@ class ZhaopianController extends BaseController {
             $rs = M('hongbao_order')->add($data);
 
             if($rs){
-//                redirect(U('/weixin/pay', array('id'=>$data['order_sn'])));
-//                // $this->success('操作成功.',U('/hongbao/detail',array('id'=>$id)));
-//                return true;
-
                 $json['data'] = $data['order_sn'];
                 break;
             }else{
-//                $this->error('操作失败，请重试.',U('/hongbao/buy',array('id'=>$id)));
-//                return false;
                 $json['error'] = 1;
                 $json['message'] = '操作失败，请重试.';
                 break;
             }
         }while(false);
         echo json_encode($json);
-    }
-
-    public function remark(){
-        $this->title ="凑红包玩法";
-        $this->display();
     }
 }

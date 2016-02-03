@@ -333,6 +333,6 @@ function  f_log($word, $log_name="./log.log")
 //    return date('Ymd') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT);
 //}
 
-function get_order_sn(){
-    return date('YmdHi').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+function get_order_sn($type=''){
+    return $type.date('YmdHi').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
 }

@@ -1,21 +1,47 @@
 <include file="Public:header" />
 
 <div class="container">
-    <div class="detail_bg_block">&nbsp;</div>
-    <div class="detail_bg">
-        <img src="{$hongbao_user.header}" alt="{$hongbao_user.name}"  />
-    </div>
-    <div class="detail_info">
-        <div class="mt40 cl"><img src="/uploads/2/20151016/zmlcms_1444966713334.jpg" class="detail_head_img" /></div>
-        <div class="cl">王苏蕴</div>
-        <div class="cl remark">“爱我就给我发红包”</div>
-    </div>
-    <div class="detail_body">
-        <div class=" mc tc cl" style="width: 80px;"><button class="btn btn_cou">赏</button> </div>
-        <div class="remark cl">已有12人赏红包</div>
-        <div class="detail_menu cl">
-            <div class="menu_detail"><</div>
+    <input type="hidden" name="id" value="{$zhaopian.id}" />
+    <input type="hidden" name="number_no" value="{$zhaopian.number_no}" />
+    <input type="hidden" name="min_amount" value="{$zhaopian.min_amount}" />
+    <input type="hidden" name="max_amount" value="{$zhaopian.max_amount}" />
+
+    <div class="buy_block">
+        <div class="detail_bg_block">&nbsp;</div>
+        <div class="detail_bg">
+            <img src="/uploads/{$zhaopian.pic_url}" alt="{$zhaopian.remark}"  />
         </div>
+        <div class="detail_info">
+            <div class="mt40 cl"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
+            <div class="cl">{$zhaopian_user.name}</div>
+            <div class="cl remark">“{$zhaopian.remark}”</div>
+        </div>
+        <div class="detail_body">
+            <div class=" mc tc cl" style="width: 80px;"><button class="btn btn_cou btn_shang" style="border: none;" data-id="{$zhaopian.number_no}">赏</button> </div>
+            <div class="remark cl">已有{$zhaopian.total_num}人赏红包</div>
+            <div class="detail_menu cl">
+                <div class="menu_detail"><img src="/images/shang_ico.png" /></div>
+            </div>
+        </div>
+
+        <div class="buy_detail_block hide">
+            <div id="remark_block">
+                <div id="shareit">
+                </div>
+    <span style="text-align: center; background: #fff; position: fixed; padding: 12px; -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 90%; left: 5%;" id="follow">
+      <div class="fr" style="cursor: pointer" onclick="$('.buy_detail_block').removeClass('show').addClass('hide')">X</div>
+        <p style="color: #999">
+            <input type="hidden" name="amount" value="1.05" />
+            <span style="color: #E08100; font-size: 28px; padding: 4px 0" class="amount_block">1.05元</span> <br />
+           发红包看照片,金额随机</p>
+
+        <input type="button" class="btn btn_cou mc" onclick="set_order();" data-role="set_pay_block" style="border: none; width: 80%; height: 36px; margin-top: 12px; margin-bottom: 12px; line-height: 36px;" value="赏" />
+       </span>
+            </div>
+        </div>
+    </div>
+    <div class="own_block">
+
     </div>
 </div>
 
@@ -73,19 +99,29 @@
 </script>
 
 <script type="text/javascript">
+    $('.btn_shang').click(function(){
+        var max = parseFloat($('input[name="max_amount"]').val());
+        var min = parseFloat($('input[name="min_amount"]').val());
+
+        var amount = (Math.random()*(max-min)+min).toFixed(2);
+        $('.amount_block').text(amount+'元');
+        $('input[name="amount"]').val(amount);
+        // 设置随机金额
+        //
+        $('.buy_detail_block').removeClass('hide').addClass('show');
+    });
     /**
      * 生成支付订单
      */
     function set_order(){
-        var id = $('input[name="id"]').val();
-        var num = $('input[name="num"]').val();
-
+        var id = $('input[name="number_no"]').val();
+        var amount = $('input[name="amount"]').val();
         $.ajax({
             type:'post',
-            url:"{:U('/hongbao/order')}",
+            url:"{:U('/zhaopian/order')}",
             async:false,
             cache:false,
-            data:{id:id, num:num},
+            data:{id:id, amount:amount},
             dataType:'json',
             success:function(result){
                 if(result.error==0){
@@ -94,9 +130,6 @@
                 }else if(result.error==1){
                     layer.msg(result.message, function(){});
                     return false;
-                }else if(result.error==2){
-                    $("#error_block").show();
-                    setTimeout(function(){window.location.reload();}, 2000);
                 }
             }
         });
@@ -114,7 +147,7 @@
         }
         $.ajax({
             type:'post',
-            url:"{:U('/weixin/pay1')}",
+            url:"{:U('/weixin/zhaopian')}",
             async:false,
             cache:false,
             data:{id:id},
@@ -129,7 +162,6 @@
             }
         });
     }
-
 
     function checkHongBao(_this){
         return true;
