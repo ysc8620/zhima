@@ -7,7 +7,7 @@ $config = array(
     'OUTPUT_ENCODE'        =>true, // 页面压缩输出
 
     'MODULE_ALLOW_LIST'    =>    array('www','home','user','admin','install','zhao'),
-    'DEFAULT_MODULE'       =>    'www',  // 默认模块
+    'DEFAULT_MODULE'       =>    'zhao',  // 默认模块
 
     //加密混合值
 	'AUTH_CODE' => 'ZhiMaLe',
