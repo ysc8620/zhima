@@ -6,7 +6,7 @@
 // +----------------------------------------------------------------------
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
-namespace Www\Controller;
+namespace Zhao\Controller;
 use Think\Controller;
 class PictureController extends BaseController {
     public function index(){

@@ -9,13 +9,18 @@
     }
 
 </script>
+        <style type="text/css">
+            input.pic{position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0); z-index: 10; width: 100%; height: 100%}
+        </style>
 <div class="container">
 	<div class="from">
-        <form action="{:U('/hongbao/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
+        <form action="{:U('/zhaopian/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkZhaopian(this)">
             <input type="hidden" name="sign" value="{$sign}" />
-		<ul>
-			<div class="row" style="height: 200px; background: url(/images/bg.png) center center no-repeat #161616;">
-
+            <input type="hidden" name="is_rand" value="1" />
+		    <ul>
+			<div class="row" style="height: 200px; text-align: center; background: url(/images/bg.png) center center no-repeat #161616;">
+                <input type="file" class="pic" name="imgOne" id="imgOne" onchange="preImg(this.id,'imgPre');" />
+                <img id="imgPre" src="/images/touming.png" style="max-width:100%; max-height:100%; display: block; margin: 0 auto;" />
 		     </div>
 		</ul>
 		<ul>
@@ -25,11 +30,11 @@
 		</ul>
 		<ul>
 			<div class="w50 fl">
-				<div class="amount tr"><input type="button" class="btn w50 " value="随机价格" /></div>
+				<div class="amount tr"><input type="button" data-role="set_rand" class="btn w50 " value="随机价格" /></div>
 				<div class="amount_remark tr ptop6 pbottom10" style="padding-right: 12px;">￥1.05-￥5.00范围随机</div>
 			</div>
             <div class="w50 fl">
-                <div class="amount tl ml10"><input type="button" class="btn w50 color_def" value="设置价格" /></div>
+                <div class="amount tl ml10"><input type="button" data-role="set_price" class="btn w50 color_def" value="设置价格" /></div>
                 <div class="amount_remark ml10 ptop6 pbottom10" style="padding-left: 12px;">可设置￥1.05-￥200内</div>
             </div>
 		</ul>
@@ -48,84 +53,56 @@
 	</div>
 
 </div>
-
-<div id="remark_block" style="display: none">
-    <div id="shareit">
-    </div>
-     <span style="text-align: center; background: #fff; padding: 12px; -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 90%; left: 5%;" id="follow">
-        <p style="text-align: left">
-            1. 发起凑红包 <br />
-            2. 邀请朋友参与 <br/>
-            3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>
-            4. 系统会根据参与份数，随机抽出幸运星</p>
-
-        <input type="button" class="btn mc" onclick="$('#remark_block').hide();" style="width: 80%; height: 36px; margin-top: 12px; line-height: 36px;" value="知 道 了" />
-       </span>
 </div>
 <include file="Public:foot" />
 <script type="text/javascript">
+    /**
+     * 从 file 域获取 本地图片 url
+     */
+    /**
+     * 从 file 域获取 本地图片 url
+     */
+    function getFileUrl(sourceId) {
+        var url;
+        if (navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) { // IE10取消了滤镜
+            //url = document.getElementById(sourceId).value;
+            document.all.imgOne.select();
+            $("#preview").focus();
+            url = document.selection.createRange().text;
 
-    $('input[name="amount"]').keyup(function(){
-        var amount = parseFloat($(this).val() == ''?0:$(this).val());
-        var total = parseInt($('input[name="total"]').val() == ''?0:$('input[name="total"]').val());
-        $('.total_amount').text(amount * total);
-
-    });
-    $('input[name="total"]').keyup(function(){
-        var amount = parseFloat($('input[name="amount"]').val() == ''?0:$('input[name="amount"]').val());
-        var total = parseInt($('input[name="total"]').val() == ''?0:$('input[name="total"]').val());
-
-        $('.total_amount').text(amount * total);
-    });
-    function show_remark(){
-//        layer.open({
-//            title: '凑红包玩法?'
-//            ,content: (" <span style='text-align: left'> 1. 发起凑红包 <br />"+
-//                    "2. 邀请朋友参与 <br/>"+
-//                    "3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>"+
-//                    "4. 系统会根据参与份数，随机抽出幸运星</span>")
-//            ,btn: ['知道了']
-//        });
-        $('#remark_block').show();
+        } else if (navigator.userAgent.indexOf("Firefox") > 0) { // Firefox
+            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+        } else if (navigator.userAgent.indexOf("Chrome") > 0) { // Chrome
+            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+        }else if(navigator.userAgent.indexOf("MSIE 10.0") > 0){
+            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+        }else{
+            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+        }
+        return url;
     }
 
+    /**
+     * 将本地图片 显示到浏览器上
+     */
+    function preImg(sourceId, targetId) {
+        var url = getFileUrl(sourceId);
+        var imgPre = document.getElementById(targetId);
+        if(window.navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) {
+            var picpreview=document.getElementById("preview");
+            picpreview.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = url;
+        }else{
+            imgPre.src = url;
+        }
+
+    }
     function checkTextLength(obj, length) {
         if(obj.value.length > length)   {
             obj.value = obj.value.substr(0, length);
         }
     }
 
-    function checkHongBao(){
-        var amount = $('input[name="amount"]').val();
-        var reg = new RegExp("^[0-9]\.?[0-9]*$");
-        if(!reg.test(amount)){
-            layer.msg('请填写整数金额.', function(){});
-            return false;
-        }
-
-        if(amount > 200 || amount < 0){
-            layer.msg('请输入200之内金额.', function(){});
-            return false;
-        }
-
-        // $('#updateTip1').hide();
-
-
-        var total = $('input[name="total"]').val();
-        if(!reg.test(total)){
-            layer.msg('请填写整数份额.', function(){});
-            return false;
-        }
-
-        if(total > 200 || total < 1){
-            layer.msg('请输入1-200之间份额.', function(){});
-            return false;
-        }
-
-        if(amount * total > 200 || amount * total < 2){
-            layer.msg('总金额在2-200元之间.', function(){});
-            return false;
-        }
+    function checkZhaopian(){
         return true;
     }
 

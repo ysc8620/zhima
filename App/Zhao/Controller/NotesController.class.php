@@ -10,21 +10,19 @@ namespace Zhao\Controller;
 class NotesController extends BaseController {
     public function index(){
         $this->user = M('user')->find($this->user_id);
-        $this->title = '我的记录';
+
         $page = I('request.p',1);
         $page = $page<1?1:$page;
         $this->state = I('request.state', '');
         $limit = 10;
         if($this->state == 'creation'){
-            $list = M('hongbao')->where(array('user_id'=>$this->user_id))->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('hongbao')->where(array('user_id'=>$this->user_id))->count();
-        }elseif($this->state == 'star'){
-            $list = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}' AND is_star=1)")->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}' AND is_star=1)")->count();
+            $this->title = '我发布的';
+            $list = M('zhaopian')->where("user_id='{$this->user_id}'")->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('zhaopian')->where("user_id='{$this->user_id}'")->count();
         }else{
-            $list = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}') or user_id='{$this->user_id}'")->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('hongbao')->where("id in(SELECT hongbao_id FROM zml_hongbao_order WHERE user_id='{$this->user_id}') or user_id='{$this->user_id}'")->count();
-
+            $this->title = '我购买的';
+            $list = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}')")->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}')")->count();
         }
 
         // $list = M('hongbao_order')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();

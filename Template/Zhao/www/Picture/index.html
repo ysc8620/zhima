@@ -13,13 +13,24 @@
     /**
      * 从 file 域获取 本地图片 url
      */
+    /**
+     * 从 file 域获取 本地图片 url
+     */
     function getFileUrl(sourceId) {
         var url;
-        if (navigator.userAgent.indexOf("MSIE")>=1) { // IE
-            url = document.getElementById(sourceId).value;
-        } else if(navigator.userAgent.indexOf("Firefox")>0) { // Firefox
+        if (navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) { // IE10取消了滤镜
+            //url = document.getElementById(sourceId).value;
+            document.all.imgOne.select();
+            $("#preview").focus();
+            url = document.selection.createRange().text;
+
+        } else if (navigator.userAgent.indexOf("Firefox") > 0) { // Firefox
             url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
-        } else if(navigator.userAgent.indexOf("Chrome")>0) { // Chrome
+        } else if (navigator.userAgent.indexOf("Chrome") > 0) { // Chrome
+            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+        }else if(navigator.userAgent.indexOf("MSIE 10.0") > 0){
+            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+        }else{
             url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
         }
         return url;
@@ -31,7 +42,13 @@
     function preImg(sourceId, targetId) {
         var url = getFileUrl(sourceId);
         var imgPre = document.getElementById(targetId);
-        imgPre.src = url;
+        if(window.navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) {
+            var picpreview=document.getElementById("preview");
+            picpreview.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = url;
+        }else{
+            imgPre.src = url;
+        }
+
     }
 </script>
 <style type="text/css">
@@ -41,8 +58,10 @@
 <div class="container">
     <div class="from">
         <form action="">
-            <input type="file" name="imgOne" id="imgOne" onchange="preImg(this.id,'imgPre');" />
+            <a class="btn-new">
+            <input type="file" class="pic" name="imgOne" id="imgOne" onchange="preImg(this.id,'imgPre');" />
             <img id="imgPre" src="" width="300px" height="300px" style="display: block;" />
+            </a>
         </form>
 
         <form action="{:U('/hongbao/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">

@@ -20,44 +20,45 @@ class ZhaopianController extends BaseController {
             $sign = I('post.sign');
 
             if($sign != session('sign')){
-                $this->error('请不要重复提交.',U('/hongbao'));
+                $this->error('请不要重复提交.',U('/zhaopian'));
             }else{
                 session('sign', microtime(true));
             }
+            $is_rand = I('post.is_rand',0,'intval');
             $amount = I('post.amount',0,'floatval');
-            $total = I('post.total',0,'intval');
             $remark = I('post.remark','','htmlspecialchars');
-
-            if($amount <= 0 || $total < 1 || $amount > 200){
-                $this->error('红包范围在2-200之间.',U('/hongbao'));
-                return false;
+            if(!$is_rand){
+                if($amount < 2 || $amount > 200){
+                    $this->error('价格在2-200之间.',U('/hongbao'));
+                    return false;
+                }
             }
 
-            if($amount * $total > 200 || $amount * $total <2){
-                $this->error('红包范围在2-200之间.',U('/hongbao'));
-                return false;
-            }
             // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
             $user = M('user')->find($this->user_id);
             $data['number_no'] = get_order_sn();
             $data['user_id'] = $this->user_id;
-            $data['part_amount'] = $amount;
-            $data['total_amount'] = $total * $amount;
-            $data['total_part'] = $total;
             $data['remark'] = $remark;
+            $data['is_rand'] = $is_rand;
+            if($is_rand){
+                $data['min_amount'] = 1.05;
+                $data['max_amount'] = 5;
+            }else{
+                $data['min_amount'] = $amount;
+                $data['max_amount'] = 200;
+            }
             $data['addtime'] = time();
             $data['state'] = 1;
             $data['openid'] = $user['openid'];
-
-            $re = M('hongbao')->add($data);
+            $re = M('zhaopian')->add($data);
             if($re){
-                redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
+                redirect(U('/zhaopian/detail', array('id'=>$data['number_no'])));
                 exit();
             }else{
-                $this->error('红包创建失败', U('/hongbao'));
+                $this->error('红包照片创建失败', U('/zhaopian'));
             }
         }while(false);
-        $this->error('红包创建失败', U('/hongbao'));
+        $this->error('红包照片创建失败', U('/zhaopian'));
     }
 
     function time2Units ($time)
@@ -98,42 +99,26 @@ class ZhaopianController extends BaseController {
      * 红包详情
      */
     public function detail(){
-        $this->title ="凑红包详情";
+        $this->title ="红包照片详情";
 
         $id = I('get.id',0, 'strval');
 
         $this->show_share = I('get.show_share', 0,'strval');
         if($id < 1){
-            $this->error('请选择查看的红包', U('/notes'));
+            $this->error('请选择查看的红包照片', U('/notes'));
         }
-        $this->hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
+        $this->zhaopian = M('zhaopian')->where(array('number_no'=>$id))->find();
 
-        if(!$this->hongbao){
-            $this->error('没找到红包详情', U('/notes'));
+        if(!$this->zhaopian){
+            $this->error('没找到红包照片详情', U('/notes'));
         }
-        $this->hongbao_amount = $this->hongbao['total_amount'] * 0.98;
 
-        if($this->hongbao['state'] == 2){
-            $total_user = M('hongbao_order')->where(array('hongbao_id'=>$this->hongbao['id'], 'state'=>2))->group('user_id')->select();
-
-            $this->total_user = intval(count($total_user));
-            $this->use_time = $this->time2Units($this->hongbao['success_time'] - $this->hongbao['addtime']);
-
-
-        }
-        $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
+        $this->zhaopian_user = M('user')->find($this->zhaopian['user_id']);
         $this->user = M('user')->find($this->user_id);
 
-        $percentage = ceil($this->hongbao[total_num]/$this->hongbao[total_part]*100);
-        $this->percentage = $percentage>100?100:$percentage;
 
-        $difference = $this->hongbao[total_part]-$this->hongbao[total_num];
-        $this->difference = $difference < 0?0:$difference;
 
-        $this->wait_total = M('hongbao_order')->where(array("hongbao_id"=>$this->hongbao['id'], "state"=>1, "addtime"=>array('gt', time()-30)))->sum('part_num');
-        $this->wait_total = intval($this->wait_total);
-
-        $this->title = "{$this->hongbao_user['name']}发起的凑红包";
+        $this->title = "{$this->hongbao_user['name']}发起的红包照片";
 
 //        我发起的的凑红包-￥200
 //
