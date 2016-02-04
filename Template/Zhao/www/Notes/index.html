@@ -27,7 +27,7 @@
 		<div class="block" style="min-height: 200px;">
             <volist name="list" id="item">
 			        <div class="pic">
-                        <a class="" href="{:U('zhaopian/detail',array('id'=>$item['number_no']))}"><img src="{$item.user.header}" /></a>
+                        <a class="" style="vertical-align: middle" href="{:U('zhaopian/detail',array('id'=>$item['number_no']))}"><img src="/uploads/{$item.pic_url}" /></a>
                     </div>
 </volist>
 			<div class="cl"></div>

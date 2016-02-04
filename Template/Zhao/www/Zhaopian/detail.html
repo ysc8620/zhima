@@ -19,9 +19,7 @@
         <div class="detail_body">
             <div class=" mc tc cl" style="width: 80px;"><button class="btn btn_cou btn_shang" style="border: none;" data-id="{$zhaopian.number_no}">赏</button> </div>
             <div class="remark cl">已有{$zhaopian.total_num}人赏红包</div>
-            <div class="detail_menu cl">
-                <div class="menu_detail"><img src="/images/shang_ico.png" /></div>
-            </div>
+
         </div>
 
         <div class="buy_detail_block hide">
@@ -43,11 +41,32 @@
     <div class="own_block">
 
     </div>
+    <div class="detail_body" style="bottom: 20px;">
+        <div class="detail_menu_body cl hide">
+            <div class="item_menu">
+                <div class="sub_menu"><a href="{:U('/notes')}">我的记录</a></div>
+                <div class="sub_menu"><a href="{:U('/zhaopian')}">我也要发</a></div>
+            </div>
+        </div>
+        <div class="detail_menu cl" data-role="detail_menu">
+            <div class="menu_detail"><img class="ico" src="/images/xia_ico.png" /></div>
+        </div>
+    </div>
 </div>
 
 <include file="Public:foot" />
 
 <script type="text/javascript">
+    $('[data-role="detail_menu"]').click(function(){
+       var src = $(this).find('img.ico').attr('src');
+        if(src.indexOf('xia_ico.png') >= 0 ){
+            $('.detail_menu_body').removeClass('hide').addClass('show');
+            $(this).find('img.ico').attr('src','/images/shang_ico.png');
+        }else{
+            $('.detail_menu_body').removeClass('show').addClass('hide');
+            $(this).find('img.ico').attr('src','/images/xia_ico.png');
+        }
+    });
     //调用微信JS api 支付
     function jsApiCall(data)
     {
