@@ -244,6 +244,8 @@ class ZhaopianController extends BaseController {
             $user = M('user')->find($this->user_id);
             $data = array(
                 'zhaopian_id' => $zhaopian['id'],
+                'zhaopian_user_id' => $zhaopian['user_id'],
+                'zhaopian_openid' => $zhaopian['openid'],
                 'number_no' =>$zhaopian['number_no'],
                 'order_sn' =>get_order_sn('zo'),
                 'user_id' => $this->user_id,
