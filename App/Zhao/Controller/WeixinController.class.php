@@ -179,7 +179,7 @@ class WeixinController extends Controller {
                         if($amount < 1 || $amount > 20000){
                             #$this->error("红包金额不对能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
                             $json['error'] = 1;
-                            $json['message'] = "支付金额超过限制.";
+                            $json['message'] = "支付金额超过限制.{$amount}";
                             break;
                         }
                         $data['body'] = "红包照片";
