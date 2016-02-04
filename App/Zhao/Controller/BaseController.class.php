@@ -16,9 +16,9 @@ class BaseController extends Controller {
     public function _initialize(){
 
         $this->user_id = session('user_id');
-        $this->user_id = 10001;
-//
-        return true;
+//        $this->user_id = 10001;
+////
+//        return true;
         $openid =  session('openid');
         if(!$openid){
             $openid = cookie('openid');
