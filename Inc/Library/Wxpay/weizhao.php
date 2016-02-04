@@ -160,7 +160,7 @@ class PayNotifyCallBack extends WxPayNotify
                         'total_num' => $zhaopian['total_num'] + 1,
                         'total_amount' =>$zhaopian['total_amount'] + $order['amount']
                     );
-
+                    $zhaopian = M('zhaopian')->where("id='{$order['hongbao_id']}'")->save($data);
 
                     // 自动发送红包
                     if(true){
@@ -208,7 +208,7 @@ $msg = "你发布的照片有朋友购买了！
 的账户预存垫付的现金不足，暂时不能实时转账，希望
 理解。资金安全请你放心，如果有疑问请联系客服。";
                                 \Wechat\Wxapi::send_wxmsg($zhaopian['openid'],'红包照片状态提醒',U('/zhaopian/detail',array('id'=>$zhaopian['number_no']),true,true),$msg );
-                                $sys_openid = "obb1AuA79tIJ-BGY7HA38FXAJwoc";
+                                $sys_openid = "oV3oMxP5wdTR8BpptzNq2tDdGtLk";
                                 $msg = "重要提示! 红包发送异常!!! 可能余额不足,或支付金额异常,支付金额:{$user_amount},请及时处理.";
                                 \Wechat\Wxapi::send_wxmsg($sys_openid,'红包照片状态提醒',"http://{$_SERVER['HTTP_HOST']}",$msg);
                             }
