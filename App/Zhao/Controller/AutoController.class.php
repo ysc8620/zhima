@@ -52,7 +52,7 @@ class AutoController extends Controller {
                 $data = sendHongBao($bao);
                 if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
                     M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('is_send_zhaopian'=>1));
-                    M('hongbao_send')->where(array("id='{$hongbao_send['id']}'"))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
+                    M('zhaopian_send')->where(array("id='{$hongbao_send['id']}'"))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
 
                   $log = "发送红包成功, 红包编号：{$order['id']},发送编号：{$hongbao_send['id']}";
                     f_log($log, ROOT_PATH.'Runtime/Logs/zhaopian.log');
