@@ -175,7 +175,7 @@ class WeixinController extends Controller {
                     }
 
                     if($order['state'] == 1){
-                        $amount = ceil($order['total_amount'] *100);
+                        $amount = ceil($order['amount'] *100);
                         if($amount < 1 || $amount > 20000){
                             #$this->error("红包金额不对能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
                             $json['error'] = 1;
