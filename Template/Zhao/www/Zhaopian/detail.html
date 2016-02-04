@@ -6,6 +6,7 @@
     <input type="hidden" name="min_amount" value="{$zhaopian.min_amount}" />
     <input type="hidden" name="max_amount" value="{$zhaopian.max_amount}" />
 
+    <if condition="$zhaopian['user_id'] neq $user['uin'] and !$is_buy">
     <div class="buy_block">
         <div class="detail_bg_block">&nbsp;</div>
         <div class="detail_bg">
@@ -38,9 +39,14 @@
             </div>
         </div>
     </div>
-    <div class="own_block">
-
-    </div>
+    </if>
+    <if condition="$zhaopian['user_id'] neq $user['uin'] and $is_buy">
+    </if>
+    <if condition="$zhaopian['user_id'] eq $user['uin']">
+        <div class="own_block">
+            
+        </div>
+    </if>
     <div class="detail_body" style="bottom: 20px;">
         <div class="detail_menu_body cl hide">
             <div class="item_menu">

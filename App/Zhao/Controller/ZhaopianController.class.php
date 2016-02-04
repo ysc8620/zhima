@@ -153,59 +153,35 @@ class ZhaopianController extends BaseController {
 
         $this->title = "{$this->hongbao_user['name']}发起的红包照片";
 
-//        我发起的的凑红包-￥200
-//
-//“凑红包，有福利，你懂得”
-//共40份，还剩40份
-//
-//我凑了20元到王苏蕴的红包
-//
-//“凑红包，有福利，你懂得”
-//共40份，还剩40份
-
-        $limit_part = $this->hongbao[total_part] - $this->hongbao[total_num];
-        $limit_part = $limit_part<0?0:$limit_part;
         if($this->hongbao['user_id'] == $this->user_id){
-            $this->share_title = "我发起的凑红包-￥{$this->hongbao['total_amount']}";
+            $this->share_title = "我发起的红包照片";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
-            $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_part']}份，还剩{$limit_part}份";
+            $this->share_desc = "“{$this->zhaopian['remark']}”";
         }else{
-            $amount = M('hongbao_order')->where(array("hongbao_id"=>$this->hongbao['id'], "state"=>2,'user_id'=>$this->user_id))->sum('total_amount');
-            $amount = floatval($amount);
+            $is_buy = M('zhaopian_order')->where(array("zhaopian_id"=>$this->zhaopian['id'], "state"=>2,'user_id'=>$this->user_id))->count();
+            $this->is_buy = $is_buy > 0 ? true:false;
 
-            if($amount <= 0 ){
-                $this->share_title = "{$this->hongbao_user['name']}发起的凑红包-￥{$this->hongbao['total_amount']}";
+            if($is_buy < 1 ){
+                $this->share_title = "{$this->zhaopian_user['name']}发起的红包照片";
             }else{
-                $this->share_title = "我凑了{$amount}元到{$this->hongbao_user['name']}的红包";
+                $this->share_title = "我购买了{$this->zhaopian_user['name']}的红包照片";
             }
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
-            $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_part']}份，还剩{$limit_part}份";
+            $this->share_desc = "“{$this->zhaopian['remark']}”";
         }
 
-        $this->default_index = 0;
-        $cookie_key = 'id'.$this->hongbao['id'].'_'.$this->user_id;
-        $is_show = intval(cookie($cookie_key));
-        //print_r($_COOKIE);
-        if(!$is_show){
-            cookie($cookie_key, 1,array('expire'=>time()+2592000));
-        }
-        $this->is_show = $is_show?true:false;
-        $this->star_name = '';
-        $order_list = M('hongbao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2,3,4)))))->order("addtime desc")->select();
+
+
+        $order_list = M('zhaopian_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2)))))->order("addtime desc")->select();
         if($order_list){
             foreach($order_list as $k=>$order){
-
                 $user = M('user')->find($order['user_id']);
-                if($order[is_star] == 1){
-                    $this->default_index = $k;
-                    $this->star_name =  $user['name'];
-                }
                 $order_list[$k]['user'] = $user;
             }
         }
-        $this->share_link = U('/hongbao/detail', array('id'=>$id), true,true);
+        $this->share_link = U('/zhaopian/detail', array('id'=>$id), true,true);
         $this->order_list = $order_list;
         $this->id = $id;
         $this->display();
