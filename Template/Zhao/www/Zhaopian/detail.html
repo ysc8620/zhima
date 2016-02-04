@@ -5,7 +5,7 @@
     <input type="hidden" name="number_no" value="{$zhaopian.number_no}" />
     <input type="hidden" name="min_amount" value="{$zhaopian.min_amount}" />
     <input type="hidden" name="max_amount" value="{$zhaopian.max_amount}" />
-
+    <input type="hidden" name="is_rand" value="{$zhaopian.is_rand}" />
     <if condition="$zhaopian['user_id'] neq $user['uin'] and !$is_buy">
     <div class="buy_block">
         <div class="detail_bg_block">&nbsp;</div>
@@ -152,10 +152,16 @@
     $('.btn_shang').click(function(){
         var max = parseFloat($('input[name="max_amount"]').val());
         var min = parseFloat($('input[name="min_amount"]').val());
-
+        var is_rand = $('input[name="is_rand"]').val();
         var amount = (Math.random()*(max-min)+min).toFixed(2);
-        $('.amount_block').text(amount+'元');
-        $('input[name="amount"]').val(amount);
+
+        if(is_rand == '1'){
+            $('.amount_block').text(amount+'元');
+            $('input[name="amount"]').val(amount);
+        }else{
+            $('.amount_block').text(min+'元');
+            $('input[name="amount"]').val(min);
+        }
         // 设置随机金额
         //
         $('.buy_detail_block').removeClass('hide').addClass('show');
