@@ -16,7 +16,7 @@ class AutoController extends Controller {
     function sendhongbao(){
         $order_list = M('zhaopian_order')->where(array('state'=>2, 'is_send_zhaopian'=>0))->select();
         foreach($order_list as $order){
-            $order_send = M('hongbao_send')->where(array('id'=>$order['send_id']))->find();
+            $order_send = M('zhaopian_send')->where(array('id'=>$order['send_id']))->find();
             if(!$order_send){
                 $bao = array(
                     'mch_billno' =>get_order_sn(),
@@ -33,7 +33,7 @@ class AutoController extends Controller {
                 $hongbao_id = M('zhaopian_send')->add($send);
                 if($hongbao_id){
                     M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('send_id'=>$hongbao_id, 'send_sn'=>$bao['mch_billno'], 'send_time'=>time()));
-                    $hongbao_send = M('zhaopiab_send')->find($hongbao_id);
+                    $hongbao_send = M('zhaopiao_send')->find($hongbao_id);
                 }
             }
 
