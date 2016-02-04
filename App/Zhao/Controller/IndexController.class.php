@@ -11,7 +11,7 @@ use Think\Controller;
 class IndexController extends BaseController {
     public function index(){
 
-        redirect(U("/zhaopian"));
+        redirect(U("/zhao/zhaopian"));
     	//首页幻灯片获取
     	$this->display();
 		//session('user',null);

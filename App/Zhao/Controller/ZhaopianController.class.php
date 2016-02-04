@@ -20,7 +20,7 @@ class ZhaopianController extends BaseController {
             $sign = I('post.sign');
 
             if($sign != session('sign')){
-                $this->error('请不要重复提交.',U('/zhaopian'));
+                $this->error('请不要重复提交.',U('/zhao/zhaopian'));
             }else{
                 session('sign', microtime(true));
             }
@@ -29,13 +29,13 @@ class ZhaopianController extends BaseController {
             $remark = I('post.remark','','htmlspecialchars');
             if(!$is_rand){
                 if($amount < 1.05 || $amount > 200){
-                    $this->error('价格在1.05-200之间.',U('/zhaopian'));
+                    $this->error('价格在1.05-200之间.',U('/zhao/zhaopian'));
                     return false;
                 }
             }
 
             if(empty($_FILES['imgOne'])){
-                $this->error('请选择要发布的红包照片.',U('/zhaopian'));
+                $this->error('请选择要发布的红包照片.',U('/zhao/zhaopian'));
                 return false;
             }
 
@@ -63,7 +63,7 @@ class ZhaopianController extends BaseController {
             }
 
             if(empty($data['pic_url'])){
-                $this->error('请选择要发布的红包照片.',U('/zhaopian'));
+                $this->error('请选择要发布的红包照片.',U('/zhao/zhaopian'));
                 return false;
             }
 
@@ -86,13 +86,13 @@ class ZhaopianController extends BaseController {
             $data['openid'] = $user['openid'];
             $re = M('zhaopian')->add($data);
             if($re){
-                redirect(U('/zhaopian/detail', array('id'=>$data['number_no'])));
+                redirect(U('/zhao/zhaopian/detail', array('id'=>$data['number_no'])));
                 exit();
             }else{
-                $this->error('红包照片创建失败', U('/zhaopian'));
+                $this->error('红包照片创建失败', U('/zhao/zhaopian'));
             }
         }while(false);
-        $this->error('红包照片创建失败', U('/zhaopian'));
+        $this->error('红包照片创建失败', U('/zhao/zhaopian'));
     }
 
     function time2Units ($time)
@@ -139,12 +139,12 @@ class ZhaopianController extends BaseController {
 
         $this->show_share = I('get.show_share', 0,'strval');
         if($id < 1){
-            $this->error('请选择查看的红包照片', U('/notes'));
+            $this->error('请选择查看的红包照片', U('/zhao/notes'));
         }
         $this->zhaopian = M('zhaopian')->where(array('number_no'=>$id))->find();
 
         if(!$this->zhaopian){
-            $this->error('没找到红包照片详情', U('/notes'));
+            $this->error('没找到红包照片详情', U('/zhao/notes'));
         }
 
         $this->zhaopian_user = M('user')->find($this->zhaopian['user_id']);
@@ -181,7 +181,7 @@ class ZhaopianController extends BaseController {
                 $order_list[$k]['user'] = $user;
             }
         }
-        $this->share_link = U('/zhaopian/detail', array('id'=>$id), true,true);
+        $this->share_link = U('/zhao/zhaopian/detail', array('id'=>$id), true,true);
         $this->order_list = $order_list;
         $this->id = $id;
         $this->display();
