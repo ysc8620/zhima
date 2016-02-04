@@ -152,15 +152,15 @@ class ZhaopianController extends BaseController {
 
 
         $this->title = "{$this->hongbao_user['name']}发起的红包照片";
-
+        $zhaopian_order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'user_id'=>$this->user_id,'state'=>2))->find();
+        $this->zhaopian_order = $zhaopian_order;
         if($this->hongbao['user_id'] == $this->user_id){
             $this->share_title = "我发起的红包照片";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
             $this->share_desc = "“{$this->zhaopian['remark']}”";
         }else{
-            $is_buy = M('zhaopian_order')->where(array("zhaopian_id"=>$this->zhaopian['id'], "state"=>2,'user_id'=>$this->user_id))->count();
-            $this->is_buy = $is_buy > 0 ? true:false;
+            $this->is_buy = $zhaopian_order? true:false;
 
             if($is_buy < 1 ){
                 $this->share_title = "{$this->zhaopian_user['name']}发起的红包照片";
@@ -171,8 +171,6 @@ class ZhaopianController extends BaseController {
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
             $this->share_desc = "“{$this->zhaopian['remark']}”";
         }
-
-
 
         $order_list = M('zhaopian_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2)))))->order("addtime desc")->select();
         if($order_list){

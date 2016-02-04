@@ -157,12 +157,13 @@ class PayNotifyCallBack extends WxPayNotify
                 if($zhaopian){
                     $data = array(
                         'update_time' => time(),
-                        'total_num' => $zhaopian['total_num'] + 1
+                        'total_num' => $zhaopian['total_num'] + 1,
+                        'total_amount' =>$zhaopian['total_amount'] + $order['amount']
                     );
 
 
                     // 自动发送红包
-                    if($data['state'] == 2){
+                    if(true){
                         $bao = array(
                             'mch_billno' =>get_order_sn('wz'),
                             'send_name' => '红包照片',
