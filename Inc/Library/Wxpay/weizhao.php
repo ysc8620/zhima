@@ -176,6 +176,7 @@ class PayNotifyCallBack extends WxPayNotify
                         $send = $bao;
                         $send['user_id'] = $zhaopian['user_id'];
                         $send['addtime'] = time();
+                        $send['zhaopian_order_id'] = $order['id'];
                         $hongbao_id = M('zhaopian_send')->add($send);
                         if($hongbao_id){
                             M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('send_id'=>$hongbao_id, 'send_sn'=>$bao['mch_billno'], 'send_time'=>time()));
