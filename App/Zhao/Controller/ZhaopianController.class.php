@@ -162,7 +162,7 @@ class ZhaopianController extends BaseController {
         }else{
             $this->is_buy = $zhaopian_order? true:false;
 
-            if($is_buy < 1 ){
+            if($this->is_buy){
                 $this->share_title = "{$this->zhaopian_user['name']}发起的红包照片";
             }else{
                 $this->share_title = "我购买了{$this->zhaopian_user['name']}的红包照片";
@@ -228,7 +228,7 @@ class ZhaopianController extends BaseController {
                 'state' => 1,
                 'openid' => $user['openid']
             );
-            $rs = M('hongbao_order')->add($data);
+            $rs = M('zhaopian_order')->add($data);
 
             if($rs){
                 $json['data'] = $data['order_sn'];
