@@ -101,9 +101,6 @@
     //调用微信JS api 支付
     function jsApiCall(data)
     {
-        for (is in  data){
-            alert(data);
-        }
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
                 data,
@@ -206,6 +203,9 @@
             data:{id:id},
             dataType:'json',
             success:function(result){
+
+                alerr(result.error);
+
                 if(result.error==0){
 
                     callpay(result.data);
