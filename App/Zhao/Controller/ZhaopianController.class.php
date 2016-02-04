@@ -228,7 +228,7 @@ class ZhaopianController extends BaseController {
                 'state' => 1,
                 'openid' => $user['openid']
             );
-            $rs = M('hongbao_order')->add($data);
+            $rs = M('zhaopian_order')->add($data);
 
             if($rs){
                 $json['data'] = $data['order_sn'];
