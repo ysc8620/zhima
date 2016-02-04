@@ -38,10 +38,15 @@
                 <div class="amount_remark ml10 ptop6 pbottom10" style="padding-left: 12px;">可设置￥1.05-￥200内</div>
             </div>
 		</ul>
+            <ul data-role="price_block" style="display: none">
+                <div class="w50 fr">
+                    <div class="amount tl ml10"><input type="number" name="amount" class="text2 color_999  w50" value="1.05" /></div>
+                </div>
+            </ul>
 		<ul class="cl mt10">
 		<div class="tit ">
 			<div class="w90 mc">
-			<input type="submit" class="btn" value="凑 红 包" />
+			<input type="submit" class="btn" value="发 布" />
 			</div>
 			<div class="w90 mc tc f12 ptop6">
                 发布一张朋友发红包才能看的照片
@@ -103,10 +108,51 @@
     }
 
     function checkZhaopian(){
+        var file_val = $('input[name="imgOne"]').val();
+        if(file_val.length < 1){
+            layer.msg('请选择要上传的照片', function(){});
+            return false;
+        }
+
+        var remark = $('input[name="remark"]').val();
+        if(remark.length < 1){
+            layer.msg('请设置照片描述信息', function(){});
+            return false;
+        }
+
+
+        var is_rand = $('input[name="is_rand"]').val();
+        if(is_rand == '0'){
+            var amount = $('input[name="amount"]').val();
+            if(amount == ''){
+                layer.msg('请输入照片价格', function(){});
+                return false;
+            }
+            amount = parseFloat(amount);
+            if(amount < 1.05 || amount > 200){
+                layer.msg('价格范围在1.05-200之间', function(){});
+                return false;
+            }
+        }
+
+
+
+        return false;
         return true;
     }
 
-
+    $('[data-role="set_rand"]').click(function(){
+        $('input[name="is_rand"]').val(1);
+        $(this).removeClass('color_def');
+        $('[data-role="set_price"]').addClass('color_def');
+        $('[data-role="price_block"]').hide();
+    });
+    $('[data-role="set_price"]').click(function(){
+        $('input[name="is_rand"]').val(0);
+        $(this).removeClass('color_def');
+        $('[data-role="set_rand"]').addClass('color_def');
+        $('[data-role="price_block"]').show();
+    });
 </script>
 </body>
 </html>

@@ -79,9 +79,10 @@ input[type=text],textarea {-webkit-appearance:none}
 .container {position:relative;width:100%;max-width:640px;min-height:100%;margin:0 auto;overflow-x:hidden;background-color:#2a2a2a; border:#4a4a4a 1px solid;}
 .from textarea{ width:100%; border:none; background:#161616; height:80px; color:#747474;}
 .from{ width: 96%; margin:12px auto; }
-.from div.row{ height: 50px; line-height:650px; -webkit-border-radius:3px;border-radius:3px; background:#161616; position:relative; border:#494949 1px solid;}
+.from div.row{ height: 50px; line-height:50px; -webkit-border-radius:3px;border-radius:3px; background:#161616; position:relative; border:#494949 1px solid;}
 .from  ul{ clear:both; margin-bottom:12px;}
 .from input.text{ width:100%;}
+.from .text2{ margin-bottom:12px; border:#494949 1px solid;  -webkit-border-radius:3px;border-radius:3px;}
 input, button{ border:none; font-size: 14px; background:#161616; text-align:left;  height: 48px; width:auto; line-height:48px; padding:0 4px;}
 .from span{ display: table-cell; font-size:14px; line-height: 50px;}
 .from span.label{ float:left; left: 0; padding-left: 6px;  position: absolute;}

@@ -25,11 +25,11 @@ class ZhaopianController extends BaseController {
                 session('sign', microtime(true));
             }
             $is_rand = I('post.is_rand',0,'intval');
-            $amount = I('post.amount',2,'floatval');
+            $amount = I('post.amount',1.05,'floatval');
             $remark = I('post.remark','','htmlspecialchars');
             if(!$is_rand){
-                if($amount < 2 || $amount > 200){
-                    $this->error('价格在2-200之间.',U('/zhaopian'));
+                if($amount < 1.05 || $amount > 200){
+                    $this->error('价格在1.05-200之间.',U('/zhaopian'));
                     return false;
                 }
             }
