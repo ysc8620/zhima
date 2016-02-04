@@ -44,14 +44,14 @@
     </if>
     <if condition="$zhaopian['user_id'] eq $user['uin']">
         <div class="own_block">
-            
+
         </div>
     </if>
     <div class="detail_body" style="bottom: 20px;">
         <div class="detail_menu_body cl hide">
             <div class="item_menu">
-                <div class="sub_menu"><a href="{:U('/notes')}">我的记录</a></div>
-                <div class="sub_menu"><a href="{:U('/zhaopian')}">我也要发</a></div>
+                <div class="sub_menu"><a href="{:U('/zhao/notes')}">我的记录</a></div>
+                <div class="sub_menu"><a href="{:U('/zhao/zhaopian')}">我也要发</a></div>
             </div>
         </div>
         <div class="detail_menu cl" data-role="detail_menu">
@@ -84,10 +84,10 @@
                     // alert(res.err_code+'='+res.err_desc+'='+res.err_msg);
                     // window.location.href = "/notes.html";
                     // alert('支付成功');
-                    window.location.href="?show_share=1";
-                    return false;
-//                    window.location.reload();
+//                    window.location.href="?show_share=1";
 //                    return false;
+                    window.location.reload();
+                    return false;
                     switch (res.err_msg){
 
                         case 'get_brand_wcpay_request:cancel':
@@ -143,7 +143,7 @@
         var amount = $('input[name="amount"]').val();
         $.ajax({
             type:'post',
-            url:"{:U('/zhaopian/order')}",
+            url:"{:U('/zhao/zhaopian/order')}",
             async:false,
             cache:false,
             data:{id:id, amount:amount},
@@ -172,7 +172,7 @@
         }
         $.ajax({
             type:'post',
-            url:"{:U('/weixin/zhaopian')}",
+            url:"{:U('/zhao/weixin/zhaopian')}",
             async:false,
             cache:false,
             data:{id:id},

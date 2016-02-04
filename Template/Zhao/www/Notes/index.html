@@ -27,7 +27,7 @@
 		<div class="block" style="min-height: 200px;">
             <volist name="list" id="item">
 			        <div class="pic">
-                        <a class="" style="vertical-align: middle" href="{:U('zhaopian/detail',array('id'=>$item['number_no']))}"><img src="/uploads/{$item.pic_url}" /></a>
+                        <a class="" style="vertical-align: middle" href="{:U('/zhao/zhaopian/detail',array('id'=>$item['number_no']))}"><img src="/uploads/{$item.pic_url}" /></a>
                     </div>
 </volist>
 			<div class="cl"></div>
@@ -36,7 +36,7 @@
             <div class="fr cl" style="margin-right: 12px;"><span style="font-size:12px; ">第{$page}/{$total_page}页,共{$totalRows}条</span> </div>
         </div>
 		<div class="xiala cl">
-            <div class="fl cl" style="margin-left: 12px;"><a href="{:U('/zhaopian')}"><input type="button" class="btn w120" value="发红包照片" /></a></div>
+            <div class="fl cl" style="margin-left: 12px;"><a href="{:U('/zhao/zhaopian')}"><input type="button" class="btn w120" value="发红包照片" /></a></div>
 			 <div id="pager" class="pagebar pagination fr" style="margin-right: 12px; text-align: right">
             {$page_show}
             </div>
