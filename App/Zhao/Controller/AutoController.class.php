@@ -39,7 +39,7 @@ class AutoController extends Controller {
                     $hongbao_send = M('zhaopian_send')->find($hongbao_id);
                 }
             }
-
+            var_dump($hongbao_send);die();
             // 发送红包
             if($hongbao_send){print_r($hongbao_send);echo '----';die();
                 $bao = array(
