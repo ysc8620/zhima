@@ -54,7 +54,7 @@ class AutoController extends Controller {
                 );
 
                 $data = sendHongBao($bao);
-
+                print_r($data);
 
                 if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
                     M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('is_send_zhaopian'=>1));
