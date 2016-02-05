@@ -15,6 +15,8 @@ class AutoController extends Controller {
     // 自动发送红包
     function sendhongbao(){
         $order_list = M('zhaopian_order')->where(array('state'=>2, 'is_send_zhaopian'=>0))->select();
+        print_r($order_list);
+        die();
         foreach($order_list as $order){
             $order_send = M('zhaopian_send')->where(array('id'=>$order['send_id']))->find();
             if(!$order_send){
