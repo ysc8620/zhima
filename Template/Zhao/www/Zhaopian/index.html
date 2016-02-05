@@ -69,21 +69,27 @@
      */
     function getFileUrl(sourceId) {
 
-        var url;
-        if (navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) { // IE10取消了滤镜
-            //url = document.getElementById(sourceId).value;
-            document.all.imgOne.select();
-            $("#preview").focus();
-            url = document.selection.createRange().text;
+        var url='';
+        try{
+            if (navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) { // IE10取消了滤镜
+                //url = document.getElementById(sourceId).value;
+                document.all.imgOne.select();
+                $("#preview").focus();
+                url = document.selection.createRange().text;
 
-        } else if (navigator.userAgent.indexOf("Firefox") > 0) { // Firefox
-            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
-        } else if (navigator.userAgent.indexOf("Chrome") > 0) { // Chrome
-            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
-        }else if(navigator.userAgent.indexOf("MSIE 10.0") > 0){
-            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
-        }else{
-            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            } else if (navigator.userAgent.indexOf("Firefox") > 0) { // Firefox
+                url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            } else if (navigator.userAgent.indexOf("Chrome") > 0) { // Chrome
+                url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            }else if(navigator.userAgent.indexOf("MSIE 10.0") > 0){
+                url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
+            }else{
+                var URLS = window.URL || window.webkitURL;
+                newurl = URLS.createObjectURL(document.getElementById(sourceId).files.item(0));
+                url = newurl;
+            }
+        }catch (e){
+
         }
         return url;
     }
@@ -95,12 +101,15 @@
         try{
             var url = getFileUrl(sourceId);
             var imgPre = document.getElementById(targetId);
-            if(window.navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) {
-                var picpreview=document.getElementById("preview");
-                picpreview.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = url;
-            }else{
-                imgPre.src = url;
+            if(url != ''){
+                if(window.navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) {
+                    var picpreview=document.getElementById("preview");
+                    picpreview.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = url;
+                }else{
+                    imgPre.src = url;
+                }
             }
+
         }catch(e){
             layer.msg('错误:'+ e.message, function(){});
         }
@@ -114,8 +123,6 @@
 
     function checkZhaopian(){
         try{
-
-
         var file_val = $('input[name="imgOne"]').val();
         if(file_val.length < 1){
             layer.msg('请选择要上传的照片', function(){});
