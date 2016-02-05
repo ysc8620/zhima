@@ -178,7 +178,7 @@ class ZhaopianController extends BaseController {
             if(!$order){
                 $user = M('user')->find($this->user_id);
                 if($this->zhaopian['is_rand']>0){
-                    $amount = number_format(randomFloat(1.05,5),2);
+                    $amount = number_format($this->randomFloat(1.05,5),2);
                 }else{
                     $amount = $this->zhaopian['min_amount'];
                 }
