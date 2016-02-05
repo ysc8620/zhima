@@ -160,7 +160,7 @@ class ZhaopianController extends BaseController {
         if($this->hongbao['user_id'] == $this->user_id){
             $this->share_title = "我发布了1张私照，想看吗？";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
+            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/silogocover.jpg";
             $this->share_desc = "“{$this->zhaopian['remark']}”";
         }else{
             $this->is_buy = $zhaopian_order? true:false;
@@ -171,7 +171,7 @@ class ZhaopianController extends BaseController {
                 $this->share_title = "{$this->zhaopian_user['name']}发布了1张私照，想看吗？";
             }
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
+            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/silogocover.jpg";
             $this->share_desc = "“{$this->zhaopian['remark']}”";
         }
 
