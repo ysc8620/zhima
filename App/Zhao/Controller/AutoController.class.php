@@ -17,8 +17,9 @@ class AutoController extends Controller {
         $order_list = M('zhaopian_order')->where(array('state'=>2, 'is_send_zhaopian'=>0))->select();
 
         foreach($order_list as $order){
-            $order_send = M('zhaopian_send')->where(array('id'=>$order['send_id']))->find();
-            if(!$order_send){
+            $hongbao_send = M('zhaopian_send')->where(array('id'=>$order['send_id']))->find();
+
+            if(!$hongbao_send){
                 $bao = array(
                     'mch_billno' =>get_order_sn(),
                     'send_name' => '红包照片',
@@ -39,7 +40,7 @@ class AutoController extends Controller {
                     $hongbao_send = M('zhaopian_send')->find($hongbao_id);
                 }
             }
-            var_dump($hongbao_send);die();
+
             // 发送红包
             if($hongbao_send){print_r($hongbao_send);echo '----';die();
                 $bao = array(
@@ -53,7 +54,7 @@ class AutoController extends Controller {
                 );
 
                 $data = sendHongBao($bao);
-                print_r($data);
+
 
                 if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
                     M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('is_send_zhaopian'=>1));
