@@ -10,7 +10,7 @@
 
 </script>
         <style type="text/css">
-            input.pic{position:absolute; right:0; top:0; font-size:100px; opacity:50; filter:alpha(opacity=0); z-index: 10; width: 100%; height: 100%}
+            input.pic{position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0); z-index: 10; width: 100%; height: 100%}
         </style>
 <div class="container">
 	<div class="from">
@@ -19,8 +19,8 @@
             <input type="hidden" name="is_rand" value="1" />
 		    <ul>
 			<div class="row" style="height: 200px; text-align: center; background: url(/images/bg.png) center center no-repeat #161616;">
-                <input type="file" class="pic" name="imgOne" id="imgOne" onchange="preImg(this.id,'imgPre');" />
-                <img id="imgPre" src="/images/touming.png" style="max-width:100%; max-height:100%; display: block; margin: 0 auto;" />
+                <input type="file" class="pic" name="imgOne" id="imgOne" onchange="preImg(this.id,'preview');" />
+                <img id="preview" name="preview" src="/images/touming.png" style="max-width:100%; max-height:100%; display: block; margin: 0 auto;" />
 		     </div>
 		</ul>
 		<ul>
@@ -68,6 +68,7 @@
      * 从 file 域获取 本地图片 url
      */
     function getFileUrl(sourceId) {
+
         var url;
         if (navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) { // IE10取消了滤镜
             //url = document.getElementById(sourceId).value;
@@ -91,13 +92,17 @@
      * 将本地图片 显示到浏览器上
      */
     function preImg(sourceId, targetId) {
-        var url = getFileUrl(sourceId);
-        var imgPre = document.getElementById(targetId);
-        if(window.navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) {
-            var picpreview=document.getElementById("preview");
-            picpreview.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = url;
-        }else{
-            imgPre.src = url;
+        try{
+            var url = getFileUrl(sourceId);
+            var imgPre = document.getElementById(targetId);
+            if(window.navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) {
+                var picpreview=document.getElementById("preview");
+                picpreview.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = url;
+            }else{
+                imgPre.src = url;
+            }
+        }catch(e){
+            layer.msg('错误'+ e.message, function(){});
         }
 
     }
