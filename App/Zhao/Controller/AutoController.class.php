@@ -83,4 +83,29 @@ class AutoController extends Controller {
         print_r($_SESSION);
         echo time();
     }
+
+    function create(){
+        $img_list = M('zhaopian')->select();
+        $rootPath = C('UPLOAD_PATH');
+        foreach($img_list as $img){
+            $pic_url = $rootPath . $img['pic_url'];
+            if(file_exists($pic_url)){
+                $img = new \Think\Image();
+                $img->open($pic_url);
+                $width = $img->width();
+                $height = $img->height();
+                $x = $y = 0;
+                if($width > $height){
+                    $x = floor(($width - $height)/2);
+                    $width = $height;
+                }elseif($height> $width){
+                    $y = floor(($height - $width)/2);
+                    $height = $width;
+                }
+                $img->crop($width, $height,$x,$y, 300, 300)->save($pic_url . '_thumb.jpg');
+            }
+
+        }
+
+    }
 }

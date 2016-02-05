@@ -59,6 +59,19 @@ class ZhaopianController extends BaseController {
                     $this->error($upload->getError(),'') ;
                 }else{// 上传成功
                     $data['pic_url'] = $info['imgOne']['savepath'].$info['imgOne']['savename'];
+                    $img = new \Think\Image();
+                    $img->open($rootPath . $data['pic_url']);
+                    $width = $img->width();
+                    $height = $img->height();
+                    $x = $y = 0;
+                    if($width > $height){
+                        $x = floor(($width - $height)/2);
+                        $width = $height;
+                    }elseif($height> $width){
+                        $y = floor(($height - $width)/2);
+                        $height = $width;
+                    }
+                    $img->crop($width, $height,$x,$y, 300, 300)->save($rootPath . $data['pic_url'] . '_thumb.jpg');
                 }
             }
 
@@ -150,13 +163,13 @@ class ZhaopianController extends BaseController {
         $this->zhaopian_user = M('user')->find($this->zhaopian['user_id']);
         $this->user = M('user')->find($this->user_id);
 
-
         $this->title = "{$this->hongbao_user['name']}发起的红包照片";
         $zhaopian_order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'user_id'=>$this->user_id,'state'=>2))->find();
         $this->zhaopian_order = $zhaopian_order;
 
         $this->total_amount = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->sum('amount');
         $this->total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->count();
+
         if($this->hongbao['user_id'] == $this->user_id){
             $this->share_title = "我发布了1张私照，想看吗？";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
