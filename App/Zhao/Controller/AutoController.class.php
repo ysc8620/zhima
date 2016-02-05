@@ -43,6 +43,9 @@ class AutoController extends Controller {
 
             // 发送红包
             if($hongbao_send){
+                if($hongbao_send['state'] == 2){
+                    continue;
+                }
                 $bao = array(
                     'mch_billno' =>$hongbao_send['mch_billno'],
                     'send_name' => '红包照片',
@@ -54,7 +57,6 @@ class AutoController extends Controller {
                 );
 
                 $data = sendHongBao($bao);
-                print_r($data);
 
                 if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
                     M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('is_send_zhaopian'=>1));
