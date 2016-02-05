@@ -154,6 +154,9 @@ class ZhaopianController extends BaseController {
         $this->title = "{$this->hongbao_user['name']}发起的红包照片";
         $zhaopian_order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'user_id'=>$this->user_id,'state'=>2))->find();
         $this->zhaopian_order = $zhaopian_order;
+
+        $this->total_amount = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'user_id'=>$this->user_id,'state'=>2))->sum('amount');
+        $this->total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'user_id'=>$this->user_id,'state'=>2))->count();
         if($this->hongbao['user_id'] == $this->user_id){
             $this->share_title = "我发起的红包照片";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -162,7 +165,7 @@ class ZhaopianController extends BaseController {
         }else{
             $this->is_buy = $zhaopian_order? true:false;
 
-            if($is_buy < 1 ){
+            if($this->is_buy  < 1 ){
                 $this->share_title = "{$this->zhaopian_user['name']}发起的红包照片";
             }else{
                 $this->share_title = "我购买了{$this->zhaopian_user['name']}的红包照片";
