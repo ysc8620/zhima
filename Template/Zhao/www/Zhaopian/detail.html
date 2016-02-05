@@ -162,6 +162,7 @@
      * 生成支付订单
      */
     function set_order(){
+        alert('1')
         var index = layer.load(1, {
             shade: [0.5,'#000'] //0.1透明度的白色背景
         });
@@ -174,7 +175,7 @@
             cache:false,
             data:{id:id, amount:amount},
             dataType:'json',
-            success:function(result){
+            success:function(result){ alert('2')
                 layer.close(index);
                 if(result.error==0){
                     // callpay(result.data);
@@ -198,7 +199,7 @@
         if(id.length < 1){
             layer.msg('没有支付订单', function(){});
             return false;
-        }
+        } alert('3')
         $.ajax({
             type:'post',
             url:"{:U('/zhao/weixin/zhaopian')}",
@@ -207,11 +208,11 @@
             data:{id:id},
             dataType:'json',
             success:function(result){
-
+                alert('4')
                // alert(result.error);
 
                 if(result.error==0){
-
+                    alert('5')
                     callpay(result.data);
 
                 }else if(result.error==1){
