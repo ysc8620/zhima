@@ -21,8 +21,8 @@ class NotesController extends BaseController {
             $total = M('zhaopian')->where("user_id='{$this->user_id}'")->count();
         }else{
             $this->title = '我购买的';
-            $list = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}')")->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}')")->count();
+            $list = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2)")->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2)")->count();
         }
 
         // $list = M('hongbao_order')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
