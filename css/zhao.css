@@ -350,7 +350,7 @@ input.jia{margin:0!important;height:36px; vertical-align:middle; line-height:30p
 
 .detail_info>div{ line-height:26px;  }
 .detail_info>div.remark{ font-size:16px;}
-.detail_body{ z-index:200; position:absolute; bottom: 40px; width:100%; text-align:center;}
+.detail_body{ z-index:200; position:fixed; bottom: 40px; width:100%; text-align:center;}
 .detail_body>div.remark{ line-height:20px;}
 
 .detail_menu_body{ width:120px; margin-left:34px; text-align:left; border-radius: 2px; border-left:#abacac 2px solid; padding:6px;}
