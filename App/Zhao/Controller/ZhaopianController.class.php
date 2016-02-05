@@ -169,6 +169,7 @@ class ZhaopianController extends BaseController {
 
         $this->total_amount = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->sum('amount');
         $this->total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->count();
+        $this->is_buy = $zhaopian_order ? true:false;
 
         if($this->hongbao['user_id'] == $this->user_id){
             $this->share_title = "我发布了1张私照，想看吗？";
@@ -176,8 +177,6 @@ class ZhaopianController extends BaseController {
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/silogocover.jpg";
             $this->share_desc = "“{$this->zhaopian['remark']}”";
         }else{
-            $this->is_buy = $zhaopian_order? true:false;
-
             if($this->is_buy ){
                 $this->share_title = "我买了{$this->zhaopian_user['name']}的私照，推荐！";
             }else{

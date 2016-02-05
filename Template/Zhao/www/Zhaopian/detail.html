@@ -1,5 +1,7 @@
 <include file="Public:header" />
-
+<if condition="!$is_buy">
+    <script type="text/javascript" src="/js/StackBlur.js"></script>
+</if>
 <div class="container">
 
     <input type="hidden" name="id" value="{$zhaopian.id}" />
@@ -22,7 +24,6 @@
         <div class="detail_body">
             <div class=" mc tc cl" style="width: 80px;"><button class="btn btn_cou btn_shang" style="border: none;" data-id="{$zhaopian.number_no}">赏</button> </div>
             <div class="remark cl">已有{$total_num}人赏红包</div>
-
         </div>
 
         <div class="buy_detail_block hide">
@@ -47,7 +48,7 @@
             <div class="detail_info1">
                 <div class=" fl ml10"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
                 <div class="fl ml10">
-                    <div class="cl tl"><span style="color: #e5e5e5; font-size: 14px;">{$zhaopian_user.name}</span> <span style="background: #2d2d2d; padding: 6px; color: #c62a6c">已打赏{$zhaopian_order['amount']}元</span></div>
+                    <div class="cl tl" style="margin-top: 6px;"><span style="color: #e5e5e5; font-size: 14px;">{$zhaopian_user.name}</span> <if condition="$zhaopian[user_id] eq $user_id"><span class="dashang">共{$total_num}人打赏, 获得{$total_amount}元</span> <span><a href="" style="color: #deb16a!important;">详情</a></span><else/><span style="background: #2d2d2d; padding: 6px; color: #c62a6c">已打赏{$zhaopian_order['amount']}元</span></if></div>
                     <div class="cl tl remark" style="color: #e5e5e5; font-size: 16px;">“{$zhaopian.remark}”</div>
                 </div>
                 <div class="cl"></div>
@@ -73,13 +74,13 @@
 </div>
 
 <include file="Public:foot" />
-
+<if condition="!$is_buy">
 <script type="text/javascript">
-
-//    alert($(window).width() +'='+$(window).height())
-    stackBlurImage( 'preview', 'canvas', 80, false );
-
-    $('[data-role="detail_menu"]').click(function(){
+  stackBlurImage( 'preview', 'canvas', 80, false );
+</script>
+</if>
+<script type="text/javascript">
+        $('[data-role="detail_menu"]').click(function(){
        var src = $(this).find('img.ico').attr('src');
         if(src.indexOf('xia_ico.png') >= 0 ){
             $('.detail_menu_body').removeClass('hide').addClass('show');
@@ -104,22 +105,22 @@
 //                    return false;
                     window.location.reload();
                     return false;
-                    switch (res.err_msg){
-
-                        case 'get_brand_wcpay_request:cancel':
-                            // location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
-//                                alert('取消');
-                            break;
-                        case 'get_brand_wcpay_request:fail':
-                            //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
-//                            alert('错误');
-                            break;
-                        case 'get_brand_wcpay_request:ok':
-                            // location.href="/?_a=done&order_sn=<?php echo $order_sn;?>&ac=<?php echo $authcode?>";
-                            //alert('成功');
-                            $("#shareit1").show();
-                            break;
-                    }
+//                    switch (res.err_msg){
+//
+//                        case 'get_brand_wcpay_request:cancel':
+//                            // location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+////                                alert('取消');
+//                            break;
+//                        case 'get_brand_wcpay_request:fail':
+//                            //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+////                            alert('错误');
+//                            break;
+//                        case 'get_brand_wcpay_request:ok':
+//                            // location.href="/?_a=done&order_sn=<?php echo $order_sn;?>&ac=<?php echo $authcode?>";
+//                            //alert('成功');
+//                            $("#shareit1").show();
+//                            break;
+//                    }
                 }
         );
     }
