@@ -162,6 +162,9 @@
      * 生成支付订单
      */
     function set_order(){
+        var index = layer.load(2, {
+            shade: [0.5,'#000'] //0.1透明度的白色背景
+        });
         var id = $('input[name="number_no"]').val();
         var amount = $('input[name="amount"]').val();
         $.ajax({
@@ -172,9 +175,12 @@
             data:{id:id, amount:amount},
             dataType:'json',
             success:function(result){
+                layer.close(index);
                 if(result.error==0){
                     // callpay(result.data);
+
                     set_pay(result.data);
+
                 }else if(result.error==1){
                     layer.msg(result.message, function(){});
                     return false;
