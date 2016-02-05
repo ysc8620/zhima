@@ -81,14 +81,8 @@
     $('canvas').css('height',$(window).height() );
     $('canvas').css('width',$(window).width() );
 
-    $(window).resize(function(){
-        $('.preview').css('width',$(window).width() );
-        $('.preview').css('height',$(window).height() );
-        $('canvas').css('height',$(window).height() );
-        $('canvas').css('width',$(window).width() );
-    });
-
-    stackBlurImage( 'preview', 'canvas', 10, false );
+    alert($(window).width() +'='+$(window).height())
+    stackBlurImage( 'preview', 'canvas', 80, false );
 
     $('[data-role="detail_menu"]').click(function(){
        var src = $(this).find('img.ico').attr('src');
