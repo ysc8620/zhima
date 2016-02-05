@@ -155,8 +155,8 @@ class ZhaopianController extends BaseController {
         $zhaopian_order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'user_id'=>$this->user_id,'state'=>2))->find();
         $this->zhaopian_order = $zhaopian_order;
 
-        $this->total_amount = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'user_id'=>$this->user_id,'state'=>2))->sum('amount');
-        $this->total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'user_id'=>$this->user_id,'state'=>2))->count();
+        $this->total_amount = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->sum('amount');
+        $this->total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->count();
         if($this->hongbao['user_id'] == $this->user_id){
             $this->share_title = "我发起的红包照片";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
