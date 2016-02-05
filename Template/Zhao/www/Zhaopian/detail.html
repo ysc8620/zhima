@@ -12,7 +12,7 @@
         <div class="detail_bg_block">&nbsp;</div>
         <div class="detail_bg">
             <canvas height="100%" width="100%" style="width: 100%; height: 100%" id="canvas"></canvas>
-            <img class="preview" id="preview" src="{$base_url}/uploads/{$zhaopian.pic_url}" alt="{$zhaopian.remark}" style="display: none" />
+            <img class="preview" style="width:100%; "  id="preview" src="{$base_url}/uploads/{$zhaopian.pic_url}" alt="{$zhaopian.remark}" style="display: none" />
         </div>
         <div class="detail_info">
             <div class="mt40 cl" style="margin-top: 4px;"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
@@ -76,12 +76,7 @@
 
 <script type="text/javascript">
 
-    $('.preview').css('width',$(window).width() );
-    $('.preview').css('height',$(window).height() );
-    $('canvas').css('height',$(window).height() );
-    $('canvas').css('width',$(window).width() );
-
-    alert($(window).width() +'='+$(window).height())
+//    alert($(window).width() +'='+$(window).height())
     stackBlurImage( 'preview', 'canvas', 80, false );
 
     $('[data-role="detail_menu"]').click(function(){
