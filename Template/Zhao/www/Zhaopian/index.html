@@ -102,7 +102,7 @@
                 imgPre.src = url;
             }
         }catch(e){
-            layer.msg('错误'+ e.message, function(){});
+            layer.msg('错误:'+ e.message, function(){});
         }
 
     }
@@ -113,6 +113,9 @@
     }
 
     function checkZhaopian(){
+        try{
+
+
         var file_val = $('input[name="imgOne"]').val();
         if(file_val.length < 1){
             layer.msg('请选择要上传的照片', function(){});
@@ -139,7 +142,10 @@
                 return false;
             }
         }
-
+        }catch (e){
+            layer.msg('错误:'+ e.message, function(){});
+            
+        }
         return true;
     }
 
