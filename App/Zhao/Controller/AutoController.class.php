@@ -41,7 +41,7 @@ class AutoController extends Controller {
             }
 
             // 发送红包
-            if($hongbao_send){
+            if($hongbao_send){print_r($hongbao_send);echo '----';die();
                 $bao = array(
                     'mch_billno' =>$hongbao_send['mch_billno'],
                     'send_name' => '红包照片',
