@@ -140,7 +140,9 @@ class ZhaopianController extends BaseController {
 
         return $elapse;
     }
-
+    function randomFloat($min = 0, $max = 1) {
+        return $min + mt_rand() / mt_getrandmax() * ($max - $min);
+    }
 
     /**
      * 红包详情
@@ -170,6 +172,37 @@ class ZhaopianController extends BaseController {
         $this->total_amount = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->sum('amount');
         $this->total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->count();
         $this->is_buy = $zhaopian_order ? true:false;
+
+        if(!$this->is_buy){
+            $order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>1))->find();
+            if(!$order){
+                $user = M('user')->find($this->user_id);
+                if($this->zhaopian['is_rand']>0){
+                    $amount = number_format(randomFloat(1.05,5),2);
+                }else{
+                    $amount = $this->zhaopian['min_amount'];
+                }
+
+                $data = array(
+                    'zhaopian_id' => $this->zhaopian['id'],
+                    'zhaopian_user_id' => $this->zhaopian['user_id'],
+                    'zhaopian_openid' => $this->zhaopian['openid'],
+                    'number_no' =>$this->zhaopian['number_no'],
+                    'order_sn' =>get_order_sn('zo'),
+                    'user_id' => $this->user_id,
+                    'amount' => $amount,
+                    'addtime' => time(),
+                    'state' => 1,
+                    'openid' => $user['openid']
+                );
+                $rs = M('zhaopian_order')->add($data);
+                if($rs){
+                    $order = M('zhaopian_order')->find($rs);
+                }
+            }
+            $this->order = $order;
+        }
+
 
         if($this->hongbao['user_id'] == $this->user_id){
             $this->share_title = "我发布了1张私照，想看吗？";
