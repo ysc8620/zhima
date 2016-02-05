@@ -1,19 +1,21 @@
 <include file="Public:header" />
 
 <div class="container">
+
     <input type="hidden" name="id" value="{$zhaopian.id}" />
     <input type="hidden" name="number_no" value="{$zhaopian.number_no}" />
     <input type="hidden" name="min_amount" value="{$zhaopian.min_amount}" />
     <input type="hidden" name="max_amount" value="{$zhaopian.max_amount}" />
     <input type="hidden" name="is_rand" value="{$zhaopian.is_rand}" />
-    <if condition="$zhaopian['user_id'] neq $user['uin'] and !$is_buy">
-    <div class="buy_block">
+    <if condition="!$is_buy">
+    <div class="buy_block" >
         <div class="detail_bg_block">&nbsp;</div>
         <div class="detail_bg">
-            <img src="/uploads/{$zhaopian.pic_url}" alt="{$zhaopian.remark}"  />
+            <canvas height="100%" width="100%" id="canvas"></canvas>
+            <img class="preview" id="preview" src="/uploads/{$zhaopian.pic_url}" alt="{$zhaopian.remark}" style="display: none" />
         </div>
         <div class="detail_info">
-            <div class="mt40 cl"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
+            <div class="mt40 cl" style="margin-top: 4px;"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
             <div class="cl">{$zhaopian_user.name}</div>
             <div class="cl remark">“{$zhaopian.remark}”</div>
         </div>
@@ -40,7 +42,7 @@
         </div>
     </div>
     </if>
-    <if condition="$zhaopian['user_id'] neq $user['uin'] and $is_buy">
+    <if condition="$is_buy">
         <div class="own_block">
             <div class="detail_info1">
                 <div class=" fl ml10"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
@@ -52,26 +54,11 @@
             </div>
             <div class="cl"></div>
             <div class="detail_body1 cl" >
-                <img src="/uploads/{$zhaopian['pic_url']}" style="max-width: 98%" />
+                <img src="/uploads/{$zhaopian['pic_url']}" style="width: 100%; height: 100%" />
             </div>
         </div>
     </if>
-    <if condition="$zhaopian['user_id'] eq $user['uin']">
-        <div class="own_block">
-            <div class="detail_info1">
-                <div class=" fl ml10"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
-                <div class="fl ml10">
-                    <div class="cl tl"><span style="color: #e5e5e5; font-size: 14px;">{$zhaopian_user.name}</span> <span style="background: #2d2d2d; padding: 6px; color: #c62a6c">共{$total_num}人打赏,获得{$total_amount}元</span><span><a href="" style="color: #b57d44">详情</a></span></div>
-                    <div class="cl tl remark" style="color: #e5e5e5; font-size: 16px;">“{$zhaopian.remark}”</div>
-                </div>
-                <div class="cl"></div>
-            </div>
-            <div class="cl"></div>
-            <div class="detail_body1 cl" >
-                <img src="/uploads/{$zhaopian['pic_url']}" style="max-width: 98%" />
-            </div>
-        </div>
-    </if>
+
     <div class="detail_body" style="bottom: 20px;">
         <div class="detail_menu_body cl hide">
             <div class="item_menu">
@@ -88,6 +75,16 @@
 <include file="Public:foot" />
 
 <script type="text/javascript">
+
+    $('.preview').css('height',$(window).height() );
+    $('#canvas').css('height',$(window).height() );
+    $(window).resize(function(){
+        $('.preview').css('height',$(window).height() );
+        $('#canvas').css('height',$(window).height() );
+    });
+
+    stackBlurImage( 'preview', 'canvas', 10, false );
+
     $('[data-role="detail_menu"]').click(function(){
        var src = $(this).find('img.ico').attr('src');
         if(src.indexOf('xia_ico.png') >= 0 ){
