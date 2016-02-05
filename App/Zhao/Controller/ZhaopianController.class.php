@@ -197,6 +197,7 @@ class ZhaopianController extends BaseController {
         }
         $this->share_link = U('/zhao/zhaopian/detail', array('id'=>$id), true,true);
         $this->order_list = $order_list;
+        $this->base_url = "http://$_SERVER[HTTP_HOST]";
         $this->id = $id;
         $this->display();
     }
