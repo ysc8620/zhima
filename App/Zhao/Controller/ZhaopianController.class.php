@@ -144,6 +144,20 @@ class ZhaopianController extends BaseController {
         return $min + mt_rand() / mt_getrandmax() * ($max - $min);
     }
 
+    public function del(){
+        $id = I('get.id', '','strval');
+        $zhaopian = M('zhaopian')->where(array('number_no'=>$id))->find();
+        if(empty($zhaopian)){
+            return $this->error('找不到要删除的照片', U('/zhao/notes'));
+        }
+        if($zhaopian['user_id'] != $this->user_id ){
+            return $this->error('您没有删除该照片权限', U('/zhao/notes'));
+        }
+        // 删除照片
+        M('zhaopian')->where(array('id'=>$zhaopian['id']))->save(array('state'=>99));
+        return $this->error('照片删除成功', U('/zhao/notes'));
+    }
+
     /**
      * 红包详情
      */

@@ -17,12 +17,12 @@ class NotesController extends BaseController {
         $limit = 16;
         if($this->state == 'creation'){
             $this->title = '我发布的';
-            $list = M('zhaopian')->where("user_id='{$this->user_id}'")->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('zhaopian')->where("user_id='{$this->user_id}'")->count();
+            $list = M('zhaopian')->where("user_id='{$this->user_id}' AND state=1")->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('zhaopian')->where("user_id='{$this->user_id}' AND state=1")->count();
         }else{
             $this->title = '我购买的';
-            $list = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2)")->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2)")->count();
+            $list = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2) AND state=1")->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2) AND state=1")->count();
         }
 
         // $list = M('hongbao_order')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
