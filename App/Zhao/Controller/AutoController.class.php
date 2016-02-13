@@ -79,9 +79,13 @@ class AutoController extends Controller {
     }
 
     public function img(){
-        $img = new \Think\Image(2);
-        $img->open(ROOT_PATH.'1.jpg')->thumb(800,20000)->save(ROOT_PATH.'2.jpg');
+//        $img = new \Think\Image(2);
+//        $img->open(ROOT_PATH.'1.jpg')->thumb(800,20000)->save(ROOT_PATH.'2.jpg');
+        header('Content-type: image/jpeg');
+        $image = new Imagick(ROOT_PATH.'2.jpg');
+        $image->gaussianBlurImage(80,8);
 
+        echo $image->getImageBlob();
     }
 
     function test(){
