@@ -82,6 +82,9 @@ class AutoController extends Controller {
 //        $img = new \Think\Image(2);
 //        $img->open(ROOT_PATH.'1.jpg')->thumb(800,20000)->save(ROOT_PATH.'2.jpg');
         //header('Content-type: image/jpeg');
+        set_time_limit(0);
+        ini_set('memory_limit', '1000M');
+
         $image = new \Imagick(ROOT_PATH.'2.jpg');
         $image->gaussianBlurImage(80,8)->save(ROOT_PATH.'3.jpg', null, 80,true);
 echo 'ok';
