@@ -79,9 +79,9 @@ class AutoController extends Controller {
     }
 
     public function img(){
-//        $img = new \Think\Image(2);
-//        $img->open(ROOT_PATH.'1.jpg')->thumb(800,20000)->save(ROOT_PATH.'2.jpg');
-        //header('Content-type: image/jpeg');
+        $img = new \Think\Image(2);
+        $img->open(ROOT_PATH.'1.jpg')->thumb(300,20000)->save(ROOT_PATH.'2.jpg');
+        header('Content-type: image/jpeg');
         set_time_limit(0);
         ini_set('memory_limit', '1000M');
 
