@@ -17,9 +17,5 @@ class IndexController extends BaseController {
 		//session('user',null);
     }
 
-    public function test(){
-       $img = new \Think\Image(2);
-        $img->open(ROOT_PATH.'1.jpg')->thumb(800,20000)->save(ROOT_PATH.'2.jpg');
 
-    }
 }
