@@ -186,8 +186,8 @@ class ZhaopianController extends BaseController {
             $this->error('没找到红包照片详情', U('/zhao/notes'));
         }
         //
-        $path = C('UPLOAD_PATH') . "/uploads/".$this->zhaopian['pic_url'];
-        echo $path;die();
+        $path = C('UPLOAD_PATH') .$this->zhaopian['pic_url'];
+  
         if(file_exists($path) && !file_exists($path."_thumb2.jpg")){
             $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
             $img->open($path);
