@@ -80,7 +80,7 @@ class ZhaopianController extends BaseController {
 
                     $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
 
-                    $img2->open($rootPath . $data['pic_url'] . '_thumb1.jpg')->gaussianBlurImage(120,12)->save($rootPath . $data['pic_url'] . '_thumb2.jpg');
+                    $img2->open($rootPath . $data['pic_url'] . '_thumb1.jpg')->gaussianBlurImage(80,30)->save($rootPath . $data['pic_url'] . '_thumb2.jpg');
 
                 }
             }
@@ -196,7 +196,7 @@ class ZhaopianController extends BaseController {
 
             $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
 
-            $img2->open($path . '_thumb1.jpg')->gaussianBlurImage(100,10)->save($path . '_thumb2.jpg');
+            $img2->open($path . '_thumb1.jpg')->gaussianBlurImage(80,30)->save($path . '_thumb2.jpg');
 
         }
 
