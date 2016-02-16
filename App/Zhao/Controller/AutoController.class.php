@@ -99,11 +99,12 @@ class AutoController extends Controller {
     }
 
     function create(){
+        set_time_limit(0);
         $img_list = M('zhaopian')->select();
         $rootPath = C('UPLOAD_PATH');
         foreach($img_list as $img){
             $pic_url = $rootPath . $img['pic_url'];
-            if(file_exists($pic_url)){
+            if(file_exists($pic_url) && !file_exists($pic_url . '_thumb1.jpg')){
                 $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
                 $img->open($pic_url);
 //                $width = $img->width();
