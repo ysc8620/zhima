@@ -16,6 +16,7 @@ class ZhaopianController extends BaseController {
     }
 
     public function add(){
+        set_time_limit(0);
         do{
             $sign = I('post.sign');
 
