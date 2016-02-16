@@ -45,7 +45,7 @@
             <div class="detail_info1">
                 <div class=" fl ml10"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
                 <div class="fl ml10">
-                    <div class="cl tl" style="margin-top: 6px;"><span style="color: #e5e5e5; font-size: 14px;">{$zhaopian_user.name}</span> <if condition="$zhaopian[user_id] eq $user_id"><span class="dashang">共{$total_num}人打赏, 获得{$total_amount}元</span> <span><a href="" style="color: #deb16a!important;">详情</a></span><else/><span style="background: #2d2d2d; padding: 6px; color: #c62a6c">已打赏{$zhaopian_order['amount']}元</span></if></div>
+                    <div class="cl tl" style="margin-top: 6px;"><span style="color: #e5e5e5; font-size: 14px;">{$zhaopian_user.name}</span> <if condition="$zhaopian[user_id] eq $user_id"><span class="dashang">共{$total_num}人打赏, 获得{$total_amount}元</span> <span><a href="javascript:" class="show_detail_list" style="color: #deb16a!important;">详情</a></span><else/><span style="background: #2d2d2d; padding: 6px; color: #c62a6c">已打赏{$zhaopian_order['amount']}元</span></if></div>
                     <div class="cl tl remark" style="color: #e5e5e5; font-size: 16px;">“{$zhaopian.remark}”</div>
                 </div>
                 <div class="cl"></div>
@@ -71,6 +71,7 @@
     </div>
 </div>
 
+
 <include file="Public:foot" />
 <script type="text/javascript">
     var height = $(window).height();
@@ -86,6 +87,32 @@
             $(this).find('img.ico').attr('src','/images/xia_ico.png');
         }
     });
+
+    $('.show_detail_list').click(function(){
+        layer.open({
+            type: 1,
+            title:"&nbsp;",
+           // skin: 'layui-layer-rim', //加上边框
+            area: ['90%', '80%'], //宽高
+            content: '<div style="text-align: center; width: 100%; padding: 20px;"><img src="/images/loading.gif" /></div>'
+        });
+        show_page(1);
+    });
+
+    function show_page(page){
+        var id = $('input[name="number_no"]').val();
+        $.ajax({
+            type:'post',
+            url:"{:U('/zhao/zhaopian/detail_list')}",
+            async:false,
+            cache:false,
+            data:{id:id, page:page},
+            dataType:'html',
+            success:function(result){
+                $('.layui-layer-content').html(result);
+            }
+        });
+    }
     //调用微信JS api 支付
     function jsApiCall(data)
     {

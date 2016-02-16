@@ -211,7 +211,7 @@ class ZhaopianController extends BaseController {
         $this->total_amount = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->sum('amount');
         $this->total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->count();
         $this->is_buy = $zhaopian_order ? true:false;
-
+//        $this->is_buy=true;
         if(!$this->is_buy){
             $order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'],'user_id'=>$this->user_id, 'state'=>1))->find();
             if(!$order){
@@ -270,6 +270,33 @@ class ZhaopianController extends BaseController {
         $this->order_list = $order_list;
         $this->base_url = "http://$_SERVER[HTTP_HOST]";
         $this->id = $id;
+        $this->display();
+    }
+
+    /**
+     *
+     */
+    public function detail_list(){
+        $id = I('post.id','','strval');
+        $page = I('post.page',1,'intval');
+        $page = $page < 1?1:$page;
+        $zhaopian = M('zhaopian')->where(array('number_no'=>$id))->find();
+        if(!$zhaopian){
+            echo '<div style="text-align: center; width: 100%; padding: 20px;">暂无购买记录.</div>';
+            die();
+        }
+        $total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$zhaopian['id'], 'state'=>2))->count();
+        $this->page = $page;
+        $this->all_page = ceil($total_num/10);
+
+        $order_list = M('zhaopian_order')->where(array('zhaopian_id'=>$zhaopian['id'], 'state'=>2))->limit(($page-1)*10,10)->select();
+        if($order_list){
+            foreach($order_list as $i=>$order){
+                $user = M('user')->find($order['user_id']);
+                $order_list[$i]['user'] = $user;
+            }
+        }
+        $this->list = $order_list;
         $this->display();
     }
 

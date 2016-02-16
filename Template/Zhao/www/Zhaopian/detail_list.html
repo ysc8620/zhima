@@ -1,0 +1,23 @@
+
+<div class="order_list">
+    <div class="header bt_line">
+            </div>
+    <div class="block" style="min-height: 200px;">
+        <volist name="list" id="item">
+                <div class="pic">
+                    <a class="" style="vertical-align: middle" href="{:U('/zhao/zhaopian/detail',array('id'=>$item['number_no']))}"><img src="/uploads/{$item.pic_url}_thumb.jpg" /></a>
+                </div>
+</volist>
+        <div class="cl"></div>
+    </div>
+
+    <div class="xiala cl">
+         <div id="pager" class="pagebar pagination fr" style="margin-right: 12px; text-align: right">
+        {$page_show}
+        </div>
+        <div class="cl">&nbsp;</div>
+    </div>
+
+    <div class="cl"></div>
+</div>
+
