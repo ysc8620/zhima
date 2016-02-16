@@ -11,8 +11,7 @@
     <div class="buy_block" >
         <div class="detail_bg_block">&nbsp;</div>
         <div class="detail_bg">
-            <canvas height="100%" width="100%" style="width: 100%; height: 100%" id="canvas"></canvas>
-            <img class="preview" style="width:100%; "  id="preview" src="{$base_url}/uploads/{$zhaopian.pic_url}" alt="{$zhaopian.remark}" style="display: none" />
+            <img class="preview" style="width:100%; height: 100%"  id="preview" src="{$base_url}/uploads/{$zhaopian.pic_url}" alt="{$zhaopian.remark}" />
         </div>
         <div class="detail_info">
             <div class="mt40 cl" style="margin-top: 4px;"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
@@ -73,14 +72,12 @@
 </div>
 
 <include file="Public:foot" />
-<if condition="!$is_buy">
 <script type="text/javascript">
-  stackBlurImage( 'preview', 'canvas', 80, false );
-</script>
-</if>
-<script type="text/javascript">
-        $('[data-role="detail_menu"]').click(function(){
-       var src = $(this).find('img.ico').attr('src');
+    var height = $(window).height();
+    $('.preview').css('height', height);
+
+    $('[data-role="detail_menu"]').click(function(){
+        var src = $(this).find('img.ico').attr('src');
         if(src.indexOf('xia_ico.png') >= 0 ){
             $('.detail_menu_body').removeClass('hide').addClass('show');
             $(this).find('img.ico').attr('src','/images/shang_ico.png');

@@ -57,9 +57,10 @@ class ZhaopianController extends BaseController {
 
                 if(!$info) {
                     $this->error($upload->getError(),'') ;
-                }else{// 上传成功
+                }else{
+                    // 上传成功
                     $data['pic_url'] = $info['imgOne']['savepath'].$info['imgOne']['savename'];
-                    $img = new \Think\Image();
+                    $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
                     $img->open($rootPath . $data['pic_url']);
                     $width = $img->width();
                     $height = $img->height();
@@ -72,6 +73,11 @@ class ZhaopianController extends BaseController {
                         $height = $width;
                     }
                     $img->crop($width, $height,$x,$y, 300, 300)->save($rootPath . $data['pic_url'] . '_thumb.jpg');
+                    $img->thumb(500, 1000)->save($rootPath . $data['pic_url'] . '_thumb1.jpg');
+                    $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
+
+                    $img2->open($rootPath . $data['pic_url'] . '_thumb1.jpg')->img->gaussianBlurImage(80,8);
+                    $img2->save($rootPath . $data['pic_url'] . '_thumb2.jpg');
                 }
             }
 
