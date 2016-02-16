@@ -104,7 +104,7 @@ class AutoController extends Controller {
         $rootPath = C('UPLOAD_PATH');
         foreach($img_list as $img){
             $pic_url = $rootPath . $img['pic_url'];
-            if(file_exists($pic_url) && !file_exists($pic_url . '_thumb1.jpg')){
+            if(file_exists($pic_url) ){
                 $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
                 $img->open($pic_url);
 //                $width = $img->width();
@@ -121,7 +121,7 @@ class AutoController extends Controller {
                 $img->thumb(500, 1000)->save($pic_url . '_thumb1.jpg');
                 $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
 
-                $img2->open($pic_url . '_thumb1.jpg')->gaussianBlurImage(80,8)->save($pic_url . '_thumb2.jpg');
+                $img2->open($pic_url . '_thumb1.jpg')->gaussianBlurImage(90,9)->save($pic_url . '_thumb2.jpg');
             }
 
         }
