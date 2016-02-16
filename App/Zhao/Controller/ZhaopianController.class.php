@@ -187,7 +187,7 @@ class ZhaopianController extends BaseController {
         }
         //
         $path = C('UPLOAD_PATH') .$this->zhaopian['pic_url'];
-  
+
         if(file_exists($path) && !file_exists($path."_thumb2.jpg")){
             $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
             $img->open($path);
@@ -196,7 +196,7 @@ class ZhaopianController extends BaseController {
 
             $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
 
-            $img2->open($path . '_thumb1.jpg')->gaussianBlurImage(120,12)->save($path . '_thumb2.jpg');
+            $img2->open($path . '_thumb1.jpg')->gaussianBlurImage(100,10)->save($path . '_thumb2.jpg');
 
         }
 
