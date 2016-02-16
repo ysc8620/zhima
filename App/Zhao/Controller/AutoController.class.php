@@ -104,19 +104,24 @@ class AutoController extends Controller {
         foreach($img_list as $img){
             $pic_url = $rootPath . $img['pic_url'];
             if(file_exists($pic_url)){
-                $img = new \Think\Image();
+                $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
                 $img->open($pic_url);
-                $width = $img->width();
-                $height = $img->height();
-                $x = $y = 0;
-                if($width > $height){
-                    $x = floor(($width - $height)/2);
-                    $width = $height;
-                }elseif($height> $width){
-                    $y = floor(($height - $width)/2);
-                    $height = $width;
-                }
-                $img->crop($width, $height,$x,$y, 300, 300)->save($pic_url . '_thumb.jpg');
+//                $width = $img->width();
+//                $height = $img->height();
+//                $x = $y = 0;
+//                if($width > $height){
+//                    $x = floor(($width - $height)/2);
+//                    $width = $height;
+//                }elseif($height> $width){
+//                    $y = floor(($height - $width)/2);
+//                    $height = $width;
+//                }
+//                $img->crop($width, $height,$x,$y, 300, 300)->save($pic_url . '_thumb.jpg');
+                $img->thumb(500, 1000)->save($pic_url . '_thumb1.jpg');
+                $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
+
+                $img2->open($pic_url . '_thumb1.jpg')->img->gaussianBlurImage(80,8);
+                $img2->save($pic_url . '_thumb2.jpg');
             }
 
         }
