@@ -185,6 +185,20 @@ class ZhaopianController extends BaseController {
         if(!$this->zhaopian){
             $this->error('没找到红包照片详情', U('/zhao/notes'));
         }
+        //
+        $path = C('UPLOAD_PATH') . "/uploads/".$this->zhaopian[pic_url];
+        if(file_exists($path) && !file_exists($path."_thumb2.jpg")){
+            $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
+            $img->open($path);
+            $img->thumb(500, 1000)->save($path . '_thumb1.jpg');
+
+
+            $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
+
+            $img2->open($path . '_thumb1.jpg')->gaussianBlurImage(120,12)->save($path . '_thumb2.jpg');
+
+        }
+
 
         $this->zhaopian_user = M('user')->find($this->zhaopian['user_id']);
         $this->user = M('user')->find($this->user_id);
