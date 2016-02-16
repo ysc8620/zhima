@@ -583,6 +583,12 @@ class Imagick{
         }
         $draw->destroy();
     }
+    public function gaussianBlurImage (  $radius=80 ,  $sigma=8){
+        if(empty($this->img)) E('没有指定图像资源');
+
+        $this->img->gaussianBlurImage($radius, $sigma);
+        return $this;
+    }
 
     /**
      * 析构方法，用于销毁图像资源
