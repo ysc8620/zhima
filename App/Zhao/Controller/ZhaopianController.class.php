@@ -187,6 +187,7 @@ class ZhaopianController extends BaseController {
         }
         //
         $path = C('UPLOAD_PATH') . "/uploads/".$this->zhaopian['pic_url'];
+        echo $path;die();
         if(file_exists($path) && !file_exists($path."_thumb2.jpg")){
             $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
             $img->open($path);
