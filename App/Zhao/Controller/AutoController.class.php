@@ -120,8 +120,7 @@ class AutoController extends Controller {
                 $img->thumb(500, 1000)->save($pic_url . '_thumb1.jpg');
                 $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
 
-                $img2->open($pic_url . '_thumb1.jpg')->img->gaussianBlurImage(80,8);
-                $img2->save($pic_url . '_thumb2.jpg');
+                $img2->open($pic_url . '_thumb1.jpg')->gaussianBlurImage(80,8)->save($pic_url . '_thumb2.jpg');
             }
 
         }
