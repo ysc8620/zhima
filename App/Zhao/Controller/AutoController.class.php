@@ -144,10 +144,10 @@ class AutoController extends Controller {
     function pay(){
         $data = array(
             'partner_trade_no' => get_order_sn(),
-            're_user_name'=>'不带你玩',
-            'openid' => 'oV3oMxFJRKo8LxX-WGfbHc-wmdE8',
+            're_user_name'=>'王苏蕴',
+            'openid' => 'oV3oMxP5wdTR8BpptzNq2tDdGtLk',
             'amount' => 100,
-            'desc'=>'测试企业付款'
+            'desc'=>'测试企业付款接口'
         );
          $rs = sendPay($data);
         var_dump($rs);
