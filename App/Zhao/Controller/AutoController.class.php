@@ -127,6 +127,20 @@ class AutoController extends Controller {
         }
     }
 
+    function send(){
+
+        $data = array(
+            'mch_billno' =>get_order_sn(),
+            'send_name' => '红包照片',
+            're_openid' =>'oV3oMxFJRKo8LxX-WGfbHc-wmdE8',
+            'total_amount' => 100,
+            'wishing' => '测试红包。',
+            'act_name'=> '红包照片',
+            'remark' => '红包照片',
+        );
+        $rs = sendPay($data);
+    }
+
     function pay(){
         $data = array(
             'partner_trade_no' => get_order_sn(),
