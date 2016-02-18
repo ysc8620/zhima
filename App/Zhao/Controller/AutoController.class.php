@@ -10,7 +10,7 @@
 namespace Zhao\Controller;
 use Think\Controller;
 set_time_limit(0);
-require_once ROOT_PATH .'/Inc/Library/Wxpay/weixin.php';
+require_once ROOT_PATH .'/Inc/Library/Wxpay/weizhao.php';
 class AutoController extends Controller {
     // 自动发送红包
     function sendhongbao(){
@@ -125,6 +125,25 @@ class AutoController extends Controller {
             }
 
         }
+    }
 
+    function pay(){
+        $data = array(
+            'partner_trade_no' => get_order_sn(),
+            're_user_name'=>'不带你玩',
+            'openid' => 'oV3oMxFJRKo8LxX-WGfbHc-wmdE8',
+            'amount' => 100,
+            'desc'=>'测试企业付款'
+        );
+         $rs = sendPay($data);
+        var_dump($rs);
+        /*{
+            $input = new WxSendPay();
+            $input->SetPartner_Trade_No($data['partner_trade_no']); // 红包编号
+            $input->SetRe_user_name($data['re_user_name']);   // 发送人
+            $input->SetOpenid($data['openid']);   // 接收人
+            $input->SetAmount($data['amount']);  // 发送金额
+            $input->SetDesc($data['desc']);  // 备注
+        }*/
     }
 }
