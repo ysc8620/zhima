@@ -1037,7 +1037,7 @@ class WxPayRefund extends WxPayDataBase
 	**/
 	public function SetMch_id($value)
 	{
-		$this->values['mchid'] = $value;
+		$this->values['mch_id'] = $value;
 	}
 	/**
 	* 获取微信支付分配的商户号的值
@@ -1045,7 +1045,7 @@ class WxPayRefund extends WxPayDataBase
 	**/
 	public function GetMch_id()
 	{
-		return $this->values['mchid'];
+		return $this->values['mch_id'];
 	}
 	/**
 	* 判断微信支付分配的商户号是否存在
@@ -1053,7 +1053,7 @@ class WxPayRefund extends WxPayDataBase
 	**/
 	public function IsMch_idSet()
 	{
-		return array_key_exists('mchid', $this->values);
+		return array_key_exists('mch_id', $this->values);
 	}
 
 
@@ -3345,7 +3345,7 @@ class WxSendPay extends WxPayDataBase
      **/
     public function SetMch_id($value)
     {
-        $this->values['mch_id'] = $value;
+        $this->values['mchid'] = $value;
     }
     /**
      * 获取微信支付分配的商户号的值
@@ -3353,7 +3353,7 @@ class WxSendPay extends WxPayDataBase
      **/
     public function GetMch_id()
     {
-        return $this->values['mch_id'];
+        return $this->values['mchid'];
     }
     /**
      * 判断微信支付分配的商户号是否存在
@@ -3361,7 +3361,7 @@ class WxSendPay extends WxPayDataBase
      **/
     public function IsMch_idSet()
     {
-        return array_key_exists('mch_id', $this->values);
+        return array_key_exists('mchid', $this->values);
     }
 
     /**
