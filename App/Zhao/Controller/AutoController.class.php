@@ -85,8 +85,8 @@ class AutoController extends Controller {
 //        echo $radius, $sigma;
 //        die();
         ini_set('memory_limit', '1000M');
-        $img = new \Think\Image(2);
-        $img->open(ROOT_PATH.'2.jpg')->thumb(400,800)->save(ROOT_PATH.'1.jpg');
+//        $img = new \Think\Image(2);
+//        $img->open(ROOT_PATH.'2.jpg')->thumb(400,800)->save(ROOT_PATH.'1.jpg');
         header('Content-type: image/jpeg');
 
 
