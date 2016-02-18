@@ -82,6 +82,8 @@ class AutoController extends Controller {
         set_time_limit(0);
         $radius = I('request.r', 80);
         $sigma = I('request.s', 8);
+        echo $radius, $sigma;
+        die();
         ini_set('memory_limit', '1000M');
         $img = new \Think\Image(2);
 //        $img->open(ROOT_PATH.'1.jpg')->thumb(300,1000)->save(ROOT_PATH.'2.jpg');
