@@ -85,12 +85,12 @@ class AutoController extends Controller {
 //        echo $radius, $sigma;
 //        die();
         ini_set('memory_limit', '1000M');
-//        $img = new \Think\Image(2);
-//        $img->open(ROOT_PATH.'1.jpg')->thumb(300,1000)->save(ROOT_PATH.'2.jpg');
+        $img = new \Think\Image(2);
+        $img->open(ROOT_PATH.'2.jpg')->thumb(500,1000)->save(ROOT_PATH.'1.jpg');
         header('Content-type: image/jpeg');
 
 
-        $image = new \Imagick(ROOT_PATH.'2.jpg');
+        $image = new \Imagick(ROOT_PATH.'1.jpg');
         $image->gaussianBlurImage($radius,$sigma);
 
         echo $image->getImageBlob();
