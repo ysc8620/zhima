@@ -81,7 +81,7 @@ class AutoController extends Controller {
     public function img(){
         set_time_limit(0);
         $radius = I('request.r', 80);
-        $sigma = I('request.s', 8);
+        $sigma = I('request.t', 8);
 //        echo $radius, $sigma;
 //        die();
         ini_set('memory_limit', '1000M');
