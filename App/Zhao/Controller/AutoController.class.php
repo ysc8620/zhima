@@ -80,14 +80,16 @@ class AutoController extends Controller {
 
     public function img(){
         set_time_limit(0);
+        $radius = I('request.r', 80);
+        $sigma = I('request.s', 8);
         ini_set('memory_limit', '1000M');
         $img = new \Think\Image(2);
-        $img->open(ROOT_PATH.'1.jpg')->thumb(300,1000)->save(ROOT_PATH.'2.jpg');
+//        $img->open(ROOT_PATH.'1.jpg')->thumb(300,1000)->save(ROOT_PATH.'2.jpg');
         header('Content-type: image/jpeg');
 
 
         $image = new \Imagick(ROOT_PATH.'2.jpg');
-        $image->gaussianBlurImage(80,8);
+        $image->gaussianBlurImage($radius,$sigma);
 
         echo $image->getImageBlob();
     }
@@ -145,7 +147,7 @@ class AutoController extends Controller {
         $data = array(
             'partner_trade_no' => get_order_sn(),
             're_user_name'=>'王苏蕴',
-            'openid' => 'oV3oMxP5wdTR8BpptzNq2tDdGtLk', 
+            'openid' => 'oV3oMxP5wdTR8BpptzNq2tDdGtLk',
             'amount' => 100,
             'desc'=>'测试企业付款接口'
         );
