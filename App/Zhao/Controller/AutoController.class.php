@@ -17,27 +17,36 @@ class AutoController extends Controller {
         $order_list = M('zhaopian_order')->where(array('state'=>2, 'is_send_zhaopian'=>0))->select();
 
         foreach($order_list as $order){
-            $hongbao_send = M('zhaopian_send')->where(array('id'=>$order['send_id']))->find();
-
+            $hongbao_send = M('zhaopian_pay')->where(array('id'=>$order['send_id']))->find();
+            $hongbao_user = M('user')->find($order['zhaopian_user_id']);
             if(!$hongbao_send){
+                $order_user = M('user')->find($order['user_id']);
+//                $bao = array(
+//                    'mch_billno' =>get_order_sn(),
+//                    'send_name' => '红包照片',
+//                    're_openid' =>$order['zhaopian_openid'],
+//                    'total_amount' => floor($order['amount'] * 0.98 * 100),
+//                    'wishing' => '恭喜您！你发布的照片有朋友购买了。',
+//                    'act_name'=> '红包照片',
+//                    'remark' => '红包照片',
+//                );
+
                 $bao = array(
-                    'mch_billno' =>get_order_sn(),
-                    'send_name' => '红包照片',
-                    're_openid' =>$order['zhaopian_openid'],
-                    'total_amount' => floor($order['amount'] * 0.98 * 100),
-                    'wishing' => '恭喜您！你发布的照片有朋友购买了。',
-                    'act_name'=> '红包照片',
-                    'remark' => '红包照片',
+                    'partner_trade_no' => get_order_sn(),
+                    're_user_name'=>$hongbao_user['name'],
+                    'openid' => $order['zhaopian_openid'],
+                    'amount' => floor($order['amount'] * 0.98 * 100),
+                    'desc'=>'恭喜您！您在照片刚刚"'.$order_user['name'].'"购买了'
                 );
                 $send = $bao;
                 $send['user_id'] = $order['zhaopian_user_id'];
                 $send['addtime'] = time();
-                $send['zhaopian_order_id'] = $order['id'];
+                $send['order_id'] = $order['id'];
 
-                $hongbao_id = M('zhaopian_send')->add($send);
+                $hongbao_id = M('zhaopian_pay')->add($send);
                 if($hongbao_id){
-                    M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('send_id'=>$hongbao_id, 'send_sn'=>$bao['mch_billno'], 'send_time'=>time()));
-                    $hongbao_send = M('zhaopian_send')->find($hongbao_id);
+                    M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('send_id'=>$hongbao_id, 'send_sn'=>$bao['partner_trade_no'], 'send_time'=>time()));
+                    $hongbao_send = M('zhaopian_pay')->find($hongbao_id);
                 }
             }
 
@@ -46,21 +55,29 @@ class AutoController extends Controller {
                 if($hongbao_send['state'] == 2){
                     continue;
                 }
+//                $bao = array(
+//                    'mch_billno' =>$hongbao_send['mch_billno'],
+//                    'send_name' => '红包照片',
+//                    're_openid' =>$order['zhaopian_openid'],
+//                    'total_amount' => floor($order['amount'] * 0.98 * 100),
+//                    'wishing' => '恭喜您！你发布的照片有朋友购买了。',
+//                    'act_name'=> '红包照片',
+//                    'remark' => '红包照片',
+//                );
+
                 $bao = array(
-                    'mch_billno' =>$hongbao_send['mch_billno'],
-                    'send_name' => '红包照片',
-                    're_openid' =>$order['zhaopian_openid'],
-                    'total_amount' => floor($order['amount'] * 0.98 * 100),
-                    'wishing' => '恭喜您！你发布的照片有朋友购买了。',
-                    'act_name'=> '红包照片',
-                    'remark' => '红包照片',
+                    'partner_trade_no' => $hongbao_send['partner_trade_no'],
+                    're_user_name'=>$hongbao_send['re_user_name'],
+                    'openid' => $order['zhaopian_openid'],
+                    'amount' => floor($order['amount'] * 0.98 * 100),
+                    'desc'=>'恭喜您！您在照片刚刚"'.$order_user['name'].'"购买了'
                 );
 
-                $data = sendHongBao($bao);
+                $data = sendPay($bao);
 
                 if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
                     M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('is_send_zhaopian'=>1));
-                    M('zhaopian_send')->where(array("id='{$hongbao_send['id']}'"))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
+                    M('zhaopian_pay')->where(array("id='{$hongbao_send['id']}'"))->save(array('state'=>2, 'payment_no'=>$data['payment_no']));
 
                   $log = "发送红包成功, 红包编号：{$order['id']},发送编号：{$hongbao_send['id']}";
                     f_log($log, ROOT_PATH.'Runtime/Logs/zhaopian.log');

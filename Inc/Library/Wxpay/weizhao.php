@@ -191,29 +191,38 @@ class PayNotifyCallBack extends WxPayNotify
                         'total_amount' =>$zhaopian['total_amount'] + $order['amount']
                     );
                     $zhaopian = M('zhaopian')->where("id='{$order['hongbao_id']}'")->save($data);
-
+                    $zhaopian_user = M('user')->find($zhaopian['user_id']);
                     // 自动发送红包
                     if(true){
+//                        $bao = array(
+//                            'mch_billno' =>get_order_sn('wz'),
+//                            'send_name' => '红包照片',
+//                            're_openid' =>$zhaopian['openid'],
+//                            'total_amount' => floor($order['amount'] * 0.98 * 100),
+//                            'wishing' => '恭喜您！您在照片刚刚"'.$user['name'].'"购买了',
+//                            'act_name'=> '红包照片',
+//                            'remark' => '红包照片',
+//                        );
+
                         $bao = array(
-                            'mch_billno' =>get_order_sn('wz'),
-                            'send_name' => '红包照片',
-                            're_openid' =>$zhaopian['openid'],
-                            'total_amount' => floor($order['amount'] * 0.98 * 100),
-                            'wishing' => '恭喜您！您在照片刚刚"'.$user['name'].'"购买了',
-                            'act_name'=> '红包照片',
-                            'remark' => '红包照片',
+                            'partner_trade_no' => get_order_sn(),
+                            're_user_name'=>$zhaopian_user['name'],
+                            'openid' => $zhaopian['openid'],
+                            'amount' => floor($order['amount'] * 0.98 * 100),
+                            'desc'=>'恭喜您！您在照片刚刚"'.$user['name'].'"购买了'
                         );
+
                         $send = $bao;
                         $send['user_id'] = $zhaopian['user_id'];
                         $send['addtime'] = time();
-                        $send['zhaopian_order_id'] = $order['id'];
-                        $hongbao_id = M('zhaopian_send')->add($send);
+                        $send['order_id'] = $order['id'];
+                        $hongbao_id = M('zhaopian_pay')->add($send);
                         if($hongbao_id){
-                            M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('send_id'=>$hongbao_id, 'send_sn'=>$bao['mch_billno'], 'send_time'=>time()));
-                            $data = sendHongBao($bao);
+                            M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('send_id'=>$hongbao_id, 'send_sn'=>$bao['partner_trade_no'], 'send_time'=>time()));
+                            $data = sendPay($bao);
                             if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
                                 M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('is_send_zhaopian'=>1));
-                                M('zhaopian_send')->where(array("id='$hongbao_id'"))->save(array('state'=>2, 'send_listid'=>$data['send_listid']));
+                                M('zhaopian_pay')->where(array("id='$hongbao_id'"))->save(array('state'=>2, 'payment_no'=>$data['payment_no']));
 
                                 $user_amount = number_format($order['amount'] * 0.98,2);
 $msg =  "你发布的照片有朋友购买了！
@@ -222,7 +231,7 @@ $msg =  "你发布的照片有朋友购买了！
 
 支付金额：￥{$order['amount']}元
 
-好友购买照片钱已经通过微信红包打给你，其中已扣除2%微信支付手续费，扣除后金额为{$user_amount}元";
+好友购买照片钱已经通过微信支付打给你，其中已扣除2%微信支付手续费，扣除后金额为{$user_amount}元";
 \Wechat\Wxapi::send_wxmsg($zhaopian['openid'],'红包照片状态提醒',U('/zhaopian/detail',array('id'=>$zhaopian['number_no']),true,true),$msg );
                             }else{
                                 M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>3));
