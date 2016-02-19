@@ -15,7 +15,7 @@ $db = new db();
 echo '1';
 do{
     $time = time() - 600;
-    $item = $db->get_row("SELECT * FROM zml_zhaopian WHERE is_create = 0 and create_time > $time LIMIT 1");
+    $item = $db->get_row("SELECT * FROM zml_zhaopian WHERE is_create = 0 and create_time < $time LIMIT 1");
     echo '1';
     if(empty($item)){
         break;
