@@ -8,18 +8,18 @@
  */
 set_time_limit(0);
 $root_path = realpath(dirname(dirname(__FILE__)));
-
+echo '1';
 include($root_path . '/auto/config.php');
-
+echo '1';
 $db = new db();
-
+echo '1';
 do{
     $time = time() - 600;
     $item = $db->get_row("SELECT * FROM zml_zhaopian WHERE is_create = 0 and create_time > $time LIMIT 1");
-
+    echo '1';
     if(empty($item)){
         break;
-    }
+    }echo '1';
     $db->query("UPDATE zml_zhaopian SET create_time='$time' WHERE id='{$item['id']}'");
     $path = $root_path . "/uploads/".$item['pic_url'];
     echo $path."\r\n";
