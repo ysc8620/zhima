@@ -75,12 +75,12 @@ class ZhaopianController extends BaseController {
                         $height = $width;
                     }
                     $img->crop($width, $height,$x,$y, 300, 300)->save($rootPath . $data['pic_url'] . '_thumb.jpg');
-                    $img->thumb(500, 1000)->save($rootPath . $data['pic_url'] . '_thumb1.jpg');
-
-
-                    $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
-
-                    $img2->open($rootPath . $data['pic_url'] . '_thumb1.jpg')->gaussianBlurImage(40,30)->save($rootPath . $data['pic_url'] . '_thumb2.jpg');
+//                    $img->thumb(500, 1000)->save($rootPath . $data['pic_url'] . '_thumb1.jpg');
+//
+//
+//                    $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
+//
+//                    $img2->open($rootPath . $data['pic_url'] . '_thumb1.jpg')->gaussianBlurImage(40,30)->save($rootPath . $data['pic_url'] . '_thumb2.jpg');
 
                 }
             }
@@ -188,17 +188,17 @@ class ZhaopianController extends BaseController {
         //
         $path = C('UPLOAD_PATH') .$this->zhaopian['pic_url'];
 
-        if(file_exists($path) && !file_exists($path."_thumb2.jpg")){
-            $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
-            $img->open($path);
-            $img->thumb(500, 1000)->save($path . '_thumb1.jpg');
-
-
-            $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
-
-            $img2->open($path . '_thumb1.jpg')->gaussianBlurImage(40,30)->save($path . '_thumb2.jpg');
-
-        }
+//        if(file_exists($path) && !file_exists($path."_thumb2.jpg")){
+//            $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
+//            $img->open($path);
+//            $img->thumb(500, 1000)->save($path . '_thumb1.jpg');
+//
+//
+//            $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
+//
+//            $img2->open($path . '_thumb1.jpg')->gaussianBlurImage(40,30)->save($path . '_thumb2.jpg');
+//
+//        }
 
 
         $this->zhaopian_user = M('user')->find($this->zhaopian['user_id']);
