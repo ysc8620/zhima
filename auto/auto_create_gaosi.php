@@ -38,6 +38,7 @@ do{
                 $height = $width;
             }
             $img->crop($width, $height,$x,$y, 300, 300)->save($path . '_thumb.jpg');
+        }
 
 
         if(!file_exists($path . '_thumb2.jpg')){
