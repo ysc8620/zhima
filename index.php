@@ -86,4 +86,6 @@ if(is_file(APP_PATH . 'Common/Conf/install.lock') == false){
 }
 require './Inc/ThinkPHP.php';
 
+\Think\App::run();
+
 // 亲^_^ 后面不需要任何代码了 就是如此简单
