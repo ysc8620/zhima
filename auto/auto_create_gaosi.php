@@ -24,7 +24,8 @@ do{
     echo $path."\r\n";
     if(file_exists($path)){
         if(!file_exists($path . '_thumb.jpg')){
-            $img = new Imagick($path);
+            $img = new \Think\Image(2);
+            $img->open($path);
 
             $width = $img->width();
             $height = $img->height();
@@ -36,18 +37,17 @@ do{
                 $y = floor(($height - $width)/2);
                 $height = $width;
             }
-            $img->crop($width, $height,$x,$y, 300, 300);
-            $img->save($path . '_thumb.jpg', null, 80,true);
-        }
+            $img->crop($width, $height,$x,$y, 300, 300)->save($path . '_thumb.jpg');
+
 
         if(!file_exists($path . '_thumb2.jpg')){
-            $img = new Imagick($path);
-            $img->thumb(500, 1000);
-            $img->save($path . '_thumb1.jpg', null, 80,true);
+            $img = new \Think\Image(2);
+            $img->open($path );
+            $img->thumb(500, 1000)->save($path . '_thumb1.jpg');
 
-            $img = new Imagick($path . '_thumb1.jpg');
-            $img->gaussianBlurImage(40,36);
-            $img->save($path . '_thumb2.jpg', null, 80,true);
+
+            $img = new \Think\Image(2);
+            $img->open($path . '_thumb1.jpg' )->gaussianBlurImage(40,36)->save($path . '_thumb2.jpg');
         }
     }
 
