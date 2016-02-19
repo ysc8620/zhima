@@ -19,7 +19,7 @@ do{
     if(empty($item)){
         break;
     }
-    M('zhaopian')->wherer(array('id'=>$item['id']))->save(array('create_time'=>$time));
+    M('zhaopian')->where(array('id'=>$item['id']))->save(array('create_time'=>$time));
     $path = $root_path . "/uploads/".$item['pic_url'];
     echo $path."\r\n";
     if(file_exists($path)){
@@ -51,5 +51,5 @@ do{
         }
     }
 
-    M('zhaopian')->wherer(array('id'=>$item['id']))->save(array('is_create'=>1));
+    M('zhaopian')->where(array('id'=>$item['id']))->save(array('is_create'=>1));
 }while(true);
