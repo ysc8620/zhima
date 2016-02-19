@@ -75,6 +75,8 @@ class ZhaopianController extends BaseController {
                         $height = $width;
                     }
                     $img->crop($width, $height,$x,$y, 300, 300)->save($rootPath . $data['pic_url'] . '_thumb.jpg');
+
+
 //                    $img->thumb(500, 1000)->save($rootPath . $data['pic_url'] . '_thumb1.jpg');
 //
 //
@@ -186,7 +188,7 @@ class ZhaopianController extends BaseController {
             $this->error('没找到红包照片详情', U('/zhao/notes'));
         }
         //
-        $path = C('UPLOAD_PATH') .$this->zhaopian['pic_url'];
+//        $path = C('UPLOAD_PATH') .$this->zhaopian['pic_url'];
 
 //        if(file_exists($path) && !file_exists($path."_thumb2.jpg")){
 //            $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
@@ -211,7 +213,7 @@ class ZhaopianController extends BaseController {
         $this->total_amount = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->sum('amount');
         $this->total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->count();
         $this->is_buy = $zhaopian_order ? true:false;
-//        $this->is_buy=true;
+        $this->is_buy=true;
         if(!$this->is_buy){
             $order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'],'user_id'=>$this->user_id, 'state'=>1))->find();
             if(!$order){

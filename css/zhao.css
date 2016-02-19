@@ -173,7 +173,7 @@ filter:alpha(opacity=80);
 .detail_info1 {filter:alpha(opacity=60);
     -moz-opacity:0.6;
     -khtml-opacity: 0.6;
-    opacity: 0.6;  background: #000; text-align:center; right:12px; padding:6px; position: absolute; top: 12px; left: 12px; z-index: 100;}
+    opacity: 0.6;  background: #000; text-align:center; right:2px; padding:6px; position: absolute; top: 12px; left: 2px; z-index: 100;}
 .detail_body1{ width:99%; text-align:center; margin:2px auto;}
 input.btn_cou, button.btn_cou{ border-radius: 50%; width: 80px!important; height:80px!important; background:#EB5151; color:#FEF05B; font-size:24px; font-weight:bold;}
 
