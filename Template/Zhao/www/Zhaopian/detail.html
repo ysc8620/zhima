@@ -75,7 +75,14 @@
 
 <include file="Public:foot" />
 <script type="text/javascript">
-    var height = $(window).height();
+
+    var hide_index = setTimeout(function(){$('.detail_info1').fadeOut('slow');}, 5000);
+    $('.own_block').click(function(){
+        clearTimeout(hide_index);
+        $('.detail_info1').fadeIn('slow');
+        hide_index = setTimeout(function(){$('.detail_info1').fadeOut('slow');}, 5000);
+    });
+    var height = $(document).height();
     $('.preview').css('height', height);
 
     $('.detail_body1').css('height', height);

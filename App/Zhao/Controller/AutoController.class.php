@@ -42,6 +42,7 @@ class AutoController extends Controller {
                 $send['user_id'] = $order['zhaopian_user_id'];
                 $send['addtime'] = time();
                 $send['order_id'] = $order['id'];
+                $send['zhaopian_id'] = $order['zhaopian_id'];
 
                 $hongbao_id = M('zhaopian_pay')->add($send);
                 if($hongbao_id){
