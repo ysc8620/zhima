@@ -46,9 +46,11 @@ do{
             $img->open($path );
             $img->thumb(500, 1000)->save($path . '_thumb1.jpg');
 
+            if(file_exists($path . '_thumb1.jpg')){
+                $img = new \Think\Image(2);
+                $img->open($path . '_thumb1.jpg' )->gaussianBlurImage(40,36)->save($path . '_thumb2.jpg');
+            }
 
-            $img = new \Think\Image(2);
-            $img->open($path . '_thumb1.jpg' )->gaussianBlurImage(40,36)->save($path . '_thumb2.jpg');
         }
     }
 
