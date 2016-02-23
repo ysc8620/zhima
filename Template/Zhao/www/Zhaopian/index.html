@@ -27,7 +27,7 @@
 		</ul>
         <ul class="mb10 list_img_block hide">
 
-            <div class="list_img_add fl select_pic"><img src="/images/plus-icon.png" style="height: 90px; padding-top: 4px" /> </div>
+            <div class="list_img_add fl select_pic"><img src="/images/plus-icon.png" style="height: 80px; padding-top: 4px" /> </div>
             <div class="cl"></div>
         </ul>
 		<ul>
@@ -99,6 +99,7 @@
                     jQuery(function(){
                         $('.list_img_block').removeClass('hide');
                         $.each( res.localIds, function(i, n){
+                            alert('.list_img img[src="'+n+'"]')
                             if($('.list_img img[src="'+n+'"]').size()>0){
                                 return;
                             }
