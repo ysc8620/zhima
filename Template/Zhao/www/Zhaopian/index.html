@@ -117,6 +117,7 @@
             }
 
             images.serverId = [];
+            alert(images.localId)
             $.each(images.localId, function(i,n) {
                 wx.uploadImage({
                     localId: n,
