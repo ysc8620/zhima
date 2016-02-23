@@ -13,6 +13,7 @@ class PictureController extends BaseController {
         $this->display();
     }
 
+
     public function up(){
 
     }
