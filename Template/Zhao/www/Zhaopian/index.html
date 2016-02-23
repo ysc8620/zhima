@@ -125,6 +125,7 @@ alert('---')
                         localId: n,
                         success: function (res) {
                             images.serverId.push(res.serverId);
+                            alert(res.serverId)
                         },
                         fail: function (res) {
                             layer.msg(JSON.stringify(res), function(){});
