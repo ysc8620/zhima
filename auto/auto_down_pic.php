@@ -32,7 +32,7 @@ do{
     }else{
         $pic_url = $item['pic_url'];
     }
-    M('zhaopian_pic')->where(array('id'=>$item['id'], 'down_time'=>time()))->save($data);
+    M('zhaopian_pic')->where(array('id'=>$item['id']))->save($data);
 
     echo $pic_url."\r\n";
     if(!file_exists($pic_url)){
