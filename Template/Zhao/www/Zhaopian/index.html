@@ -109,17 +109,18 @@
         });
 
         $('.btn').click(function() {
-
+alert('---')
             if (images.localId.length == 0) {
                 layer.msg('请先使用选择图片按钮', function(){});
                 return;
 
             }
-
+            alert('---')
             images.serverId = [];
-
+            alert('---')
             jQuery(function(){
                 $.each(images.localId, function(i,n) {
+                    alert('---')
                     wx.uploadImage({
                         localId: n,
                         success: function (res) {
