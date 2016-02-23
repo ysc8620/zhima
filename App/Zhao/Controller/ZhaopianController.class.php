@@ -28,6 +28,7 @@ class ZhaopianController extends BaseController {
             $is_rand = I('post.is_rand',0,'intval');
             $amount = I('post.amount',1.05,'floatval');
             $remark = I('post.remark','','htmlspecialchars');
+            $media_ids = I('post.media_ids', '', 'strval');
             if(!$is_rand){
                 if($amount < 1.05 || $amount > 200){
                     $this->error('价格在1.05-200之间.',U('/zhao/zhaopian'));
@@ -35,62 +36,62 @@ class ZhaopianController extends BaseController {
                 }
             }
 
-            if(empty($_FILES['imgOne'])){
+            if(empty($media_ids)){
                 $this->error('请选择要发布的红包照片.',U('/zhao/zhaopian'));
                 return false;
             }
 
-            if($_FILES['imgOne']){
-                $rootPath=C('UPLOAD_PATH');
-                $config = array(
-                    //'maxSize'    =    3145728,
-                    'rootPath'   =>    $rootPath,
-                    'savePath'   =>    $this->user_id . '/',
-                    'saveName'   =>    'zp_'.time().rand(111,999),
-                    'exts'       =>   explode(',',C('UPLOAD_TYPE')),
-                    'autoSub'    =>    true,
-                    'subName'    =>    array('date','Ymd'),
-                );
-
-                $type 	= 'Local';
-                $upload = new \Think\Upload($config,$type);// 实例化上传类
-                $info   =   $upload->upload();
-
-                if(!$info) {
-                    $this->error($upload->getError(),'') ;
-                }else{
-                    // 上传成功
-                    $data['pic_url'] = $info['imgOne']['savepath'].$info['imgOne']['savename'];
-
-                    $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
-                    $img->open($rootPath . $data['pic_url']);
-                    $width = $img->width();
-                    $height = $img->height();
-                    $x = $y = 0;
-                    if($width > $height){
-                        $x = floor(($width - $height)/2);
-                        $width = $height;
-                    }elseif($height> $width){
-                        $y = floor(($height - $width)/2);
-                        $height = $width;
-                    }
-                    $img->crop($width, $height,$x,$y, 300, 300)->save($rootPath . $data['pic_url'] . '_thumb.jpg','jpg');
-
-
-//                    $img->thumb(500, 1000)->save($rootPath . $data['pic_url'] . '_thumb1.jpg');
+//            if($_FILES['imgOne']){
+//                $rootPath=C('UPLOAD_PATH');
+//                $config = array(
+//                    //'maxSize'    =    3145728,
+//                    'rootPath'   =>    $rootPath,
+//                    'savePath'   =>    $this->user_id . '/',
+//                    'saveName'   =>    'zp_'.time().rand(111,999),
+//                    'exts'       =>   explode(',',C('UPLOAD_TYPE')),
+//                    'autoSub'    =>    true,
+//                    'subName'    =>    array('date','Ymd'),
+//                );
+//
+//                $type 	= 'Local';
+//                $upload = new \Think\Upload($config,$type);// 实例化上传类
+//                $info   =   $upload->upload();
+//
+//                if(!$info) {
+//                    $this->error($upload->getError(),'') ;
+//                }else{
+//                    // 上传成功
+//                    $data['pic_url'] = $info['imgOne']['savepath'].$info['imgOne']['savename'];
+//
+//                    $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
+//                    $img->open($rootPath . $data['pic_url']);
+//                    $width = $img->width();
+//                    $height = $img->height();
+//                    $x = $y = 0;
+//                    if($width > $height){
+//                        $x = floor(($width - $height)/2);
+//                        $width = $height;
+//                    }elseif($height> $width){
+//                        $y = floor(($height - $width)/2);
+//                        $height = $width;
+//                    }
+//                    $img->crop($width, $height,$x,$y, 300, 300)->save($rootPath . $data['pic_url'] . '_thumb.jpg','jpg');
 //
 //
-//                    $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
+////                    $img->thumb(500, 1000)->save($rootPath . $data['pic_url'] . '_thumb1.jpg');
+////
+////
+////                    $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
+////
+////                    $img2->open($rootPath . $data['pic_url'] . '_thumb1.jpg')->gaussianBlurImage(40,30)->save($rootPath . $data['pic_url'] . '_thumb2.jpg');
 //
-//                    $img2->open($rootPath . $data['pic_url'] . '_thumb1.jpg')->gaussianBlurImage(40,30)->save($rootPath . $data['pic_url'] . '_thumb2.jpg');
-
-                }
-            }
-
-            if(empty($data['pic_url'])){
-                $this->error('请选择要发布的红包照片.',U('/zhao/zhaopian'));
-                return false;
-            }
+//                }
+//            }
+//
+//            if(empty($data['pic_url'])){
+//                $this->error('请选择要发布的红包照片.',U('/zhao/zhaopian'));
+//                return false;
+//            }
 
             // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
             $user = M('user')->find($this->user_id);
@@ -111,6 +112,22 @@ class ZhaopianController extends BaseController {
             $data['openid'] = $user['openid'];
             $re = M('zhaopian')->add($data);
             if($re){
+                $media_ids = trim($media_ids, ',');
+                $media_ids = explode(',', $media_ids);
+                $bool = true;
+                foreach($media_ids as $id){
+                    $pic = array(
+                        'zhaopian_id'=>$re,
+                        'user_id'=> $this->user_id,
+                        'media_id'=>$id,
+                        'addtime'=>time()
+                    );
+                    if($bool){
+                        $pic['is_dafault'] = 1;
+                    }
+                    M('zhaopian_pic')->add($pic);
+                }
+
                 redirect(U('/zhao/zhaopian/detail', array('id'=>$data['number_no'])));
                 exit();
             }else{

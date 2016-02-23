@@ -17,7 +17,7 @@
 </style>
 <div class="container">
 	<div class="from">
-        <form action="{:U('/zhao/zhaopian/add')}" method="post" enctype="multipart/form-data" name="theForm" id="theForm" onSubmit="return checkZhaopian(this)">
+        <form action="{:U('/zhao/zhaopian/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkZhaopian(this)">
             <input type="hidden" name="sign" value="{$sign}" />
             <input type="hidden" name="is_rand" value="1" />
             <input type="hidden" name="media_ids" value="" />
@@ -112,9 +112,11 @@
                 localId: n,
                 success: function (res) {
                     images.serverId.push(res.serverId);
-                    alert(res.serverId);
+                    $('input[name="media_ids"]').val($('input[name="media_ids"]').val()+','+res.serverId);
                     if(images.localId.length>0){
                         upload(images.localId.pop())
+                    }else{
+                        $('form[name="theForm"]').submit();
                     }
                 },
                 fail: function (res) {
@@ -152,13 +154,13 @@
 
     function checkZhsssaopian(){
 
-        return false;
+//        return false;
         try{
-//        var file_val = $('input[name="imgOne"]').val();
-//        if(file_val.length < 1){
-//            layer.msg('请选择要上传的照片', function(){});
-//            return false;
-//        }
+        var file_val = $('input[name="media_ids"]').val();
+        if(file_val.length < 1){
+            layer.msg('请选择要上传的照片', function(){});
+            return false;
+        }
 
         var remark = $('input[name="remark"]').val();
         if(remark.length < 1){
