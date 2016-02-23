@@ -107,7 +107,7 @@ class AutoController extends Controller {
         header('Content-type: image/jpeg');
         $path = ROOT_PATH . '/uploads/10010/20160219/zp_1455874253897.gif';
         $img = new \Think\Image(2);
-        $img->open($path)->save(ROOT_PATH.'gif.jpg','jpg',90);
+        $img->open($path)->save(ROOT_PATH.'gif.jpg','jpg');
 
     }
 

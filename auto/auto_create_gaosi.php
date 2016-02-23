@@ -37,7 +37,7 @@ do{
                 $y = floor(($height - $width)/2);
                 $height = $width;
             }
-            $img->crop($width, $height,$x,$y, 300, 300)->save($path . '_thumb.jpg');
+            $img->crop($width, $height,$x,$y, 300, 300)->save($path . '_thumb.jpg','jpg');
         }
 
 
@@ -48,7 +48,7 @@ do{
 
             if(file_exists($path . '_thumb1.jpg')){
                 $img = new \Think\Image(2);
-                $img->open($path . '_thumb1.jpg' )->gaussianBlurImage(40,36)->save($path . '_thumb2.jpg');
+                $img->open($path . '_thumb1.jpg' )->gaussianBlurImage(40,36)->save($path . '_thumb2.jpg','jpg');
             }
 
         }
