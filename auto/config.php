@@ -13,6 +13,8 @@ define('APP_DEBUG',True);
 // 定义应用目录
 define('APP_PATH',$root_path .'/App/');
 
+define('ROOT_PATH', dirname(dirname(__FILE__)).'/');
+
 // 定义模版目录
 define('TMPL_PATH',$root_path .'/Template/');
 define('RUNTIME_PATH',$root_path .'/Runtime/');

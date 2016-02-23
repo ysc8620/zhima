@@ -291,4 +291,37 @@ class Wxapi
         curl_close ($ch);
         return $temp;
     }
+
+    static public function down_media($media_id, $pic_url){
+        self::init();
+        $ACCESS_TOKEN = self::getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/media/get?access_token=$ACCESS_TOKEN&media_id=$media_id";
+        $data = self::httpGet($url);
+
+    }
+
+    static public function downloadWeixinFile($url)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_NOBODY, 0);    //只取body头
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $package = curl_exec($ch);
+        $httpinfo = curl_getinfo($ch);
+        curl_close($ch);
+        $imageAll = array_merge(array('header' => $httpinfo), array('body' => $package));
+        return $imageAll;
+    }
+
+    static public function saveWeixinFile($filename, $filecontent)
+    {
+        $local_file = fopen($filename, 'w');
+        if (false !== $local_file){
+            if (false !== fwrite($local_file, $filecontent)) {
+                fclose($local_file);
+            }
+        }
+    }
 }
