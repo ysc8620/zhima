@@ -119,6 +119,7 @@
             images.serverId = [];
 
             $.each(images.localId, function(i,n) {
+                alert(i+'-'+n);
                 wx.uploadImage({
                     localId: n,
                     success: function (res) {
@@ -130,7 +131,7 @@
                     }
                 });
             });
-            
+
         });
 
 
