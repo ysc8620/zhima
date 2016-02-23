@@ -117,20 +117,20 @@
             }
 
             images.serverId = [];
-            alert(images.localId)
+
             $.each(images.localId, function(i,n) {
                 wx.uploadImage({
                     localId: n,
                     success: function (res) {
                         images.serverId.push(res.serverId);
-                        //alert(res.serverId)
+                        alert(res.serverId)
                     },
                     fail: function (res) {
                         layer.msg(JSON.stringify(res), function(){});
                     }
                 });
             });
-            alert(images.serverId.length)
+            
         });
 
 
