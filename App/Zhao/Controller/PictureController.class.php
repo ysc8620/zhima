@@ -7,12 +7,12 @@
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
 namespace Zhao\Controller;
-use Think\Controller;
 class PictureController extends BaseController {
     public function index(){
         $this->display();
     }
     public function bak(){
+        echo '-';
         $this->display();
     }
 
