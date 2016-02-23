@@ -73,6 +73,10 @@ class Wx
 //            }else{
 //                echo "Input something...";
 //            }
+            $event = $postObj->Event;
+            $msgType = $postObj->MsgType;
+            //f_log("date:".date("Y-m-d H:i:s"), dirname(__FILE__).'/test.log');
+            f_log("from".$fromUsername."=event={$event}=msgtype=$msgType", dirname(__FILE__).'/test.log');
             // 事件消息
             if ($msgType == 'event') {
                 $event = $postObj->Event;
