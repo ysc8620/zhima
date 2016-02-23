@@ -137,7 +137,7 @@ class AutoController extends Controller {
 //                    $height = $width;
 //                }
 //                $img->crop($width, $height,$x,$y, 300, 300)->save($pic_url . '_thumb.jpg');
-                $img->thumb(500, 1000)->save($pic_url . '_thumb1.jpg');
+                $img->thumb(500, 1000)->save($pic_url . '_thumb1.jpg','jpg');
                 $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
 
                 $img2->open($pic_url . '_thumb1.jpg')->gaussianBlurImage(90,9)->save($pic_url . '_thumb2.jpg');
