@@ -24,7 +24,7 @@ do{
     );
 
     if(!$item['pic_url']){
-        $pic_url = "/uploads/".$item['user_id'].'/'.date("Ymd").'zp_'.time().rand(111,999).'.jpg';
+        $pic_url = "/uploads/".$item['user_id'].'/'.date("Ymd").'/zp_'.time().rand(111,999).'.jpg';
         if(!file_exists(dirname($root_path . $pic_url))){
             mkdir(dirname($root_path . $pic_url), 0777, true);
         }
@@ -36,7 +36,7 @@ do{
 
     echo $pic_url."\r\n";
     if(!file_exists($pic_url)){
-        $ds = \Wechat\Wxapi::downloadWeixinFile($media_id);
+        $ds = \Wechat\Wxapi::downloadWeixinFile($item['media_id']);
         \Wechat\Wxapi::saveWeixinFile($root_path . $pic_url,$ds['body']);
     }
 
