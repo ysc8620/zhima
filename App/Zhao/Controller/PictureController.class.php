@@ -12,7 +12,9 @@ class PictureController extends BaseController {
     public function index(){
         $this->display();
     }
-
+    public function bak(){
+        $this->display();
+    }
 
     public function up(){
 
