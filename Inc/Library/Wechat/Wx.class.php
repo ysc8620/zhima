@@ -76,7 +76,7 @@ class Wx
             $event = $postObj->Event;
             $msgType = $postObj->MsgType;
             //f_log("date:".date("Y-m-d H:i:s"), dirname(__FILE__).'/test.log');
-            f_log("from".$fromUsername."=event={$event}=msgtype=$msgType", dirname(__FILE__).'/test.log');
+            //f_log("from".$fromUsername."=event={$event}=msgtype=$msgType", dirname(__FILE__).'/test.log');
             // 事件消息
             if ($msgType == 'event') {
                 $event = $postObj->Event;
@@ -85,25 +85,28 @@ class Wx
                 // 用户关注
                 if($event == 'subscribe'){
                     $user = M('user')->where("openid='$fromUsername'")->find();
-                    if(! $user ){
-                        M('user')->add(
-                            array(
-                                'openid' => $fromUsername,
-                                'create_time' => time(),
-                                'subscribe' => 1,
-                                'subscribe_time'=>time()
-                            )
-                        );
-                    }else{
-                        M('user')->where("uin='{$user['uin']}'")->save(
-                            array(
-                                'openid' => $fromUsername,
-                                'create_time' => time(),
-                                'subscribe' => 1,
-                                'subscribe_time'=>time()
-                            )
-                        );
+                    if($fromUsername){
+                        if(! $user ){
+                            M('user')->add(
+                                array(
+                                    'openid' => $fromUsername,
+                                    'create_time' => time(),
+                                    'subscribe' => 1,
+                                    'subscribe_time'=>time()
+                                )
+                            );
+                        }else{
+                            M('user')->where("uin='{$user['uin']}'")->save(
+                                array(
+                                    'openid' => $fromUsername,
+                                    'create_time' => time(),
+                                    'subscribe' => 1,
+                                    'subscribe_time'=>time()
+                                )
+                            );
+                        }
                     }
+
                     $weixin = F('weixin','',CONF_PATH);
                     $contentStr = htmlspecialchars_decode($weixin['weixin_regMsg']);
                     if($contentStr){
