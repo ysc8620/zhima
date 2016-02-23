@@ -117,21 +117,27 @@
             }
 
             images.serverId = [];
-            jQuery(function(){
-            $.each(images.localId, function(i,n) {
-                alert(i+'-'+n);
+          //  jQuery(function(){
+           // $.each(images.localId, function(i,n) {
+            id = images.localId.pop();
+               // alert(i+'-'+n);
+            function upload(id){
                 wx.uploadImage({
                     localId: n,
                     success: function (res) {
                         images.serverId.push(res.serverId);
-                        alert(res.serverId)
+                        alert(res.serverId);
+                        if(images.localId.length>0){
+                            upload(images.localId.pop())
+                        }
                     },
                     fail: function (res) {
                         layer.msg(JSON.stringify(res), function(){});
                     }
                 });
-            });
-            });
+            }
+           // });
+           // });
         });
 
 
