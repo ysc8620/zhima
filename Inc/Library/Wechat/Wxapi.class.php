@@ -292,16 +292,14 @@ class Wxapi
         return $temp;
     }
 
-    static public function down_media($media_id, $pic_url){
+
+
+    static public function downloadWeixinFile($media_id)
+    {
         self::init();
         $ACCESS_TOKEN = self::getAccessToken();
         $url = "https://api.weixin.qq.com/cgi-bin/media/get?access_token=$ACCESS_TOKEN&media_id=$media_id";
-        $data = self::httpGet($url);
-
-    }
-
-    static public function downloadWeixinFile($url)
-    {
+        //https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID"
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_NOBODY, 0);    //只取body头
