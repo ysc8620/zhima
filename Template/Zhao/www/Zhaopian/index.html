@@ -20,6 +20,7 @@
         <form action="{:U('/zhao/zhaopian/add')}" method="post" enctype="multipart/form-data" name="theForm" id="theForm" onSubmit="return checkZhaopian(this)">
             <input type="hidden" name="sign" value="{$sign}" />
             <input type="hidden" name="is_rand" value="1" />
+            <input type="hidden" name="media_ids" value="" />
 		    <ul>
 			<div class="row select_pic" style="height: 240px; text-align: center; background: url(/images/bg.png) center center no-repeat #161616;">
                 <img id="preview" name="preview" src="/images/touming.png" style="max-width:100%; max-height:100%; display: block; margin: 0 auto;" />
@@ -99,10 +100,6 @@
                     jQuery(function(){
                         $('.list_img_block').removeClass('hide');
                         $.each( res.localIds, function(i, n){
-                            alert('.list_img img[src="'+n+'"]')
-                            if($('.list_img img[src="'+n+'"]').size()>0){
-                                return;
-                            }
                             $(".list_img_add").before('<div class="list_img fl"> <img src="'+n+'" /></div>');
                         });
 
@@ -113,7 +110,7 @@
 
 
 
-        document.querySelector('#uploadImage').onclick = function () {
+        function uploadpic() {
 
             if (images.localId.length == 0) {
                 layer.msg('请先使用选择图片按钮', function(){});
@@ -129,17 +126,19 @@
                         localId: n,
                         success: function (res) {
                             images.serverId.push(res.serverId);
-
                         },
-
                         fail: function (res) {
                             layer.msg(JSON.stringify(res), function(){});
                         }
-
                     });
-
                 });
-
+                ids = '';
+                for(id in images.serverId){
+                    ids += id+",";
+                }
+                $('input[name="media_ids"]').val(ids);
+                alert(ids);
+                
             });
 
         };
@@ -184,8 +183,11 @@
         }
         }catch (e){
             layer.msg('错误:'+ e.message, function(){});
-            
         }
+
+        uploadpic();
+
+
         return true;
     }
 
