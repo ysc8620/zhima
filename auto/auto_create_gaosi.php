@@ -44,7 +44,7 @@ do{
         if(!file_exists($path . '_thumb2.jpg')){
             $img = new \Think\Image(2);
             $img->open($path );
-            $img->thumb(500, 1000)->save($path . '_thumb1.jpg');
+            $img->thumb(500, 1000)->save($path . '_thumb1.jpg','jpg');
 
             if(file_exists($path . '_thumb1.jpg')){
                 $img = new \Think\Image(2);
