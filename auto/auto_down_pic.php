@@ -36,7 +36,9 @@ do{
 
     echo $pic_url."\r\n";
     if(!file_exists($pic_url)){
+        echo $item['media_id']."\r\n";
         $ds = \Wechat\Wxapi::downloadWeixinFile($item['media_id']);
+        print_r($ds);
         \Wechat\Wxapi::saveWeixinFile($root_path . $pic_url,$ds['body']);
     }
 
