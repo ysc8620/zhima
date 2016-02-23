@@ -92,7 +92,7 @@
             serverId: []
         };
 
-        document.querySelector('.select_pic').onclick = function () {
+        $('.select_pic').click(function () {
             wx.chooseImage({
                 success: function (res) {
                     images.localId = res.localIds;
@@ -102,12 +102,9 @@
                         });
 
                     });
-
                 }
-
             });
-
-        };
+        });
 
 
 
