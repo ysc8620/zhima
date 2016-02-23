@@ -88,7 +88,7 @@ class Imagick{
         //保存图像
         $imgname = realpath(dirname($imgname)) . '/' . basename($imgname); //强制绝对路径
         if ('gif' == $type) {
-            $this->img->writeImages($imgname, true);
+            $this->img->writeImages($imgname, false);
         } else {
             $this->img->writeImage($imgname);
         }
