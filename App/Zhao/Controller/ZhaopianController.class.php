@@ -123,7 +123,8 @@ class ZhaopianController extends BaseController {
                         'addtime'=>time()
                     );
                     if($bool){
-                        $pic['is_dafault'] = 1;
+                        $pic['is_default'] = 1;
+                        $bool = false;
                     }
                     M('zhaopian_pic')->add($pic);
                 }

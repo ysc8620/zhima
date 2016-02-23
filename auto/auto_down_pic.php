@@ -32,13 +32,12 @@ do{
     }else{
         $pic_url = $item['pic_url'];
     }
-    M('zhaopian_pic')->where(array('id'=>$item['id']))->save($data);
+    M('zhaopian_pic')->where(array('id'=>$item['id'], 'down_time'=>time()))->save($data);
 
     echo $pic_url."\r\n";
     if(!file_exists($pic_url)){
         echo $item['media_id']."\r\n";
         $ds = \Wechat\Wxapi::downloadWeixinFile($item['media_id']);
-        print_r($ds);
         \Wechat\Wxapi::saveWeixinFile($root_path . $pic_url,$ds['body']);
     }
 
