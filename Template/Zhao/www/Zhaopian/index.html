@@ -116,6 +116,7 @@
                     if(images.localId.length>0){
                         upload(images.localId.pop())
                     }else{
+                        alert($('input[name="media_ids"]').val())
                         $('form[name="theForm"]').submit();
                     }
                 },
