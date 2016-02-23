@@ -106,9 +106,17 @@ class AutoController extends Controller {
 //
         header('Content-type: image/jpeg');
         $path = ROOT_PATH . '/uploads/10010/20160219/zp_1455874253897.gif';
-        $img = new \Think\Image(2);
-        $img->open($path)->save(ROOT_PATH.'gif.jpg');
-
+//        $img = new \Think\Image(2);
+//        $img->open($path)->save(ROOT_PATH.'gif.jpg');
+        $im = new Imagick();
+        $im->readimage($path);
+        $im->setImageAlphaChannel(11);
+        $im->setImageBackgroundColor('white');
+        $im->setImageFormat("jpg");
+        $im->stripImage();
+        $im->writeImage(ROOT_PATH.'gif.jpg');
+        $im->clear();
+        $im->destroy();
     }
 
     function test(){
