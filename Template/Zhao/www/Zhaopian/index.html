@@ -97,10 +97,11 @@
             wx.chooseImage({
                 success: function (res) {
                     images.localId = res.localIds;
+                    alert('xxx'+images.localId.length);
                     jQuery(function(){
                         $('.list_img_block').removeClass('hide');
                         $.each( res.localIds, function(i, n){
-                            alert('xxx');
+
                             $(".list_img_add").before('<div class="list_img fl"> <img src="'+n+'" /></div>');
                         });
 
