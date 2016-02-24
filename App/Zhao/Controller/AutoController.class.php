@@ -126,7 +126,7 @@ class AutoController extends Controller {
 
         $this->jsApiParameters = json_decode($jsApiParameters);
 
-
+        echo $this->jsApiParameters."===";
         $this->display();
     }
 
