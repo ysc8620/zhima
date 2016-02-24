@@ -22,7 +22,7 @@ do{
     M('zhaopian')->where(array('id'=>$item['id']))->save(array('create_time'=>$time));
     $path = $root_path . "/uploads/".$item['pic_url'];
     echo $path."\r\n";
-    if(file_exists($path)){
+    if(file_exists($path) && is_file($path)){
         if(!file_exists($path . '_thumb.jpg')){
             $img = new \Think\Image(2);
             $img->open($path);

@@ -106,14 +106,15 @@ class ZhaopianController extends BaseController {
                 $data['min_amount'] = $amount;
                 $data['max_amount'] = 200;
             }
-
+            $media_ids = trim($media_ids, ',');
+            $media_ids = explode(',', $media_ids);
+            $data['total_pic'] = count($media_ids);
             $data['addtime'] = time();
             $data['state'] = 1;
             $data['openid'] = $user['openid'];
             $re = M('zhaopian')->add($data);
             if($re){
-                $media_ids = trim($media_ids, ',');
-                $media_ids = explode(',', $media_ids);
+
                 $bool = true;
                 foreach($media_ids as $id){
                     $pic = array(
@@ -127,6 +128,7 @@ class ZhaopianController extends BaseController {
                         $bool = false;
                     }
                     M('zhaopian_pic')->add($pic);
+
                 }
 
                 redirect(U('/zhao/zhaopian/detail', array('id'=>$data['number_no'])));
