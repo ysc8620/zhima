@@ -95,7 +95,7 @@ input, button{ border:none; font-size: 14px; background:#161616; text-align:left
     position: absolute;
 	width:18px;
 	}
-.btn{ background:#161616; border:#4a4a4a 1px solid; -webkit-border-radius:3px;border-radius:3px; font-size:16px; height:58px; color:#aa6c08; width:100%; text-align:center; margin:0 auto;}
+.btn{ background:#161616; border:#4a4a4a 1px solid; -webkit-border-radius:3px;border-radius:3px; font-size:18px; height:58px; color:#aa6c08; width:100%; text-align:center; margin:0 auto;}
 .from div.tit{ line-height:20px; text-align:center; font-size:14px; color:#747474; margin:12px auto;}
 .from div.tit .amount{ font-size:24px;}
 .from div.tit .amount_remark{ color:#747474; font-size:16px;}
