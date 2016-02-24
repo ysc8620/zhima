@@ -112,6 +112,17 @@ class AutoController extends Controller {
     }
 
     function pay(){
+        $data['body'] = "红包照片";
+        $data['attach'] = "红包照片";
+        $data['order_sn'] = get_order_sn();
+        $data['total_fee'] = 100;
+        $data['time_start'] = date('YmdHis');
+        $data['time_expire'] =  date("YmdHis", time() + 600);
+        $data['goods_tag'] = "WXG";
+        // $openid = ;//session('openid')?session('openid'):cookie('openid');
+        $data['openid'] = cookie('openid');
+
+        $this->jsApiParameters = jsapipay($data, true);
 
         $this->display();
     }
