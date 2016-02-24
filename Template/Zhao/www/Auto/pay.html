@@ -1,13 +1,12 @@
 <include file="Public:header" />
 
-<div class="container">
-</div>
+<div onclick="callpay()" style="line-height: 36px; font-size: 36px;">购买</div>
 
 <include file="Public:foot" />
 <script type="text/javascript">
 
     //调用微信JS api 支付
-    function jsApiCall(data)
+    function jsApiCall()
     {
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
@@ -55,6 +54,6 @@
         }
     }
 </script>
-<div onclick="jsApiCall()" style="line-height: 36px; font-size: 36px;">购买</div>
+
 </body>
 </html>
