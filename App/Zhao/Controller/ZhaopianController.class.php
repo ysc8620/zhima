@@ -127,9 +127,45 @@ class ZhaopianController extends BaseController {
                         $pic['is_default'] = 1;
                         $bool = false;
                     }
-                    M('zhaopian_pic')->add($pic);
+                    $pic_id = M('zhaopian_pic')->add($pic);
+                    ///////////////////////////////////////////
+                    $pic_url = $this->user_id.'/'.date("Ymd").'/zp_'.time().rand(111,999).'.jpg';
+                    $pic_path = ROOT_PATH ."/uploads/".   $pic_url;
+                    if(!file_exists(dirname($pic_path))){
+                        mkdir(dirname($pic_path), 0777, true);
+                    }
+
+
+                   // echo $pic_url."\r\n";
+                    if(!file_exists($pic_path)){
+//                        echo $item['media_id']."\r\n";
+                        $ds = \Wechat\Wxapi::downloadWeixinFile($id);
+                        \Wechat\Wxapi::saveWeixinFile($pic_path,$ds['body']);
+                    }
+
+                    if($pic['is_default']){
+                        M('zhaopian')->where(array('id'=>$re))->save(array('pic_url'=>$pic_url));
+                        if(file_exists($pic_path)){
+                            $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
+                            $img->open($pic_path);
+                            $width = $img->width();
+                            $height = $img->height();
+                            $x = $y = 0;
+                            if($width > $height){
+                                $x = floor(($width - $height)/2);
+                                $width = $height;
+                            }elseif($height> $width){
+                                $y = floor(($height - $width)/2);
+                                $height = $width;
+                            }
+                            $img->crop($width, $height,$x,$y, 300, 300)->save($pic_path . '_thumb.jpg','jpg');
+                        }
+                    }
+                    M('zhaopian_pic')->where(array('id'=>$pic_id))->save(array('state'=>1));
+                    ///////////////////////////////////////////
 
                 }
+
 
                 redirect(U('/zhao/zhaopian/detail', array('id'=>$data['number_no'])));
                 exit();

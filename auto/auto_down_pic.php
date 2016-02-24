@@ -45,10 +45,8 @@ do{
     }
 
     if($item['is_default']){
-
         M('zhaopian')->where(array('id'=>$item['zhaopian_id']))->save(array('pic_url'=>$pic_url));
         if(file_exists($pic_path)){
-
             $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
             $img->open($pic_path);
             $width = $img->width();
