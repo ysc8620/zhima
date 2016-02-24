@@ -126,8 +126,11 @@ class ZhaopianController extends BaseController {
                     if($bool){
                         $pic['is_default'] = 1;
                         $bool = false;
+                    }else{
+                        $pic['is_default'] = 0;
                     }
                     $pic_id = M('zhaopian_pic')->add($pic);
+                    
                     ///////////////////////////////////////////
                     $pic_url = $this->user_id.'/'.date("Ymd").'/zp_'.time().rand(111,999).'.jpg';
                     $pic_path = ROOT_PATH ."/uploads/".   $pic_url;
