@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="zh-CN" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
 <meta name="Generator" content="hongbaoos v1.0" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -27,7 +28,7 @@
 		<div class="block" style="min-height: 200px;">
             <volist name="list" id="item">
 			        <div class="pic">
-                        <a class="" style="vertical-align: middle" href="{:U('/zhao/zhaopian/detail',array('id'=>$item['number_no']))}"><img src="/uploads/{$item.pic_url}_thumb.jpg" /></a>
+                        <a class="" style="vertical-align: middle" href="{:U('/zhao/zhaopian/detail',array('id'=>$item['number_no']))}"><img src="<if condition="file_exists(ROOT_PATH.'/uploads/'.$item[pic_url].'_thumb.jpg')">/uploads/{$item.pic_url}_thumb.jpg<else/>/images/d.jpg</if>" /></a>
                     </div>
 </volist>
 			<div class="cl"></div>

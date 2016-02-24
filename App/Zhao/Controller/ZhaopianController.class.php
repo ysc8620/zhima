@@ -131,7 +131,7 @@ class ZhaopianController extends BaseController {
                     }
                     $pic_id = M('zhaopian_pic')->add($pic);
 
-              
+
                     ///////////////////////////////////////////
 
                 }
