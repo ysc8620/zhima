@@ -110,7 +110,10 @@ class AutoController extends Controller {
         $img->open($path)->save(ROOT_PATH.'gif.jpg','jpg');
 
     }
-
+    function t(){
+        $d = \Wechat\Wxapi::get_openid('test');
+        print_r($d);
+    }
     function test(){
         print_r($_COOKIE);
         print_r($_SESSION);
