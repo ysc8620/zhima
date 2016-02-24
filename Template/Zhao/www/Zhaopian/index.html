@@ -28,7 +28,7 @@
 		</ul>
         <ul class="mb10 list_img_block hide">
 
-            <div class="list_img_add fl select_pic"><img src="/images/plus-icon.png" style="height: 60px; margin-top: 14px" /> </div>
+            <div class="list_img_add fl select_pic"><img src="/images/plus-icon.png" style="height: 60px; margin-top: 10px" /> </div>
             <div class="cl"></div>
         </ul>
 		<ul>
@@ -96,13 +96,11 @@
         $('.select_pic').click(function () {
             wx.chooseImage({
                 success: function (res) {
-                    alert('xxx');
+
                     images.localId = res.localIds;
-                    alert('xxx'+images.localId.length);
                     jQuery(function(){
                         $('.list_img_block').removeClass('hide');
                         $.each( res.localIds, function(i, n){
-
                             $(".list_img_add").before('<div class="list_img fl"> <img src="'+n+'" /></div>');
                         });
 
