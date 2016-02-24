@@ -107,14 +107,14 @@ filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')
 .detail_head_block{ position:absolute; bottom:-30px; text-align:center; margin:0 auto; width:100%;}
 .detail_head_img{    background-repeat: no-repeat;
     border-radius: 50%;
-    box-shadow: 0 0 0 2px #fff;
+
     display: inline-block;
     height: 60px;
     width: 60px;}
 
 .detail_head_img2{    background-repeat: no-repeat;
     border-radius: 50%;
-    box-shadow: 0 0 0 2px #fff;
+
     display: inline-block;
     height: 60px;
     width: 60px;}
@@ -170,10 +170,7 @@ filter:alpha(opacity=80);
 	opacity: 0.8;
 	}
 .detail_info { position:absolute; z-index:200; top:12px; text-align:center; width:100%;}
-.detail_info1 {filter:alpha(opacity=60);
-    -moz-opacity:0.6;
-    -khtml-opacity: 0.6;
-    opacity: 0.6;  background: #000; text-align:center; right:2px; padding:6px; position: absolute; top: 12px; left: 2px; z-index: 100;}
+.detail_info1 {background: #000; text-align:center; right:0; padding:6px; position: absolute; top: 0; left: 0; z-index: 100;}
 .detail_body1{ width:99%; text-align:center; margin:2px auto;}
 input.btn_cou, button.btn_cou{ border-radius: 50%; width: 80px!important; height:80px!important; background:#EB5151; color:#FEF05B; font-size:24px; font-weight:bold;}
 
@@ -360,12 +357,6 @@ input.jia{margin:0!important;height:36px; vertical-align:middle; line-height:30p
 .detail_menu_body .sub_menu{ background:#908a8a; border-radius: 3px; text-align:center; height:26px; line-height:26px; margin-bottom:10px; }
 .detail_menu_body .sub_menu a{ color:#161616!important; font-size:14px!important; }
 .detail_menu{ text-align:left; margin-left:20px;}
-.detail_menu .menu_detail{ border:2px #fff solid;  border-radius: 50%; width: 30px!important; height:30px!important;
-filter:alpha(opacity=60);
-	-moz-opacity:0.6;
-	-khtml-opacity: 0.6;
-	opacity: 0.6;
-	
-	line-height:30px; font:24px; text-align:center; color:#fff}
+.detail_menu .menu_detail{  border-radius: 50%; width: 30px!important; height:30px!important;line-height:30px; font:24px; text-align:center; color:#fff}
 
-.dashang{background: #2d2d2d; margin: 0 4px; padding: 4px; color: #c62a6c; border-radius: 3px;}
+.dashang{margin: 0 4px; padding: 4px; color: #e5e5e5; border-radius: 3px;}

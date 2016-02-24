@@ -207,11 +207,11 @@ class ZhaopianController extends BaseController {
         }
         //
         $path = C('UPLOAD_PATH') .$this->zhaopian['pic_url'];
-if(file_exists($path."_thumb2.jpg")){
-    $this->gaosi_img = "/uploads/".$this->zhaopian['pic_url'].'_thumb2.jpg';
-}else{
-    $this->gaosi_img = '/img/default.jpg';
-}
+        if(file_exists($path."_thumb2.jpg")){
+            $this->gaosi_img = "/uploads/".$this->zhaopian['pic_url'].'_thumb2.jpg';
+        }else{
+            $this->gaosi_img = '/img/default.jpg';
+        }
 //        if(file_exists($path) && !file_exists($path."_thumb2.jpg")){
 //            $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
 //            $img->open($path);
