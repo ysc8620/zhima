@@ -228,7 +228,7 @@ class ZhaopianController extends BaseController {
         $this->zhaopian_user = M('user')->find($this->zhaopian['user_id']);
         $this->user = M('user')->find($this->user_id);
 
-        $this->title = "{$this->hongbao_user['name']}发起的红包照片";
+        $this->title = "{$this->zhaopian_user['name']}发布的红包照片";
         $zhaopian_order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'user_id'=>$this->user_id,'state'=>2))->find();
         $this->zhaopian_order = $zhaopian_order;
 
