@@ -52,7 +52,8 @@ do{
             }
 
         }
+        M('zhaopian')->where(array('id'=>$item['id']))->save(array('is_create'=>1));
     }
 
-    M('zhaopian')->where(array('id'=>$item['id']))->save(array('is_create'=>1));
+
 }while(true);
