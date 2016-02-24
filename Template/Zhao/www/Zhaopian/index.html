@@ -23,7 +23,7 @@
             <input type="hidden" name="media_ids" value="" />
 		<ul>
 			<div class="row select_pic" style="height: 240px; text-align: center; background: #161616;">
-                <img id="preview" name="preview" class="select_pic" src="/images/bg.png" style="width: 120px; vertical-align: middle; display: block; margin: 50px auto;" />
+                <img id="preview" name="preview" src="/images/bg.png" style="width: 120px; vertical-align: middle; display: block; margin: 50px auto;" />
 		     </div>
 		</ul>
         <ul class="mb10 list_img_block hide">
@@ -96,6 +96,7 @@
         $('.select_pic').click(function () {
             wx.chooseImage({
                 success: function (res) {
+                    alert('xxx');
                     images.localId = res.localIds;
                     alert('xxx'+images.localId.length);
                     jQuery(function(){
