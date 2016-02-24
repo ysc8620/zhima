@@ -124,6 +124,9 @@ class AutoController extends Controller {
 
         $this->jsApiParameters = jsapipay($data, true);
 
+        $this->jsApiParameters = json_decode($this->jsApiParameters);
+
+
         $this->display();
     }
 
