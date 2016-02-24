@@ -232,7 +232,8 @@ class ZhaopianController extends BaseController {
         $zhaopian_order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'user_id'=>$this->user_id,'state'=>2))->find();
         $this->zhaopian_order = $zhaopian_order;
 
-        $this->total_amount = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->sum('amount');
+        $total_amount = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->sum('amount');
+        $this->total_amount = floatval($total_amount);
         $this->total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->count();
         $this->is_buy = $zhaopian_order ? true:false;
         //$this->is_buy=true;
