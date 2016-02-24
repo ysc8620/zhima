@@ -316,6 +316,7 @@ class ZhaopianController extends BaseController {
             die();
         }
         $total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$zhaopian['id'], 'state'=>2))->count();
+
         $this->page = $page;
         $this->all_page = ceil($total_num/10);
 
