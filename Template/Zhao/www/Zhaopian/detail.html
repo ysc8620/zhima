@@ -32,12 +32,12 @@
             <div id="remark_block">
                 <div id="shareit">
                 </div>
-    <span style="text-align: center; background: #fff; position: fixed; padding: 12px; -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 90%; left: 5%;" id="follow">
+    <span style="text-align: center; background: #fef5e4; position: fixed; padding: 12px; -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 70%; left: 15%;" id="follow">
       <div class="fr" style="cursor: pointer" onclick="$('.buy_detail_block').removeClass('show').addClass('hide')">X</div>
         <p style="color: #999">
             <input type="hidden" name="amount" value="{$order.amount}" />
-            <span style="color: #E08100; font-size: 28px; padding: 4px 0" class="amount_block">{$order.amount}元</span> <br />
-           发红包看照片,金额随机</p>
+            <span style="color: #E08100; font-size: 28px; padding: 4px 0" class="amount_block">{$order.amount}元</span> <br /> <br />
+            赏红包看照片,<if condition="$zhaopian.is_rand eq 1">固定金额<else/>金额随机</if></p>
         <input type="button" class="btn btn_cou mc" onclick="set_pay('{$order.order_sn}');" data-role="set_pay_block" style="border: none; width: 80%; height: 36px; margin-top: 12px; margin-bottom: 12px; line-height: 36px;" value="赏" />
        </span>
             </div>
