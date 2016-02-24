@@ -38,7 +38,6 @@ class WeixinController extends Controller {
         $web_openid = session('openid');
         if(isset($_GET['code']) ){
             $data = \Wechat\Wxapi::get_openid($_GET['code']);
-            print_r($data);die();
             session('openid', $data['openid']);
             session('access_token', $data['access_token']);
             cookie('openid',$data['openid'],array('expire'=>time()+2592000));

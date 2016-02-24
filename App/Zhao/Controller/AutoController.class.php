@@ -110,14 +110,10 @@ class AutoController extends Controller {
         $img->open($path)->save(ROOT_PATH.'gif.jpg','jpg');
 
     }
-    function t(){
-        \Wechat\Wxapi::authorize();
-        //print_r($d);
-    }
-    function test(){
-        print_r($_COOKIE);
-        print_r($_SESSION);
-        echo time();
+
+    function pay(){
+
+        $this->display();
     }
 
     function create(){
@@ -149,37 +145,4 @@ class AutoController extends Controller {
         }
     }
 
-    function send(){
-
-        $data = array(
-            'mch_billno' =>get_order_sn(),
-            'send_name' => '红包照片',
-            're_openid' =>'oV3oMxFJRKo8LxX-WGfbHc-wmdE8',
-            'total_amount' => 100,
-            'wishing' => '测试红包。',
-            'act_name'=> '红包照片',
-            'remark' => '红包照片',
-        );
-        $rs = sendPay($data);
-    }
-
-    function pay(){
-        $data = array(
-            'partner_trade_no' => get_order_sn(),
-            're_user_name'=>'王苏蕴',
-            'openid' => 'oV3oMxP5wdTR8BpptzNq2tDdGtLk',
-            'amount' => 100,
-            'desc'=>'测试企业付款接口'
-        );
-         $rs = sendPay($data);
-        var_dump($rs);
-        /*{
-            $input = new WxSendPay();
-            $input->SetPartner_Trade_No($data['partner_trade_no']); // 红包编号
-            $input->SetRe_user_name($data['re_user_name']);   // 发送人
-            $input->SetOpenid($data['openid']);   // 接收人
-            $input->SetAmount($data['amount']);  // 发送金额
-            $input->SetDesc($data['desc']);  // 备注
-        }*/
-    }
 }

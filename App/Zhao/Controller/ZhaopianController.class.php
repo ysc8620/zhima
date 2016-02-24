@@ -262,6 +262,12 @@ if(file_exists($path."_thumb2.jpg")){
                 if($rs){
                     $order = M('zhaopian_order')->find($rs);
                 }
+            }else{
+                if($this->zhaopian['is_rand']>0){
+                    $amount = number_format($this->randomFloat(1.05,5),2);
+                    $order['amount'] = $amount;
+                    M('zhaopian_order')->where(array('id'=>$order['id']))->save(array('amount'=>$amount));
+                }
             }
             $this->order = $order;
         }
