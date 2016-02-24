@@ -111,7 +111,7 @@ class AutoController extends Controller {
 
     }
     function t(){
-        $d = \Wechat\Wxapi::get_openid('test');
+        $d = \Wechat\Wxapi::get_openid('');
         print_r($d);
     }
     function test(){
