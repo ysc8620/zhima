@@ -26,12 +26,12 @@ class ZhaopianController extends BaseController {
                 session('sign', microtime(true));
             }
             $is_rand = I('post.is_rand',0,'intval');
-            $amount = I('post.amount',1.05,'floatval');
+            $amount = I('post.amount',0.5,'floatval');
             $remark = I('post.remark','','htmlspecialchars');
             $media_ids = I('post.media_ids', '', 'strval');
             if(!$is_rand){
-                if($amount < 1.05 || $amount > 200){
-                    $this->error('价格在1.05-200之间.',U('/zhao/zhaopian'));
+                if($amount < 0.5 || $amount > 200){
+                    $this->error('价格在0.50-200之间.',U('/zhao/zhaopian'));
                     return false;
                 }
             }
@@ -100,7 +100,7 @@ class ZhaopianController extends BaseController {
             $data['remark'] = $remark;
             $data['is_rand'] = $is_rand;
             if($is_rand){
-                $data['min_amount'] = 1.05;
+                $data['min_amount'] = 0.5;
                 $data['max_amount'] = 5;
             }else{
                 $data['min_amount'] = $amount;
@@ -241,7 +241,7 @@ class ZhaopianController extends BaseController {
             if(!$order){
                 $user = M('user')->find($this->user_id);
                 if($this->zhaopian['is_rand']>0){
-                    $amount = number_format($this->randomFloat(1.05,5),2);
+                    $amount = number_format($this->randomFloat(0.5,5),2);
                 }else{
                     $amount = $this->zhaopian['min_amount'];
                 }
@@ -264,7 +264,7 @@ class ZhaopianController extends BaseController {
                 }
             }else{
                 if($this->zhaopian['is_rand']>0){
-                    $amount = number_format($this->randomFloat(1.05,5),2);
+                    $amount = number_format($this->randomFloat(0.5,5),2);
                     $order['amount'] = $amount;
                     M('zhaopian_order')->where(array('id'=>$order['id']))->save(array('amount'=>$amount));
                 }

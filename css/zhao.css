@@ -81,11 +81,11 @@ input[type=text],textarea {-webkit-appearance:none}
 }
 .from textarea{ width:100%; border:none; background:#161616; height:80px; color:#747474;}
 .from{ width: 96%; margin:12px auto; }
-.from div.row{ height: 50px; line-height:50px; -webkit-border-radius:3px;border-radius:3px; background:#161616; position:relative; border:#494949 1px solid;}
+.from div.row{ height: 60px; line-height:60px; -webkit-border-radius:3px;border-radius:3px; background:#161616; position:relative; border:#494949 1px solid;}
 .from  ul{ clear:both; margin-bottom:12px;}
 .from input.text{ width:100%;}
 .from .text2{ margin-bottom:12px; border:#494949 1px solid;  -webkit-border-radius:3px;border-radius:3px;}
-input, button{ border:none; font-size: 14px; background:#161616; text-align:left;  height: 48px; width:auto; line-height:48px; padding:0 4px;}
+input, button{ border:none; font-size: 14px; background:#161616; text-align:left;  height: 58px; width:auto; line-height:58px; padding:0 12px;}
 .from span{ display: table-cell; font-size:14px; line-height: 50px;}
 .from span.label{ float:left; left: 0; padding-left: 6px;  position: absolute;}
 .from span.unit{ float:right;
@@ -95,7 +95,7 @@ input, button{ border:none; font-size: 14px; background:#161616; text-align:left
     position: absolute;
 	width:18px;
 	}
-.btn{ background:#161616; border:#4a4a4a 1px solid; -webkit-border-radius:3px;border-radius:3px; font-size:16px; height:50px; color:#aa6c08; width:100%; text-align:center; margin:0 auto;}
+.btn{ background:#161616; border:#4a4a4a 1px solid; -webkit-border-radius:3px;border-radius:3px; font-size:16px; height:58px; color:#aa6c08; width:100%; text-align:center; margin:0 auto;}
 .from div.tit{ line-height:20px; text-align:center; font-size:14px; color:#747474; margin:12px auto;}
 .from div.tit .amount{ font-size:24px;}
 .from div.tit .amount_remark{ color:#747474; font-size:16px;}
@@ -360,4 +360,3 @@ input.jia{margin:0!important;height:36px; vertical-align:middle; line-height:30p
 .detail_menu .menu_detail{  border-radius: 50%; width: 30px!important; height:30px!important;line-height:30px; font:24px; text-align:center; color:#fff}
 
 .dashang{margin: 0 4px; padding: 4px; color: #e5e5e5; border-radius: 3px;}
-.list_img_block .list_img{ width:25%!important; float:left;}

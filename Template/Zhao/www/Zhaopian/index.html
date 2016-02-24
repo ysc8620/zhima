@@ -38,12 +38,12 @@
 		</ul>
 		<ul>
 			<div class="w50 fl">
-				<div class="amount tr"><input type="button" data-role="set_rand" class="btn w50 " value="随机价格" /></div>
-				<div class="amount_remark tr ptop6 pbottom10" style="padding-right: 12px;">￥1.05-￥5.00范围随机</div>
+				<div class="amount tr"><input type="button" data-role="set_rand" class="btn  " value="随机价格" /></div>
+				<div class="amount_remark tr ptop6 pbottom10" style="padding-right: 12px;">￥0.50-￥5.00范围随机</div>
 			</div>
             <div class="w50 fl">
-                <div class="amount tl ml10"><input type="button" data-role="set_price" class="btn w50 color_def" value="设置价格" /></div>
-                <div class="amount_remark ml10 ptop6 pbottom10" style="padding-left: 12px;">可设置￥1.05-￥200内</div>
+                <div class="amount tl ml10"><input type="button" data-role="set_price" class="btn  color_def" value="设置价格" /></div>
+                <div class="amount_remark ml10 ptop6 pbottom10" style="padding-left: 12px;">可设置￥0.50-￥200内</div>
             </div>
 		</ul>
             <ul data-role="price_block" style="display: none">
@@ -179,8 +179,8 @@
                 return false;
             }
             amount = parseFloat(amount);
-            if(amount < 1.05 || amount > 200){
-                layer.msg('价格范围在1.05-200之间', function(){});
+            if(amount < 0.5 || amount > 200){
+                layer.msg('价格范围在0.50-200之间', function(){});
                 return false;
             }
         }
