@@ -122,9 +122,9 @@ class AutoController extends Controller {
         // $openid = ;//session('openid')?session('openid'):cookie('openid');
         $data['openid'] = cookie('openid');
 
-        $this->jsApiParameters = jsapipay($data, true);
+        $jsApiParameters = jsapipay($data, false);
 
-        $this->jsApiParameters = json_decode($this->jsApiParameters);
+        $this->jsApiParameters = json_decode($jsApiParameters);
 
 
         $this->display();
