@@ -224,6 +224,7 @@
                 if(result.error==0){
                     callpay(result.data);
                 }else if(result.error==1){
+                    alert(result.message)
                     layer.msg(result.message, function(){});
                 }
             }
