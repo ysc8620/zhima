@@ -28,7 +28,7 @@
 		</ul>
         <ul class="mb10 list_img_block hide">
 
-            <div class="list_img_add fl select_pic"><img src="/images/plus-icon.png" style="height: 60px; margin-top: 10px" /> </div>
+            <div class="list_img_add fl select_pic"><img src="/images/plus-icon.png" style="height: 56px; margin-top: 10px" /> </div>
             <div class="cl"></div>
         </ul>
 		<ul>
@@ -111,6 +111,7 @@
                                 images.localId.splice(i, 1);
                             }
                         });
+                        $(this).parent().remove();
                     });
                     alert(images.localId)
                 }
