@@ -155,7 +155,7 @@ class WeixinController extends Controller {
         do{
             $id = I('id','', 'strval');
             if($id){
-                $order = M('zhaopian_order')->where(array('order_sn'=>$id))->find();
+                $order = M('zhaopian_order')->where(array('id'=>$id))->find();
 
                 if($order){
                     $zhaopian = M('zhaopian')->where(array('number_no'=>$order['number_no']))->find();
