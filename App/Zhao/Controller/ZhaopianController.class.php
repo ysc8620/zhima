@@ -300,7 +300,17 @@ class ZhaopianController extends BaseController {
 //                        $this->zhaopian = $zhaopian;
 //                        $this->order = $order;
 //                        $this->id = $id;
-                $this->jsApiParameters = jsapipay($data, false);
+                try{
+                    $this->jsApiParameters = jsapipay($data, false);
+                }catch (\Exception $e){
+                    sleep(1);
+                    try{
+                        $this->jsApiParameters = jsapipay($data, false);
+                    }catch (\Exception $e){
+                        
+                    }
+                }
+
                // break;
             }
 
