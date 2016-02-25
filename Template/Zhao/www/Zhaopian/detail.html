@@ -38,7 +38,7 @@
             <input type="hidden" name="amount" value="{$order.amount}" />
             <span style="color: #E08100; font-size: 28px; padding: 4px 0" class="amount_block">{$order.amount}元</span> <br /> <br />
             赏红包看照片,<if condition="$zhaopian.is_rand eq 1">固定金额<else/>金额随机</if></p>
-        <input type="button" class="btn btn_cou mc" onclick="set_pay('{$order.order_sn}');" data-role="set_pay_block" style="border: none; width: 80%; height: 36px; margin-top: 12px; margin-bottom: 12px; line-height: 36px;" value="赏" />
+        <input type="button" class="btn btn_cou mc" onclick="callpay('{$order.order_sn}');" data-role="set_pay_block" style="border: none; width: 80%; height: 36px; margin-top: 12px; margin-bottom: 12px; line-height: 36px;" value="赏" />
        </span>
             </div>
         </div>
@@ -132,7 +132,7 @@
     {
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
-                data,
+                {$jsApiParameters},
                 function(res){
                     //WeixinJSBridge.log(res.err_msg);
                     // alert(res.err_code+'='+res.err_desc+'='+res.err_msg);
@@ -243,9 +243,9 @@
             async:false,
             cache:false,
             data:{id:id},
-            dataType:'html',
+            dataType:'json',
             success:function(result){
-                alert(result)
+
                 if(result.error==0){
                     callpay(result.data);
                 }else if(result.error==1){

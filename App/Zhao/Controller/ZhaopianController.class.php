@@ -278,6 +278,30 @@ class ZhaopianController extends BaseController {
                     M('zhaopian_order')->where(array('id'=>$order['id']))->save(array('amount'=>$amount));
                 }
             }
+
+            if($order['state'] == 1){
+                $amount = ceil($order['amount'] *100);
+
+                $data['body'] = "红包照片";
+                $data['attach'] = "红包照片";
+                $data['order_sn'] = $order['order_sn'] ;
+                $data['total_fee'] = $amount;
+                $data['time_start'] = date('YmdHis');
+                $data['time_expire'] =  date("YmdHis", time() + 600);
+                $data['goods_tag'] = "WXG";
+                // $openid = ;//session('openid')?session('openid'):cookie('openid');
+                $data['openid'] = $order['openid'];
+//
+//                        $this->user = M('user')->find($zhaopian['user_id']);
+//
+//                        $this->title = "{$this->user['name']}凑红包";
+//                        $this->zhaopian = $zhaopian;
+//                        $this->order = $order;
+//                        $this->id = $id;
+                $this->jsApiParameters = jsapipay($data, false);
+               // break;
+            }
+
             $this->order = $order;
         }
 
