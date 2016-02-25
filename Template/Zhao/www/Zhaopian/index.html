@@ -11,7 +11,7 @@
 </script>
 <style type="text/css">
     input.pic{position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0); z-index: 10; width: 100%; height: 100%}
-    .list_img{ width: 75px; height: 75px;border-radius: 3px; line-height: 75px; float: left; text-align: center; border: #363636 1px solid; background: #161616; margin-bottom: 2px; margin-right: 2px; overflow: hidden}
+    .list_img{ width: 75px; position: relative; height: 75px;border-radius: 3px; line-height: 75px; float: left; text-align: center; border: #363636 1px solid; background: #161616; margin-bottom: 2px; margin-right: 2px; overflow: hidden}
     .list_img_add{ border-radius: 3px; width: 75px; height: 75px;  text-align: center; border: #363636 1px solid;  background: #161616; overflow: hidden}
     .list_img_add img, .list_img img{ max-height: 75px; max-width: 75px; vertical-align: middle}
 </style>
@@ -87,7 +87,6 @@
     });
 
     wx.ready(function () {
-
         var images = {
             localId: [],
             serverId: []
@@ -96,18 +95,29 @@
         $('.select_pic').click(function () {
             wx.chooseImage({
                 success: function (res) {
-
                     images.localId = res.localIds;
+                    alert(images.localId)
                     jQuery(function(){
                         $('.list_img_block').removeClass('hide');
                         $.each( res.localIds, function(i, n){
-                            $(".list_img_add").before('<div class="list_img fl"> <img src="'+n+'" /></div>');
+                            $(".list_img_add").before('<div class="list_img fl"> <img src="'+n+'" /> <div class="del"><img src="/images/delete-icon.png" onclick="del(\''+n+'\')" style="width: 20px; position: absolute; right: 4px; bottom: 4px;" /></div></div>');
                         });
 
                     });
                 }
             });
         });
+
+        function del(url){
+            alert(url);
+
+           $.each(images.localId, function(i, n){
+               if(n == url){
+
+               }
+           });
+        }
+        
         function upload(n){
             wx.uploadImage({
                 localId: n,
