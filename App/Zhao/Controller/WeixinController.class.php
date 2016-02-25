@@ -182,6 +182,7 @@ class WeixinController extends Controller {
                             $json['message'] = "支付金额超过限制.{$amount}";
                             break;
                         }
+                        $data = array();
                         $data['body'] = "红包照片";
                         $data['attach'] = "红包照片";
                         $data['order_sn'] = $order['order_sn'];
@@ -198,6 +199,8 @@ class WeixinController extends Controller {
 //                        $this->zhaopian = $zhaopian;
 //                        $this->order = $order;
 //                        $this->id = $id;
+
+
 
                         try{
                             $jsApiParameters = jsapipay($data, false);
