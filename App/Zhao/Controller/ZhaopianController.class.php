@@ -7,6 +7,7 @@
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
 namespace Zhao\Controller;
+require_once ROOT_PATH .'/Inc/Library/Wxpay/weizhao.php';
 class ZhaopianController extends BaseController {
     public function index(){
         $this->sign = md5(microtime(true));
