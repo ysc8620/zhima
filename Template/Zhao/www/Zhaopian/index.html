@@ -95,15 +95,15 @@
         $('.select_pic').click(function () {
             wx.chooseImage({
                 success: function (res) {
-                    images.localId = res.localIds;
-                    alert(images.localId)
+                    //images.localId = res.localIds;
                     jQuery(function(){
                         $('.list_img_block').removeClass('hide');
                         $.each( res.localIds, function(i, n){
+                            images.localId.push(n);
                             $(".list_img_add").before('<div class="list_img fl"> <img src="'+n+'" /> <div class="del"><img src="/images/delete-icon.png" onclick="del(\''+n+'\')" style="width: 20px; position: absolute; right: 4px; bottom: 4px;" /></div></div>');
                         });
-
                     });
+                    alert(images.localId)
                 }
             });
         });
@@ -113,7 +113,7 @@
 
            $.each(images.localId, function(i, n){
                if(n == url){
-
+                   images.localId.splice(i, 1);
                }
            });
         }
