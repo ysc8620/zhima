@@ -130,7 +130,7 @@ class WxPayApi
 
     /**
      *
-     * 发送红包
+     * 申请退款，WxPayRefund中out_trade_no、transaction_id至少填一个且
      * out_refund_no、total_fee、refund_fee、op_user_id为必填参数
      * appid、mchid、spbill_create_ip、nonce_str不需要填入
      * @param WxPayRefund $inputObj
@@ -165,64 +165,6 @@ class WxPayApi
 
         $inputObj->SetSign();//签名
         $xml = $inputObj->ToXml();
-        $startTimeStamp = self::getMillisecond();//请求开始时间
-        $response = self::postXmlCurl($xml, $url, true, $timeOut);
-        $obj = new WxPayResults();
-        $obj->FromXml($response);
-        $result = $obj->GetValues();
-        self::reportCostTime($url, $startTimeStamp, $result);//上报请求花费时间
-
-        return $result;
-    }
-
-    /**
-     *
-     * 企业支付
-     * partner_trade_no、check_name、re_user_name，amount，desc、openid为必填参数
-     * appid、mchid、spbill_create_ip、nonce_str不需要填入
-    <xml>
-    <mch_appid>wxe062425f740c30d8</mch_appid>
-    <mchid>10000098</mchid>
-    <nonce_str>3PG2J4ILTKCH16CQ2502SI8ZNMTM67VS</nonce_str>
-    <partner_trade_no>100000982014120919616</partner_trade_no>
-    <openid>ohO4Gt7wVPxIT1A9GjFaMYMiZY1s</openid>
-    <check_name>OPTION_CHECK</check_name>
-    <re_user_name>张三</re_user_name>
-    <amount>100</amount>
-    <desc>节日快乐!</desc>
-    <spbill_create_ip>10.2.3.10</spbill_create_ip>
-    <sign>C97BDBACF37622775366F38B629F45E3</sign>
-    </xml>
-
-     * @param WxPayRefund $inputObj
-     * @param int $timeOut
-     * @throws WxPayException
-     * @return 成功时返回，其他抛异常
-     */
-    public static function sendPay($inputObj, $timeOut = 6)
-    {
-        $url = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
-        //检测必填参数
-        if(!$inputObj->IsPartner_Trade_No() ){//mch_appid
-            throw new WxPayException("付款接口中，却少必填partner_trade_no！");
-        }elseif (!$inputObj->IsRe_user_name()) {
-            throw new WxPayException("付款接口中，却少必填re_user_name！");
-        }else if(!$inputObj->IsOpenid()){
-            throw new WxPayException("付款接口中，缺少必填参数openid！");
-        }else if(!$inputObj->IsAmount()){
-            throw new WxPayException("付款接口中，缺少必填参数amount！");
-        }else if(!$inputObj->IsDesc()){
-            throw new WxPayException("付款接口中，缺少必填参数desc！");
-        }
-        $inputObj->SetMch_appid(WxPayConfig::APPID);//公众账号ID
-        $inputObj->SetMch_id(WxPayConfig::MCHID);//商户号
-        $inputObj->SetCheck_Name('NO_CHECK');//商户号
-        $inputObj->SetSpbill_create_ip('127.0.0.1');
-        $inputObj->SetNonce_str(self::getNonceStr());//随机字符串
-
-        $inputObj->SetSign();//签名
-        $xml = $inputObj->ToXml();
-        // echo htmlspecialchars($xml);
         $startTimeStamp = self::getMillisecond();//请求开始时间
         $response = self::postXmlCurl($xml, $url, true, $timeOut);
         $obj = new WxPayResults();
