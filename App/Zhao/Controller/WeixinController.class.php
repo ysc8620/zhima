@@ -198,9 +198,26 @@ class WeixinController extends Controller {
 //                        $this->zhaopian = $zhaopian;
 //                        $this->order = $order;
 //                        $this->id = $id;
-                        $this->jsApiParameters = jsapipay($data, false);
 
-                        $json['data'] = json_decode($this->jsApiParameters);
+                          try{
+                            $sApiParameters = jsapipay($data, false);
+                        }catch (\Exception $e){
+                            sleep(5);
+                            try{
+                                $jsApiParameters = jsapipay($data, false);
+                            }catch (\Exception $e){
+                                sleep(5);
+                                try{
+                                    $jsApiParameters = jsapipay($data, false);
+                                }catch (\Exception $e){
+                                    $json['error'] = 1;
+                                    $json['message'] = "签名失败请刷新。";
+                                    break;
+                                }
+                            }
+                        }
+
+                        $json['data'] = json_decode($jsApiParameters);
                         break;
                     }else{
                         //$this->error("红包状态不能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
