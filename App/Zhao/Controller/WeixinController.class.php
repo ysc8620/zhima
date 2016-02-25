@@ -183,8 +183,8 @@ class WeixinController extends Controller {
                             break;
                         }
                         $data = array();
-                        $data['body'] = "红包照片";
-                        $data['attach'] = "红包照片";
+                        $data['body'] = "xx";
+                        $data['attach'] = "dd";
                         $data['order_sn'] = $order['order_sn'];
                         $data['total_fee'] = $amount;
                         $data['time_start'] = date('YmdHis');
