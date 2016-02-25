@@ -182,9 +182,11 @@ class WeixinController extends Controller {
                             $json['message'] = "支付金额超过限制.{$amount}";
                             break;
                         }
+                        $order_sn = get_order_sn();
+                        M('zhaopian_order')->where(array('id'=>$order['id']))->save(array('order_sn'=>$order_sn));
                         $data['body'] = "红包照片";
                         $data['attach'] = "红包照片";
-                        $data['order_sn'] = $order['order_sn'] ;
+                        $data['order_sn'] = $order_sn;
                         $data['total_fee'] = $amount;
                         $data['time_start'] = date('YmdHis');
                         $data['time_expire'] =  date("YmdHis", time() + 600);
