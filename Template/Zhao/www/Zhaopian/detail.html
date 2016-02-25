@@ -232,7 +232,7 @@
         if(!id){
             var id = $('input[name="pay_id"]').val();
         }
-alert('xxx');
+
         if(id.length < 1){
             layer.msg('没有支付订单', function(){});
             return false;
@@ -243,12 +243,11 @@ alert('xxx');
             async:false,
             cache:false,
             data:{id:id},
-            dataType:'json',
+            dataType:'html',
             success:function(result){
-              alert('---')
+                alert(result)
                 if(result.error==0){
                     callpay(result.data);
-
                 }else if(result.error==1){
                     layer.msg(result.message, function(){});
                 }
