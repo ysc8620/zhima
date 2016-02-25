@@ -80,9 +80,16 @@
 
     var hide_index = setTimeout(function(){$('.detail_info1').fadeOut('slow');}, 5000);
     $('.own_block').click(function(){
-        clearTimeout(hide_index);
-        $('.detail_info1').fadeIn('slow');
-        hide_index = setTimeout(function(){$('.detail_info1').fadeOut('slow');}, 5000);
+        if($('.detail_info1').is(":hidden")){
+            clearTimeout(hide_index);
+            $('.detail_info1').fadeIn('slow');
+            hide_index = setTimeout(function(){$('.detail_info1').fadeOut('slow');}, 5000);
+        }else{
+            clearTimeout(hide_index);
+            $('.detail_info1').fadeOut('slow');
+            hide_index = setTimeout(function(){$('.detail_info1').fadeOut('slow');}, 5000);
+        }
+
     });
     var height = $(document).height();
     $('.preview').css('height', height);
