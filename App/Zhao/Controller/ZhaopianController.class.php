@@ -292,6 +292,7 @@ class ZhaopianController extends BaseController {
                 $data['goods_tag'] = "WXG";
                 // $openid = ;//session('openid')?session('openid'):cookie('openid');
                 $data['openid'] = $order['openid'];
+                print_r($data);
 //
 //                        $this->user = M('user')->find($zhaopian['user_id']);
 //
