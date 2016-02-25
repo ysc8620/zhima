@@ -10,7 +10,7 @@
 namespace Zhao\Controller;
 use Think\Controller;
 set_time_limit(0);
-require_once ROOT_PATH .'/Inc/Library/Wxpay/weizhao.php';
+require_once ROOT_PATH .'/Inc/Library/Wxpay/weixin.php';
 class AutoController extends Controller {
     // 自动发送红包
     function sendhongbao(){
