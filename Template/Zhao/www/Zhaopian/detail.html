@@ -21,11 +21,10 @@
         </div>
         <div class="detail_body">
             <div class=" mc tc cl" style="width: 80px;"><button class="btn btn_cou btn_shang" style="border: none;" data-id="{$zhaopian.number_no}">赏</button> </div>
-            <if condition="$zhaopian.user_id eq $user_id"><div class="cl" style="margin-top: 20px">已有{$total_num}人赏红包, 获得￥{$total_amount}元<span>  &nbsp; <a style="color: #deb16a!important;" class="show_detail_list" href="javascript:">详情</a></span></div>
-                <else/>
-            <if condition="$total_num gt 0"><div class="remark cl">已有{$total_num}人赏红包</div></if>
+                <if condition="$zhaopian.user_id eq $user_id"><div class="cl" style="margin-top: 20px">已有{$total_num}人赏红包, 获得￥{$total_amount}元<span>  &nbsp; <a style="color: #deb16a!important;" class="show_detail_list" href="javascript:">详情</a></span></div>
+                    <elseif condition="$total_num gt 0"/>
+                <div class="remark cl">已有{$total_num}人赏红包</div>
             </if>
-
         </div>
 
         <div class="buy_detail_block hide">
@@ -56,7 +55,7 @@
             </div>
             <div class="cl"></div>
             <div class="detail_body1 cl" style="text-align: center; vertical-align: middle" >
-                <img src="/uploads/{$zhaopian['pic_url']}" style=" vertical-align: middle; text-align: center" />
+                <img src="/uploads/{$zhaopian.pic_url}" style=" vertical-align: middle; text-align: center" />
             </div>
         </div>
     </if>
