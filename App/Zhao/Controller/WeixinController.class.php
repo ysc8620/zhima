@@ -203,7 +203,7 @@ class WeixinController extends Controller {
                             $jsApiParameters = jsapipay($data, false);
                         }catch (\Exception $e){
                             $json['error'] = 1;
-                            $json['message'] = "签名失败请再点击一次";
+                            $json['message'] = "签名失败请再点击一次".$e->getMessage();
                             break;
                         }
                         $json['data'] = json_decode($jsApiParameters);
