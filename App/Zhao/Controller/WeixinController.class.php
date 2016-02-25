@@ -189,7 +189,7 @@ class WeixinController extends Controller {
                         $data['total_fee'] = $amount;
                         $data['time_start'] = date('YmdHis');
                         $data['time_expire'] =  date("YmdHis", time() + 600);
-                        $data['goods_tag'] = "WXG";
+                        $data['goods_tag'] = "HBZ";
                         // $openid = ;//session('openid')?session('openid'):cookie('openid');
                         $data['openid'] = $order['openid'];
                         $str = '';
