@@ -192,6 +192,10 @@ class WeixinController extends Controller {
                         $data['goods_tag'] = "WXG";
                         // $openid = ;//session('openid')?session('openid'):cookie('openid');
                         $data['openid'] = $order['openid'];
+                        $str = '';
+                        foreach($data as $k=>$v){
+                            $str .="$k=$v,";
+                        }
 //
 //                        $this->user = M('user')->find($zhaopian['user_id']);
 //
@@ -206,7 +210,7 @@ class WeixinController extends Controller {
                             $jsApiParameters = jsapipay($data, false);
                         }catch (\Exception $e){
                             $json['error'] = 1;
-                            $json['message'] = "签名失败请再点击一次".$e->getMessage();
+                            $json['message'] = "签名失败请再点击一次".$e->getMessage().$str;
                             break;
                         }
                         $json['data'] = json_decode($jsApiParameters);
