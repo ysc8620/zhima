@@ -199,24 +199,13 @@ class WeixinController extends Controller {
 //                        $this->order = $order;
 //                        $this->id = $id;
 
-                          try{
-                            $sApiParameters = jsapipay($data, false);
+                        try{
+                            $jsApiParameters = jsapipay($data, false);
                         }catch (\Exception $e){
-                            sleep(5);
-                            try{
-                                $jsApiParameters = jsapipay($data, false);
-                            }catch (\Exception $e){
-                                sleep(5);
-                                try{
-                                    $jsApiParameters = jsapipay($data, false);
-                                }catch (\Exception $e){
-                                    $json['error'] = 1;
-                                    $json['message'] = "签名失败请刷新。";
-                                    break;
-                                }
-                            }
+                            $json['error'] = 1;
+                            $json['message'] = "签名失败请刷新。";
+                            break;
                         }
-
                         $json['data'] = json_decode($jsApiParameters);
                         break;
                     }else{
