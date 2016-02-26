@@ -60,7 +60,7 @@
         </div>
     </if>
 
-    <div class="detail_body detail_more_block" style="bottom: 20px;">
+    <div class="detail_body detail_more_block" style="bottom: 20px; width: 120px;">
         <div class="detail_menu_body cl hide">
             <div class="item_menu">
                 <if condition="$zhaopian['user_id'] eq $user_id"><div class="sub_menu"><a onclick="return confirm('您确定要删除该照片吗？')" href="{:U('/zhao/zhaopian/del',array('id'=>$zhaopian['number_no']))}">删除照片</a></div></if>
