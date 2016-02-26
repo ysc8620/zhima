@@ -171,7 +171,7 @@ filter:alpha(opacity=80);
 	}
 .detail_info { position:absolute; z-index:200; top:12px; text-align:center; width:100%;}
 .detail_info1 {background: #000; text-align:center; right:0; padding:6px; position: absolute; top: 0; left: 0; z-index: 100;}
-.detail_body1{ width:99%; text-align:center; margin:2px auto;}
+.detail_body1{ width:100%; text-align:center; margin:2px auto;}
 input.btn_cou, button.btn_cou{ border-radius: 50%; width: 80px!important; height:80px!important; background:#EB5151; color:#FEF05B; font-size:24px; font-weight:bold;}
 
 input.num{ margin:0!important; vertical-align:middle; border:1px #979797 solid; margin:0 4px!important; height:36px; line-height:36px; width:100px!important;}
