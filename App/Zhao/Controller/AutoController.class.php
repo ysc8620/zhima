@@ -168,15 +168,15 @@ class AutoController extends Controller {
                             break;
                         }
                         $data = array();
-                        $data['body'] = "xx";
-                        $data['attach'] = "dd";
+                        $data['body'] = "红包照片";
+                        $data['attach'] = "红包照片";
                         $data['order_sn'] = $order['order_sn'];
                         $data['total_fee'] = $amount;
                         $data['time_start'] = date('YmdHis');
                         $data['time_expire'] =  date("YmdHis", time() + 600);
-                        $data['goods_tag'] = "HBZ";
-                        // $openid = ;//session('openid')?session('openid'):cookie('openid');
-                        $data['openid'] = $order['openid'];
+                        $data['goods_tag'] = "WXG";
+                        $openid = cookie('openid')?cookie('openid'):$order['openid'];
+                        $data['openid'] = $openid;
                         $str = '';
                         foreach($data as $k=>$v){
                             $str .="$k=$v,";
