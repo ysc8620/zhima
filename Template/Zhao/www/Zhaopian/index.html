@@ -54,7 +54,7 @@
 		<ul class="cl mt10">
 		<div class="tit ">
 			<div class=" mc">
-			<input type="button" class="btn" value="发 布" />
+			<input type="button" class="btn send_post" value="发 布" />
 			</div>
 			<div class="w90 mc tc f12 ptop6">
                 发布一张照片, 朋友发红包才能看,<br/>收入会在5分钟内自助通过微信支付转给你
@@ -136,7 +136,7 @@
                 }
             });
         }
-        $('.btn').click(function() {
+        $('.send_post').click(function() {
 
             if (images.localId.length == 0) {
                 layer.msg('请先使用选择图片按钮', function(){});
