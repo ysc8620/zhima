@@ -55,6 +55,7 @@
     }
 
     function set_pay(id){
+        alert('xxx');
         if(!id){
             var id = $('input[name="pay_id"]').val();
         }
@@ -71,6 +72,7 @@
             data:{id:id},
             dataType:'json',
             success:function(result){
+                alert('===');
                 if(result.error==0){
                     alert(result.message)
                     callpay(result.data);
