@@ -300,6 +300,7 @@ class ZhaopianController extends BaseController {
             }
             $this->order = $order;
         }
+        $this->pic_list = array();
         if($this->is_buy ){
             if($this->zhaopian['total_pic'] > 1){
                 $this->pic_list = M('zhaopian_pic')->where(array('zhaopian_id'=>$this->zhaopian['id']))->select();
