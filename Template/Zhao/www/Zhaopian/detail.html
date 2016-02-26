@@ -207,7 +207,7 @@
     });
 
 
-    function set_pay(id){
+    function set_payss(id){
         if(!id){
             var id = $('input[name="pay_id"]').val();
         }
@@ -224,11 +224,9 @@
             data:{id:id},
             dataType:'json',
             success:function(result){
-
                 if(result.error==0){
                     callpay(result.data);
                 }else if(result.error==1){
-                    alert(result.message)
                     layer.msg(result.message, function(){});
                 }
             }
