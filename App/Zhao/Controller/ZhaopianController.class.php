@@ -307,8 +307,6 @@ class ZhaopianController extends BaseController {
             }
         }
 
-        print_r($this->pic_list);
-
         if($this->hongbao['user_id'] == $this->user_id){
             $this->share_title = "我发布了{$this->zhaopian['total_pic']}张私照，想看吗？";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
