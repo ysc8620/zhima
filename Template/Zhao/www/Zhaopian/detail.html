@@ -178,9 +178,10 @@
 
     });
     var height = $(document).height();
-    $('.preview').css('height', height);
-
-    $('.detail_body1').css('height', height);
+    var width= $(document).width();
+    $('.preview').css('max-width', width+'px');
+    $('.preview').css('max-height', height+'px');
+    $('.detail_body1').css('height', height+'px');
     $('.detail_body1').css('line-height', height+'px');
 
     $('[data-role="detail_menu"]').click(function(){
