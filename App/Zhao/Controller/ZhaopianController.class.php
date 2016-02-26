@@ -245,6 +245,7 @@ class ZhaopianController extends BaseController {
         $this->total_amount = floatval($total_amount);
         $this->total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->count();
         $this->is_buy = $zhaopian_order ? true:false;
+        $this->jsApiParameters = '1';
         //$this->is_buy=true;
         if(!$this->is_buy){
             $order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'],'user_id'=>$this->user_id, 'state'=>1))->find();
@@ -280,40 +281,21 @@ class ZhaopianController extends BaseController {
                 }
             }
 
-//            if($order['state'] == 1){
-//                $amount = ceil($order['amount'] *100);
-//
-//                $data['body'] = "红包照片";
-//                $data['attach'] = "红包照片";
-//                $data['order_sn'] = $order['order_sn'] ;
-//                $data['total_fee'] = $amount;
-//                $data['time_start'] = date('YmdHis');
-//                $data['time_expire'] =  date("YmdHis", time() + 600);
-//                $data['goods_tag'] = "WXG";
-//                // $openid = ;//session('openid')?session('openid'):cookie('openid');
-//                $data['openid'] = $order['openid'];
-////                print_r($data);
-////
-////                        $this->user = M('user')->find($zhaopian['user_id']);
-////
-////                        $this->title = "{$this->user['name']}凑红包";
-////                        $this->zhaopian = $zhaopian;
-////                        $this->order = $order;
-////                        $this->id = $id;
-//                try{
-//                    $this->jsApiParameters = jsapipay($data, false);
-//                }catch (\Exception $e){
-//                    sleep(1);
-//                    try{
-//                        $this->jsApiParameters = jsapipay($data, false);
-//                    }catch (\Exception $e){
-//
-//                    }
-//                }
+            if($order['state'] == 1){
+                $data['body'] = "红包照片";
+                $data['attach'] = "红包照片";
+                $data['order_sn'] = '2016102102458654121';
+                $data['total_fee'] = 100;
+                $data['time_start'] = date('YmdHis');
+                $data['time_expire'] =  date("YmdHis", time() + 600);
+                $data['goods_tag'] = "WXG";
+                // $openid = ;//session('openid')?session('openid'):cookie('openid');
+                $data['openid'] = cookie('openid');
 
-               // break;
-//            }
-
+                $jsApiParameters = jsapipay($data, false);
+                // print_r($jsApiParameters);
+                $this->jsApiParameters = $jsApiParameters;
+            }
             $this->order = $order;
         }
 
@@ -345,10 +327,6 @@ class ZhaopianController extends BaseController {
         $this->order_list = $order_list;
         $this->base_url = "http://$_SERVER[HTTP_HOST]";
         $this->id = $id;
-        $this->display();
-    }
-
-    public function pay(){
         $this->display();
     }
 
