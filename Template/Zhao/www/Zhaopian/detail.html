@@ -63,13 +63,13 @@
                 <if condition="$hongbao.total_pic gt 1">
                     <div class="main_visual">
                         <div class="flicking_con">
-                            <volist name="pic_list" id="pic" key=i>
+                            <volist name="pic_list" id="pic" key="i">
                             <a href="#">{$i}</a>
                             </volist>
                         </div>
                         <div class="main_image">
                             <ul>
-                                <volist name="pic_list" id="pic" key=i>
+                                <volist name="pic_list" id="pic" key="i">
                                 <li><span class="img_{$i}" style="background:url('/uploads/{$pic.pic_url}') center top no-repeat"></span></li>
                                     </volist>
                             </ul>
