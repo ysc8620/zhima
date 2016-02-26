@@ -19,8 +19,9 @@ class AutoController extends Controller {
         foreach($order_list as $order){
             $hongbao_send = M('zhaopian_pay')->where(array('id'=>$order['send_id']))->find();
             $hongbao_user = M('user')->find($order['zhaopian_user_id']);
+            $order_user = M('user')->find($order['user_id']);
             if(!$hongbao_send){
-                $order_user = M('user')->find($order['user_id']);
+
 //                $bao = array(
 //                    'mch_billno' =>get_order_sn(),
 //                    'send_name' => '红包照片',
@@ -38,8 +39,7 @@ class AutoController extends Controller {
                     'amount' => floor($order['amount'] * 0.98 * 100),
                     'desc'=>'恭喜您！您的照片刚刚"'.$order_user['name'].'"购买了'
                 );
-                print_r($bao);
-                die();
+
                 $send = $bao;
                 $send['user_id'] = $order['zhaopian_user_id'];
                 $send['addtime'] = time();
