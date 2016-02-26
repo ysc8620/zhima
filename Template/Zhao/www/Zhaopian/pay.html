@@ -72,6 +72,7 @@
             dataType:'json',
             success:function(result){
                 if(result.error==0){
+                    alert(result.message)
                     callpay(result.data);
                 }else if(result.error==1){
                     alert(result.message)
