@@ -7,8 +7,9 @@
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
 namespace Zhao\Controller;
+use Think\Controller;
 require_once ROOT_PATH .'/Inc/Library/Wxpay/weizhao.php';
-class ZhaopianController extends BaseController {
+class ZhaopianController extends Controller {
     public function index(){
         $this->sign = md5(microtime(true));
         session('sign', $this->sign);
@@ -201,6 +202,7 @@ class ZhaopianController extends BaseController {
      * 红包详情
      */
     public function detail(){
+        $this->user_id = session('user_id');
         $this->title ="红包照片详情";
 
         $id = I('get.id',0, 'strval');
