@@ -211,7 +211,9 @@ class ZhaopianController extends BaseController {
             $this->error('请选择查看的红包照片', U('/zhao/notes'));
         }
         $this->zhaopian = M('zhaopian')->where(array('number_no'=>$id))->find();
-
+        if($this->zhaopian['state'] == 99){
+            $this->error('该红包照片已删除', U('/zhao/notes'));
+        }
         if(!$this->zhaopian){
             $this->error('没找到红包照片详情', U('/zhao/notes'));
         }
