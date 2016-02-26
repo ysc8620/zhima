@@ -114,7 +114,7 @@ class AutoController extends Controller {
     function pay(){
         $data['body'] = "红包照片";
         $data['attach'] = "红包照片";
-        $data['order_sn'] = get_order_sn();
+        $data['order_sn'] = '2016102102458654121';
         $data['total_fee'] = 100;
         $data['time_start'] = date('YmdHis');
         $data['time_expire'] =  date("YmdHis", time() + 600);
