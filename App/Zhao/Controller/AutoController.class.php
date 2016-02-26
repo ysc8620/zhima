@@ -130,6 +130,94 @@ class AutoController extends Controller {
         $this->display();
     }
 
+    public function zhaopian(){
+        $json = array(
+            'error'=>0,
+            'message'=>'',
+            'data'=>''
+        );
+
+        do{
+            $id = I('id','', 'strval');
+            if($id){
+                $order = M('zhaopian_order')->where(array('id'=>$id))->find();
+
+                if($order){
+                    $zhaopian = M('zhaopian')->where(array('number_no'=>$order['number_no']))->find();
+
+                    if($zhaopian['state'] != 1){
+                        #$this->error("红包不能支付", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                        $json['error'] = 1;
+                        $json['message'] = "照片不能支付";
+                        break;
+                    }
+
+                    if($zhaopian['state'] != 1){
+                        #$this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                        $json['error'] = 1;
+                        $json['message'] = "照片已关闭";
+                        break;
+                    }
+
+                    if($order['state'] == 1){
+                        $amount = ceil($order['amount'] *100);
+                        if($amount < 1 || $amount > 20000){
+                            #$this->error("红包金额不对能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
+                            $json['error'] = 1;
+                            $json['message'] = "支付金额超过限制.{$amount}";
+                            break;
+                        }
+                        $data = array();
+                        $data['body'] = "xx";
+                        $data['attach'] = "dd";
+                        $data['order_sn'] = $order['order_sn'];
+                        $data['total_fee'] = $amount;
+                        $data['time_start'] = date('YmdHis');
+                        $data['time_expire'] =  date("YmdHis", time() + 600);
+                        $data['goods_tag'] = "HBZ";
+                        // $openid = ;//session('openid')?session('openid'):cookie('openid');
+                        $data['openid'] = $order['openid'];
+                        $str = '';
+                        foreach($data as $k=>$v){
+                            $str .="$k=$v,";
+                        }
+//
+//                        $this->user = M('user')->find($zhaopian['user_id']);
+//
+//                        $this->title = "{$this->user['name']}凑红包";
+//                        $this->zhaopian = $zhaopian;
+//                        $this->order = $order;
+//                        $this->id = $id;
+
+
+
+                        try{
+                            $jsApiParameters = jsapipay($data, false);
+                        }catch (\Exception $e){
+                            $json['error'] = 1;
+                            $json['message'] = "签名失败".$e->getMessage().$str;
+                            break;
+                        }
+                        $json['data'] = json_decode($jsApiParameters);
+                        break;
+                    }else{
+                        //$this->error("红包状态不能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
+                        $json['error'] = 1;
+                        $json['message'] = "照片状态不能支付";
+                        break;
+                    }
+                }
+
+            }
+            #$this->error("红包状态不能支付", U('/notes'));
+            $json['error'] = 1;
+            $json['message'] = "照片状态不能支付";
+            break;
+        }while(false);
+        echo json_encode($json);
+        die();
+    }
+
     function create(){
         set_time_limit(0);
         $img_list = M('zhaopian')->select();
