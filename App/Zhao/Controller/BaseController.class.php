@@ -14,8 +14,8 @@ class BaseController extends Controller {
      * 系统初始化
      */
     public function _initialize(){
-/*
-        $this->user_id = session('user_id');
+
+        $this->user_id = session('user_id');/*
 //        $this->user_id = 10001;
 ////
 //        return true;
