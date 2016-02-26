@@ -14,6 +14,7 @@ require_once ROOT_PATH .'/Inc/Library/Wxpay/weizhao.php';
 class AutoController extends Controller {
     // 自动发送红包
     function sendhongbao(){
+        header("Content-type:text/html;charset=utf-8");
         $order_list = M('zhaopian_order')->where(array('state'=>2, 'is_send_zhaopian'=>0))->select();
 
         foreach($order_list as $order){
@@ -86,7 +87,7 @@ class AutoController extends Controller {
                     f_log($log, ROOT_PATH.'Runtime/Logs/zhaopian.log');
                     echo $log."<br/>";
                 }else{
-
+                    print_r($data);
                     $log = "发送红包失败, 红包编号：{$order['id']},发送编号：{$hongbao_send['id']}";
                     f_log($log, ROOT_PATH.'Runtime/Logs/zhaopian.log');
                     echo $log."<br/>";
