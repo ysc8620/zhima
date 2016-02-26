@@ -131,7 +131,7 @@ filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')
 .order_list{ width:100%; }
 .order_list .header{ width:96%; margin:0 auto; font-size:14px; line-height:30px;}
 .order_list .block{ width:99%; margin:4px auto;}
-.order_list .block .pic{ width:20%; float:left; height:auto; background:#3a3a3a; overflow:hidden; vertical-align:middle; text-align:center;
+.order_list .block .pic{ width:25%; float:left; height:auto; background:#3a3a3a; overflow:hidden; vertical-align:middle; text-align:center;
 
 /*非IE的主流浏览器识别的垂直居中的方法*/
 

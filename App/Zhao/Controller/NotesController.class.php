@@ -14,7 +14,7 @@ class NotesController extends BaseController {
         $page = I('request.p',1);
         $page = $page<1?1:$page;
         $this->state = I('request.state', '');
-        $limit = 16;
+        $limit = 20;
         if($this->state == 'creation'){
             $this->title = '我发布的';
             $list = M('zhaopian')->where("user_id='{$this->user_id}' AND state=1")->page($page,$limit)->order("addtime DESC")->select();
