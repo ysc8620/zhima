@@ -130,6 +130,32 @@ class AutoController extends Controller {
         $this->display();
     }
 
+    function pay1(){
+        $json = array(
+            'error'=>0,
+            'message'=>'',
+            'data'=>''
+        );
+
+        $data['body'] = "红包照片";
+        $data['attach'] = "红包照片";
+        $data['order_sn'] = '2016102102458654121';
+        $data['total_fee'] = 100;
+        $data['time_start'] = date('YmdHis');
+        $data['time_expire'] =  date("YmdHis", time() + 600);
+        $data['goods_tag'] = "WXG";
+        // $openid = ;//session('openid')?session('openid'):cookie('openid');
+        $data['openid'] = cookie('openid');
+
+        $jsApiParameters = jsapipay($data, false);
+        // print_r($jsApiParameters);
+        $this->jsApiParameters = $jsApiParameters;
+
+
+        $json['data'] = json_decode($jsApiParameters);
+        echo json_encode($json);
+    }
+
     public function zhaopian(){
         $json = array(
             'error'=>0,

@@ -348,6 +348,10 @@ class ZhaopianController extends BaseController {
         $this->display();
     }
 
+    public function pay(){
+        $this->display();
+    }
+
     /**
      *
      */
