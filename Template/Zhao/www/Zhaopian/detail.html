@@ -70,11 +70,11 @@
                         <div class="main_image">
                             <ul>
                                 <volist name="pic_list" id="pic" key="i">
-                                <li>/uploads/{$pic.pic_url}<span class="img_{$i}" style="background:url('/uploads/{$pic.pic_url}') center top no-repeat"></span></li>
-                                    </volist>
+                                <li><span class="img_{$i}" style="background:url('/uploads/{$pic.pic_url}') center top no-repeat"></span></li>
+                               </volist>
                             </ul>
-                            <a href="javascript:;" id="btn_prev"></a>
-                            <a href="javascript:;" id="btn_next"></a>
+                            <a href="javascript:;" style="display: none" id="btn_prev"></a>
+                            <a href="javascript:;"  style="display: none"  id="btn_next"></a>
                         </div>
                     </div>
                     <else/>
