@@ -87,6 +87,7 @@ class AutoController extends Controller {
                     f_log($log, ROOT_PATH.'Runtime/Logs/zhaopian.log');
                     echo $log."<br/>";
                 }else{
+                    echo "amount:".$order['amount'];
                     print_r($data);
                     $log = "发送红包失败, 红包编号：{$order['id']},发送编号：{$hongbao_send['id']}";
                     f_log($log, ROOT_PATH.'Runtime/Logs/zhaopian.log');
