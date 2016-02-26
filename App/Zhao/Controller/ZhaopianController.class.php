@@ -245,7 +245,7 @@ class ZhaopianController extends BaseController {
         $total_amount = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->sum('amount');
         $this->total_amount = floatval($total_amount);
         $this->total_num = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'], 'state'=>2))->count();
-        $this->is_buy = $zhaopian_order ? true:false;
+        $this->is_buy = $zhaopian_order ? 1:0;
         $this->jsApiParameters = '1';
         //$this->is_buy=true;
         if(!$this->is_buy){
