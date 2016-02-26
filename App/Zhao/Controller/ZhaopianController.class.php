@@ -300,7 +300,11 @@ class ZhaopianController extends BaseController {
             }
             $this->order = $order;
         }
-
+        if($this->is_buy ){
+            if($this->zhaopian['total_pic'] > 1){
+                $this->pic_list = M('zhaopian_pic')->where(array('zhaopian_id'=>$this->zhaopian['id']))->select();
+            }
+        }
 
         if($this->hongbao['user_id'] == $this->user_id){
             $this->share_title = "我发布了{$this->zhaopian['total_pic']}张私照，想看吗？";

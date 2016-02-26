@@ -1,5 +1,10 @@
 <include file="Public:header" />
 
+<if condition="$is_buy">
+<script type="text/javascript" src="/js/jquery.event.drag-1.5.min.js"></script>
+<script type="text/javascript" src="/js/jquery.touchSlider.js"></script>
+</if>
+
 <div class="container">
 
     <input type="hidden" name="id" value="{$zhaopian.id}" />
@@ -55,7 +60,27 @@
             </div>
             <div class="cl"></div>
             <div class="detail_body1 cl" style="text-align: center; vertical-align: middle" >
-                <img src="/uploads/{$zhaopian.pic_url}" style=" vertical-align: middle; text-align: center" />
+                <if condition="$hongbao.total_pic gt 1">
+                    <div class="main_visual">
+                        <div class="flicking_con">
+                            <volist name=$pic_list id="pic" key=i>
+                            <a href="#">{$i}</a>
+                            </volist>
+                        </div>
+                        <div class="main_image">
+                            <ul>
+                                <volist name=$pic_list id="pic" key=i>
+                                <li><span class="img_{$i}" style="background:url('/uploads/{$pic.pic_url}') center top no-repeat"></span></li>
+                                    </volist>
+                            </ul>
+                            <a href="javascript:;" id="btn_prev"></a>
+                            <a href="javascript:;" id="btn_next"></a>
+                        </div>
+                    </div>
+                    <else/>
+                    <img src="/uploads/{$zhaopian.pic_url}" style=" vertical-align: middle; text-align: center" />
+                </if>
+
             </div>
         </div>
     </if>
