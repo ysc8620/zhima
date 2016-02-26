@@ -17,5 +17,8 @@ class IndexController extends BaseController {
 		//session('user',null);
     }
 
+    public function pay(){
+        $this->display();
+    }
 
 }
