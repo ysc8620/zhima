@@ -36,7 +36,7 @@
         <p style="color: #999">
             <input type="hidden" name="amount" value="{$order.amount}" />
             <span style="color: #E08100; font-size: 28px; padding: 4px 0" class="amount_block">{$order.amount}元</span> <br /> <br />
-            赏红包看照片,<if condition="$zhaopian.is_rand eq 1">固定金额<else/>金额随机</if></p>
+            赏红包看照片,<if condition="$zhaopian.is_rand eq 1">金额随机<else/>固定金额</if></p>
         <input type="button" class="btn btn_cou mc" onclick="jsApiCall('{$order.id}');" data-role="set_pay_block" style="border: none; width: 80%; height: 36px; margin-top: 12px; margin-bottom: 12px; line-height: 36px;" value="赏" />
        </span>
             </div>
