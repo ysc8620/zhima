@@ -77,8 +77,10 @@
 
 <include file="Public:foot" />
 <script type="text/javascript">
+    if({$is_buy}){
+        var hide_index = setTimeout(function(){$('.detail_info1').fadeOut('slow'); $('.detail_more_block').fadeOut('slow');}, 5000);
+    }
 
-    var hide_index = setTimeout(function(){$('.detail_info1').fadeOut('slow'); $('.detail_more_block').fadeOut('slow');}, 5000);
     $('.own_block').click(function(){
         if($('.detail_info1').is(":hidden")){
             clearTimeout(hide_index);
@@ -99,7 +101,7 @@
     $('.detail_body1').css('height', height);
     $('.detail_body1').css('line-height', height+'px');
 
-    $('[data-role="detail_menu"], .detail_body1').click(function(){
+    $('[data-role="detail_menu"]').click(function(){
         var src = $(this).find('img.ico').attr('src');
         if(src.indexOf('up.png') >= 0 ){
             $('.detail_menu_body').removeClass('hide').addClass('show');
