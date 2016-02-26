@@ -99,7 +99,7 @@
     $('.detail_body1').css('height', height);
     $('.detail_body1').css('line-height', height+'px');
 
-    $('[data-role="detail_menu"]').click(function(){
+    $('[data-role="detail_menu"], .detail_body1').click(function(){
         var src = $(this).find('img.ico').attr('src');
         if(src.indexOf('up.png') >= 0 ){
             $('.detail_menu_body').removeClass('hide').addClass('show');
