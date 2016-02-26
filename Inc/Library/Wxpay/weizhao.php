@@ -209,7 +209,7 @@ class PayNotifyCallBack extends WxPayNotify
                             're_user_name'=>$zhaopian_user['name'],
                             'openid' => $zhaopian['openid'],
                             'amount' => floor($order['amount'] * 0.98 * 100),
-                            'desc'=>'恭喜您！您在照片刚刚"'.$user['name'].'"购买了'
+                            'desc'=>'恭喜您！您的照片刚刚"'.$user['name'].'"购买了'
                         );
 
                         $send = $bao;

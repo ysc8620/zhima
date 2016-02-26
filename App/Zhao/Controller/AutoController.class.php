@@ -36,8 +36,10 @@ class AutoController extends Controller {
                     're_user_name'=>$hongbao_user['name'],
                     'openid' => $order['zhaopian_openid'],
                     'amount' => floor($order['amount'] * 0.98 * 100),
-                    'desc'=>'恭喜您！您在照片刚刚"'.$order_user['name'].'"购买了'
+                    'desc'=>'恭喜您！您的照片刚刚"'.$order_user['name'].'"购买了'
                 );
+                print_r($bao);
+                die();
                 $send = $bao;
                 $send['user_id'] = $order['zhaopian_user_id'];
                 $send['addtime'] = time();

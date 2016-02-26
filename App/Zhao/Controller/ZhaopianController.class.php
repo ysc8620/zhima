@@ -248,7 +248,7 @@ class ZhaopianController extends BaseController {
         $this->is_buy = $zhaopian_order ? 1:0;
         $this->jsApiParameters = '1';
         //$this->is_buy=true;
-        if(!$this->is_buy){
+        if(!$this->is_buy ){
             $order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'],'user_id'=>$this->user_id, 'state'=>1))->find();
             if(!$order){
                 $user = M('user')->find($this->user_id);
