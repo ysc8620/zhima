@@ -202,7 +202,6 @@ class ZhaopianController extends Controller {
      * 红包详情
      */
     public function detail(){
-        $this->user_id = session('user_id');
         $this->title ="红包照片详情";
 
         $id = I('get.id',0, 'strval');
@@ -279,7 +278,8 @@ class ZhaopianController extends Controller {
                 if($this->zhaopian['is_rand']>0){
                     $amount = number_format($this->randomFloat(0.5,5),2);
                     $order['amount'] = $amount;
-                    M('zhaopian_order')->where(array('id'=>$order['id']))->save(array('amount'=>$amount));
+                    $order['order_sn'] = get_order_sn();
+                    M('zhaopian_order')->where(array('id'=>$order['id']))->save(array('amount'=>$amount, 'order_sn'=>$order['order_sn']));
                 }
             }
 
