@@ -9,7 +9,7 @@
 namespace Zhao\Controller;
 use Think\Controller;
 require_once ROOT_PATH .'/Inc/Library/Wxpay/weizhao.php';
-class ZhaopianController extends Controller {
+class ZhaopianController extends BaseController {
     public function index(){
         $this->sign = md5(microtime(true));
         session('sign', $this->sign);
