@@ -180,6 +180,23 @@ class ZhaopianController extends BaseController {
 
         return $elapse;
     }
+
+    function getRandomAmount(){
+        $num = mt_rand(1,10);
+        //
+        if($num <= 5){
+            $amount = $this->randomFloat(1.05, 1.5);
+        }elseif(5 < $num && $num <= 7){
+            $amount = $this->randomFloat(1.5, 2);
+        }elseif($num < 7 && $num <= 9){
+            $amount = $this->randomFloat(2, 3);
+        }else{
+            $amount = $this->randomFloat(3, 5);
+        }
+
+        return number_format($amount, 2);
+    }
+
     function randomFloat($min = 0, $max = 1) {
         return $min + mt_rand() / mt_getrandmax() * ($max - $min);
     }
@@ -255,7 +272,7 @@ class ZhaopianController extends BaseController {
             if(!$order){
                 $user = M('user')->find($this->user_id);
                 if($this->zhaopian['is_rand']>0){
-                    $amount = number_format($this->randomFloat(1.05,5),2);
+                    $amount = $this->getRandomAmount();
                 }else{
                     $amount = $this->zhaopian['min_amount'];
                 }
@@ -278,7 +295,7 @@ class ZhaopianController extends BaseController {
                 }
             }else{
                 if($this->zhaopian['is_rand']>0){
-                    $amount = number_format($this->randomFloat(1.05,5),2);
+                    $amount = $this->getRandomAmount();
                     $order['amount'] = $amount;
                     $order['order_sn'] = get_order_sn();
                     M('zhaopian_order')->where(array('id'=>$order['id']))->save(array('amount'=>$amount, 'order_sn'=>$order['order_sn']));
