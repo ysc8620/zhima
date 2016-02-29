@@ -183,7 +183,7 @@
     var width= $(document).width();
 
     var img_height = parseInt('{$height}');
-    var img_width = parseInt('($width)');
+    var img_width = parseInt('{$width}');
     alert(width/img_width + '=='+height/img_height)
     if(width/img_width <= height/img_height){
         $('#preview').css('height', height);
