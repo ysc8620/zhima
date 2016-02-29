@@ -15,7 +15,7 @@
     <div class="buy_block" >
         <div class="detail_bg_block">&nbsp;</div>
         <div class="detail_bg">
-            <img class="preview"  id="preview" src="{$gaosi_img}" alt="{$zhaopian.remark}" />
+            <img class="preview"  id="preview" style="width: 100%;" src="{$gaosi_img}" alt="{$zhaopian.remark}" />
         </div>
         <div class="detail_info">
             <div class="mt40 cl" style="margin-top: 4px;"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
@@ -181,8 +181,7 @@
     });
     var height = $(document).height();
     var width= $(document).width();
-    $('.preview').css('max-width', width+'px');
-    $('.preview').css('max-height', height+'px');
+    $('.preview').css('height', height+'px');
     $('.detail_body1').css('height', height+'px');
     $('.detail_body1').css('line-height', height+'px');
 
