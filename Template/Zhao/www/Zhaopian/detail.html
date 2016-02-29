@@ -184,7 +184,7 @@
 
     var img_height = parseInt('{$height}');
     var img_width = parseInt('($width)');
-    if(img_width/width >= img_height/height){
+    if(width/img_width >= height/img_height){
         $('#preview').css('height', height);
         $('#preview').css('left', ($('#preview').width() - width )/2);
     }else{
@@ -192,8 +192,8 @@
         $('#preview').css('width', height);
     }
 
-    $('.detail_body1').css('height', height+'px');
-    $('.detail_body1').css('line-height', height+'px');
+    $('.detail_body1').css('height', height);
+    $('.detail_body1').css('line-height', height);
 
     $('[data-role="detail_menu"]').click(function(){
         var src = $(this).find('img.ico').attr('src');
