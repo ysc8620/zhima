@@ -184,8 +184,7 @@
 
     var img_height = parseInt('{$height}');
     var img_width = parseInt('{$width}');
-    alert(width/img_width + '=='+height/img_height)
-    if(width/img_width <= height/img_height){
+    if(width/img_width >= height/img_height){
         $('#preview').css('height', height);
         $('#preview').css('left', ($('#preview').width() - width )/2);
         alert('111='+($('#preview').width() - width )/2);
