@@ -186,8 +186,8 @@
     var img_width = parseInt('{$width}');
     if(img_width/width >= img_height/height){
         $('#preview').css('height', height);
-        alert($('#preview').width() +'=='+width);
-        $('#preview').css('left', ($('#preview').width() - width )/2);
+        $('#preview').css('width', img_width * img_width/width);
+        $('#preview').css('left', (img_width * img_width/width - width )/2);
         alert('111='+($('#preview').width() - width )/2);
     }else{
         $('#preview').css('top', ($('#preview').height() - height )/2);
