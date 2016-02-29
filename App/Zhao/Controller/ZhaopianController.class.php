@@ -268,6 +268,17 @@ class ZhaopianController extends BaseController {
         $this->jsApiParameters = '1';
         //$this->is_buy=true;
         if(!$this->is_buy ){
+            $img_path = ROOT_PATH .'uploads/'. $this->zhaopian['pic_url'];
+            $this->width = 750;
+            $this->height = 1334;
+            if(file_exists($img_path) && is_file($img_path)){
+                // 获取图片宽高
+                $img = new \Think\Image(2);
+                $img->open($img_path);
+                $this->width = $img->width();
+                $this->height = $img->height();
+            }
+
             $order = M('zhaopian_order')->where(array('zhaopian_id'=>$this->zhaopian['id'],'user_id'=>$this->user_id, 'state'=>1))->find();
             if(!$order){
                 $user = M('user')->find($this->user_id);
