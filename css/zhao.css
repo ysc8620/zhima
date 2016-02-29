@@ -162,13 +162,7 @@ filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')
 
 }
 
-.detail_bg_block{ width:100%; height:100%; display: block; position: absolute; left:0; top:0; background:#333; z-index:100;
-
-filter:alpha(opacity=80);
-	-moz-opacity:0.8;
-	-khtml-opacity: 0.8;
-	opacity: 0.8;
-	}
+.detail_bg_block{ width:100%; height:100%; display: block; position: absolute; left:0; top:0; background:#333; z-index:100;filter:alpha(opacity=80);-moz-opacity:0.8;-khtml-opacity: 0.8;opacity: 0.8;}
 .detail_info { position:absolute; z-index:200; top:12px; text-align:center; width:100%;}
 .detail_info1 {background: #000; text-align:center; right:0; padding:6px; position: absolute; top: 0; left: 0; z-index: 100;}
 .detail_body1{ width:100%; text-align:center; margin:2px auto;}
@@ -178,8 +172,8 @@ input.num{ margin:0!important; vertical-align:middle; border:1px #979797 solid; 
 input.jian{ margin:0!important; vertical-align:middle; height:36px; line-height:30px;  background:#fff; border:1px #979797 solid; -webkit-border-radius:3px;border-radius:3px; padding:0 12px;}
 input.jia{margin:0!important;height:36px; vertical-align:middle; line-height:30px; background:#fff; border:1px #979797 solid; -webkit-border-radius:3px;border-radius:3px; padding:0 12px;}
 .pagination{list-style:none;padding:0;display:inline-block;vertical-align:bottom;}
-.pagination li{display:inline-block;border:solid 1px #999;border-radius:4px; height: 50px; line-height: 50px;}
-.pagination a{color:#333; font-size:16px;padding:0 8px;line-height:50px;display:block;transition:all 1s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
+.pagination li{float: left}
+.pagination a{ background:#161616; height: 40px; line-height: 40px; border:#4a4a4a 1px solid; -webkit-border-radius:3px;border-radius:3px; font-size:16px;  color:#aa6c08!important; width:100%; text-align:center; margin:0 auto; display:block;transition:all 1s cubic-bezier(0.175, 0.885, 0.32, 1) 0s;}
 .pagination a.prev, .pagination a.next{ width: 85px; text-align: center;}
 .pagination .disabled a:link, .pagination .disabled a:visited, .pagination .disabled a:hover{cursor:not-allowed;pointer-events:none;color:#f1f1f1;}
 .pagination .active{pointer-events:none;}
