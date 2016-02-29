@@ -184,18 +184,15 @@
 
     var img_height = parseInt('{$height}');
     var img_width = parseInt('{$width}');
-    alert(width+':'+img_width+'='+height+':'+img_height);
 
     if(img_width/width >= img_height/height){
         $('#preview').css('height', height);
         $('#preview').css('width', height/img_height * img_width);
         $('#preview').css('left', "-"+( height/img_height * img_width - width )/2);
-
-        alert('111='+img_width * img_width/width);
     }else{
-        $('#preview').css('top', "-"+($('#preview').height() - height )/2);
         $('#preview').css('width', width);
-        alert('222='+($('#preview').height() - height )/2);
+        $('#preview').css('height', width/img_width * img_height);
+        $('#preview').css('top', "-"+( width/img_width * img_height - height )/2);
     }
 
 
