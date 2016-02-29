@@ -38,7 +38,7 @@ class AutoController extends Controller {
                     're_user_name'=>$hongbao_user['name'],
                     'openid' => $order['zhaopian_openid'],
                     'amount' => floor($order['amount'] * 0.98 * 100),
-                    'desc'=>'恭喜您！您的照片刚刚"'.$order_user['name'].'"购买了'
+                    'desc'=> "好消息！“{$order_user['name']}”刚刚购买了您的私货照片。"
                 );
 
                 $send = $bao;
@@ -74,7 +74,7 @@ class AutoController extends Controller {
                     're_user_name'=>$hongbao_send['re_user_name'],
                     'openid' => $order['zhaopian_openid'],
                     'amount' => floor($order['amount'] * 0.98 * 100),
-                    'desc'=>'恭喜您！您在照片刚刚"'.$order_user['name'].'"购买了'
+                    'desc'=>"好消息！“{$order_user['name']}”刚刚购买了您的私货照片。"
                 );
 
                 $data = sendPay($bao);
