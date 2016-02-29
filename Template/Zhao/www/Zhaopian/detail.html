@@ -188,9 +188,8 @@
 
     if(img_width/width >= img_height/height){
         $('#preview').css('height', height);
-        $('#preview').css('width', img_width * img_width/width);
-        $('#preview').css('left', "-"+(img_width * img_width/width - width )/2);
-
+        $('#preview').css('width', height/img_height * img_width);
+        $('#preview').css('left', "-"+( height/img_height * img_width - width )/2);
 
         alert('111='+img_width * img_width/width);
     }else{
