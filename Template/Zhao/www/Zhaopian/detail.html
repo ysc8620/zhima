@@ -187,10 +187,14 @@
     if(width/img_width >= height/img_height){
         $('#preview').css('height', height);
         $('#preview').css('left', ($('#preview').width() - width )/2);
+        alert('111='+($('#preview').width() - width )/2);
     }else{
         $('#preview').css('top', ($('#preview').height() - height )/2);
         $('#preview').css('width', height);
+        alert('222='+($('#preview').height() - height )/2);
     }
+
+
 
     $('.detail_body1').css('height', height);
     $('.detail_body1').css('line-height', height);
