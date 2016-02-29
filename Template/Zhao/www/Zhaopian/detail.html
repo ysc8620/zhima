@@ -62,7 +62,6 @@
             <div class="cl"></div>
             <div class="detail_body1 cl" style="text-align: center; vertical-align: middle" >
                 <if condition="$zhaopian[total_pic] gt 1">
-                    ------------------
                     <div class="main_visual">
                         <div class="flicking_con">
                             <volist name="pic_list" id="pic" key="i">
@@ -80,7 +79,6 @@
                         </div>
                     </div>
                     <else/>
-                    /uploads/{$zhaopian.pic_url}=====
                     <img src="/uploads/{$zhaopian.pic_url}" style=" vertical-align: middle; text-align: center" />
                 </if>
 
@@ -188,17 +186,17 @@
     var img_width = parseInt('{$width}');
 
     if(img_width/width >= img_height/height){
-        $('#preview').css('height', height);
-        $('#preview').css('width', height/img_height * img_width);
-        $('#preview').css('left', "-"+( height/img_height * img_width - width )/2);
+        $('#preview').css('height', height+'px');
+        $('#preview').css('width', (height/img_height * img_width)+'px');
+        $('#preview').css('left', "-"+( height/img_height * img_width - width )/2+'px');
     }else{
-        $('#preview').css('width', width);
-        $('#preview').css('height', width/img_width * img_height);
-        $('#preview').css('top', "-"+( width/img_width * img_height - height )/2);
+        $('#preview').css('width', width+'px');
+        $('#preview').css('height', width/img_width * img_height+'px');
+        $('#preview').css('top', "-"+( width/img_width * img_height - height )/2+'px');
     }
 
-    $('.detail_body1').css('height', height);
-    $('.detail_body1').css('line-height', height);
+    $('.detail_body1').css('height', height+'px');
+    $('.detail_body1').css('line-height', height+'px');
 
     $('[data-role="detail_menu"]').click(function(){
         var src = $(this).find('img.ico').attr('src');
