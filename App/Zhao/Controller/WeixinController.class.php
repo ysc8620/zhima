@@ -154,27 +154,42 @@ class WeixinController extends Controller {
 
         do{
             $id = I('id','', 'strval');
+            $amount = I('amount',0,'floatval');
             if($id){
-                $order = M('zhaopian_order')->where(array('id'=>$id))->find();
+                $zhaopian = M('zhaopian')->where(array('id'=>$id))->find();
+                if(!$zhaopian){
+                    $json['error'] = 1;
+                    $json['message'] = "找不到要购买的照片.";
+                    break;
+                }
+
+                if($zhaopian['state'] != 1){
+                    #$this->error("红包不能支付", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                    $json['error'] = 1;
+                    $json['message'] = "照片不能支付";
+                    break;
+                }
+
+                if($zhaopian['state'] != 1){
+                    #$this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                    $json['error'] = 1;
+                    $json['message'] = "照片已关闭";
+                    break;
+                }
+
+                $order = M('zhaopian_order')->where(array('zhaopian_id'=>$id, 'user_id'=>$this->user_id, 'state'=>2))->find();
 
                 if($order){
-                    $zhaopian = M('zhaopian')->where(array('number_no'=>$order['number_no']))->find();
+                    $json['error'] = 1;
+                    $json['message'] = "您已经购买过该照片";
+                    break;
+                }
+                if(true){
 
-                    if($zhaopian['state'] != 1){
-                        #$this->error("红包不能支付", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                        $json['error'] = 1;
-                        $json['message'] = "照片不能支付";
-                        break;
-                    }
 
-                    if($zhaopian['state'] != 1){
-                        #$this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                        $json['error'] = 1;
-                        $json['message'] = "照片已关闭";
-                        break;
-                    }
 
-                    if($order['state'] == 1){
+
+
                         $amount = ceil($order['amount'] *100);
                         if($amount < 1 || $amount > 20000){
                             #$this->error("红包金额不对能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
@@ -221,7 +236,7 @@ class WeixinController extends Controller {
                         $json['message'] = "照片状态不能支付";
                         break;
                     }
-                }
+
 
             }
             #$this->error("红包状态不能支付", U('/notes'));
