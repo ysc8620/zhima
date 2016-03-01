@@ -72,7 +72,6 @@ class BaseController extends Controller {
         }
 
         $signPackage = \Wechat\Wxapi::getSignPackage();
-        print_r($signPackage);
         $this->signPackage = $signPackage;
         $this->share_title = "凑红包, 有福利, 你懂得";
         $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
