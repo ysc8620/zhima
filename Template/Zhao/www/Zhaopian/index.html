@@ -83,15 +83,16 @@
             "chooseImage",
             "uploadImage"
         ]
-    });
+    });      alert('xxx');
 
-    wx.ready(function () {
+    wx.ready(function () {      alert('xxx');
         var images = {
             localId: [],
             serverId: []
         };
 
         $('.select_pic').click(function () {
+            alert('xxx');
             wx.chooseImage({
                 success: function (res) {
                     //images.localId = res.localIds;
