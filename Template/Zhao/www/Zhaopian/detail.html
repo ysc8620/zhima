@@ -71,7 +71,7 @@
                         <div class="main_image">
                             <ul>
                                 <volist name="pic_list" id="pic" key="i">
-                                <li><span class="img_{$i}" style="background:url('/uploads/{$pic.pic_url}') center center no-repeat"></span></li>
+                                <li><span class="img_{$i}" ><img src="/uploads/{$pic.pic_url}" /> </span></li>
                                </volist>
                             </ul>
                             <a href="javascript:;" style="display: none" id="btn_prev"></a>
