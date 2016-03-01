@@ -188,7 +188,8 @@
 
     $('.main_visual').css('height', height+'px');
     $('.main_image').css('height', height+'px');
-
+    $('.main_image img').css('max-height', height+'px');
+    $('.main_image img').css('max-width', width+'px');
     if(img_width/width >= img_height/height){
         $('#preview').css('height', height+'px');
         $('#preview').css('width', (height/img_height * img_width)+'px');
