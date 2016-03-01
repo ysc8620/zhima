@@ -185,6 +185,10 @@
     var img_height = parseInt('{$height}');
     var img_width = parseInt('{$width}');
 
+
+    $('.main_visual').css('height', height+'px');
+    $('.main_image').css('height', height+'px');
+
     if(img_width/width >= img_height/height){
         $('#preview').css('height', height+'px');
         $('#preview').css('width', (height/img_height * img_width)+'px');
