@@ -154,7 +154,6 @@ class WeixinController extends Controller {
 
         do{
             $id = I('id','', 'strval');
-            $amount = I('amount',0,'floatval');
             if($id){
                 $zhaopian = M('zhaopian')->where(array('id'=>$id))->find();
                 if(!$zhaopian){
@@ -185,11 +184,6 @@ class WeixinController extends Controller {
                     break;
                 }
                 if(true){
-
-
-
-
-
                         $amount = ceil($order['amount'] *100);
                         if($amount < 1 || $amount > 20000){
                             #$this->error("红包金额不对能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
