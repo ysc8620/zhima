@@ -113,17 +113,18 @@
                                 $(".list_img_add").before('<div class="list_img fl"> <img src="'+n+'" /> <div class="del" data-id="'+n+'"><img src="/images/delete-icon.png"  style="width: 20px; position: absolute; right: 4px; bottom: 4px;" /></div></div>');
                             }
                         });
-                    });
-                    $('.list_img .del').unbind('click');
-                    $('.list_img .del').click(function(){
-                        var url = $(this).attr('data-id');
-                        $.each(images.localId, function(i, n){
-                            if(n == url){
-                                images.localId.splice(i, 1);
-                            }
-                        });
-                        $(this).parent().remove();
 
+                        $('.list_img .del').unbind('click');
+                        $('.list_img .del').click(function(){
+                            var url = $(this).attr('data-id');
+                            $.each(images.localId, function(i, n){
+                                if(n == url){
+                                    images.localId.splice(i, 1);
+                                }
+                            });
+                            $(this).parent().remove();
+
+                        });
                     });
                 }
             });
