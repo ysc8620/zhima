@@ -91,8 +91,10 @@
             serverId: []
         };
 
-        $('.select_pic').click(function () {
-            alert('1');
+        $('.select_pic').click(function (e) {
+            event.preventDefault(); //阻止默认动作即该链接不会跳转。
+            event.stopPropagation();//阻止冒泡事件，上级的单击事件不会被调用
+           //不仅阻止了事件往上冒泡，而且阻止了事件本身
             wx.chooseImage({
                 success: function (res) {
                     //images.localId = res.localIds;
@@ -124,6 +126,7 @@
                     });
                 }
             });
+            return false;
         });
 
         function upload(n){
