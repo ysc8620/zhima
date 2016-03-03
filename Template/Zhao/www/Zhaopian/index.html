@@ -22,12 +22,12 @@
             <input type="hidden" name="is_rand" value="1" />
             <input type="hidden" name="media_ids" value="" />
 		<ul>
-			<div class="row select_pic bg_img" style="height: 240px; text-align: center; background: #161616; overflow: hidden">
+			<div class="row select_pic_tebie bg_img" style="height: 240px; text-align: center; background: #161616; overflow: hidden">
                 <img id="preview" name="preview" src="/images/bg.png" style="width: 120px; vertical-align: middle; display: block; margin: 50px auto;" />
 		     </div>
 		</ul>
         <ul class="mb10 list_img_block hide">
-            <div class="list_img_add fl select_pic"><img src="/images/plus-icon.png" style="height: 56px; margin-top: 10px" /> </div>
+            <div class="list_img_add fl select_pic_tebie"><img src="/images/plus-icon.png" style="height: 56px; margin-top: 10px" /> </div>
             <div class="cl"></div>
         </ul>
 		<ul>
@@ -91,7 +91,7 @@
             serverId: []
         };
 
-        $('.select_pic').click(function (event) {
+        $('.select_pic_tebie').click(function (event) {
             event.preventDefault(); //阻止默认动作即该链接不会跳转。
             event.stopPropagation();//阻止冒泡事件，上级的单击事件不会被调用
            //不仅阻止了事件往上冒泡，而且阻止了事件本身
