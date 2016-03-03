@@ -22,12 +22,12 @@
             <input type="hidden" name="is_rand" value="1" />
             <input type="hidden" name="media_ids" value="" />
 		<ul>
-			<div class="row select_pic_tebie bg_img" style="height: 240px; text-align: center; background: #161616; overflow: hidden">
+			<div class="row select_pic_tebie bg_img" id="chooseImage" style="height: 240px; text-align: center; background: #161616; overflow: hidden">
                 <img id="preview" name="preview" src="/images/bg.png" style="width: 120px; vertical-align: middle; display: block; margin: 50px auto;" />
 		     </div>
 		</ul>
         <ul class="mb10 list_img_block hide">
-            <div class="list_img_add fl select_pic_tebie"><img src="/images/plus-icon.png" style="height: 56px; margin-top: 10px" /> </div>
+            <div class="list_img_add fl select_pic_tebie" id="chooseImage1"><img src="/images/plus-icon.png" style="height: 56px; margin-top: 10px" /> </div>
             <div class="cl"></div>
         </ul>
 		<ul>
@@ -91,10 +91,10 @@
             serverId: []
         };
 
-        $('.select_pic_tebie').click(function (event) {
+        document.querySelector('#chooseImage1').onclick = function (event) {
             event.preventDefault(); //阻止默认动作即该链接不会跳转。
             event.stopPropagation();//阻止冒泡事件，上级的单击事件不会被调用
-           //不仅阻止了事件往上冒泡，而且阻止了事件本身
+            //不仅阻止了事件往上冒泡，而且阻止了事件本身
             wx.chooseImage({
                 success: function (res) {
                     //images.localId = res.localIds;
@@ -109,7 +109,6 @@
                                 $('#preview').css('max-height','236px');
                                 $('#preview').css('max-width','100%');
                             }else{
-
                                 $(".list_img_add").before('<div class="list_img fl"> <img src="'+n+'" /> <div class="del" data-id="'+n+'"><img src="/images/delete-icon.png"  style="width: 20px; position: absolute; right: 4px; bottom: 4px;" /></div></div>');
                             }
                         });
@@ -129,7 +128,46 @@
                 }
             });
             return false;
-        });
+        };
+
+        document.querySelector('#chooseImage').onclick = function (event) {
+            event.preventDefault(); //阻止默认动作即该链接不会跳转。
+            event.stopPropagation();//阻止冒泡事件，上级的单击事件不会被调用
+           //不仅阻止了事件往上冒泡，而且阻止了事件本身
+            wx.chooseImage({
+                success: function (res) {
+                    //images.localId = res.localIds;
+                    jQuery(function(){
+                        $('.list_img_block').removeClass('hide');
+                        $.each( res.localIds, function(i, n){
+                            images.localId.push(n);
+                            if(images.localId.length == 1){
+                                $('#preview').attr('src',n)
+                                $('#preview').css('margin','2px auto');
+                                $('#preview').css('width','auto');
+                                $('#preview').css('max-height','236px');
+                                $('#preview').css('max-width','100%');
+                            }else{
+                                $(".list_img_add").before('<div class="list_img fl"> <img src="'+n+'" /> <div class="del" data-id="'+n+'"><img src="/images/delete-icon.png"  style="width: 20px; position: absolute; right: 4px; bottom: 4px;" /></div></div>');
+                            }
+                        });
+
+                        $('.list_img .del').unbind('click');
+                        $('.list_img .del').click(function(){
+                            var url = $(this).attr('data-id');
+                            $.each(images.localId, function(i, n){
+                                if(n == url){
+                                    images.localId.splice(i, 1);
+                                }
+                            });
+                            $(this).parent().remove();
+
+                        });
+                    });
+                }
+            });
+            return false;
+        };
 
         function upload(n){
             wx.uploadImage({
