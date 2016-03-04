@@ -256,7 +256,7 @@ class ZhaopianController extends BaseController {
                 M('zhaopian_pic')->add($v);
             }
         }
-        $this->error('转发成功', U('/zhao/zhaopian/detail',array('id'=>$zhaopian['number_no'])));
+        $this->success('准备就绪，赶快分享吧', U('/zhao/zhaopian/detail',array('id'=>$zhaopian['number_no'])));
     }
 
     /**

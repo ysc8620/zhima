@@ -87,6 +87,11 @@ class BaseController extends Controller {
         redirect($jumpUrl);
     }
 
+    protected function success($message,$jumpUrl){
+        session('success_message', $message);
+        redirect($jumpUrl);
+    }
+
     protected function display($templateFile='',$charset='',$contentType='',$content='',$prefix='') {
         $this->assign('time', time());
         $this->view->display($templateFile,$charset,$contentType,$content,$prefix);
