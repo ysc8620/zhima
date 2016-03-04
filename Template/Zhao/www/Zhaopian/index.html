@@ -189,7 +189,7 @@
         }
         $('.send_post').click(function() {
 
-            if (images.localId.length == 0) {
+            if (images.localId.length < 1) {
                 layer.msg('请先使用选择图片按钮', function(){});
                 return;
 
