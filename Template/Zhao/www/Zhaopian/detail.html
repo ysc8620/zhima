@@ -93,7 +93,7 @@
     <div class="detail_body detail_more_block" style="bottom: 20px; width: 120px;">
         <div class="detail_menu_body cl hide">
             <div class="item_menu">
-                <if condition="$zhaopian['user_id'] neq $user_id"><div class="sub_menu"><a href="{:U('/zhao/zhaopian/zhuanfa',array('id'=>$zhaopian['number_no']))}">转发赚钱</a></div></if>
+                <if condition="$zhaopian['user_id'] neq $user_id and $is_buy"><div class="sub_menu"><a href="{:U('/zhao/zhaopian/zhuanfa',array('id'=>$zhaopian['number_no']))}">转发赚钱</a></div></if>
                 <if condition="$zhaopian['user_id'] eq $user_id"><div class="sub_menu"><a onclick="return confirm('您确定要删除该照片吗？')" href="{:U('/zhao/zhaopian/del',array('id'=>$zhaopian['number_no']))}">删除照片</a></div></if>
                 <div class="sub_menu"><a href="{:U('/zhao/notes')}">我的记录</a></div>
                 <div class="sub_menu"><a href="{:U('/zhao/zhaopian')}">我也要发</a></div>
