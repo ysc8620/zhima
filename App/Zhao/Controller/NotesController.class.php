@@ -17,11 +17,11 @@ class NotesController extends BaseController {
         $limit = 20;
         if($this->state == 'creation'){
             $this->title = '我发布的';
-            $list = M('zhaopian')->where("user_id='{$this->user_id}' AND state=1")->page($page,$limit)->order("addtime DESC")->select();
+            $list = M('zhaopian')->where("user_id='{$this->user_id}' AND state=1")->page($page,$limit)->order("id DESC")->select();
             $total = M('zhaopian')->where("user_id='{$this->user_id}' AND state=1")->count();
         }else{
             $this->title = '我购买的';
-            $list = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2) AND state=1")->page($page,$limit)->order("addtime DESC")->select();
+            $list = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2) AND state=1")->page($page,$limit)->order("id DESC")->select();
             $total = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2) AND state=1")->count();
         }
 
