@@ -20,7 +20,7 @@
         <div class="detail_info">
             <div class="mt40 cl" style="margin-top: 4px;"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
             <div class="cl">{$zhaopian_user.name}</div>
-            <div class="cl remark">“{$zhaopian.remark}”</div>
+            <div class="cl remark" style="margin-left: 12px; margin-right: 12px;">“{$zhaopian.remark}”</div>
             <if condition="$zhaopian.total_pic gt 1"><div class="cl">共{$zhaopian.total_pic}张照片</div></if>
         </div>
         <div class="detail_body">
@@ -52,11 +52,15 @@
     <if condition="$is_buy">
         <div class="own_block">
             <div class="detail_info1">
-                <div class=" fl ml10"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
-                <div class="fl ml10">
-                    <div class="cl tl" style="margin-top: 6px;"><span style="color: #e5e5e5; font-size: 14px;">{$zhaopian_user.name}</span> <if condition="$zhaopian[user_id] eq $user_id "><span class="dashang">共{$total_num}人打赏, 获得{$total_amount}元</span> &nbsp; <span> <a href="javascript:" class="show_detail_list" style="color: #deb16a!important;">详情</a></span><else/><span class="dashang">已打赏{$zhaopian_order['amount']}元</span></if></div>
-                    <div class="cl tl remark" style="color: #e5e5e5; font-size: 16px;">“{$zhaopian.remark}”</div>
-                </div>
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td width="70"><div class=" fl ml10"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div></td>
+                        <td><div class="fl ml10">
+                            <div class="cl tl" style="margin-top: 6px;"><span style="color: #e5e5e5; font-size: 14px;">{$zhaopian_user.name}</span> <if condition="$zhaopian[user_id] eq $user_id "><span class="dashang">共{$total_num}人打赏, 获得{$total_amount}元</span> &nbsp; <span> <a href="javascript:" class="show_detail_list" style="color: #deb16a!important;">详情</a></span><else/><span class="dashang">已打赏{$zhaopian_order['amount']}元</span></if></div>
+                            <div class="cl tl remark" style="color: #e5e5e5; font-size: 16px;">“{$zhaopian.remark}”</div>
+                        </div></td>
+                    </tr>
+                </table>
                 <div class="cl"></div>
             </div>
             <div class="cl"></div>
@@ -89,6 +93,7 @@
     <div class="detail_body detail_more_block" style="bottom: 20px; width: 120px;">
         <div class="detail_menu_body cl hide">
             <div class="item_menu">
+                <if condition="$zhaopian['user_id'] eq $user_id"><div class="sub_menu"><a href="{:U('/zhao/zhaopian/zhuanfa',array('id'=>$zhaopian['number_no']))}">转发赚钱</a></div></if>
                 <if condition="$zhaopian['user_id'] eq $user_id"><div class="sub_menu"><a onclick="return confirm('您确定要删除该照片吗？')" href="{:U('/zhao/zhaopian/del',array('id'=>$zhaopian['number_no']))}">删除照片</a></div></if>
                 <div class="sub_menu"><a href="{:U('/zhao/notes')}">我的记录</a></div>
                 <div class="sub_menu"><a href="{:U('/zhao/zhaopian')}">我也要发</a></div>

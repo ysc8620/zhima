@@ -215,6 +215,45 @@ class ZhaopianController extends BaseController {
         return $this->error('照片删除成功', U('/zhao/notes'));
     }
 
+    public function zhuanfa(){
+        $id = I('get.id',0, 'strval');
+        if($id < 1){
+            $this->error('请选择查看的红包照片', U('/zhao/notes'));
+        }
+        $zhaopian = M('zhaopian')->where(array('number_no'=>$id))->find();
+
+        if(!$zhaopian){
+            $this->error('没找到红包照片详情', U('/zhao/notes'));
+        }
+
+        if($zhaopian['state'] == 99){
+            $this->error('该红包照片已删除', U('/zhao/notes'));
+        }
+        $zhaopian_id = $zhaopian['id'];
+        unset($zhaopian['id']);
+        $user = M('user')->find($this->user_id);
+        $zhaopian['number_no'] = get_order_sn('zp');
+
+        $zhaopian['is_zhuan'] = 1;
+        $zhaopian['zhuan_user_id'] = $zhaopian['user_id'];
+        $zhaopian['zhuan_id'] = $zhaopian_id;
+
+        $zhaopian['user_id'] = $this->user_id;
+        $zhaopian['openid'] = $user['openid'];
+        $zhaopian['create_time'] = time();
+        $rs = M('zhaopian')->add($zhaopian);
+        if($rs){
+            $list = M('zhaopian_pic')->where(array('zhaopian_id'=>$zhaopian_id))->select();
+            foreach($list as $v){
+                $v['zhaopian_id'] = $rs;
+                $v['user_id'] = $this->user_id;
+                unset($v['id']);
+                M('zhaopian_pic')->add($v);
+            }
+        }
+        $this->success('转发成功', U('/zhao/zhaopian/detail',array('id'=>$zhaopian['number_no'])));
+    }
+
     /**
      * 红包详情
      */

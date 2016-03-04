@@ -23,6 +23,11 @@ function cut_image($img, $width, $height, $type = 3){
     }
     return $newImg;
 }
+function getamount($amount){
+    return number_format($amount * 0.98,2);
+}
+
+
 //默认数据
 function default_data($data,$var){
 	$info = !empty($data) ? $data: $var;
