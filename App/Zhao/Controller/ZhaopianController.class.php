@@ -246,6 +246,7 @@ class ZhaopianController extends BaseController {
         $zhaopian['user_id'] = $this->user_id;
         $zhaopian['openid'] = $user['openid'];
         $zhaopian['create_time'] = time();
+        $zhaopian['addtime'] = time();
         $rs = M('zhaopian')->add($zhaopian);
         if($rs){
             $list = M('zhaopian_pic')->where(array('zhaopian_id'=>$zhaopian_id))->select();
