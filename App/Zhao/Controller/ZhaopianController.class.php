@@ -229,6 +229,11 @@ class ZhaopianController extends BaseController {
         if($zhaopian['state'] == 99){
             $this->error('该红包照片已删除', U('/zhao/notes'));
         }
+
+        $new = M('zhaopian')->where(array('zhuan_id'=>$zhaopian['id'], 'user_id'=>$this->user_id))->find();
+        if($new){
+            $this->error('转发成功', U('/zhao/zhaopian/detail',array('id'=>$new['number_no'])));
+        }
         $zhaopian_id = $zhaopian['id'];
         unset($zhaopian['id']);
         $user = M('user')->find($this->user_id);
