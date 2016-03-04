@@ -24,7 +24,7 @@ function cut_image($img, $width, $height, $type = 3){
     return $newImg;
 }
 function getamount($amount){
-    return number_format($amount * 0.98,2);
+    return number_format($amount * 0.98, 2);
 }
 
 
