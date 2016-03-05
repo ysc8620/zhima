@@ -42,59 +42,6 @@ class ZhaopianController extends BaseController {
                 $this->error('请选择要发布的红包照片.',U('/zhao/zhaopian'));
                 return false;
             }
-
-//            if($_FILES['imgOne']){
-//                $rootPath=C('UPLOAD_PATH');
-//                $config = array(
-//                    //'maxSize'    =    3145728,
-//                    'rootPath'   =>    $rootPath,
-//                    'savePath'   =>    $this->user_id . '/',
-//                    'saveName'   =>    'zp_'.time().rand(111,999),
-//                    'exts'       =>   explode(',',C('UPLOAD_TYPE')),
-//                    'autoSub'    =>    true,
-//                    'subName'    =>    array('date','Ymd'),
-//                );
-//
-//                $type 	= 'Local';
-//                $upload = new \Think\Upload($config,$type);// 实例化上传类
-//                $info   =   $upload->upload();
-//
-//                if(!$info) {
-//                    $this->error($upload->getError(),'') ;
-//                }else{
-//                    // 上传成功
-//                    $data['pic_url'] = $info['imgOne']['savepath'].$info['imgOne']['savename'];
-//
-//                    $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
-//                    $img->open($rootPath . $data['pic_url']);
-//                    $width = $img->width();
-//                    $height = $img->height();
-//                    $x = $y = 0;
-//                    if($width > $height){
-//                        $x = floor(($width - $height)/2);
-//                        $width = $height;
-//                    }elseif($height> $width){
-//                        $y = floor(($height - $width)/2);
-//                        $height = $width;
-//                    }
-//                    $img->crop($width, $height,$x,$y, 300, 300)->save($rootPath . $data['pic_url'] . '_thumb.jpg','jpg');
-//
-//
-////                    $img->thumb(500, 1000)->save($rootPath . $data['pic_url'] . '_thumb1.jpg');
-////
-////
-////                    $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
-////
-////                    $img2->open($rootPath . $data['pic_url'] . '_thumb1.jpg')->gaussianBlurImage(40,30)->save($rootPath . $data['pic_url'] . '_thumb2.jpg');
-//
-//                }
-//            }
-//
-//            if(empty($data['pic_url'])){
-//                $this->error('请选择要发布的红包照片.',U('/zhao/zhaopian'));
-//                return false;
-//            }
-
             // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
             $user = M('user')->find($this->user_id);
             $data['number_no'] = get_order_sn('zp');
@@ -132,13 +79,7 @@ class ZhaopianController extends BaseController {
                         $pic['is_default'] = 0;
                     }
                     $pic_id = M('zhaopian_pic')->add($pic);
-
-
-                    ///////////////////////////////////////////
-
                 }
-
-
                 redirect(U('/zhao/zhaopian/detail', array('id'=>$data['number_no'])));
                 exit();
             }else{
@@ -286,18 +227,6 @@ class ZhaopianController extends BaseController {
         }else{
             $this->gaosi_img = '/img/default.jpg';
         }
-//        if(file_exists($path) && !file_exists($path."_thumb2.jpg")){
-//            $img = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
-//            $img->open($path);
-//            $img->thumb(500, 1000)->save($path . '_thumb1.jpg');
-//
-//
-//            $img2 = new \Think\Image(\Think\Image::IMAGE_IMAGICK);
-//
-//            $img2->open($path . '_thumb1.jpg')->gaussianBlurImage(40,30)->save($path . '_thumb2.jpg');
-//
-//        }
-
 
         $this->zhaopian_user = M('user')->find($this->zhaopian['user_id']);
         $this->user = M('user')->find($this->user_id);
@@ -385,15 +314,35 @@ class ZhaopianController extends BaseController {
         }
 
         if($this->hongbao['user_id'] == $this->user_id){
-            $this->share_title = "我发布了{$this->zhaopian['total_pic']}张私照，想看吗？";
+            /*
+             1，分享自己发的
+标题：我发布了3张照片，想看吗？
+内容：“用户输入的内容”
+2，分享别人发的
+李陆鸣发布了3张照片，想看吗？
+3，买了别人的照片
+我买了李陆鸣的照片，推荐！
+
+            分享朋友圈
+1，分享自己发的
+标题：我发布了3张照片，想看吗？“据说看了能提升幸福感~”
+2，分享别人的
+标题：李陆鸣发布了3张照片，想看吗？“据说看了能提升幸福感~”
+3，买了别人的照片
+标题：我买了李陆鸣发布的照片，推荐！“据说看了能提升幸福感~”
+            */
+            $this->share_title_friend = "我发布了{$this->zhaopian['total_pic']}张照片，想看吗？“{$this->zhaopian['remark']}”";
+            $this->share_title = "我发布了{$this->zhaopian['total_pic']}张照片，想看吗？";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/silogocover.jpg";
             $this->share_desc = "“{$this->zhaopian['remark']}”";
         }else{
             if($this->is_buy ){
-                $this->share_title = "我买了{$this->zhaopian_user['name']}的私照，推荐！";
+                $this->share_title_friend = "我买了{$this->zhaopian_user['name']}发布的照片，推荐！“{$this->zhaopian['remark']}”";
+                $this->share_title = "我买了{$this->zhaopian_user['name']}的照片，推荐！";
             }else{
-                $this->share_title = "{$this->zhaopian_user['name']}发布了{$this->zhaopian['total_pic']}张私照，想看吗？";
+                $this->share_title_friend = "{$this->zhaopian_user['name']}发布了{$this->zhaopian['total_pic']}张照片，想看吗？“{$this->zhaopian['remark']}”";
+                $this->share_title = "{$this->zhaopian_user['name']}发布了{$this->zhaopian['total_pic']}张照片，想看吗？";
             }
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/silogocover.jpg";

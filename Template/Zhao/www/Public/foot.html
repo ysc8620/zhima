@@ -85,6 +85,26 @@
                 //alert(JSON.stringify(res));
             }
         };
+
+        var shareDataFriend = {
+            title: '{$share_title_friend?$share_title_friend:$share_title}',
+            desc: '{$share_desc}',
+            link: '{$share_link}',
+            imgUrl: '{$share_imgUrl}',
+
+            trigger: function (res) {
+                //alert('用户点击发送给朋友');
+            },
+            success: function (res) {
+                //alert('已分享');
+            },
+            cancel: function (res) {
+                //alert('已取消');
+            },
+            fail: function (res) {
+                //alert(JSON.stringify(res));
+            }
+        };
         wx.onMenuShareAppMessage(shareData);
         wx.onMenuShareTimeline(shareData);
         wx.onMenuShareQQ(shareData);
