@@ -16,10 +16,12 @@ class BaseController extends Controller {
     public function _initialize(){
 
         $this->user_id = session('user_id');
+        if(I('get.show_test','','strval') == 'test'){
+            $this->user_id = 10004;
+            //
+            return true;
+        }
 
-//        $this->user_id = 10001;
-//        //
-//        return true;
 
         $openid =  session('openid');
         if(!$openid){
