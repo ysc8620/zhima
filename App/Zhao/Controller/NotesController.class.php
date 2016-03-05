@@ -23,9 +23,9 @@ class NotesController extends BaseController {
             $this->title = '我购买的';
             //$list = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2) AND state=1")->page($page,$limit)->order("id DESC")->select();
 
-            $list = M('zhaopian')->table('zhaopian z')->join("zhaopian_order o on o.zhaopian_id = z.id and o.user_id='{$this->user_id}' and o.state=2")->field('z.*')->order('o.pay_time desc')->page($page,$limit)->select();
+            $list = M('zhaopian')->table('zml_zhaopian z')->join("zml_zhaopian_order o on o.zhaopian_id = z.id and o.user_id='{$this->user_id}' and o.state=2")->field('z.*')->order('o.pay_time desc')->page($page,$limit)->select();
             //$total = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2) AND state=1")->count();
-            $total = M('zhaopian')->table('zhaopian z')->join("zhaopian_order o on o.zhaopian_id = z.id and o.user_id='{$this->user_id}' and o.state=2")->count();
+            $total = M('zhaopian')->table('zml_zhaopian z')->join("zml_zhaopian_order o on o.zhaopian_id = z.id and o.user_id='{$this->user_id}' and o.state=2")->count();
         }
 
         // $list = M('hongbao_order')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
