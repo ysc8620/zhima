@@ -313,7 +313,7 @@ class ZhaopianController extends BaseController {
             }
         }
 
-        if($this->hongbao['user_id'] == $this->user_id){
+        if($this->zhaopian['user_id'] == $this->user_id){
             /*
              1，分享自己发的
 标题：我发布了3张照片，想看吗？
