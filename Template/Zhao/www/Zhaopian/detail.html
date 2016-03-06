@@ -200,13 +200,15 @@
         $('#preview').css('height', height+'px');
         $('#preview').css('width', parseInt(height/img_height * img_width)+'px');
         $('#preview').css('left', "-"+parseInt(( height/img_height * img_width - width ))/2+'px');
-
+        alert(parseInt(height/img_height * img_width)+'-h'+height+'-t'+$('#preview').css('top')+'-l'+(parseInt(( height/img_height * img_width - width ))/2));
     }else{
         $('#preview').css('width', width+'px');
         $('#preview').css('height', parseInt(width/img_width * img_height)+'px');
         $('#preview').css('top', "-"+parseInt(( width/img_width * img_height - height )/2)+'px');
+
+
     }
-    alert($('#preview').width()+'-h'+$('#preview').height()+'-t'+$('#preview').css('top')+'-l'+$('#preview').css('left'));
+
     $('.detail_body1').css('height', height+'px');
     $('.detail_body1').css('line-height', height+'px');
 
