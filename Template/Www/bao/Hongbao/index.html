@@ -1,4 +1,4 @@
-<include file="Public:header" xmlns="http://www.w3.org/1999/html"/>
+<include file="Public:header" />
 <script type="text/javascript" src="/js/utils.js"></script>
 <script type="text/javascript">
     onload = function() {
@@ -14,39 +14,40 @@
         <form action="{:U('/hongbao/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
             <input type="hidden" name="sign" value="{$sign}" />
 		<ul>
-			<div class="row" style="height: 200px; background: url(/images/bg.png) center center no-repeat #161616;">
-
-		     </div>
+			<div class="row">
+				<span class="label">每份金额</span><input class="fr"  name="amount" type="number" id="amount" style="margin-right: 34px;" oninput="checkTextLength( this,4)" maxlength="4" value="2" /><span class="unit">元</span>
+			</div>
 		</ul>
 		<ul>
 			<div class="row">
-				<input class="fr color_999 tl text"  name="remark" maxlength="120"  id="remark" value="珍藏多年,首次公开,绝对值得" />
+				<span class="label">红包份数</span><input class="fr" name="total" type="number" id="total" style="margin-right: 34px;" oninput="checkTextLength( this,3)" maxlength="3" value="5" /><span class="unit">份</span>
+			<div>
+		</ul>
+		<ul>
+			<div class="row">
+				<span class="label">说明</span><input class="fr color_999 tr"  name="remark" maxlength="120" style="margin-right: 34px;" id="remark" value="凑红包,有福利,你懂得" />
 			</div>
 		</ul>
 		<ul>
-			<div class="w50 fl">
-				<div class="amount tr"><input type="button" class="btn w50 " value="随机价格" /></div>
-				<div class="amount_remark tr ptop6 pbottom10" style="padding-right: 12px;">￥1.05-￥5.00范围随机</div>
+			<div class="tit">
+				<div class="amount">￥<font class="total_amount">10</font></div>
+				<div class="amount_remark">总金额最大不能超过200元</div>
 			</div>
-            <div class="w50 fl">
-                <div class="amount tl ml10"><input type="button" class="btn w50 color_def" value="设置价格" /></div>
-                <div class="amount_remark ml10 ptop6 pbottom10" style="padding-left: 12px;">可设置￥1.05-￥200内</div>
-            </div>
 		</ul>
-		<ul class="cl mt10">
-		<div class="tit ">
+		<ul> 
+		<div class="tit">
 			<div class="w90 mc">
 			<input type="submit" class="btn" value="凑 红 包" />
 			</div>
-			<div class="w90 mc tc f12 ptop6">
-                发布一张朋友发红包才能看的照片
-                收入会自动通过微信红包发给你
+			<div class="w90 mc tr">
+			<a href="javascript:void(0)" class=" mt10" style="margin-top: 10px!important; clear: both; line-height: 36px;" onclick="show_remark()">凑红包玩法？</a>
 			</div>
 			</div>
 		</ul>
 		</form>
 	</div>
-
+	
+	<div class="from"><div class="foot_reamrk">如果24小时内该红包没有凑齐, 系统会自动退款</div></div>
 </div>
 
 <div id="remark_block" style="display: none">
