@@ -15,39 +15,38 @@
             <input type="hidden" name="sign" value="{$sign}" />
 		<ul>
 			<div class="row">
-				<span class="label">每份金额</span><input class="fr"  name="amount" type="number" id="amount" style="margin-right: 34px;" oninput="checkTextLength( this,4)" maxlength="4" value="2" /><span class="unit">元</span>
-			</div>
-		</ul>
-		<ul>
-			<div class="row">
-				<span class="label">红包份数</span><input class="fr" name="total" type="number" id="total" style="margin-right: 34px;" oninput="checkTextLength( this,3)" maxlength="3" value="5" /><span class="unit">份</span>
+				<span class="label">红包个数</span><input class="fr" name="total" type="number" id="total" style="margin-right: 34px;" oninput="checkTextLength( this,3)" maxlength="3" value="5" /> <span class="unit">个</span>
 			<div>
 		</ul>
+        <ul>
+            <div class="row">
+                <span class="label">总金额</span><input class="fr"  name="amount" type="number" id="amount" style="margin-right: 34px;" oninput="checkTextLength( this,4)" maxlength="4" value="10" /> <span class="unit">元</span>
+            </div>
+        </ul>
 		<ul>
 			<div class="row">
-				<span class="label">说明</span><input class="fr color_999 tr"  name="remark" maxlength="120" style="margin-right: 34px;" id="remark" value="凑红包,有福利,你懂得" />
+				<span class="label">说明</span><input class="fr color_999 tr"  name="remark" maxlength="120" style="margin-right: 34px;" id="remark" value="恭喜发财,大吉大利!" />
 			</div>
 		</ul>
 		<ul>
 			<div class="tit">
 				<div class="amount">￥<font class="total_amount">10</font></div>
-				<div class="amount_remark">总金额最大不能超过200元</div>
 			</div>
 		</ul>
 		<ul> 
 		<div class="tit">
 			<div class="w90 mc">
-			<input type="submit" class="btn" value="凑 红 包" />
+			<input type="submit" class="btn" value="塞钱进红包" />
 			</div>
 			<div class="w90 mc tr">
-			<a href="javascript:void(0)" class=" mt10" style="margin-top: 10px!important; clear: both; line-height: 36px;" onclick="show_remark()">凑红包玩法？</a>
+			<a href="javascript:void(0)" class=" mt10" style="margin-top: 10px!important; display: none; clear: both; line-height: 36px;" onclick="show_remark()">凑红包玩法？</a>
 			</div>
 			</div>
 		</ul>
 		</form>
 	</div>
 	
-	<div class="from"><div class="foot_reamrk">如果24小时内该红包没有凑齐, 系统会自动退款</div></div>
+	<div class="from"><div class="foot_reamrk" style="margin-bottom: 8px">对方领取的红包金额为1.05~200元</div></div>
 </div>
 
 <div id="remark_block" style="display: none">
@@ -68,25 +67,17 @@
 
     $('input[name="amount"]').keyup(function(){
         var amount = parseFloat($(this).val() == ''?0:$(this).val());
-        var total = parseInt($('input[name="total"]').val() == ''?0:$('input[name="total"]').val());
-        $('.total_amount').text(amount * total);
+        $('.total_amount').text(amount);
 
     });
-    $('input[name="total"]').keyup(function(){
-        var amount = parseFloat($('input[name="amount"]').val() == ''?0:$('input[name="amount"]').val());
-        var total = parseInt($('input[name="total"]').val() == ''?0:$('input[name="total"]').val());
 
-        $('.total_amount').text(amount * total);
+    $('input[name="amount"]').change(function(){
+        var amount = parseFloat($(this).val() == ''?0:$(this).val());
+        $('.total_amount').text(amount);
+
     });
+
     function show_remark(){
-//        layer.open({
-//            title: '凑红包玩法?'
-//            ,content: (" <span style='text-align: left'> 1. 发起凑红包 <br />"+
-//                    "2. 邀请朋友参与 <br/>"+
-//                    "3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>"+
-//                    "4. 系统会根据参与份数，随机抽出幸运星</span>")
-//            ,btn: ['知道了']
-//        });
         $('#remark_block').show();
     }
 
@@ -104,27 +95,14 @@
             return false;
         }
 
-        if(amount > 200 || amount < 0){
-            layer.msg('请输入200之内金额.', function(){});
-            return false;
-        }
-
-        // $('#updateTip1').hide();
-
-
         var total = $('input[name="total"]').val();
         if(!reg.test(total)){
             layer.msg('请填写整数份额.', function(){});
             return false;
         }
 
-        if(total > 200 || total < 1){
-            layer.msg('请输入1-200之间份额.', function(){});
-            return false;
-        }
-
-        if(amount * total > 200 || amount * total < 2){
-            layer.msg('总金额在2-200元之间.', function(){});
+        if(amount / total > 200 || amount / total < 1.05){
+            layer.msg('平均每个红包在1.05-200元之间.', function(){});
             return false;
         }
         return true;

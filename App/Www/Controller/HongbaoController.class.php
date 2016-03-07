@@ -28,28 +28,30 @@ class HongbaoController extends BaseController {
             $total = I('post.total',0,'intval');
             $remark = I('post.remark','','htmlspecialchars');
 
-            if($amount <= 0 || $total < 1 || $amount > 200){
-                $this->error('红包范围在2-200之间.',U('/hongbao'));
+            if($amount <= 1 || $total < 1){
+                $this->error('请输入红包金额或红包个数.',U('/hongbao'));
                 return false;
             }
 
-            if($amount * $total > 200 || $amount * $total <2){
-                $this->error('红包范围在2-200之间.',U('/hongbao'));
+            if($amount/$total < 1.05 || $amount/$total > 200){
+                $this->error('平均每份红包范围在1.05-200之间.',U('/hongbao'));
                 return false;
             }
             // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
             $user = M('user')->find($this->user_id);
             $data['number_no'] = get_order_sn();
             $data['user_id'] = $this->user_id;
-            $data['part_amount'] = $amount;
-            $data['total_amount'] = $total * $amount;
-            $data['total_part'] = $total;
+            $data['total_amount'] = $amount;
+            $data['total_num'] = $total;
             $data['remark'] = $remark;
             $data['addtime'] = time();
             $data['state'] = 1;
             $data['openid'] = $user['openid'];
+            $data['from_user_id'] = $this->user_id;
+            $data['from_openid'] = $user['openid'];
+            $data['is_rand'] = 1;
 
-            $re = M('hongbao')->add($data);
+            $re = M('bao')->add($data);
             if($re){
                 redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
                 exit();
@@ -106,7 +108,7 @@ class HongbaoController extends BaseController {
         if($id < 1){
             $this->error('请选择查看的红包', U('/notes'));
         }
-        $this->hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
+        $this->hongbao = M('bao')->where(array('number_no'=>$id))->find();
 
         if(!$this->hongbao){
             $this->error('没找到红包详情', U('/notes'));
@@ -114,12 +116,7 @@ class HongbaoController extends BaseController {
         $this->hongbao_amount = $this->hongbao['total_amount'] * 0.98;
 
         if($this->hongbao['state'] == 2){
-            $total_user = M('hongbao_order')->where(array('hongbao_id'=>$this->hongbao['id'], 'state'=>2))->group('user_id')->select();
-
-            $this->total_user = intval(count($total_user));
             $this->use_time = $this->time2Units($this->hongbao['success_time'] - $this->hongbao['addtime']);
-
-
         }
         $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
         $this->user = M('user')->find($this->user_id);
