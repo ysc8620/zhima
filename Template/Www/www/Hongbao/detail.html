@@ -21,8 +21,10 @@
 		<div class='detail_block ' data-role="detail_default">
 			<ul>
 				<div class="tit">
-					<div class="">
-                        <button type="button"  onclick="set_buy()" style="font-size: 30px;" class="btn btn_cou">凑</button>
+                    <div class="title" style="font-size: 16px; margin: 6px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 凑齐啦~</div>
+
+                    <div class="">
+                        <button type="button"  onclick="set_buy()" style="font-size: 30px; color: #fdf05e" class="btn btn_cou"><font>赞助</font></button>
 					</div>
 					<div class="">
 						<a href="javascript:void(0)" style="margin-top: 10px!important; clear: both; line-height: 36px;" onclick="show_remark()">设为“不可赞助”</a>
@@ -71,20 +73,24 @@
      <div class="cl" ></div>
 </div>
 
-<div id="shareit1" style="display: none">
+<div id="shareit1" style="display: block">
     <div id="shareit">
         <img src="/images/share_bg.png" style="height:120px;" class="arrow">
     </div>
     <span style="" id="follow">
+        <img src="/images/xinhongbao_bg.png" class="bg" style="left: 0; top: 0" />
         <div style="padding-right: 0px; padding-left: 0px; margin-top: 16px; font-size: 20px; color: #fff" class="text"><p>支付成功</p></div>
 		<div>
-            <img src="/images/ico_xiao.png" style="width:80px;" />
+            <img src="/images/fahongbao-banner.png" style="width:80px;" />
         </div>
 		<div style="padding: 0px; margin-top: 0px; font-size: 20px; color: #fff" class="text">分享出去，加快进度</div>
     </span>
 </div>
 
-
+<script type="text/javascript">
+    var w = $('#follow').width();
+    $('#follow img.bg').css('width', w+'px');
+</script>
 <div id="error_block" style="display: none">
     <div id="shareit">
     </div>
