@@ -8,7 +8,6 @@
 		<ul>
 			<div class="tit mt20">
 				<div class="title">{$hongbao_user.name}发起的红包</div>
-
 				<div class="remark" style="margin: 16px 0; font-size: 18px">{$hongbao.remark}</div>
 
                 <ul >
@@ -21,10 +20,11 @@
 		<div class='detail_block ' data-role="detail_default">
 			<ul>
 				<div class="tit">
-                    <div class="title" style="font-size: 16px; margin: 6px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 凑齐啦~</div>
-
+                    <if condition="$hongbao.state eq 2">
+                        <div class="title" style="font-size: 16px; margin: 6px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 凑齐啦~</div>
+                    </if>
                     <div class="">
-                        <button type="button"  onclick="set_buy()" style="font-size: 30px; color: #fdf05e" class="btn btn_cou"><font>赞助</font></button>
+                        <button type="button"  onclick="set_buy()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>赞助</font></button>
 					</div>
 					<div class="">
 						<a href="javascript:void(0)" style="margin-top: 10px!important; clear: both; line-height: 36px;" onclick="show_remark()">设为“不可赞助”</a>
@@ -73,7 +73,7 @@
      <div class="cl" ></div>
 
 
-    <div id="shareit1" style="display: block">
+    <div id="shareit1" style="display: none">
         <div id="shareit">
             <img src="/images/share_bg.png" style="height:120px;" class="arrow">
         </div>
