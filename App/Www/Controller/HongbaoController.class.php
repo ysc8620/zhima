@@ -125,8 +125,8 @@ class HongbaoController extends BaseController {
         // 是否显示分享
         $this->is_show_share = false;
         $this->receive_order = false;
-        if($this->hongbao_user['user_id'] == $this->user_id){
-            if($this->hongbao_user['is_read'] < 1){
+        if($this->hongbao['user_id'] == $this->user_id){
+            if($this->hongbao['is_read'] < 1){
                 $this->is_show_share = true;
                 // 已经分享
                 M('bao')->where(array('id'=>$this->hongbao['id']))->save(array('is_read'=>1));
