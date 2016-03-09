@@ -19,8 +19,8 @@ class NotesController extends BaseController {
             $list = M('bao')->where(array('user_id'=>$this->user_id))->page($page,$limit)->order("addtime DESC")->select();
             $total = M('bao')->where(array('user_id'=>$this->user_id))->count();
         }elseif($this->state == 'receive'){
-            $list = M('bao')->where("id in(SELECT hongbao_id FROM zml_bao_order WHERE user_id='{$this->user_id}')")->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('bao')->where("id in(SELECT hongbao_id FROM zml_bao_order WHERE user_id='{$this->user_id}')")->count();
+            $list = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}')")->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}')")->count();
         }else{
             $list = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') or user_id='{$this->user_id}'")->page($page,$limit)->order("addtime DESC")->select();
             $total = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') or user_id='{$this->user_id}'")->count();
@@ -50,31 +50,6 @@ class NotesController extends BaseController {
         $this->display();
     }
 
-    public function join(){
-        $this->title = '我参与的';
-
-        $this->user = M('user')->find($this->user_id);
-        $page = I('request.p',1);
-        $page = $page<1?1:$page;
-
-        $list = M('hongbao_order')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
-        if($list){
-            foreach($list as $i=>$item){
-                $list[$i]['hongbao'] = M('hongbao')->find($item['hongbao_id']);
-                $list[$i]['user'] = M('user')->find($list[$i]['hongbao']['user_id']);
-            }
-        }
-        $total = M('hongbao_order')->where(array('user_id'=>$this->user_id))->count();
-        $this->list = $list;
-        $Page              = new \Think\Page($total,10); // 实例化分页类 传入总记录数和每页显示的记录数(20)
-        $Page->rollPage = 5;
-        $Page->setConfig('prev','上一页');
-        $Page->setConfig('next','下一页');
-        $Page->setConfig('theme','%UP_PAGE% %DOWN_PAGE% <li ><a>共 %TOTAL_ROW% 条记录</a></li>');
-        $show  = $Page->show();
-        $this->page = $show;
-        $this->display();
-    }
 
 
 }
