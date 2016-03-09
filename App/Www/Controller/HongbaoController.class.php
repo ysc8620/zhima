@@ -133,6 +133,10 @@ class HongbaoController extends BaseController {
         if(!$this->hongbao){
             $this->error('没找到红包详情', U('/notes'));
         }
+
+//        if($this->hongbao['state'] == 1){
+//            $this->error('红包还没支付', U('/notes'));
+//        }
         $this->hongbao_amount = $this->hongbao['total_amount'] * 0.98;
 
         if($this->hongbao['state'] == 2){
@@ -159,27 +163,25 @@ class HongbaoController extends BaseController {
 
         $limit_part = $this->hongbao[total_num] - $this->hongbao[receive_num];
         $limit_part = $limit_part<0?0:$limit_part;
-        $my_order = '';
+
         if($this->hongbao['user_id'] == $this->user_id){
             $this->share_title = "我发起的红包-￥{$this->hongbao['total_amount']}";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
             $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
         }else{
-            $my_order = M('bao_order')->where(array("bao_id"=>$this->hongbao['id'], 'user_id'=>$this->user_id))->sum('amount');
 
 
-            if($my_order ){
+            if($this->receive_order ){
 
                 $this->share_title = "{$this->hongbao_user['name']}发起的红包-￥{$this->hongbao['total_amount']}";
             }else{
-                $this->share_title = "我领了{$my_order['amount']}元到{$this->hongbao_user['name']}的红包";
+                $this->share_title = "我领了{$this->receive_order['amount']}元到{$this->hongbao_user['name']}的红包";
             }
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
             $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
         }
-        $this->my_order = $my_order;
         $this->default_index = 0;
         $cookie_key = 'id'.$this->hongbao['id'].'_'.$this->user_id;
         $is_show = intval(cookie($cookie_key));
@@ -196,10 +198,6 @@ class HongbaoController extends BaseController {
             foreach($order_list as $k=>$order){
 
                 $user = M('user')->find($order['user_id']);
-                if($order[is_star] == 1){
-                    $this->default_index = $k;
-                    $this->star_name =  $user['name'];
-                }
                 $order_list[$k]['user'] = $user;
             }
         }

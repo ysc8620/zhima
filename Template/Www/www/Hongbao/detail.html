@@ -90,7 +90,7 @@
         </span>
     </div>
 
-<div id="remark_block" style="display: block">
+<div id="remark_block" style="<if condition='!$receive_order and $hongbao[state] eq 2'>display: block<else/>display:none</if>">
     <div class="shareit">
     </div>
     <div style="text-align: center; background: #e05449;  -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 80%; left: 10%;" id="follow">
@@ -102,7 +102,7 @@
 
         <img src="/images/linghongbao-banner.png" style="width: 100%;" />
         <div class="cls" style="clear: both; margin-bottom: 12px;"></div>
-        <p style="text-align: center; padding: 12px; font-size: 18px; line-height: 24px;">看看大家手气></p>
+        <p style="text-align: center; padding: 12px; font-size: 18px; line-height: 24px;" onclick="$('#remark_block').hide();">看看大家手气></p>
     </div>
 </div>
 
