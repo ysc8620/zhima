@@ -144,7 +144,7 @@ class HongbaoController extends BaseController {
 
         // 是否显示分享
         $this->is_show_share = false;
-        $this->receive_order = false;$this->is_show_share = true;
+        $this->receive_order = false;
         if($this->hongbao['user_id'] == $this->user_id){
             if($this->hongbao['is_read'] < 1){
                 $this->is_show_share = true;
@@ -159,25 +159,27 @@ class HongbaoController extends BaseController {
 
         $limit_part = $this->hongbao[total_num] - $this->hongbao[receive_num];
         $limit_part = $limit_part<0?0:$limit_part;
+        $my_order = '';
         if($this->hongbao['user_id'] == $this->user_id){
             $this->share_title = "我发起的红包-￥{$this->hongbao['total_amount']}";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
             $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
         }else{
-            $amount = M('bao_order')->where(array("bao_id"=>$this->hongbao['id'], "state"=>2,'user_id'=>$this->user_id))->sum('amount');
-            $amount = floatval($amount);
+            $my_order = M('bao_order')->where(array("bao_id"=>$this->hongbao['id'], 'user_id'=>$this->user_id))->sum('amount');
 
-            if($amount <= 0 ){
+
+            if($my_order ){
+
                 $this->share_title = "{$this->hongbao_user['name']}发起的红包-￥{$this->hongbao['total_amount']}";
             }else{
-                $this->share_title = "我领了{$amount}元到{$this->hongbao_user['name']}的红包";
+                $this->share_title = "我领了{$my_order['amount']}元到{$this->hongbao_user['name']}的红包";
             }
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
             $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
         }
-
+        $this->my_order = $my_order;
         $this->default_index = 0;
         $cookie_key = 'id'.$this->hongbao['id'].'_'.$this->user_id;
         $is_show = intval(cookie($cookie_key));

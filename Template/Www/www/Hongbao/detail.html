@@ -82,13 +82,30 @@
 
 
     <div id="shareit1" style="display:  <if condition="$is_show_share">block<else />none</if>">
-        <div id="shareit">
+        <div class="shareit">
 
         </div>
-        <span style="" id="follow"> <img src="/images/share_bg.png" style="height:120px;" class="arrow">
+        <span style="" class="follow"> <img src="/images/share_bg.png" style="height:120px;" class="arrow">
             <img src="/images/xinhongbao_bg.png" class="bg" style="left: 0; top: 0;" />
         </span>
     </div>
+
+<div id="remark_block" style="display: block">
+    <div class="shareit">
+    </div>
+    <div style="text-align: center; background: #e05449;  -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 80%; left: 10%;" id="follow">
+        <p style="text-align: center; padding: 12px; font-size: 18px; line-height: 24px;">
+            <img src="{$hongbao_user.header}" alt="{$hongbao_user.name}" class="detail_head_img" /> <br />
+            {$hongbao_user.name}<br/><br/>
+            发了一个红包, 金额随机<br/><br/>
+            ”{$hongbao.remark}“</p>
+
+        <img src="/images/linghongbao-banner.png" style="width: 100%;" />
+        <div class="cls" style="clear: both; margin-bottom: 12px;"></div>
+        <p style="text-align: center; padding: 12px; font-size: 18px; line-height: 24px;">看看大家手气</p>
+    </div>
+</div>
+
 </div>
 
 
@@ -99,19 +116,6 @@
 </script>
 
 
-<div id="remark_block" style="display: none">
-    <div id="shareit">
-    </div>
-    <span style="text-align: center; background: #fff; padding: 12px; -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 90%; left: 5%;" id="follow">
-        <p style="text-align: left">
-            1. 发起凑红包 <br />
-            2. 邀请朋友参与 <br/>
-            3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>
-            4. 系统会根据参与份数，随机抽出幸运星</p>
-
-        <input type="button" class="btn mc" onclick="$('#remark_block').hide();" style="width: 80%; height: 36px; margin-top: 12px; line-height: 36px;" value="知 道 了" />
-       </span>
-</div>
 
 <include file="Public:foot" />
 
