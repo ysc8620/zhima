@@ -21,10 +21,10 @@ class HongbaoController extends BaseController {
             'msg_content' => '',
         );
         do{
+            $id = I('post.amount','','strval');
             $amount = I('post.amount',0,'floatval');
             $total = I('post.total',0,'intval');
             $remark = I('post.remark','','htmlspecialchars');
-
             if($amount <= 1 || $total < 1){
                 $json['msg_code'] = 10002;
                 $json['msg_content'] = '请输入红包金额或红包个数';
@@ -36,21 +36,29 @@ class HongbaoController extends BaseController {
                 $json['msg_content'] = '平均每个红包范围在1.05-200之间.';
                 break;
             }
-            // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
-            $user = M('user')->find($this->user_id);
-            $data['number_no'] = get_order_sn();
-            $data['order_sn'] = get_order_sn();
-            $data['user_id'] = $this->user_id;
-            $data['total_amount'] = $amount;
-            $data['total_num'] = $total;
-            $data['remark'] = $remark;
-            $data['addtime'] = time();
-            $data['state'] = 1;
-            $data['openid'] = $user['openid'];
-            $data['from_user_id'] = $this->user_id;
-            $data['from_openid'] = $user['openid'];
-            $data['is_rand'] = 1;
-            $re = M('bao')->add($data);
+            $hongbao = '';
+            if($id){
+                $re = M('bao')->where(array('number_no'=>$id))->find();
+
+            }
+            if(!$re || $re['amount'] != $amount){
+                // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
+                $user = M('user')->find($this->user_id);
+                $data['number_no'] = get_order_sn();
+                $data['order_sn'] = get_order_sn();
+                $data['user_id'] = $this->user_id;
+                $data['total_amount'] = $amount;
+                $data['total_num'] = $total;
+                $data['remark'] = $remark;
+                $data['addtime'] = time();
+                $data['state'] = 1;
+                $data['openid'] = $user['openid'];
+                $data['from_user_id'] = $this->user_id;
+                $data['from_openid'] = $user['openid'];
+                $data['is_rand'] = 1;
+                $re = M('bao')->add($data);
+            }
+
             if($re){
                 // redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
                 $data['body'] = "红包";
@@ -62,7 +70,7 @@ class HongbaoController extends BaseController {
                 $data['goods_tag'] = "WXG";
                 // $openid = ;//session('openid')?session('openid'):cookie('openid');
                 $data['openid'] = $user['openid'];
-                $data['number_no'] = $re;
+                $data['number_no'] = $data['number_no'];
                 $json['jsApiParameters'] = jsapipay($data, false);
                 break;
             }else{

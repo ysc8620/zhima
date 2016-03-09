@@ -120,10 +120,11 @@
             var amount = $('input[name="amount"]').val();
             var total = $('input[name="total"]').val();
             var remark = $('input[name="remark"]').val();
+            var id = $('input[name="id"]').val();
             $.ajax({
                 type: "POST",
                 url: "/hongbao.do",
-                data: { amount: amount, total:total, remark:remark} ,
+                data: { amount: amount, total:total, remark:remark, id:id} ,
                 dataType:'json',
                 success: function(data){
                     if(data.msg_code == 10001){
@@ -163,11 +164,11 @@
                         case 'get_brand_wcpay_request:fail':
                             //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
 //                            alert('错误');
+                            layer.msg('支付失败请重试', function(){});
                             break;
                         case 'get_brand_wcpay_request:ok':
-                            // location.href="/?_a=done&order_sn=<?php echo $order_sn;?>&ac=<?php echo $authcode?>";
-                            //alert('成功');
-                            // $("#shareit1").show();
+                            var number_no = $('input[name="id"]').val();
+                            location.href="/hongbao/detail/id/"+number_no+".html";
                             break;
                     }
                 }
