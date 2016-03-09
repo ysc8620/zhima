@@ -12,7 +12,9 @@
 
                 <ul >
                     <div class="tit mt20">
-                        <div class="title"><font>您已领取：</font>￥{$hongbao.total_amount}元</div>
+                        <if condition="$receive_order">
+                        <div class="title"><font>您已领取：</font>￥{$receive_order.amount}元</div>
+                        </if>
                     </div>
                 </ul>
 			</div>
@@ -24,11 +26,17 @@
                         <div class="title" style="font-size: 16px; margin: 6px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 凑齐啦~</div>
                     </if>
                     <div class="">
+                        <if condition="$hongbao['user_id'] eq $user_id">
+                            <button type="button"  onclick="set_buy()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>分享</font></button>
+                            <else/>
                         <button type="button"  onclick="set_buy()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>赞助</font></button>
-					</div>
+                        </if>
+                    </div>
+                    <if condition="$hongbao['user_id'] eq $user_id">
 					<div class="">
 						<a href="javascript:void(0)" style="margin-top: 10px!important; clear: both; line-height: 36px;" onclick="show_remark()">设为“不可赞助”</a>
 					</div>
+                        </if>
 				</div>
 			</ul>
 		</div>
@@ -36,7 +44,7 @@
 	</div>
 	<div class="order_list">
 		<div class="header bt_line">
-			<span><img src="/images/sm.png" style="width:14px; line-height:14px; vertical-align:middle;" /></span> <span>已有4人领取红包，共计￥8元</span>
+			<span><img src="/images/sm.png" style="width:14px; line-height:14px; vertical-align:middle;" /></span> <span>已有{:count($order_list)}人领取红包，共计￥{$order_amount}元</span>
 		</div>
 		<div class="block" style="min-height: 200px;">
             <volist name="order_list" id="order" key="i">
@@ -64,7 +72,7 @@
 		</div>
             </if>
 		<div class="xiala">
-			<div><a href="{:U('/hongbao')}"><input type="button" class="btn w120" value="发起凑红包" /></a> <a href="{:U('/notes')}" style="margin-left: 20px"><input type="button" class="btn w120" value="我的记录" /></a></div>
+			<div><a href="{:U('/hongbao')}"><input type="button" class="btn w120" value="发起红包" /></a> <a href="{:U('/notes')}" style="margin-left: 20px"><input type="button" class="btn w120" value="我的记录" /></a></div>
 			<div class="cl h12"></div>
 		</div>
 		<div class="cl"></div>
@@ -73,17 +81,12 @@
      <div class="cl" ></div>
 
 
-    <div id="shareit1" style="display: none">
+    <div id="shareit1" style="display:  <if condition='$is_show_share'>block<else />none</if>">
         <div id="shareit">
             <img src="/images/share_bg.png" style="height:120px;" class="arrow">
         </div>
     <span style="" id="follow">
-        <img src="/images/xinhongbao_bg.png" class="bg" style="left: 0; top: 0" />
-        <div style="padding-right: 0px; padding-left: 0px; margin-top: 16px; font-size: 20px; color: #fff" class="text"><p>支付成功</p></div>
-		<div>
-            <img src="/images/fahongbao-banner.png" style="width:80px;" />
-        </div>
-		<div style="padding: 0px; margin-top: 0px; font-size: 20px; color: #fff" class="text">分享出去，加快进度</div>
+        <img src="/images/xinhongbao_bg.png" class="bg" style="left: 0; top: 0;" />
     </span>
     </div>
 </div>

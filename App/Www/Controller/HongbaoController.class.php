@@ -121,22 +121,21 @@ class HongbaoController extends BaseController {
         $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
         $this->user = M('user')->find($this->user_id);
 
-       // $this->order
 
-        $this->wait_total = M('bao_order')->where(array("bao_id"=>$this->hongbao['id'], "state"=>1, "addtime"=>array('gt', time()-30)))->sum('part_num');
-        $this->wait_total = intval($this->wait_total);
+        // 是否显示分享
+        $this->is_show_share = false;
+        $this->receive_order = false;
+        if($this->hongbao_user['user_id'] == $this->user_id){
+            if($this->hongbao_user['is_read'] < 1){
+                $this->is_show_share = true;
+                // 已经分享
+                M('bao')->where(array('id'=>$this->hongbao['id']))->save(array('is_read'=>1));
+            }
+        }else{
+            $this->receive_order = M('bao_order')->where(array('bao_id'=>$this->hongbao['id'], 'user_id'=>$this->user_id))->find();
+        }
 
         $this->title = "{$this->hongbao_user['name']}发起的红包";
-
-//        我发起的的凑红包-￥200
-//
-//“凑红包，有福利，你懂得”
-//共40个，还剩40个
-//
-//我凑了20元到王苏蕴的红包
-//
-//“凑红包，有福利，你懂得”
-//共40个，还剩40个
 
         $limit_part = $this->hongbao[total_num] - $this->hongbao[receive_num];
         $limit_part = $limit_part<0?0:$limit_part;
@@ -146,7 +145,7 @@ class HongbaoController extends BaseController {
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
             $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
         }else{
-            $amount = M('bao_order')->where(array("bao_id"=>$this->hongbao['id'], "state"=>2,'user_id'=>$this->user_id))->sum('total_amount');
+            $amount = M('bao_order')->where(array("bao_id"=>$this->hongbao['id'], "state"=>2,'user_id'=>$this->user_id))->sum('amount');
             $amount = floatval($amount);
 
             if($amount <= 0 ){
@@ -168,7 +167,9 @@ class HongbaoController extends BaseController {
         }
         $this->is_show = $is_show?true:false;
         $this->star_name = '';
-        $order_list = M('bao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2,3,4)))))->order("addtime desc")->select();
+        $order_list = M('bao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(1,2)))))->order("addtime desc")->select();
+        $this->order_amount = M('bao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(1,2)))))->sum('amount');
+        $this->order_amount = floatval($this->order_amount);
         if($order_list){
             foreach($order_list as $k=>$order){
 
