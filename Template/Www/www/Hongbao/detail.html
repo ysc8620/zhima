@@ -85,9 +85,9 @@
         <div id="shareit">
             <img src="/images/share_bg.png" style="height:120px;" class="arrow">
         </div>
-    <span style="" id="follow">
-        <img src="/images/xinhongbao_bg.png" class="bg" style="left: 0; top: 0;" />
-    </span>
+        <span style="" id="follow">
+            <img src="/images/xinhongbao_bg.png" class="bg" style="left: 0; top: 0;" />
+        </span>
     </div>
 </div>
 
@@ -97,17 +97,7 @@
     var w = $('#follow').width();
     $('#follow img.bg').css('width', w+'px');
 </script>
-<div id="error_block" style="display: none">
-    <div id="shareit">
-    </div>
-    <span style="" id="follow">
-        <div style="padding-right: 0px; padding-left: 0px; margin-top: 16px; font-size: 20px; color: #fff" class="text"><p>被人抢先一步了...</p></div>
-		<div>
-            <img src="/images/ico_ku.png" style="width:80px;" />
-        </div>
-		<div style="padding: 0px; margin-top: 8px; font-size: 12px; color: #fff" class="text">剩余份数小于您想购买的份数了，请重新确认</div>
-    </span>
-</div>
+
 
 <div id="remark_block" style="display: none">
     <div id="shareit">
@@ -125,56 +115,7 @@
 
 <include file="Public:foot" />
 
-<script type="text/javascript">
-    //调用微信JS api 支付
-    function jsApiCall(data)
-    {
-        WeixinJSBridge.invoke(
-                'getBrandWCPayRequest',
-                data,
-                function(res){
-                    //WeixinJSBridge.log(res.err_msg);
-                    // alert(res.err_code+'='+res.err_desc+'='+res.err_msg);
-                    // window.location.href = "/notes.html";
-                    // alert('支付成功');
-                    window.location.href="?show_share=1";
-                    return false;
-//                    window.location.reload();
-//                    return false;
-                    switch (res.err_msg){
 
-                        case 'get_brand_wcpay_request:cancel':
-                            // location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
-//                                alert('取消');
-                            break;
-                        case 'get_brand_wcpay_request:fail':
-                            //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
-//                            alert('错误');
-                            break;
-                        case 'get_brand_wcpay_request:ok':
-                            // location.href="/?_a=done&order_sn=<?php echo $order_sn;?>&ac=<?php echo $authcode?>";
-                            //alert('成功');
-                            $("#shareit1").show();
-                            break;
-                    }
-                }
-        );
-    }
-
-    function callpay(data)
-    {
-        if (typeof WeixinJSBridge == "undefined"){
-            if( document.addEventListener ){
-                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
-            }else if (document.attachEvent){
-                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
-                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
-            }
-        }else{
-            jsApiCall(data);
-        }
-    }
-</script>
 <script type="text/javascript">
     $('.view_all').click(function(){
         $('[data-role="order"]').toggle();
@@ -222,7 +163,7 @@
             success:function(result){
                 if(result.error==0){
                     // callpay(result.data);
-                    set_pay(result.data);
+                    alert('xxx');
                 }else if(result.error==1){
                     layer.msg(result.message, function(){});
                     return false;
@@ -233,33 +174,6 @@
             }
         });
 
-    }
-
-    function set_pay(id){
-        if(!id){
-            var id = $('input[name="pay_id"]').val();
-        }
-
-        if(id.length < 1){
-            layer.msg('没有支付订单', function(){});
-            return false;
-        }
-        $.ajax({
-            type:'post',
-            url:"{:U('/weixin/pay1')}",
-            async:false,
-            cache:false,
-            data:{id:id},
-            dataType:'json',
-            success:function(result){
-                if(result.error==0){
-                    callpay(result.data);
-
-                }else if(result.error==1){
-                    layer.msg(result.message, function(){});
-                }
-            }
-        });
     }
 
     function checkHongBao(_this){
