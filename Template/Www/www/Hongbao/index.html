@@ -13,6 +13,7 @@
 	<div class="from">
         <form action="{:U('/hongbao/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
             <input type="hidden" name="sign" value="{$sign}" />
+            <input type="hidden" name="id" value="" />
 		<ul>
 			<div class="row">
 				<span class="label">红包个数</span><input class="fr" name="total" type="number" id="total" style="margin-right: 34px;" oninput="checkTextLength( this,3)" maxlength="3" value="5" /> <span class="unit">个</span>
@@ -36,7 +37,7 @@
 		<ul> 
 		<div class="tit">
 			<div class="w90 mc">
-			<input type="submit" class="btn" value="塞钱进红包" />
+			<input type="button" class="btn" value="塞钱进红包" />
 			</div>
 			<div class="w90 mc tr">
 			<a href="javascript:void(0)" class=" mt10" style="margin-top: 10px!important; display: none; clear: both; line-height: 36px;" onclick="show_remark()">凑红包玩法？</a>
@@ -105,10 +106,88 @@
             layer.msg('平均每个红包在1.05-200元之间.', function(){});
             return false;
         }
+
+        var remark = $.trim($('input[name="remark"]').val());
+        if(remark.length < 2){
+            layer.msg('请输入红包说明.', function(){});
+            return false;
+        }
         return true;
     }
 
-
+    $('.btn').click(function(){
+        if(checkHongBao()){
+            var amount = $('input[name="amount"]').val();
+            var total = $('input[name="total"]').val();
+            var remark = $('input[name="remark"]').val();
+            $.ajax({
+                type: "POST",
+                url: "/hongbao.do",
+                data: { amount: amount, total:total, remark:remark} ,
+                dataType:'json',
+                success: function(data){
+                    if(data.msg_code == 10001){
+                        $('input[name="id"]').val(data.number_no);
+                        jsApiCall(data.jsApiParameters);
+                    }else{
+                        layer.msg(data.msg_content, function(){});
+                    }
+                }
+            });
+        }
+    });
 </script>
+
+<script type="text/javascript">
+    //调用微信JS api 支付
+    function jsApiCall(data)
+    {
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                data,
+                function(res){
+                    //WeixinJSBridge.log(res.err_msg);
+                    // alert(res.err_code+'='+res.err_desc+'='+res.err_msg);
+                    // window.location.href = "/notes.html";
+                    // alert('支付成功');
+//                    window.location.href="?show_share=1";
+//                    return false;
+//                    window.location.reload();
+//                    return false;
+                    switch (res.err_msg){
+
+                        case 'get_brand_wcpay_request:cancel':
+                            // location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+//                                alert('取消');
+                            break;
+                        case 'get_brand_wcpay_request:fail':
+                            //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+//                            alert('错误');
+                            break;
+                        case 'get_brand_wcpay_request:ok':
+                            // location.href="/?_a=done&order_sn=<?php echo $order_sn;?>&ac=<?php echo $authcode?>";
+                            //alert('成功');
+                            // $("#shareit1").show();
+                            break;
+                    }
+                }
+        );
+    }
+
+    function callpay(data)
+    {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall(data);
+        }
+    }
+</script>
+
 </body>
 </html>
