@@ -27,8 +27,8 @@
                     </if>
                     <div class="">
                         <if condition="$hongbao['user_id'] eq $user_id">
-                            <button type="button"  onclick="set_buy()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>分享</font></button>
-                            <else/>
+                            <button type="button"  onclick="set_share()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>分享</font></button>
+                        <else/>
                         <button type="button"  onclick="set_buy()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>赞助</font></button>
                         </if>
                     </div>
@@ -195,6 +195,9 @@
         $("#error_block").hide();
     });
 
+    function set_share(){
+        $("#shareit1").show();
+    }
 
     $("#shareit1").on("click", function(){
         $("#shareit1").hide();
