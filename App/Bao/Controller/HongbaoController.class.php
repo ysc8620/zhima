@@ -7,6 +7,8 @@
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
 namespace Bao\Controller;
+use Wechat\Wx;
+require_once ROOT_PATH .'/Inc/Library/Wxpay/weixin.php';
 class HongbaoController extends BaseController {
     public function index(){
         $this->sign = md5(microtime(true));
