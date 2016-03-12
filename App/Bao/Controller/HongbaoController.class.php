@@ -38,7 +38,7 @@ class HongbaoController extends BaseController {
                 $json['msg_content'] = '平均每个红包范围在1.05-200之间.';
                 break;
             }
-            $hongbao = '';
+            $re = '';
             if($id){
                 $re = M('bao')->where(array('number_no'=>$id))->find();
 
@@ -46,7 +46,7 @@ class HongbaoController extends BaseController {
             $user = M('user')->find($this->user_id);
 
 
-            if(!$re || $re['amount'] != $amount){
+            if(!$re || ($re && $re['total_amount'] != $amount)){
                 // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
                 $order_sn = get_order_sn();
 
