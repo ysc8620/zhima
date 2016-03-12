@@ -64,33 +64,21 @@ class HongbaoController extends BaseController {
                 $order_sn = $re['order_sn'];
             }
 
-            $new['body'] = "红包";
-            $new['attach'] = "红包";
-            $new['order_sn'] = $order_sn ;
-            $new['total_fee'] = $amount;
-            $new['time_start'] = date('YmdHis');
-            $new['time_expire'] =  date("YmdHis", time() + 600);
-            $new['goods_tag'] = "BAO";
-            // $openid = ;//session('openid')?session('openid'):cookie('openid');
-            $new['openid'] = $user['openid'];
-            $new['number_no'] = $data['number_no'];
 
-            print_r($new);die();
-            $json['jsApiParameters'] = jsapipay($new, false);
 
             if($re){
+                $new = array();
                 // redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
-                $data['body'] = "红包";
-                $data['attach'] = "红包";
-                $data['order_sn'] = $data['order_sn'] ;
-                $data['total_fee'] = $amount;
-                $data['time_start'] = date('YmdHis');
-                $data['time_expire'] =  date("YmdHis", time() + 600);
-                $data['goods_tag'] = "BAO";
+                $new['body'] = "红包";
+                $new['attach'] = "红包";
+                $new['order_sn'] = $order_sn;
+                $new['total_fee'] = $amount;
+                $new['time_start'] = date('YmdHis');
+                $new['time_expire'] =  date("YmdHis", time() + 600);
+                $new['goods_tag'] = "BAO";
                 // $openid = ;//session('openid')?session('openid'):cookie('openid');
-                $data['openid'] = $user['openid'];
-                $data['number_no'] = $data['number_no'];
-                $json['jsApiParameters'] = jsapipay($data, false);
+                $new['openid'] = $user['openid'];
+                $json['jsApiParameters'] = jsapipay($new, false);
                 break;
             }else{
                 $json['msg_code'] = 10002;

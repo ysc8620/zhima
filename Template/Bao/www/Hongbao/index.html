@@ -127,8 +127,6 @@
                 data: { amount: amount, total:total, remark:remark, id:id} ,
                 dataType:'html',
                 success: function(data){
-                    alert(data)
-                    return;
                     if(data.msg_code == 10001){
                         $('input[name="id"]').val(data.number_no);
                         alert(data.number_no);
