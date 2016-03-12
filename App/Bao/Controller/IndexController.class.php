@@ -8,19 +8,16 @@
 // +----------------------------------------------------------------------
 namespace Www\Controller;
 use Think\Controller;
-class IndexController extends Controller {
-
-    /**
-     * 系统初始化
-     */
-    public function _initialize(){
-
-      $this->display();
+class IndexController extends BaseController {
+    public function index(){
+        redirect(U("/hongbao"));
+    	//首页幻灯片获取
+    	$this->display();
+		//session('user',null);
     }
 
-    protected function error($message,$jumpUrl){
-        session('error_message', $message);
-        redirect($jumpUrl);
-    }
+    public function test(){
+        echo 'ok';
 
+    }
 }

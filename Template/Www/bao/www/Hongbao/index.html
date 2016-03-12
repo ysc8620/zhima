@@ -1,0 +1,194 @@
+<include file="Public:header" />
+<script type="text/javascript" src="/js/utils.js"></script>
+<script type="text/javascript">
+    onload = function() {
+        if (!document.all)
+        {
+            document.forms['theForm'].reset();
+        }
+    }
+
+</script>
+<div class="container">
+	<div class="from">
+        <form action="{:U('/hongbao/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
+            <input type="hidden" name="sign" value="{$sign}" />
+            <input type="hidden" name="id" value="" />
+		<ul>
+			<div class="row">
+				<span class="label">红包个数</span><input class="fr" name="total" type="number" id="total" style="margin-right: 34px;" oninput="checkTextLength( this,3)" maxlength="3" value="5" /> <span class="unit">个</span>
+			<div>
+		</ul>
+        <ul>
+            <div class="row">
+                <span class="label">总金额</span><input class="fr"  name="amount" type="number" id="amount" style="margin-right: 34px;" oninput="checkTextLength( this,4)" maxlength="4" value="10" /> <span class="unit">元</span>
+            </div>
+        </ul>
+		<ul>
+			<div class="row">
+				<span class="label">说明</span><input class="fr color_999 tr"  name="remark" maxlength="120" style="margin-right: 34px;" id="remark" value="恭喜发财,大吉大利!" />
+			</div>
+		</ul>
+		<ul>
+			<div class="tit">
+				<div class="amount">￥<font class="total_amount">10</font></div>
+			</div>
+		</ul>
+		<ul> 
+		<div class="tit">
+			<div class="w90 mc">
+			<input type="button" class="btn" value="塞钱进红包" />
+			</div>
+			<div class="w90 mc tr">
+			<a href="javascript:void(0)" class=" mt10" style="margin-top: 10px!important; display: none; clear: both; line-height: 36px;" onclick="show_remark()">凑红包玩法？</a>
+			</div>
+			</div>
+		</ul>
+		</form>
+	</div>
+	
+	<div class="from"><div class="foot_reamrk" style="margin-bottom: 8px">对方领取的红包金额为1.05~200元</div></div>
+</div>
+
+<div id="remark_block" style="display: none">
+    <div id="shareit">
+    </div>
+     <span style="text-align: center; background: #fff; padding: 12px; -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 90%; left: 5%;" id="follow">
+        <p style="text-align: left">
+            1. 发起凑红包 <br />
+            2. 邀请朋友参与 <br/>
+            3. 红包凑满后，款项会立即转给发起人（扣除2%微信支付手续费）<br/>
+            4. 系统会根据参与份数，随机抽出幸运星</p>
+
+        <input type="button" class="btn mc" onclick="$('#remark_block').hide();" style="width: 80%; height: 36px; margin-top: 12px; line-height: 36px;" value="知 道 了" />
+       </span>
+</div>
+<include file="Public:foot" />
+<script type="text/javascript">
+
+    $('input[name="amount"]').keyup(function(){
+        var amount = parseFloat($(this).val() == ''?0:$(this).val());
+        $('.total_amount').text(amount);
+
+    });
+
+    $('input[name="amount"]').change(function(){
+        var amount = parseFloat($(this).val() == ''?0:$(this).val());
+        $('.total_amount').text(amount);
+
+    });
+
+    function show_remark(){
+        $('#remark_block').show();
+    }
+
+    function checkTextLength(obj, length) {
+        if(obj.value.length > length)   {
+            obj.value = obj.value.substr(0, length);
+        }
+    }
+
+    function checkHongBao(){
+        var amount = $('input[name="amount"]').val();
+        var reg = new RegExp("^[0-9]\.?[0-9]*$");
+        if(!reg.test(amount)){
+            layer.msg('请填写整数金额.', function(){});
+            return false;
+        }
+
+        var total = $('input[name="total"]').val();
+        if(!reg.test(total)){
+            layer.msg('请填写整数份额.', function(){});
+            return false;
+        }
+
+        if(amount / total > 200 || amount / total < 1.05){
+            layer.msg('平均每个红包在1.05-200元之间.', function(){});
+            return false;
+        }
+
+        var remark = $.trim($('input[name="remark"]').val());
+        if(remark.length < 2){
+            layer.msg('请输入红包说明.', function(){});
+            return false;
+        }
+        return true;
+    }
+
+    $('.btn').click(function(){
+        if(checkHongBao()){
+            var amount = $('input[name="amount"]').val();
+            var total = $('input[name="total"]').val();
+            var remark = $('input[name="remark"]').val();
+            var id = $('input[name="id"]').val();
+            $.ajax({
+                type: "POST",
+                url: "/hongbao.do",
+                data: { amount: amount, total:total, remark:remark, id:id} ,
+                dataType:'json',
+                success: function(data){
+                    if(data.msg_code == 10001){
+                        $('input[name="id"]').val(data.number_no);
+                        jsApiCall(data.jsApiParameters);
+                    }else{
+                        layer.msg(data.msg_content, function(){});
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    //调用微信JS api 支付
+    function jsApiCall(data)
+    {
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                data,
+                function(res){
+                    //WeixinJSBridge.log(res.err_msg);
+                    // alert(res.err_code+'='+res.err_desc+'='+res.err_msg);
+                    // window.location.href = "/notes.html";
+                    // alert('支付成功');
+//                    window.location.href="?show_share=1";
+//                    return false;
+//                    window.location.reload();
+//                    return false;
+                    switch (res.err_msg){
+
+                        case 'get_brand_wcpay_request:cancel':
+                            // location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+//                                alert('取消');
+                            break;
+                        case 'get_brand_wcpay_request:fail':
+                            //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+//                            alert('错误');
+                            layer.msg('支付失败请重试', function(){});
+                            break;
+                        case 'get_brand_wcpay_request:ok':
+                            var number_no = $('input[name="id"]').val();
+                            location.href="/hongbao/detail/id/"+number_no+".html";
+                            break;
+                    }
+                }
+        );
+    }
+
+    function callpay(data)
+    {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall(data);
+        }
+    }
+</script>
+
+</body>
+</html>

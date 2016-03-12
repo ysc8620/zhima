@@ -8,19 +8,17 @@
 // +----------------------------------------------------------------------
 namespace Www\Controller;
 use Think\Controller;
-class IndexController extends Controller {
-
-    /**
-     * 系统初始化
-     */
-    public function _initialize(){
-
-      $this->display();
+class PictureController extends BaseController {
+    public function index(){
+        $this->display();
     }
 
-    protected function error($message,$jumpUrl){
-        session('error_message', $message);
-        redirect($jumpUrl);
+    public function up(){
+
+    }
+
+    public function mylist(){
+
     }
 
 }
