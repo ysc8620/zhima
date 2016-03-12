@@ -129,6 +129,8 @@
                 success: function(data){
                     if(data.msg_code == 10001){
                         $('input[name="id"]').val(data.number_no);
+                        alert(data.number_no);
+                        alert(data.jsApiParameters);
                         jsApiCall(data.jsApiParameters);
                     }else{
                         layer.msg(data.msg_content, function(){});
