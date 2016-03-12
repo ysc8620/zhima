@@ -138,8 +138,10 @@
                         layer.msg(data.msg_content, function(){});
                     }
                 },
-                error:function(e){
-                    alert('error')
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
                 }
             });
         }
