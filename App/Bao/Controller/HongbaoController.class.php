@@ -86,6 +86,7 @@ class HongbaoController extends BaseController {
                 break;
             }
         }while(false);
+        var_dump($json);die();
         echo json_encode($json);die();
     }
 
