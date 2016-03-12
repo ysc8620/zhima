@@ -129,8 +129,6 @@
                 success: function(data){
                     if(data.msg_code == 10001){
                         $('input[name="id"]').val(data.number_no);
-                        alert(data.number_no);
-                        alert(data.jsApiParameters);
                         jsApiCall(data.jsApiParameters);
                     }else{
                         layer.msg(data.msg_content, function(){});
@@ -166,6 +164,7 @@
                         case 'get_brand_wcpay_request:fail':
                             //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
 //                            alert('错误');
+                                alert(res);
                             layer.msg('支付失败请重试', function(){});
                             break;
                         case 'get_brand_wcpay_request:ok':
