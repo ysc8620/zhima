@@ -137,7 +137,21 @@ class PayNotifyCallBack extends WxPayNotify
 
             // 更改order 状态
             // 更改 hongbao状态
-            $result['out_trade_no'];
+            $order_sn = $result['out_trade_no'];
+            if(substr($order_sn,0,2) == 'HB'){
+                $bao = M('bao')->where("order_sn='{$$order_sn}'")->find();
+                if($bao['state'] <= 1){
+                    $data = array(
+                        'pay_id' => $id,
+                        'pay_time' => time(),
+                        'transaction_id'=>$result['transaction_id'],
+                        'state' => 2
+                    );
+                    M('bao')->where("order_sn='{$order_sn}'")->save($data);
+                }
+                return true;
+            }
+
             $order = M('hongbao_order')->where("order_sn='{$result['out_trade_no']}'")->find();
             if($order){
                 // 重复操作

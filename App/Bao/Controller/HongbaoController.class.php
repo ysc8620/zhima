@@ -48,7 +48,7 @@ class HongbaoController extends BaseController {
 
             if(!$re || ($re && $re['total_amount'] != $amount)){
                 // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
-                $order_sn = get_order_sn();
+                $order_sn = get_order_sn('HB');
 
                 $data['number_no'] = get_order_sn();
                 $number_no = $data['number_no'];
