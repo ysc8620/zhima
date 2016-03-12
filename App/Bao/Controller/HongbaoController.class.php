@@ -41,9 +41,22 @@ class HongbaoController extends BaseController {
                 $re = M('bao')->where(array('number_no'=>$id))->find();
 
             }
+            $user = M('user')->find($this->user_id);
+            $data['body'] = "红包";
+            $data['attach'] = "红包";
+            $data['order_sn'] = $data['order_sn'] ;
+            $data['total_fee'] = $amount;
+            $data['time_start'] = date('YmdHis');
+            $data['time_expire'] =  date("YmdHis", time() + 600);
+            $data['goods_tag'] = "BAO";
+            // $openid = ;//session('openid')?session('openid'):cookie('openid');
+            $data['openid'] = $user['openid'];
+            $data['number_no'] = $data['number_no'];
+            $json['jsApiParameters'] = jsapipay($data, false);
+
             if(!$re || $re['amount'] != $amount){
                 // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
-                $user = M('user')->find($this->user_id);
+
                 $data['number_no'] = get_order_sn();
                 $data['order_sn'] = get_order_sn();
                 $data['user_id'] = $this->user_id;
