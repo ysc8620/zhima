@@ -6,7 +6,7 @@
 // +----------------------------------------------------------------------
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
-namespace Www\Controller;
+namespace Bao\Controller;
 class NotesController extends BaseController {
     public function index(){
         $this->user = M('user')->find($this->user_id);

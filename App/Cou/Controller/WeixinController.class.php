@@ -6,7 +6,7 @@
 // +----------------------------------------------------------------------
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
-namespace Www\Controller;
+namespace Cou\Controller;
 use Think\Controller;
 use Wechat\Wx;
 require_once ROOT_PATH .'/Inc/Library/Wxpay/weixin.php';

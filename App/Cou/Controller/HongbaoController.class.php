@@ -6,7 +6,7 @@
 // +----------------------------------------------------------------------
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
-namespace Www\Controller;
+namespace Cou\Controller;
 class HongbaoController extends BaseController {
     public function index(){
         $this->sign = md5(microtime(true));
