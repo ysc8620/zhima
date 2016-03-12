@@ -43,7 +43,7 @@ class BaseController extends Controller {
                         if($user['subscribe']){
                             // 自动获取
                             $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-                            header("Location: ".U("/weixin/userinfo").'?url='.urlencode($url));
+                            header("Location: ".U("/bao/weixin/userinfo" ).'&url='.urlencode($url));
                         }else{
                             // 网页授权
                             \Wechat\Wxapi::authorize();

@@ -126,12 +126,12 @@ class HongbaoController extends BaseController {
 
         $this->show_share = I('get.show_share', 0,'strval');
         if($id < 1){
-            $this->error('请选择查看的红包', U('/notes'));
+            $this->error('请选择查看的红包', U('/bao/notes'));
         }
         $this->hongbao = M('bao')->where(array('number_no'=>$id))->find();
 
         if(!$this->hongbao){
-            $this->error('没找到红包详情', U('/notes'));
+            $this->error('没找到红包详情', U('/bao/notes'));
         }
 
 //        if($this->hongbao['state'] == 1){
@@ -201,7 +201,7 @@ class HongbaoController extends BaseController {
                 $order_list[$k]['user'] = $user;
             }
         }
-        $this->share_link = U('/hongbao/detail', array('id'=>$id), true,true);
+        $this->share_link = U('/bao/hongbao/detail', array('id'=>$id), true,true);
         $this->order_list = $order_list;
         $this->id = $id;
         $this->display();

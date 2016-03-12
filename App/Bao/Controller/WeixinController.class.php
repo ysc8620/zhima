@@ -42,10 +42,10 @@ class WeixinController extends Controller {
             session('access_token', $data['access_token']);
             cookie('openid',$data['openid'],array('expire'=>time()+2592000));
 
-            header("location: ".U('/weixin/userinfo').'?url='.$_GET['url']. '&token='.$data['access_token']);
+            header("location: ".U('/bao/weixin/userinfo').'&url='.$_GET['url']. '&token='.$data['access_token']);
             exit();
         }else{
-            header("location: ".U('/weixin/userinfo').'?url='.$_GET['url']);
+            header("location: ".U('/bao/weixin/userinfo').'&url='.$_GET['url']);
             exit();
         }
     }
@@ -158,24 +158,24 @@ class WeixinController extends Controller {
                 $hongbao = M('hongbao')->where(array('number_no'=>$order['number_no']))->find();
 
                 if($hongbao['state'] != 1){
-                    $this->error("红包不能支付", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                    $this->error("红包不能支付", U('/bao/hongbao/detail', array('id'=>$hongbao['number_no'])));
                     exit(1);
                 }
 
                 if($hongbao['total_part'] <= $hongbao['total_num']){
-                    $this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                    $this->error("红包已经凑齐", U('/bao/hongbao/detail', array('id'=>$hongbao['number_no'])));
                     exit(1);
                 }
 
                 if(($hongbao['addtime'] + 86400) < time() ){
-                    $this->error("红包已经过期", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
+                    $this->error("红包已经过期", U('/bao/hongbao/detail', array('id'=>$hongbao['number_no'])));
                     exit(1);
                 }
 
                 if($order['state'] == 1){
                     $amount = ceil($order['total_amount'] *100);
                     if($amount < 1){
-                        $this->error("红包金额不对能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
+                        $this->error("红包金额不对能支付", U('/bao/hongbao/detail', array('id'=>$order['number_no'])));
                         exit(1);
                     }
                     $data['body'] = "凑红包";
@@ -198,13 +198,13 @@ class WeixinController extends Controller {
                     $this->display();
                     exit();
                 }else{
-                    $this->error("红包状态不能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
+                    $this->error("红包状态不能支付", U('/bao/hongbao/detail', array('id'=>$order['number_no'])));
                     exit(1);
                 }
             }
 
         }
-        $this->error("红包状态不能支付", U('/notes'));
+        $this->error("红包状态不能支付", U('/bao/notes'));
         exit(1);
     }
 
@@ -258,7 +258,7 @@ class WeixinController extends Controller {
                         $data['total_fee'] = $amount;
                         $data['time_start'] = date('YmdHis');
                         $data['time_expire'] =  date("YmdHis", time() + 600);
-                        $data['goods_tag'] = "WXG";
+                        $data['goods_tag'] = "BAO";
                         // $openid = ;//session('openid')?session('openid'):cookie('openid');
                         $data['openid'] = $order['openid'];
 

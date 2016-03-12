@@ -93,7 +93,7 @@ class AutoController extends Controller {
 幸运星：{$user_info['name']}
 
 红包已经通过微信红包打给你，其中已扣除2%微信支付手续费，扣除后金额为{$user_amount}元";
-                    \Wechat\Wxapi::send_wxmsg($hongbao['openid'],'众筹状态提醒',U('/cou/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
+                    \Wechat\Wxapi::send_wxmsg($hongbao['openid'],'众筹状态提醒',U('/bao/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
                     $msg = "幸运星就是你！没想到吧
 
 众筹标题：{$hongbao['remark']}
@@ -101,7 +101,7 @@ class AutoController extends Controller {
 众筹进度：￥{$hongbao['total_amount']}已成功！
 
 快找发起人要福利吧 :D";
-                    \Wechat\Wxapi::send_wxmsg($user_info['openid'],'众筹状态提醒',U('/cou/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
+                    \Wechat\Wxapi::send_wxmsg($user_info['openid'],'众筹状态提醒',U('/bao/hongbao/detail',array('id'=>$hongbao['number_no']),true,true),$msg );
                     $log = "发送红包成功, 红包编号：{$hongbao['id']},发送编号：{$hongbao_send['id']}";
                     f_log($log, ROOT_PATH.'Runtime/Logs/hongbao.log');
                     echo $log."<br/>";
