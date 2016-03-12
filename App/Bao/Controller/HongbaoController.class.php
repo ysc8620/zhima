@@ -21,7 +21,7 @@ class HongbaoController extends BaseController {
             'msg_content' => '',
         );
         do{
-            $id = I('post.amount','','strval');
+            $id = I('post.id','','strval');
             $amount = I('post.amount',0,'floatval');
             $total = I('post.total',0,'intval');
             $remark = I('post.remark','','htmlspecialchars');
