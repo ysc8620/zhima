@@ -121,6 +121,7 @@
             var total = $('input[name="total"]').val();
             var remark = $('input[name="remark"]').val();
             var id = $('input[name="id"]').val();
+            alert(id)
             $.ajax({
                 type: "POST",
                 url: "{:U('/bao/hongbao/add')}",
