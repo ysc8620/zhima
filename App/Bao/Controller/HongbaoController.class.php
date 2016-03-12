@@ -49,7 +49,9 @@ class HongbaoController extends BaseController {
             if(!$re || $re['amount'] != $amount){
                 // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
                 $order_sn = get_order_sn();
+
                 $data['number_no'] = get_order_sn();
+                $number_no = $data['number_no'];
                 $data['order_sn'] = $order_sn;
                 $data['user_id'] = $this->user_id;
                 $data['total_amount'] = $amount;
@@ -64,9 +66,11 @@ class HongbaoController extends BaseController {
                 $re = M('bao')->add($data);
             }else{
                 $order_sn = $re['order_sn'];
+                $number_no = $re['number_no'];
             }
 
             if($re){
+                $json['number_no'] = $number_no;
                 $new = array();
                 // redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
                 $new['body'] = "红包";
