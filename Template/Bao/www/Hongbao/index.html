@@ -117,7 +117,6 @@
 
     $('.btn').click(function(){
         if(checkHongBao()){
-            alert('xx');
             var amount = $('input[name="amount"]').val();
             var total = $('input[name="total"]').val();
             var remark = $('input[name="remark"]').val();
@@ -130,15 +129,12 @@
                 success: function(data){
                     if(data.msg_code == 10001){
                         $('input[name="id"]').val(data.number_no);
+                        alert(data.number_no);
+                        alert(data.jsApiParameters);
                         jsApiCall(data.jsApiParameters);
                     }else{
                         layer.msg(data.msg_content, function(){});
                     }
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert(XMLHttpRequest.status);
-                    alert(XMLHttpRequest.readyState);
-                    alert(textStatus);
                 }
             });
         }
