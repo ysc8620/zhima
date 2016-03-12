@@ -87,6 +87,23 @@ class HongbaoController extends BaseController {
         echo json_encode($json);die();
     }
 
+    function test(){
+        $new = array();
+        $user = M('user')->find($this->user_id);
+        // redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
+        $new['body'] = "红包";
+        $new['attach'] = "红包";
+        $new['order_sn'] = get_order_sn();
+        $new['total_fee'] = 20;
+        $new['time_start'] = date('YmdHis');
+        $new['time_expire'] =  date("YmdHis", time() + 600);
+        $new['goods_tag'] = "BAO";
+        // $openid = ;//session('openid')?session('openid'):cookie('openid');
+        $new['openid'] = $user['openid'];
+        $json['jsApiParameters'] = jsapipay($new, true);
+        print_r($json);
+    }
+
     function time2Units ($time)
     {
         $year   = floor($time / 60 / 60 / 24 / 365);
