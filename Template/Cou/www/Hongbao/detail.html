@@ -307,7 +307,7 @@
                     // alert(res.err_code+'='+res.err_desc+'='+res.err_msg);
                     // window.location.href = "/notes.html";
                     // alert('支付成功');
-                    window.location.href="?show_share=1";
+                    window.location.href = "{:U('/cou/hongbao/detail', array('id'=>$id,'show_share'=>1), true,true)}";
                     return false;
 //                    window.location.reload();
 //                    return false;
@@ -426,7 +426,7 @@
 
         $.ajax({
             type:'post',
-            url:"{:U('/hongbao/order')}",
+            url:"{:U('/cou/hongbao/order')}",
             async:false,
             cache:false,
             data:{id:id, num:num},
@@ -458,7 +458,7 @@
         }
         $.ajax({
             type:'post',
-            url:"{:U('/weixin/pay1')}",
+            url:"{:U('/cou/weixin/pay1')}",
             async:false,
             cache:false,
             data:{id:id},
