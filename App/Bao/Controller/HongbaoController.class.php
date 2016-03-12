@@ -42,23 +42,13 @@ class HongbaoController extends BaseController {
 
             }
             $user = M('user')->find($this->user_id);
-            $data['body'] = "红包";
-            $data['attach'] = "红包";
-            $data['order_sn'] = $data['order_sn'] ;
-            $data['total_fee'] = $amount;
-            $data['time_start'] = date('YmdHis');
-            $data['time_expire'] =  date("YmdHis", time() + 600);
-            $data['goods_tag'] = "BAO";
-            // $openid = ;//session('openid')?session('openid'):cookie('openid');
-            $data['openid'] = $user['openid'];
-            $data['number_no'] = $data['number_no'];
-            $json['jsApiParameters'] = jsapipay($data, false);
+
 
             if(!$re || $re['amount'] != $amount){
                 // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
-
+                $order_sn = get_order_sn();
                 $data['number_no'] = get_order_sn();
-                $data['order_sn'] = get_order_sn();
+                $data['order_sn'] = $order_sn;
                 $data['user_id'] = $this->user_id;
                 $data['total_amount'] = $amount;
                 $data['total_num'] = $total;
@@ -70,7 +60,23 @@ class HongbaoController extends BaseController {
                 $data['from_openid'] = $user['openid'];
                 $data['is_rand'] = 1;
                 $re = M('bao')->add($data);
+            }else{
+                $order_sn = $re['order_sn'];
             }
+
+            $new['body'] = "红包";
+            $new['attach'] = "红包";
+            $new['order_sn'] = $order_sn ;
+            $new['total_fee'] = $amount;
+            $new['time_start'] = date('YmdHis');
+            $new['time_expire'] =  date("YmdHis", time() + 600);
+            $new['goods_tag'] = "BAO";
+            // $openid = ;//session('openid')?session('openid'):cookie('openid');
+            $new['openid'] = $user['openid'];
+            $new['number_no'] = $data['number_no'];
+
+            print_r($new);die();
+            $json['jsApiParameters'] = jsapipay($new, false);
 
             if($re){
                 // redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
