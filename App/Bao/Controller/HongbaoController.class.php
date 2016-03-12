@@ -64,8 +64,6 @@ class HongbaoController extends BaseController {
                 $order_sn = $re['order_sn'];
             }
 
-
-
             if($re){
                 $new = array();
                 // redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
@@ -78,7 +76,7 @@ class HongbaoController extends BaseController {
                 $new['goods_tag'] = "BAO";
                 // $openid = ;//session('openid')?session('openid'):cookie('openid');
                 $new['openid'] = $user['openid'];
-                $json['jsApiParameters'] = jsapipay($new, false);
+                //$json['jsApiParameters'] = jsapipay($new, false);
                 break;
             }else{
                 $json['msg_code'] = 10002;
@@ -86,7 +84,6 @@ class HongbaoController extends BaseController {
                 break;
             }
         }while(false);
-        var_dump($json);die();
         echo json_encode($json);die();
     }
 
