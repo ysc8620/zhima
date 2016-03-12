@@ -17,7 +17,7 @@
 		<ul>
 			<div class="row">
 				<span class="label">红包个数</span><input class="fr" name="total" type="number" id="total" style="margin-right: 34px;" oninput="checkTextLength( this,3)" maxlength="3" value="5" /> <span class="unit">个</span>
-			<div>
+			</div>
 		</ul>
         <ul>
             <div class="row">
@@ -123,7 +123,7 @@
             var id = $('input[name="id"]').val();
             $.ajax({
                 type: "POST",
-                url: "/hongbao.do",
+                url: "{:U('/bao/hongbao/do')}",
                 data: { amount: amount, total:total, remark:remark, id:id} ,
                 dataType:'json',
                 success: function(data){
@@ -168,7 +168,7 @@
                             break;
                         case 'get_brand_wcpay_request:ok':
                             var number_no = $('input[name="id"]').val();
-                            location.href="/hongbao/detail/id/"+number_no+".html";
+                            location.href="/index.php?s=/bao/hongbao/detail/id/"+number_no+".html";
                             break;
                     }
                 }

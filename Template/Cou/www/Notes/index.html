@@ -18,16 +18,16 @@
 <div class="container">
 
     <div class="nav_fixed">
-        <a style="color: #323232!important; font-size: 15px;" href="{:U('/notes/index')}" class="fixed_nav_item  <if condition='$state eq ""'>nav_cur</if>"><span class="nav_txt">所有</span></a>
-        <a style="color: #323232!important; font-size: 15px;" href="{:U('/notes/index',array('state'=>'creation'))}" class="fixed_nav_item <if condition='$state eq "creation"'>nav_cur</if> "><span class="nav_txt nav_payment">我发起的</span></a>
-        <a style="color: #323232!important; font-size: 15px;" href="{:U('/notes/index',array('state'=>'star'))}" class="fixed_nav_item <if condition='$state eq "star"'>nav_cur</if> "><span class="nav_txt nav_payment">我是幸运星</span></a>
+        <a style="color: #323232!important; font-size: 15px;" href="{:U('/cou/notes/index')}" class="fixed_nav_item  <if condition='$state eq ""'>nav_cur</if>"><span class="nav_txt">所有</span></a>
+        <a style="color: #323232!important; font-size: 15px;" href="{:U('/cou/notes/index',array('state'=>'creation'))}" class="fixed_nav_item <if condition='$state eq "creation"'>nav_cur</if> "><span class="nav_txt nav_payment">我发起的</span></a>
+        <a style="color: #323232!important; font-size: 15px;" href="{:U('/cou/notes/index',array('state'=>'star'))}" class="fixed_nav_item <if condition='$state eq "star"'>nav_cur</if> "><span class="nav_txt nav_payment">我是幸运星</span></a>
     </div>
 	<div class="order_list">
 		<div class="header bt_line">
 				</div>
 		<div class="block" style="min-height: 200px;">
             <volist name="list" id="item">
-                <a class="" href="{:U('/hongbao/detail',array('id'=>$item['number_no']))}">
+                <a class="" href="{:U('/cou/hongbao/detail',array('id'=>$item['number_no']))}">
 			<ul class="bt_line p6">
 				<div class="head_img fl" style="width:70px;"><img src="{$item.user.header}" alt="{$item.user.name}" class="detail_head_img2" /></div>
 					<div class="detail fl">
@@ -50,7 +50,7 @@
             <div class="fr cl" style="margin-right: 12px;"><span style="font-size:12px; ">第{$page}/{$total_page}页,共{$totalRows}条</span> </div>
         </div>
 		<div class="xiala cl">
-            <div class="fl cl" style="margin-left: 12px;"><a href="{:U('/hongbao')}"><input type="button" class="btn w120" value="发起凑红包" /></a></div>
+            <div class="fl cl" style="margin-left: 12px;"><a href="{:U('/cou/hongbao')}"><input type="button" class="btn w120" value="发起凑红包" /></a></div>
 			 <div id="pager" class="pagebar pagination fr" style="margin-right: 12px; text-align: right">
             {$page_show}
             </div>

@@ -10,14 +10,9 @@ namespace Cou\Controller;
 use Think\Controller;
 class IndexController extends BaseController {
     public function index(){
-        redirect(U("/hongbao"));
+        redirect(U("/cou/hongbao"));
     	//首页幻灯片获取
     	$this->display();
 		//session('user',null);
-    }
-
-    public function test(){
-        echo 'ok';
-
     }
 }

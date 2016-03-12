@@ -13,7 +13,7 @@ class IndexController extends Controller {
     /**
      * 系统初始化
      */
-    public function _initialize(){
+    public function index(){
 
       $this->display();
     }

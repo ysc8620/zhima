@@ -72,7 +72,7 @@
 		</div>
             </if>
 		<div class="xiala">
-			<div><a href="{:U('/hongbao')}"><input type="button" class="btn w120" value="发起红包" /></a> <a href="{:U('/notes')}" style="margin-left: 20px"><input type="button" class="btn w120" value="我的记录" /></a></div>
+			<div><a href="{:U('/bao/hongbao')}"><input type="button" class="btn w120" value="发起红包" /></a> <a href="{:U('/bao/notes')}" style="margin-left: 20px"><input type="button" class="btn w120" value="我的记录" /></a></div>
 			<div class="cl h12"></div>
 		</div>
 		<div class="cl"></div>
@@ -157,7 +157,7 @@
 
         $.ajax({
             type:'post',
-            url:"{:U('/hongbao/order')}",
+            url:"{:U('/bao/hongbao/order')}",
             async:false,
             cache:false,
             data:{id:id, num:num},
