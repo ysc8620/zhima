@@ -20,7 +20,7 @@ class HongbaoController extends BaseController {
             $sign = I('post.sign');
 
             if($sign != session('sign')){
-                $this->error('请不要重复提交.',U('/hongbao'));
+                $this->error('请不要重复提交.',U('/cou/hongbao'));
             }else{
                 session('sign', microtime(true));
             }
@@ -29,12 +29,12 @@ class HongbaoController extends BaseController {
             $remark = I('post.remark','','htmlspecialchars');
 
             if($amount <= 0 || $total < 1 || $amount > 200){
-                $this->error('红包范围在2-200之间.',U('/hongbao'));
+                $this->error('红包范围在2-200之间.',U('/cou/hongbao'));
                 return false;
             }
 
             if($amount * $total > 200 || $amount * $total <2){
-                $this->error('红包范围在2-200之间.',U('/hongbao'));
+                $this->error('红包范围在2-200之间.',U('/cou/hongbao'));
                 return false;
             }
             // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
@@ -51,13 +51,13 @@ class HongbaoController extends BaseController {
 
             $re = M('hongbao')->add($data);
             if($re){
-                redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
+                redirect(U('/cou/hongbao/detail', array('id'=>$data['number_no'])));
                 exit();
             }else{
-                $this->error('红包创建失败', U('/hongbao'));
+                $this->error('红包创建失败', U('/cou/hongbao'));
             }
         }while(false);
-        $this->error('红包创建失败', U('/hongbao'));
+        $this->error('红包创建失败', U('/cou/hongbao'));
     }
 
     function time2Units ($time)
@@ -104,12 +104,12 @@ class HongbaoController extends BaseController {
 
         $this->show_share = I('get.show_share', 0,'strval');
         if($id < 1){
-            $this->error('请选择查看的红包', U('/notes'));
+            $this->error('请选择查看的红包', U('/cou/notes'));
         }
         $this->hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
 
         if(!$this->hongbao){
-            $this->error('没找到红包详情', U('/notes'));
+            $this->error('没找到红包详情', U('/cou/notes'));
         }
         $this->hongbao_amount = $this->hongbao['total_amount'] * 0.98;
 
@@ -187,7 +187,7 @@ class HongbaoController extends BaseController {
                 $order_list[$k]['user'] = $user;
             }
         }
-        $this->share_link = U('/hongbao/detail', array('id'=>$id), true,true);
+        $this->share_link = U('/cou/hongbao/detail', array('id'=>$id), true,true);
         $this->order_list = $order_list;
         $this->id = $id;
         $this->display();
@@ -203,14 +203,14 @@ class HongbaoController extends BaseController {
         $this->title ="追加凑红包";
         $id = I('get.id',0, 'strval');
         if($id < 1){
-            $this->error('请选择查看的红包', U('/notes'));
+            $this->error('请选择查看的红包', U('/cou/notes'));
         }
         $this->hongbao = M('hongbao')->where(array('number_no'=>$id))->find();
 
         // $total_amount = intval(M('hongbao_order')->where(array("number_no"=>$id, "state"=>1,'addtime'=>array('gt', time()-1800)))->sum('total_amount'));
 
         if(!$this->hongbao){
-            $this->error('没找到红包详情', U('/notes'));
+            $this->error('没找到红包详情', U('/cou/notes'));
         }
         $this->user = M('user')->find($this->user_id);
 
