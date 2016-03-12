@@ -117,6 +117,7 @@
 
     $('.btn').click(function(){
         if(checkHongBao()){
+            alert('xx');
             var amount = $('input[name="amount"]').val();
             var total = $('input[name="total"]').val();
             var remark = $('input[name="remark"]').val();
@@ -136,6 +137,9 @@
                     }else{
                         layer.msg(data.msg_content, function(){});
                     }
+                },
+                error:function(e){
+                    alert('error')
                 }
             });
         }

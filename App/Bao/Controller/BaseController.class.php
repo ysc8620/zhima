@@ -16,9 +16,9 @@ class BaseController extends Controller {
     public function _initialize(){
 
         $this->user_id = session('user_id');
-//        $this->user_id = 10004;
-////
-//        return true;
+        $this->user_id = 10004;
+//
+        return true;
         $openid =  session('openid');
         if(!$openid){
             $openid = cookie('openid');
@@ -26,6 +26,7 @@ class BaseController extends Controller {
                 session('openid', $openid);
             }
         }
+
 
         // 系统获取当前用户
         if( ! $this->user_id ){
