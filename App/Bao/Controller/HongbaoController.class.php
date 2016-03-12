@@ -76,7 +76,7 @@ class HongbaoController extends BaseController {
                 $new['body'] = "红包";
                 $new['attach'] = "红包";
                 $new['order_sn'] = $order_sn;
-                $new['total_fee'] = $amount;
+                $new['total_fee'] = $amount * 100;
                 $new['time_start'] = date('YmdHis');
                 $new['time_expire'] =  date("YmdHis", time() + 600);
                 $new['goods_tag'] = "BAO";
