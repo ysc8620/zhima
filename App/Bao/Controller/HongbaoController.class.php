@@ -17,6 +17,9 @@ class HongbaoController extends BaseController {
         $this->display();
     }
 
+    /**
+     * 添加红包
+     */
     public function add(){
         $json = array(
             'msg_code' => 10001,
@@ -152,7 +155,6 @@ class HongbaoController extends BaseController {
         $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
         $this->user = M('user')->find($this->user_id);
 
-
         // 是否显示分享
         $this->is_show_share = false;
         $this->receive_order = false;
@@ -199,6 +201,102 @@ class HongbaoController extends BaseController {
         $this->order_list = $order_list;
         $this->id = $id;
         $this->display();
+    }
+
+    /**
+     * 领取红包
+     */
+    public function order(){
+        $id = I('get.id','', 'strval');
+        $json = array(
+            'msg_code' => 10001,
+            'msg_content' => '',
+        );
+        do{
+
+            $hongbao = M('bao')->where(array('number_no'=>$id))->find();
+            if(!$hongbao){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '没找到红包';
+                break;
+            }
+
+            if($hongbao['state'] != 2){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '红包已经领取完毕.';
+                break;
+            }
+            $total_order = M('bao_order')->where( array('bao_id'=>$hongbao['id']))->count();
+            $total_amount = M('bao_order')->where( array('bao_id'=>$hongbao['id']))->sum('amount');
+            $total_amount = floatval($total_amount);
+            $total_order = intval($total_order);
+            if($total_order >= $hongbao['total_num']){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '红包已经领取完毕.';
+                break;
+            }
+            $order = M('bao_order')->where(array('bao_id'=>$hongbao['id'], 'user_id'=>$this->user_id))->find();
+            if(! $order){
+                // 'id', 'bao_id', 'bao_user_id', 'bao_openid', 'from_bao_id', 'from_user_id', 'from_openid',
+                // 'number_no', 'order_sn', 'amount', 'addtime', 'state', 'user_id', 'openid', 'transaction_id'
+
+                $order_total_amount = $hongbao['total_amount'] - $hongbao['total_amount'] * 0.02 - $total_amount - ($hongbao['total_num'] - $total_order);
+
+                $data = array(
+                    'bao_id' => $hongbao['id'],
+                    'bao_user_id' => $hongbao['user_id'],
+                    'bao_openid' => $hongbao['openid'],
+                    'from_bao_id' => $hongbao['from_bao_id'],
+                    'from_openid' => $hongbao['from_openid'],
+                    'number_no' => $hongbao['number_no'],
+                    'order_sn' => get_order_sn('HB'),
+                    'amount' => $this->get_order_amount($order_total_amount,$hongbao['total_num'] - $total_order),
+                    'addtime' => time(),
+                    'state' => 1,
+                    'user_id' => $this->user_id,
+
+                );
+                $order_id = M('bao_order')->add($data);
+                \WxPayApi::sendHongbao();
+
+            }
+        }while(false);
+        echo json_encode($json);
+    }
+
+    /**
+     * @param $bao_id
+     */
+    private function get_order_amount($total_amount, $total_num, $min=1){
+
+        if($total_num == 1){
+            return $total_amount;
+        }
+        $order_total_amount = ($total_amount - ($total_num ))* 0.8;
+
+        $a = 1 + mt_rand(0, $order_total_amount * 100)/100;
+        return $a;
+
+    }
+
+    /**
+     * 设置赞赏
+     */
+    public function sponsor(){
+        $id = I('get.id',0, 'strval');
+        $json = array(
+            'msg_code' => 10001,
+            'msg_content' => '',
+        );
+        do{
+            $hongbao = M('bao')->where(array('number_no'=>$id))->find();
+            if($hongbao){
+                if($hongbao['user_id'] == $this->user_id){
+                    M('bao')->where(array('id'=>$hongbao['id']))->save(array('is_sponsor'=>0));
+                }
+            }
+        }while(false);
+        echo json_encode($json);
     }
 
 }

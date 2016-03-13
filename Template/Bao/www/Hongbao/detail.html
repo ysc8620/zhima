@@ -1,5 +1,6 @@
 <include file="Public:header" />
 <div class="container">
+    <input type="hidden" name="id" value="{$hongbao['number_no']}" />
 	<div class="detail_header">
 		<div class="detail_head_block"><img src="{$hongbao_user.header}" alt="{$hongbao_user.name}" class="detail_head_img" /></div>
 	</div>
@@ -13,7 +14,7 @@
                 <ul >
                     <div class="tit mt20">
                         <if condition="$receive_order">
-                        <div class="title"><font>您已领取：</font>￥{$receive_order.amount}元</div>
+                            <div class="title"><font>您已领取：</font>￥{$receive_order.amount}元</div>
                         </if>
                     </div>
                 </ul>
@@ -22,19 +23,19 @@
 		<div class='detail_block ' data-role="detail_default">
 			<ul>
 				<div class="tit">
-                    <if condition="$hongbao.state eq 2">
+                    <if condition="$hongbao.state eq 3">
                         <div class="title" style="font-size: 16px; margin: 6px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 凑齐啦~</div>
                     </if>
                     <div class="">
                         <if condition="$hongbao['user_id'] eq $user_id">
                             <button type="button"  onclick="set_share()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>分享</font></button>
-                        <else/>
-                        <button type="button"  onclick="set_buy()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>赞助</font></button>
+                        <elseif condition="$hongbao['is_sponsor'] eq 1" />
+                            <button type="button"  onclick="set_buy()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>赞助</font></button>
                         </if>
                     </div>
                     <if condition="$hongbao['user_id'] eq $user_id">
 					<div class="">
-						<a href="javascript:void(0)" style="margin-top: 10px!important; clear: both; line-height: 36px;" onclick="show_remark()">设为“不可赞助”</a>
+						<a href="javascript:void(0)" style="margin-top: 10px!important; clear: both; line-height: 36px;" onclick="set_sponsor()">设为“不可赞助”</a>
 					</div>
                         </if>
 				</div>
@@ -89,7 +90,7 @@
 
 <div id="error_block" style="display: none">
     <div id="shareit"></div>
-    <span style="" id="follow">
+    <span style="" class="follow">
         <div style="padding-right: 0px; padding-left: 0px; margin-top: 16px; font-size: 20px; color: #fff" class="text"><p>被人抢先一步了...</p></div>
 		<div>
             <img src="/images/ico_ku.png" style="width:80px;" />
@@ -150,11 +151,35 @@
     })
 
     /**
-     * 生成支付订单
+     * 设置赞赏
+     */
+    function set_sponsor(){
+        var id = $('input[name="id"]').val();
+
+        $.ajax({
+            type:'post',
+            url:"{:U('/bao/hongbao/sponsor')}",
+            async:false,
+            cache:false,
+            data:{id:id, num:num},
+            dataType:'json',
+            success:function(result){
+                if(result.msg_code==10001){
+                    // callpay(result.data);
+                    layer.msg('设置成功', function(){});
+                }else{
+                    layer.msg(result.message, function(){});
+                    return false;
+                }
+            }
+        });
+    }
+
+    /**
+     * 生成红包订单
      */
     function set_order(){
         var id = $('input[name="id"]').val();
-        var num = $('input[name="num"]').val();
 
         $.ajax({
             type:'post',
@@ -164,15 +189,13 @@
             data:{id:id, num:num},
             dataType:'json',
             success:function(result){
-                if(result.error==0){
-                    // callpay(result.data);
-                    alert('xxx');
-                }else if(result.error==1){
-                    layer.msg(result.message, function(){});
+                if(result.msg_code==10001){
+                    // layer.msg('', function(){});
+                    // 重载
+                    window.location.reload();
+                }else{
+                    layer.msg(result.msg_content, function(){});
                     return false;
-                }else if(result.error==2){
-                    $("#error_block").show();
-                    setTimeout(function(){window.location.reload();}, 2000);
                 }
             }
         });
