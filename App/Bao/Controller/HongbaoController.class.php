@@ -145,9 +145,9 @@ class HongbaoController extends BaseController {
             $this->error('没找到红包详情', U('/bao/notes'));
         }
 
-        if($this->hongbao['state'] == 1){
-            $this->error('红包还没支付', U('/bao/notes'));
-        }
+//        if($this->hongbao['state'] == 1){
+//            $this->error('红包还没支付', U('/bao/notes'));
+//        }
         $this->hongbao_amount = $this->hongbao['total_amount'] * 0.98;
         $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
         $this->user = M('user')->find($this->user_id);
