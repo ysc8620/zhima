@@ -23,14 +23,14 @@
 		<div class='detail_block ' data-role="detail_default">
 			<ul>
 				<div class="tit">
-                    <if condition="$hongbao.state eq 3">
+                    <if condition="$hongbao.state eq 3 or count($order_list) eq $hongbao['total_num']">
                         <div class="title" style="font-size: 16px; margin: 6px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 凑齐啦~</div>
                     </if>
                     <div class="">
                         <if condition="$hongbao['user_id'] eq $user_id">
                             <button type="button"  onclick="set_share()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>分享</font></button>
                         <elseif condition="$hongbao['is_sponsor'] eq 1" />
-                            <button type="button"  onclick="set_buy()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>赞助</font></button>
+                            <button type="button" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>赞助</font></button>
                         </if>
                     </div>
                     <if condition="$hongbao['user_id'] eq $user_id">
