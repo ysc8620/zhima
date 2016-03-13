@@ -191,7 +191,13 @@ class HongbaoController extends BaseController {
         }
         $this->default_index = 0;
         $order_list = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'], 'state'=>array('in', array(1,2)))))->order("addtime desc")->select();
+        $total_order_amount = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'], 'state'=>array('in', array(1,2)))))->sum('amount');
+        $this->total_order_amount = number_format(floatval($total_order_amount), 2);
 
+        if(count($order_list) == $this->hongbao['total_num']){
+
+            $this->total_order_amount = number_format($this->hongbao['total_amount'],2);
+        }
         if($order_list){
             foreach($order_list as $k=>$order){
                 $order_list[$k]['user'] = M('user')->find($order['user_id']);
@@ -226,6 +232,8 @@ class HongbaoController extends BaseController {
                 $json['msg_content'] = '红包已经领取完毕.';
                 break;
             }
+
+            $user = M('user')->find($this->user_id);
             $total_order = M('bao_order')->where( array('bao_id'=>$hongbao['id']))->count();
             $total_amount = M('bao_order')->where( array('bao_id'=>$hongbao['id']))->sum('amount');
             $total_amount = floatval($total_amount);
@@ -253,6 +261,7 @@ class HongbaoController extends BaseController {
                     'amount' => $this->get_order_amount($order_total_amount,$hongbao['total_num'] - $total_order),
                     'addtime' => time(),
                     'state' => 1,
+                    'openid'=>$user['openid'],
                     'user_id' => $this->user_id,
 
                 );
@@ -262,10 +271,9 @@ class HongbaoController extends BaseController {
                 $order = M('bao_order')->find($order_id);
             }
 
+            $honbao_user = M('user')->find($order['bao_user_id']);
             if($order){
                 if($order['state'] == 1){
-                    $user = M('user')->find($this->user_id);
-                    $honbao_user = M('user')->find($order['bao_user_id']);
                     $data = array(
                         'partner_trade_no' => $order['order_sn'],
                         're_user_name' => $user['name'],
@@ -275,7 +283,7 @@ class HongbaoController extends BaseController {
                     );
                     $result = sendPay($data);
                     if($result['result_code'] == 'SUCCESS' && $result['return_code'] == 'SUCCESS'){
-                        M('bao_order')->where(array('id'=>$order['id']))->save(array('pay_time'=>time(), 'state'=>2, 'transaction_id'=>$result['transaction_id']));
+                        M('bao_order')->where(array('id'=>$order['id']))->save(array('pay_time'=>time(), 'state'=>2, 'transaction_id'=>$result['payment_no']));
                     }
                 }
 
