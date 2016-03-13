@@ -207,7 +207,7 @@ class HongbaoController extends BaseController {
      * 领取红包
      */
     public function order(){
-        $id = I('get.id','', 'strval');
+        $id = I('post.id','', 'strval');
         $json = array(
             'msg_code' => 10001,
             'msg_content' => '',
