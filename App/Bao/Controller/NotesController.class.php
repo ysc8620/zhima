@@ -32,6 +32,7 @@ class NotesController extends BaseController {
             foreach($list as $i=>$item){
                 #$list[$i]['hongbao'] = M('hongbao')->find($item['hongbao_id']);
                 $list[$i]['user'] = M('user')->find($item['user_id']);
+                $list[$i]['order'] = M('bao_order')->where(array('bao_id'=>$item['id']), array('user_id'=>$item['user_id']))->find();
             }
         }
 
