@@ -93,23 +93,6 @@ class HongbaoController extends BaseController {
         echo json_encode($json);die();
     }
 
-    function test(){
-        $new = array();
-        $user = M('user')->find($this->user_id);
-        // redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
-        $new['body'] = "红包";
-        $new['attach'] = "红包";
-        $new['order_sn'] = get_order_sn();
-        $new['total_fee'] = 20;
-        $new['time_start'] = date('YmdHis');
-        $new['time_expire'] =  date("YmdHis", time() + 600);
-        $new['goods_tag'] = "BAO";
-        // $openid = ;//session('openid')?session('openid'):cookie('openid');
-        $new['openid'] = $user['openid'];
-        $json['jsApiParameters'] = jsapipay($new, true);
-        print_r($json);
-    }
-
     function time2Units ($time)
     {
         $year   = floor($time / 60 / 60 / 24 / 365);
@@ -162,14 +145,10 @@ class HongbaoController extends BaseController {
             $this->error('没找到红包详情', U('/bao/notes'));
         }
 
-//        if($this->hongbao['state'] == 1){
-//            $this->error('红包还没支付', U('/notes'));
-//        }
-        $this->hongbao_amount = $this->hongbao['total_amount'] * 0.98;
-
-        if($this->hongbao['state'] == 2){
-            $this->use_time = $this->time2Units($this->hongbao['success_time'] - $this->hongbao['addtime']);
+        if($this->hongbao['state'] == 1){
+            $this->error('红包还没支付', U('/bao/notes'));
         }
+        $this->hongbao_amount = $this->hongbao['total_amount'] * 0.98;
         $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
         $this->user = M('user')->find($this->user_id);
 
@@ -199,9 +178,7 @@ class HongbaoController extends BaseController {
             $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
         }else{
 
-
-            if($this->receive_order ){
-
+            if(! $this->receive_order ){
                 $this->share_title = "{$this->hongbao_user['name']}发起的红包-￥{$this->hongbao['total_amount']}";
             }else{
                 $this->share_title = "我领了{$this->receive_order['amount']}元到{$this->hongbao_user['name']}的红包";
@@ -211,22 +188,11 @@ class HongbaoController extends BaseController {
             $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
         }
         $this->default_index = 0;
-        $cookie_key = 'id'.$this->hongbao['id'].'_'.$this->user_id;
-        $is_show = intval(cookie($cookie_key));
-        //print_r($_COOKIE);
-        if(!$is_show && $this->hongbao['state'] == 2){
-            cookie($cookie_key, 1,array('expire'=>time()+2592000));
-        }
-        $this->is_show = $is_show?true:false;
-        $this->star_name = '';
-        $order_list = M('bao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(1,2)))))->order("addtime desc")->select();
-        $this->order_amount = M('bao_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(1,2)))))->sum('amount');
-        $this->order_amount = floatval($this->order_amount);
+        $order_list = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'], 'state'=>array('in', array(1,2)))))->order("addtime desc")->select();
+
         if($order_list){
             foreach($order_list as $k=>$order){
-
-                $user = M('user')->find($order['user_id']);
-                $order_list[$k]['user'] = $user;
+                $order_list[$k]['user'] = M('user')->find($order['user_id']);
             }
         }
         $this->share_link = U('/bao/hongbao/detail', array('id'=>$id), true,true);
