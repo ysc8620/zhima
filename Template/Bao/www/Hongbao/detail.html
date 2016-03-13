@@ -180,7 +180,7 @@
      */
     function set_order(){
         var id = $('input[name="id"]').val();
-
+        alert('xxx');
         $.ajax({
             type:'post',
             url:"{:U('/bao/hongbao/order')}",
@@ -188,7 +188,7 @@
             cache:false,
             data:{id:id, num:num},
             dataType:'json',
-            success:function(result){
+            success:function(result){alert('xxx');
                 if(result.msg_code==10001){
                     // layer.msg('', function(){});
                     // 重载
@@ -197,6 +197,9 @@
                     layer.msg(result.msg_content, function(){});
                     return false;
                 }
+            },
+            error: function(){
+                alert('----')
             }
         });
 
