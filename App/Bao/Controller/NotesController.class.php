@@ -19,11 +19,11 @@ class NotesController extends BaseController {
             $list = M('bao')->where(array('user_id'=>$this->user_id, array('state'=>array('in','2,3,4'))))->page($page,$limit)->order("addtime DESC")->select();
             $total = M('bao')->where(array('user_id'=>$this->user_id, array('state'=>array('in','2,3,4'))))->count();
         }elseif($this->state == 'receive'){
-            $list = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}')")->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}')")->count();
+            $list = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') and state in(2,3,4")->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') and state in(2,3,4)")->count();
         }else{
-            $list = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') or user_id='{$this->user_id}'")->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') or user_id='{$this->user_id}'")->count();
+            $list = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') or (user_id='{$this->user_id}' and state in(2,3,4))")->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') or (user_id='{$this->user_id}' and state in(2,3,4))")->count();
 
         }
 
