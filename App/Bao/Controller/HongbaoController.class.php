@@ -256,10 +256,36 @@ class HongbaoController extends BaseController {
                     'user_id' => $this->user_id,
 
                 );
+                //$order_id =
                 $order_id = M('bao_order')->add($data);
-                \WxPayApi::sendHongbao();
 
+                $order = M('bao_order')->find($order_id);
             }
+
+            if($order){
+                if($order['state'] == 1){
+                    $user = M('user')->find($this->user_id);
+                    $honbao_user = M('user')->find($order['bao_user_id']);
+                    $data = array(
+                        'partner_trade_no' => $order['order_sn'],
+                        're_user_name' => $user['name'],
+                        'openid' => $user['openid'],
+                        'amount' => $order['amount'] * 100,
+                        'desc' => "您成功领取”{$honbao_user['name']}“发的红包,￥ {$order['amount']}元"
+                    );
+                    $result = sendPay($data);
+                    if($result['result_code'] == 'SUCCESS' && $result['return_code'] == 'SUCCESS'){
+                        M('bao_order')->where(array('id'=>$order['id']))->save(array('pay_time'=>time(), 'state'=>2, 'transaction_id'=>$result['transaction_id']));
+                    }
+                }
+
+                $json['msg_content'] = '成功领取红包.';
+                break;
+            }
+
+            $json['msg_code'] = 10002;
+            $json['msg_content'] = '红包领取失败.';
+            break;
         }while(false);
         echo json_encode($json);
     }
