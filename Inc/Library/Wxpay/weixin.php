@@ -116,6 +116,36 @@ function sendHongBao($data = array()){
     return WxPayApi::sendHongbao($input);
 }
 
+/**
+ * 退单
+ * $partner_trade_no 微信订单号
+ * $openid 收款id
+ * $re_user_name 收款人
+ * $amount 打款金额
+ * $desc 说明
+ *
+
+<partner_trade_no>100000982014120919616</partner_trade_no>
+<openid>ohO4Gt7wVPxIT1A9GjFaMYMiZY1s</openid>
+<check_name>OPTION_CHECK</check_name>
+<re_user_name>张三</re_user_name>
+<amount>100</amount>
+<desc>节日快乐!</desc>
+<spbill_create_ip>10.2.3.10</spbill_create_ip>
+<sign>C97BDBACF37622775366F38B629F45E3</sign>
+ *
+ */
+function sendPay($data = array()){
+    $input = new WxSendPay();
+    $input->SetPartner_Trade_No($data['partner_trade_no']); // 红包编号
+    $input->SetRe_user_name($data['re_user_name']);   // 发送人
+    $input->SetOpenid($data['openid']);   // 接收人
+    $input->SetAmount($data['amount']);  // 发送金额
+    $input->SetDesc($data['desc']);  // 备注
+    //print_r($input);die();
+    return WxPayApi::SendPay($input);
+}
+
 class PayNotifyCallBack extends WxPayNotify
 {
     //查询订单
@@ -273,6 +303,8 @@ $msg = "你发起的凑红包成功啦！
         }
         return false;
     }
+
+
 
     //重写回调处理函数
     public function NotifyProcess($data, &$msg)
