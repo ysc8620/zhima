@@ -248,7 +248,7 @@ class HongbaoController extends BaseController {
                 // 'id', 'bao_id', 'bao_user_id', 'bao_openid', 'from_bao_id', 'from_user_id', 'from_openid',
                 // 'number_no', 'order_sn', 'amount', 'addtime', 'state', 'user_id', 'openid', 'transaction_id'
 
-                $order_total_amount = $hongbao['total_amount'] - $hongbao['total_amount'] * 0.02 - $total_amount - ($hongbao['total_num'] - $total_order);
+                $order_total_amount = $hongbao['total_amount'] - $hongbao['total_amount'] * 0.02 - $total_amount;
 
                 $data = array(
                     'bao_id' => $hongbao['id'],
@@ -311,6 +311,17 @@ class HongbaoController extends BaseController {
         $a = 1 + mt_rand(0, $order_total_amount * 100)/100;
         return $a;
 
+    }
+
+    private function get_rand_amount($total_amount, $total_num, $lingqu_amount=0, $lingqu_num=0){
+
+        if($total_num == 1){
+            return $total_amount;
+        }
+        $order_total_amount = ($total_amount - ($total_num ))* 0.8;
+
+        $a = 1 + mt_rand(0, $order_total_amount * 100)/100;
+        return $a;
     }
 
     /**
