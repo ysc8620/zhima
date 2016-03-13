@@ -291,7 +291,7 @@ input.jia{margin:0!important;height:36px; vertical-align:middle; line-height:30p
     margin-top: 400px;
 }
 
-#shareit, .shareit { -webkit-user-select: none; position: fixed;
+#shareit, .shareit, .box_block { -webkit-user-select: none; position: fixed;
     width: 100%; height: 100%;background: rgba(0,0,0,0.85);text-align: center;  top: 0; left: 0; z-index: 105;}
 #shareit img, .shareit img { max-width: 100%;}
 
