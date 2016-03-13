@@ -87,6 +87,17 @@
         </span>
     </div>
 
+<div id="error_block" style="display: none">
+    <div id="shareit"></div>
+    <span style="" id="follow">
+        <div style="padding-right: 0px; padding-left: 0px; margin-top: 16px; font-size: 20px; color: #fff" class="text"><p>被人抢先一步了...</p></div>
+		<div>
+            <img src="/images/ico_ku.png" style="width:80px;" />
+        </div>
+		<div style="padding: 0px; margin-top: 8px; font-size: 12px; color: #fff" class="text">红包已经被人抢光了~ </div>
+    </span>
+</div>
+
     <div id="remark_block" class="box_block" style='<if condition="!$receive_order and $user_id neq $hongbao['user_id']">display: block<else/>display:none</if>'>
     <div class="shareit"></div>
     <div class="follow">
@@ -96,25 +107,19 @@
             发了一个红包, 金额随机<br/>
             ”{$hongbao.remark}“</p>
 
-        <img src="/images/linghongbao-banner.png" style="width: 100%;" />
+        <img src="/images/linghongbao-banner.png" onclick="set_order()" style="width: 100%;" />
         <div class="cls" style="clear: both; margin-bottom: 6px;"></div>
         <p style="text-align: center; padding: 12px; font-size: 16px; line-height: 20px;" onclick="$('#remark_block').hide();">看看大家手气></p>
     </div>
 </div>
-
 </div>
-
-
 
 <script type="text/javascript">
     var w = $('#follow').width();
     $('#follow img.bg').css('width', w+'px');
 </script>
 
-
-
 <include file="Public:foot" />
-
 
 <script type="text/javascript">
     $('.view_all').click(function(){
