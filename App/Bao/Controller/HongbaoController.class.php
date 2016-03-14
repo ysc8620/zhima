@@ -234,14 +234,20 @@ class HongbaoController extends BaseController {
             $this->share_desc = "“{$this->hongbao['remark']}”共{$this->hongbao['total_num']}份，还剩{$limit_part}份";
         }
         $this->default_index = 0;
-
+        $this->is_show_star = false;
         if(count($order_list) == $this->hongbao['total_num']){
-
+            $this->is_show_star = true;
             $this->total_order_amount = number_format($this->hongbao['total_amount'],2);
             $this->use_time = $this->time2Units($this->hongbao['success_time'] - $this->hongbao['addtime']);
         }
+        $this->star_order = 0;
+        $max_amount = 0;
+
         if($order_list){
             foreach($order_list as $k=>$order){
+                if($order['amount'] > $max_amount){
+                    $this->star_order = $order['id'];
+                }
                 $order_list[$k]['user'] = M('user')->find($order['user_id']);
             }
         }
