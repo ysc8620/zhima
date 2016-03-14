@@ -25,7 +25,7 @@
 				<div class="tit">
                     <if condition="$hongbao.state eq 3 or count($order_list) eq $hongbao['total_num']">
                         <div class="title" style="font-size: 16px; margin: 8px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 领完啦~</div>
-                        <div class="title" style="font-size: 12px; margin: 8px 0;">{$hongbao.total_num}个红包已领完，用时{$use_time}</div>
+                        <div class="title" style="font-size: 12px; margin: 8px 0; color: #bbb">{$hongbao.total_num}个红包已领完，用时{$use_time}</div>
                     </if>
                     <div class="">
                         <if condition="$hongbao['user_id'] eq $user_id">
