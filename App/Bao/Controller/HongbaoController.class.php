@@ -168,7 +168,7 @@ class HongbaoController extends BaseController {
             $this->receive_order = M('bao_order')->where(array('bao_id'=>$this->hongbao['id'], 'user_id'=>$this->user_id))->find();
         }
 
-        $this->title = "{$this->hongbao_user['name']}发起的福利";
+        $this->title = "{$this->hongbao_user['name']}发的福利";
 
         $order_list = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'], 'state'=>array('in', array(1,2)))))->order("addtime desc")->select();
         $total_order_amount = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'], 'state'=>array('in', array(1,2)))))->sum('amount');
