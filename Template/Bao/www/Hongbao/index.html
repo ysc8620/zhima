@@ -121,6 +121,9 @@
             var total = $('input[name="total"]').val();
             var remark = $('input[name="remark"]').val();
             var id = $('input[name="id"]').val();
+            var index = layer.load(1, {
+                shade: [0.1,'#000'] //0.1透明度的白色背景
+            });
 
             $.ajax({
                 type: "POST",
@@ -128,6 +131,7 @@
                 data: { amount: amount, total:total, remark:remark, id:id} ,
                 dataType:'json',
                 success: function(data){
+                    layer.close(index);
                     if(data.msg_code == 10001){
                         $('input[name="id"]').val(data.number_no);
                         jsApiCall(data.jsApiParameters);
