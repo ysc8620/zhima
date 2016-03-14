@@ -39,8 +39,8 @@
 			<div class="w90 mc">
 			<input type="button" class="btn" value="塞钱进红包" />
 			</div>
-			<div class="w90 mc tr">
-			<a href="javascript:void(0)" class=" mt10" style="margin-top: 10px!important; display: none; clear: both; line-height: 36px;" onclick="show_remark()">凑红包玩法？</a>
+			<div class="w90 mc tr" style="color: #bbb">
+                可以发在朋友圈的红包
 			</div>
 			</div>
 		</ul>
@@ -104,6 +104,8 @@
 
         if(amount / total > 200 || amount / total < 1.05){
             layer.msg('平均每个红包在1.05-200元之间.', function(){});
+            total_amount = (total * 1.05).toFixed(2);
+            $('input[name="amount"]').val()
             return false;
         }
 

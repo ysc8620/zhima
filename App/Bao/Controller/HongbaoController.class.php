@@ -199,6 +199,7 @@ class HongbaoController extends BaseController {
         if(count($order_list) == $this->hongbao['total_num']){
 
             $this->total_order_amount = number_format($this->hongbao['total_amount'],2);
+            $this->use_time = $this->time2Units($this->hongbao['success_time'] - $this->hongbao['addtime']);
         }
         if($order_list){
             foreach($order_list as $k=>$order){

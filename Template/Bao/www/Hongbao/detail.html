@@ -8,7 +8,7 @@
 	<div class="from mt40 cl">
 		<ul>
 			<div class="tit mt20">
-				<div class="title">{$hongbao_user.name}发起的红包</div>
+				<div class="title">{$hongbao_user.name}发的福利</div>
 				<div class="remark" style="margin: 16px 0; font-size: 18px">{$hongbao.remark}</div>
 
                 <ul >
@@ -24,7 +24,8 @@
 			<ul>
 				<div class="tit">
                     <if condition="$hongbao.state eq 3 or count($order_list) eq $hongbao['total_num']">
-                        <div class="title" style="font-size: 16px; margin: 6px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 领完啦~</div>
+                        <div class="title" style="font-size: 16px; margin: 8px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 领完啦~</div>
+                        <div class="title" style="font-size: 12px; margin: 8px 0;">{$hongbao.total_num}个红包已领完，用时{$use_time}</div>
                     </if>
                     <div class="">
                         <if condition="$hongbao['user_id'] eq $user_id">
@@ -73,7 +74,7 @@
 		</div>
             </if>
 		<div class="xiala">
-			<div><a href="{:U('/bao/hongbao')}"><input type="button" class="btn w120" value="发起红包" /></a> <a href="{:U('/bao/notes')}" style="margin-left: 20px"><input type="button" class="btn w120" value="我的记录" /></a></div>
+			<div><a href="{:U('/bao/hongbao')}"><input type="button" class="btn w120" value="我发红包" /></a> <a href="{:U('/bao/notes')}" style="margin-left: 20px"><input type="button" class="btn w120" value="我的记录" /></a></div>
 			<div class="cl h12"></div>
 		</div>
 		<div class="cl"></div>
@@ -83,7 +84,7 @@
 
     <div id="shareit1" style="display:  <if condition="$is_show_share and $user_id eq $hongbao['user_id']">block<else />none</if>">
         <div class="shareit"></div>
-        <span style="" class="follow"> <img src="/images/share_bg.png" style="height:120px;" class="arrow">
+        <span style="" class="follow"> <img src="/images/share-it.png" style="height:120px;" class="arrow">
             <img src="/images/xinhongbao_bg.png" class="bg" style="left: 0; top: 0;" />
         </span>
     </div>
