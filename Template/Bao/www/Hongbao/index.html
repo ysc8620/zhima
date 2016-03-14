@@ -105,7 +105,7 @@
         if(amount / total > 200 || amount / total < 1.05){
             layer.msg('平均每个红包在1.05-200元之间.', function(){});
             total_amount = (total * 1.05).toFixed(2);
-            $('input[name="amount"]').val()
+            $('input[name="amount"]').val(total_amount);
             return false;
         }
 
