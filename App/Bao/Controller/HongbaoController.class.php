@@ -170,7 +170,12 @@ class HongbaoController extends BaseController {
 
         $this->title = "{$this->hongbao_user['name']}发起的福利";
 
-        $limit_part = $this->hongbao[total_num] - $this->hongbao[receive_num];
+        $order_list = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'], 'state'=>array('in', array(1,2)))))->order("addtime desc")->select();
+        $total_order_amount = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'], 'state'=>array('in', array(1,2)))))->sum('amount');
+        $this->total_order_amount = number_format(floatval($total_order_amount), 2);
+
+
+        $limit_part = $this->hongbao[total_num] - count($order_list);
         $limit_part = $limit_part<0?0:$limit_part;
 
         if($this->hongbao['user_id'] == $this->user_id){
@@ -183,16 +188,13 @@ class HongbaoController extends BaseController {
             if(! $this->receive_order ){
                 $this->share_title = "{$this->hongbao_user['name']}发起的福利-￥{$this->hongbao['total_amount']}";
             }else{
-                $this->share_title = "我领了{$this->receive_order['amount']}元到{$this->hongbao_user['name']}的福利";
+                $this->share_title = "我领了”{$this->hongbao_user['name']}“发的福利，￥{$this->receive_order['amount']}元";
             }
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
             $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
         }
         $this->default_index = 0;
-        $order_list = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'], 'state'=>array('in', array(1,2)))))->order("addtime desc")->select();
-        $total_order_amount = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'], 'state'=>array('in', array(1,2)))))->sum('amount');
-        $this->total_order_amount = number_format(floatval($total_order_amount), 2);
 
         if(count($order_list) == $this->hongbao['total_num']){
 
@@ -281,7 +283,7 @@ class HongbaoController extends BaseController {
                         're_user_name' => $user['name'],
                         'openid' => $user['openid'],
                         'amount' => $order['amount'] * 100,
-                        'desc' => "您成功领取”{$honbao_user['name']}“发的福利,￥ {$order['amount']}元"
+                        'desc' => "您成功领取了”{$honbao_user['name']}“发的福利,￥ {$order['amount']}元"
                     );
                     $result = sendPay($data);
                     if($result['result_code'] == 'SUCCESS' && $result['return_code'] == 'SUCCESS'){
@@ -330,7 +332,7 @@ class HongbaoController extends BaseController {
      * 设置赞赏
      */
     public function sponsor(){
-        $id = I('get.id',0, 'strval');
+        $id = I('post.id',0, 'strval');
         $json = array(
             'msg_code' => 10001,
             'msg_content' => '',
@@ -340,7 +342,15 @@ class HongbaoController extends BaseController {
             if($hongbao){
                 if($hongbao['user_id'] == $this->user_id){
                     M('bao')->where(array('id'=>$hongbao['id']))->save(array('is_sponsor'=>0));
+                }else{
+                    $json['msg_code'] = 10002;
+                    $json['msg_content'] = '没有权限';
+                    break;
                 }
+            }else{
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '没找到红包';
+                break;
             }
         }while(false);
         echo json_encode($json);
