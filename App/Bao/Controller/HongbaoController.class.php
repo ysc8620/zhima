@@ -267,7 +267,9 @@ class HongbaoController extends BaseController {
                 );
                 //$order_id =
                 $order_id = M('bao_order')->add($data);
-
+                if( ($total_order + 1) == $hongbao['total_num']){
+                    M('bao')->where(array('id'=>$hongbao['id']))->save(array('state'=>3, 'success_time'=>time()));
+                }
                 $order = M('bao_order')->find($order_id);
             }
 
