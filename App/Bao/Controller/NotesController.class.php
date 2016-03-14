@@ -33,7 +33,7 @@ class NotesController extends BaseController {
                 #$list[$i]['hongbao'] = M('hongbao')->find($item['hongbao_id']);
                 $list[$i]['user'] = M('user')->find($item['user_id']);
                 if($this->state == 'receive'){
-                    $list[$i]['order'] = M('bao_order')->where(array('bao_id'=>$item['id']), array('user_id'=>$this->user_id))->find();
+                    $list[$i]['order'] = M('bao_order')->where(array('bao_id'=>$item['id'],'user_id'=>$this->user_id))->find();
                 }
             }
         }
