@@ -90,9 +90,9 @@
 
     function checkHongBao(){
         var amount = $('input[name="amount"]').val();
-        var reg = new RegExp("^[0-9]\.?[0-9]*$");
+        var reg = new RegExp("^[0-9]*\.?[0-9]*$");
         if(!reg.test(amount)){
-            layer.msg('请填写整数金额.', function(){});
+            layer.msg('请填写正确金额.', function(){});
             return false;
         }
 
