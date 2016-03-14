@@ -246,6 +246,7 @@ class HongbaoController extends BaseController {
         if($order_list){
             foreach($order_list as $k=>$order){
                 if($order['amount'] > $max_amount){
+                    $max_amount = $order['amount'];
                     $this->star_order = $order['id'];
                 }
                 $order_list[$k]['user'] = M('user')->find($order['user_id']);
