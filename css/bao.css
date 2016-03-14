@@ -76,7 +76,7 @@ input[type=text],textarea {-webkit-appearance:none}
 .from div.row{ height: 50px; line-height:650px; -webkit-border-radius:3px;border-radius:3px; background:#fff; position:relative}
 .from  ul{ clear:both; margin-bottom:12px;}
 input, button{ border:none; font-size: 18px; text-align:right; margin-right:24px; height: 50px; width:auto; line-height:50px; padding:0 4px;}
-.from span{ display: table-cell; font-size:14px; line-height: 50px;}
+.from span{ display: table-cell; font-size:16px; line-height: 50px;}
 .from span.label{ float:left; left: 0; padding-left: 6px;  position: absolute;}
 .from span.unit{ float:right;
     right: 5px;
