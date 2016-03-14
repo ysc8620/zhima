@@ -178,21 +178,60 @@ class HongbaoController extends BaseController {
         $limit_part = $this->hongbao[total_num] - count($order_list);
         $limit_part = $limit_part<0?0:$limit_part;
 
-        if($this->hongbao['user_id'] == $this->user_id){
-            $this->share_title = "我发起的福利-￥{$this->hongbao['total_amount']}";
+//        if($this->hongbao['user_id'] == $this->user_id){
+//            $this->share_title = "我发起的福利-￥{$this->hongbao['total_amount']}";
+//            $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+//            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
+//            $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
+//        }else{
+//
+//            if(! $this->receive_order ){
+//                $this->share_title = "{$this->hongbao_user['name']}发起的福利-￥{$this->hongbao['total_amount']}";
+//            }else{
+//                $this->share_title = "我领了”{$this->hongbao_user['name']}“发的福利，￥{$this->receive_order['amount']}元";
+//            }
+//            $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+//            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
+//            $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
+//        }
+
+
+        if($this->zhaopian['user_id'] == $this->user_id){
+            /*
+1，发起人
+分享群：
+标题： 我发了￥10元福利，快来抢，手慢无！
+内容：“恭喜发财，大吉大利”共5份，还剩5份。
+
+分享朋友圈：
+标题：我发了￥10元福利，快来抢，手慢无！“恭喜发财，大吉大利”共5份。
+
+2，其他人
+分享群：王苏蕴发了￥10元福利，快来抢，手慢无！
+内容：“恭喜发财，大吉大利”共5份，还剩5份。
+
+分享朋友圈：
+标题：王苏蕴发了￥10元福利，快来抢，手慢无！“恭喜发财，大吉大利”共5份。
+
+3，赞助人
+分享群：我赞助王苏蕴发了￥10元福利，快来抢，手慢无！
+内容：“恭喜发财，大吉大利”共10份，还剩5份。     （共几份，是显示所有总共的份数，包括之前发的和赞助的，剩几份，就是当前还总共剩下几份）
+
+分享朋友圈： 我赞助王苏蕴发了￥10元福利，快来抢，手慢无！“恭喜发财，大吉大利”共10份。
+            */
+            $this->share_title_friend = "我发了￥{$this->hongbao['total_amount']}元福利，快来抢，手慢无！“恭喜发财，大吉大利”共{$this->hongbao['total_num']}份。";//"我发布了{$this->zhaopian['total_pic']}张照片，想看吗？“{$this->zhaopian['remark']}”";
+            $this->share_title = "我发了￥{$this->hongbao['total_amount']}元福利，快来抢，手慢无！";//"我发布了{$this->zhaopian['total_pic']}张照片，想看吗？";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
-            $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
+            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/silogocover.jpg";
+            $this->share_desc = "“{$this->hongbao['remark']}”共{$this->hongbao['total_num']}份，还剩{$limit_part}份";
         }else{
 
-            if(! $this->receive_order ){
-                $this->share_title = "{$this->hongbao_user['name']}发起的福利-￥{$this->hongbao['total_amount']}";
-            }else{
-                $this->share_title = "我领了”{$this->hongbao_user['name']}“发的福利，￥{$this->receive_order['amount']}元";
-            }
+            $this->share_title_friend = "{$this->hongbao_user['name']}发了￥{$this->hongbao['total_amount']}元福利，快来抢，手慢无！“{$this->hongbao['remark']}”共{$this->hongbao['total_num']}份。";//"我买了{$this->zhaopian_user['name']}发布的照片，推荐！“{$this->zhaopian['remark']}”";
+            $this->share_title = "{$this->hongbao_user['name']}发了￥{$this->hongbao['total_amount']}元福利，快来抢，手慢无！";//"我买了{$this->zhaopian_user['name']}的照片，推荐！";
+
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
-            $this->share_desc = "“{$this->hongbao['remark']}” 共{$this->hongbao['total_num']}个，还剩{$limit_part}个";
+            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/silogocover.jpg";
+            $this->share_desc = "“{$this->hongbao['remark']}”共{$this->hongbao['total_num']}份，还剩{$limit_part}份";
         }
         $this->default_index = 0;
 

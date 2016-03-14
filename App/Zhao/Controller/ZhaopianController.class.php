@@ -172,6 +172,43 @@ class ZhaopianController extends BaseController {
             $this->share_desc = "“{$this->zhaopian['remark']}”";
         }
 
+        if($this->zhaopian['user_id'] == $this->user_id){
+            /*
+             1，分享自己发的
+标题：我发布了3张照片，想看吗？
+内容：“用户输入的内容”
+2，分享别人发的
+李陆鸣发布了3张照片，想看吗？
+3，买了别人的照片
+我买了李陆鸣的照片，推荐！
+
+            分享朋友圈
+1，分享自己发的
+标题：我发布了3张照片，想看吗？“据说看了能提升幸福感~”
+2，分享别人的
+标题：李陆鸣发布了3张照片，想看吗？“据说看了能提升幸福感~”
+3，买了别人的照片
+标题：我买了李陆鸣发布的照片，推荐！“据说看了能提升幸福感~”
+            */
+            $this->share_title_friend = "我发布了{$this->zhaopian['total_pic']}张照片，想看吗？“{$this->zhaopian['remark']}”";
+            $this->share_title = "我发布了{$this->zhaopian['total_pic']}张照片，想看吗？";
+            $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/silogocover.jpg";
+            $this->share_desc = "“{$this->zhaopian['remark']}”";
+        }else{
+            if($this->is_buy ){
+                $this->share_title_friend = "我买了{$this->zhaopian_user['name']}发布的照片，推荐！“{$this->zhaopian['remark']}”";
+                $this->share_title = "我买了{$this->zhaopian_user['name']}的照片，推荐！";
+            }else{
+                $this->share_title_friend = "{$this->zhaopian_user['name']}发布了{$this->zhaopian['total_pic']}张照片，想看吗？“{$this->zhaopian['remark']}”";
+                $this->share_title = "{$this->zhaopian_user['name']}发布了{$this->zhaopian['total_pic']}张照片，想看吗？";
+            }
+            $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/silogocover.jpg";
+            $this->share_desc = "“{$this->zhaopian['remark']}”";
+        }
+
+
         $order_list = M('zhaopian_order')->where(array(array('number_no'=>$id, 'state'=>array('in', array(2)))))->order("addtime desc")->select();
         if($order_list){
             foreach($order_list as $k=>$order){
