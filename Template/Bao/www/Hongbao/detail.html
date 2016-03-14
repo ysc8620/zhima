@@ -24,7 +24,7 @@
 			<ul>
 				<div class="tit">
                     <if condition="$hongbao.state eq 3 or count($order_list) eq $hongbao['total_num']">
-                        <div class="title" style="font-size: 16px; margin: 6px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 凑齐啦~</div>
+                        <div class="title" style="font-size: 16px; margin: 6px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 领完啦~</div>
                     </if>
                     <div class="">
                         <if condition="$hongbao['user_id'] eq $user_id">
@@ -154,7 +154,9 @@
      */
     function set_sponsor(){
         var id = $('input[name="id"]').val();
-
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
         $.ajax({
             type:'post',
             url:"{:U('/bao/hongbao/sponsor')}",
@@ -163,6 +165,7 @@
             data:{id:id, num:num},
             dataType:'json',
             success:function(result){
+                layer.close(index);
                 if(result.msg_code==10001){
                     // callpay(result.data);
                     layer.msg('设置成功', function(){});
@@ -199,9 +202,6 @@
                     layer.msg(result.msg_content, function(){});
                     return false;
                 }
-            },
-            error: function(){
-                alert('----')
             }
         });
 
