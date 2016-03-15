@@ -106,6 +106,7 @@
             layer.msg('平均每个红包在1.05-200元之间.', function(){});
             total_amount = (total * 1.05).toFixed(2);
             $('input[name="amount"]').val(total_amount);
+            $('.total_amount').html(total_amount);
             return false;
         }
 
