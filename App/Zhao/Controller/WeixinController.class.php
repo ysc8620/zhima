@@ -42,10 +42,10 @@ class WeixinController extends Controller {
             session('access_token', $data['access_token']);
             cookie('openid',$data['openid'],array('expire'=>time()+2592000));
 
-            header("location: ".U('/zhao/weixin/userinfo').'?url='.$_GET['url']. '&token='.$data['access_token']);
+            header("location: ".U('/zhao/weixin/userinfo').'&url='.$_GET['url']. '&token='.$data['access_token']);
             exit();
         }else{
-            header("location: ".U('/zhao/weixin/userinfo').'?url='.$_GET['url']);
+            header("location: ".U('/zhao/weixin/userinfo').'&url='.$_GET['url']);
             exit();
         }
     }
@@ -138,7 +138,7 @@ class WeixinController extends Controller {
 
         $url = urldecode($_GET['url']);
         if(empty($url)){
-            $url = '/zhao/';
+            $url = U('/zhao/');
         }
 
         header("location:".$url."");
