@@ -247,7 +247,6 @@ class PayNotifyCallBack extends WxPayNotify
                 'state' => 2
             );
             M('bao')->where("order_sn='{$order_sn}'")->save($data);
-
         }
     }
     //查询订单

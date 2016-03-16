@@ -175,7 +175,7 @@ class HongbaoController extends BaseController {
         $this->total_order_amount = number_format(floatval($total_order_amount), 2);
 
 
-        $limit_part = $this->hongbao[total_num] - count($order_list);
+        $limit_part = $this->hongbao['total_num'] - count($order_list);
         $limit_part = $limit_part<0?0:$limit_part;
 
 //        if($this->hongbao['user_id'] == $this->user_id){
@@ -236,6 +236,19 @@ class HongbaoController extends BaseController {
         $this->default_index = 0;
         $this->is_show_star = false;
         if(count($order_list) == $this->hongbao['total_num']){
+            // 设置成功
+            if($this->hongbao['state'] == 2){
+                $state = array(
+                    'state' =>3
+                );
+                if($order_list[0]['addtime'] > 0){
+                    $state['success_time'] = $order_list[0]['addtime'];
+                }else{
+                    $state['success_time'] = time();
+                }
+                M('bao')->where(array('id'=>$this->hongbao['id']))->save($state);
+            }
+
             $this->is_show_star = true;
             $this->total_order_amount = number_format($this->hongbao['total_amount'],2);
             $this->use_time = $this->time2Units($this->hongbao['success_time'] - $this->hongbao['addtime']);
