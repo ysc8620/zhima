@@ -17,8 +17,8 @@ class IndexController extends BaseController {
 		//session('user',null);
     }
 
-    public function test(){
-        echo 'ok';
-
+    public function pay(){
+        $this->display();
     }
+
 }

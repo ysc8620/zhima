@@ -1,0 +1,33 @@
+
+<div class="order_list">
+    <div class="header bt_line">
+            </div>
+    <div class="block list" style="min-height: 200px; width: 96%;">
+        <volist name="list" id="item">
+            <ul class="bt_line p6" style="border-bottom: #ddd 1px dashed; margin-bottom: 6px;">
+                <div class="head_img fl" style="width:70px;"><img src="{$item.user.header}" alt="{$item.user.name}" class="detail_head_img2" /></div>
+                <div class="detail fl  mt10">
+                    <li class="cl tl">{$item.user.name}</li>
+                    <li class="cl tl" style="color: #bbb">{$item.addtime|date="Y-m-d H:i:s",###}</li>
+                </div>
+
+                <div class="detail  mt10 fr">
+                    <li class="cl tr">￥{:getamount($item['amount'])}元</li>
+                    </div>
+
+                <div class="cl"></div>
+            </ul>
+</volist>
+        <div class="cl"></div>
+    </div>
+
+    <div class="xiala cl">
+         <div id="pager" class="pagebar pagination fr" style="margin-right: 12px; text-align: right">
+
+        </div>
+        <div class="cl">&nbsp;</div>
+    </div>
+
+    <div class="cl"></div>
+</div>
+

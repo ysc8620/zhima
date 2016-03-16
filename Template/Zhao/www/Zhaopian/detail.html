@@ -1,109 +1,259 @@
 <include file="Public:header" />
 
+<if condition="$is_buy">
+<script type="text/javascript" src="/js/jquery.event.drag-1.5.min.js"></script>
+<script type="text/javascript" src="/js/jquery.touchSlider.js"></script>
+</if>
+
 <div class="container">
     <input type="hidden" name="id" value="{$zhaopian.id}" />
     <input type="hidden" name="number_no" value="{$zhaopian.number_no}" />
     <input type="hidden" name="min_amount" value="{$zhaopian.min_amount}" />
     <input type="hidden" name="max_amount" value="{$zhaopian.max_amount}" />
-
-    <if condition="$zhaopian['user_id'] neq $user['uin'] and !$is_buy">
-    <div class="buy_block">
+    <input type="hidden" name="is_rand" value="{$zhaopian.is_rand}" />
+    <if condition="!$is_buy">
+    <div class="buy_block" >
         <div class="detail_bg_block">&nbsp;</div>
         <div class="detail_bg">
-            <img src="/uploads/{$zhaopian.pic_url}" alt="{$zhaopian.remark}"  />
+            <img class="preview"  id="preview" src="{$gaosi_img}" alt="{$zhaopian.remark}" />
         </div>
         <div class="detail_info">
-            <div class="mt40 cl"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
+            <div class="mt40 cl" style="margin-top: 4px;"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
             <div class="cl">{$zhaopian_user.name}</div>
-            <div class="cl remark">“{$zhaopian.remark}”</div>
+            <div class="cl remark" style="margin-left: 12px; margin-right: 12px;">“{$zhaopian.remark}”</div>
+            <if condition="$zhaopian.total_pic gt 1"><div class="cl">共{$zhaopian.total_pic}张照片</div></if>
         </div>
         <div class="detail_body">
             <div class=" mc tc cl" style="width: 80px;"><button class="btn btn_cou btn_shang" style="border: none;" data-id="{$zhaopian.number_no}">赏</button> </div>
-            <div class="remark cl">已有{$zhaopian.total_num}人赏红包</div>
-
+                <if condition="$zhaopian.user_id eq $user_id and $total_num gt 0"><div class="cl" style="margin-top: 20px">已有{$total_num}人赏红包, 获得￥{$total_amount}元<span>  &nbsp; <a style="color: #deb16a!important;" class="show_detail_list" href="javascript:">详情</a></span></div>
+                    <elseif condition="$zhaopian.user_id neq $user_id and $total_num gt 0"/>
+                <div class="remark cl" style="margin-top: 20px">已有{$total_num}人赏红包</div>
+                    <elseif condition="$zhaopian.user_id eq $user_id and $total_num lt 1" />
+                    <div class="remark cl" style="margin-top: 20px">暂无人打赏<br/>点击右上角三个点分享出去吧</div>
+            </if>
         </div>
 
         <div class="buy_detail_block hide">
             <div id="remark_block">
                 <div id="shareit">
                 </div>
-    <span style="text-align: center; background: #fff; position: fixed; padding: 12px; -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 90%; left: 5%;" id="follow">
-      <div class="fr" style="cursor: pointer" onclick="$('.buy_detail_block').removeClass('show').addClass('hide')">X</div>
+    <span style="text-align: center; background: #fef5e4; position: fixed; padding: 12px; -webkit-border-radius:5px;border-radius:5px; line-height: 18px; border: 1px solid #000; width: 70%; left: 15%;" id="follow">
+      <div class="fr" style="cursor: pointer" onclick="$('.buy_detail_block').removeClass('show').addClass('hide')"><img src="/images/icon-close-round.png" style="width: 20px" /></div>
         <p style="color: #999">
-            <input type="hidden" name="amount" value="1.05" />
-            <span style="color: #E08100; font-size: 28px; padding: 4px 0" class="amount_block">1.05元</span> <br />
-           发红包看照片,金额随机</p>
-
-        <input type="button" class="btn btn_cou mc" onclick="set_order();" data-role="set_pay_block" style="border: none; width: 80%; height: 36px; margin-top: 12px; margin-bottom: 12px; line-height: 36px;" value="赏" />
+            <input type="hidden" name="amount" value="{$order.amount}" />
+            <span style="color: #E08100; font-size: 28px; padding: 4px 0" class="amount_block">{$order.amount}元</span> <br /> <br />
+            赏红包看照片,<if condition="$zhaopian.is_rand eq 1">金额随机<else/>固定金额</if></p>
+        <input type="button" class="btn btn_cou mc" onclick="jsApiCall('{$order.id}');" data-role="set_pay_block" style="border: none; width: 80%; height: 36px; margin-top: 12px; margin-bottom: 12px; line-height: 36px;" value="赏" />
        </span>
             </div>
         </div>
     </div>
     </if>
-    <if condition="$zhaopian['user_id'] neq $user['uin'] and $is_buy">
+    <if condition="$is_buy">
         <div class="own_block">
             <div class="detail_info1">
-                <div class=" fl ml10"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
-                <div class="fl ml10">
-                    <div class="cl tl"><span style="color: #e5e5e5; font-size: 14px;">{$zhaopian_user.name}</span> <span style="background: #2d2d2d; padding: 6px; color: #c62a6c">已打赏{$zhaopian_order['amount']}元</span></div>
-                    <div class="cl tl remark" style="color: #e5e5e5; font-size: 16px;">“{$zhaopian.remark}”</div>
-                </div>
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td width="70" style="text-align: left"><div class=" fl ml10"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div></td>
+                        <td style="text-align: left"><div class="fl ml10">
+                            <div class="cl tl" style="margin-top: 6px;"><span style="color: #e5e5e5; font-size: 14px;">{$zhaopian_user.name}</span> <if condition="$zhaopian[user_id] eq $user_id "><span class="dashang">共{$total_num}人打赏, 获得{$total_amount}元</span> &nbsp; <span> <a href="javascript:" class="show_detail_list" style="color: #deb16a!important;">详情</a></span><else/><span class="dashang">已打赏{$zhaopian_order['amount']}元</span>已有{$total_num}人打赏</if></div>
+                            <div class="cl tl remark" style="color: #e5e5e5; font-size: 16px;">“{$zhaopian.remark}”</div>
+                        </div></td>
+                    </tr>
+                </table>
                 <div class="cl"></div>
             </div>
             <div class="cl"></div>
-            <div class="detail_body1 cl" >
-                <img src="/uploads/{$zhaopian['pic_url']}" style="max-width: 98%" />
+            <div class="detail_body1 cl" style="text-align: center; vertical-align: middle" >
+                <if condition="$zhaopian[total_pic] gt 1">
+                    <div class="main_visual">
+                        <div class="flicking_con" style="margin-left: -{$img_left}px">
+                            <volist name="pic_list" id="pic" key="i">
+                            <a href="#">{$i}</a>
+                            </volist>
+                        </div>
+                        <div class="main_image">
+                            <ul>
+                                <volist name="pic_list" id="pic" key="i">
+                                <li><span class="img_{$i}" ><img src="/uploads/{$pic.pic_url}" /> </span></li>
+                               </volist>
+                            </ul>
+                            <a href="javascript:;" style="display: none" id="btn_prev"></a>
+                            <a href="javascript:;"  style="display: none"  id="btn_next"></a>
+                        </div>
+                    </div>
+                    <else/>
+                    <img src="/uploads/{$zhaopian.pic_url}" style=" vertical-align: middle; text-align: center" />
+                </if>
+
             </div>
         </div>
     </if>
-    <if condition="$zhaopian['user_id'] eq $user['uin']">
-        <div class="own_block">
-            <div class="detail_info1">
-                <div class=" fl ml10"><img src="{$zhaopian_user.header}" class="detail_head_img" /></div>
-                <div class="fl ml10">
-                    <div class="cl tl"><span style="color: #e5e5e5; font-size: 14px;">{$zhaopian_user.name}</span> <span style="background: #2d2d2d; padding: 6px; color: #c62a6c">共{$zhaopian['total_num']}人打赏,获得{$zhaopian['total_amount']}元</span><span><a href="" style="color: #b57d44">详情</a></span></div>
-                    <div class="cl tl remark" style="color: #e5e5e5; font-size: 16px;">“{$zhaopian.remark}”</div>
-                </div>
-                <div class="cl"></div>
-            </div>
-            <div class="cl"></div>
-            <div class="detail_body1 cl" >
-                <img src="/uploads/{$zhaopian['pic_url']}" style="max-width: 98%" />
-            </div>
-        </div>
-    </if>
-    <div class="detail_body" style="bottom: 20px;">
+
+    <div class="detail_body detail_more_block" style="bottom: 20px; width: 120px;">
         <div class="detail_menu_body cl hide">
             <div class="item_menu">
+                <if condition="$zhaopian['user_id'] neq $user_id and $is_buy"><div class="sub_menu"><a href="{:U('/zhao/zhaopian/zhuanfa',array('id'=>$zhaopian['number_no']))}">转发赚钱</a></div></if>
+                <if condition="$zhaopian['user_id'] eq $user_id"><div class="sub_menu"><a onclick="return confirm('您确定要删除该照片吗？')" href="{:U('/zhao/zhaopian/del',array('id'=>$zhaopian['number_no']))}">删除照片</a></div></if>
                 <div class="sub_menu"><a href="{:U('/zhao/notes')}">我的记录</a></div>
                 <div class="sub_menu"><a href="{:U('/zhao/zhaopian')}">我也要发</a></div>
             </div>
         </div>
         <div class="detail_menu cl" data-role="detail_menu">
-            <div class="menu_detail"><img class="ico" src="/images/xia_ico.png" /></div>
+            <div class="menu_detail"><img class="ico" src="/images/up.png" /></div>
         </div>
     </div>
 </div>
 
+
 <include file="Public:foot" />
 
 <script type="text/javascript">
+    if({$is_buy}){
+        $(document).ready(function(){
+
+            $(".main_visual").hover(function(){
+                $("#btn_prev,#btn_next").fadeIn()
+            },function(){
+                $("#btn_prev,#btn_next").fadeOut()
+            });
+
+            $dragBln = false;
+
+            $(".main_image").touchSlider({
+                flexible : true,
+                speed : 200,
+                btn_prev : $("#btn_prev"),
+                btn_next : $("#btn_next"),
+                paging : $(".flicking_con a"),
+                counter : function (e){
+                    $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+                }
+            });
+
+            $(".main_image").bind("mousedown", function() {
+                $dragBln = false;
+            });
+
+            $(".main_image").bind("dragstart", function() {
+                $dragBln = true;
+            });
+
+            $(".main_image a").click(function(){
+                if($dragBln) {
+                    return false;
+                }
+            });
+
+            timer = setInterval(function(){
+                $("#btn_next").click();
+            }, 5000);
+
+            $(".main_visual").hover(function(){
+                clearInterval(timer);
+            },function(){
+                timer = setInterval(function(){
+                    $("#btn_next").click();
+                },5000);
+            });
+
+            $(".main_image").bind("touchstart",function(){
+                clearInterval(timer);
+            }).bind("touchend", function(){
+                        timer = setInterval(function(){
+                            $("#btn_next").click();
+                        }, 5000);
+                    });
+
+        });
+
+        var hide_index = setTimeout(function(){$('.detail_info1').fadeOut('slow'); $('.detail_more_block').fadeOut('slow');}, 5000);
+    }
+
+    $('.own_block').click(function(){
+        if($('.detail_info1').is(":hidden")){
+            clearTimeout(hide_index);
+            $('.detail_info1').fadeIn('slow');
+            $('.detail_more_block').fadeIn('slow');
+
+            hide_index = setTimeout(function(){$('.detail_info1').fadeOut('slow'); $('.detail_more_block').fadeOut('slow');}, 5000);
+        }else{
+            clearTimeout(hide_index);
+            $('.detail_info1').fadeOut('slow'); $('.detail_more_block').fadeOut('slow');
+            hide_index = setTimeout(function(){$('.detail_info1').fadeOut('slow'); $('.detail_more_block').fadeOut('slow');}, 5000);
+        }
+
+    });
+    var height = $(document).height();
+    var width= $(document).width();
+
+    var img_height = parseInt('{$height}');
+    var img_width = parseInt('{$width}');
+
+    $('.main_visual').css('height', height+'px');
+    $('.main_image').css('height', height+'px');
+    $('.main_image img').css('max-height', height+'px');
+    $('.main_image li').css('line-height', height+'px');
+    $('.main_image img').css('max-width', width+'px');
+  //  alert($('#preview').width()+'-h'+$('#preview').height()+'-t'+$('#preview').css('top')+'-l'+$('#preview').css('left'));
+    if(img_width/width >= img_height/height){
+        $('#preview').css('height', height+'px');
+        $('#preview').css('width', parseInt(height/img_height * img_width)+'px');
+        $('#preview').css('left', "-"+parseInt(( height/img_height * img_width - width ))/2+'px');
+       // alert(parseInt(height/img_height * img_width)+'-h'+height+'-t'+$('#preview').css('top')+'-l'+(parseInt(( height/img_height * img_width - width ))/2));
+    }else{
+        $('#preview').css('width', width+'px');
+        $('#preview').css('height', parseInt(width/img_width * img_height)+'px');
+        $('#preview').css('top', "-"+parseInt(( width/img_width * img_height - height )/2)+'px');
+
+
+    }
+
+    $('.detail_body1').css('height', height+'px');
+    $('.detail_body1').css('line-height', height+'px');
+
     $('[data-role="detail_menu"]').click(function(){
-       var src = $(this).find('img.ico').attr('src');
-        if(src.indexOf('xia_ico.png') >= 0 ){
+        var src = $(this).find('img.ico').attr('src');
+        if(src.indexOf('up.png') >= 0 ){
             $('.detail_menu_body').removeClass('hide').addClass('show');
-            $(this).find('img.ico').attr('src','/images/shang_ico.png');
+            $(this).find('img.ico').attr('src','/images/down.png');
         }else{
             $('.detail_menu_body').removeClass('show').addClass('hide');
-            $(this).find('img.ico').attr('src','/images/xia_ico.png');
+            $(this).find('img.ico').attr('src','/images/up.png');
         }
     });
+
+    $('.show_detail_list').click(function(){
+        layer.open({
+            type: 1,
+            title:"&nbsp;",
+           // skin: 'layui-layer-rim', //加上边框
+            area: ['90%', '80%'], //宽高
+            content: '<div style="text-align: center; width: 100%; padding: 20px;"><img src="/images/loading.gif" /></div>'
+        });
+        show_page(1);
+    });
+
+    function show_page(page){
+        var id = $('input[name="number_no"]').val();
+        $.ajax({
+            type:'post',
+            url:"{:U('/zhao/zhaopian/detail_list')}",
+            async:false,
+            cache:false,
+            data:{id:id, page:page},
+            dataType:'html',
+            success:function(result){
+                $('.layui-layer-content').html(result);
+            }
+        });
+    }
     //调用微信JS api 支付
     function jsApiCall(data)
     {
         WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
-                data,
+                {$jsApiParameters},
                 function(res){
                     //WeixinJSBridge.log(res.err_msg);
                     // alert(res.err_code+'='+res.err_desc+'='+res.err_msg);
@@ -113,22 +263,22 @@
 //                    return false;
                     window.location.reload();
                     return false;
-                    switch (res.err_msg){
-
-                        case 'get_brand_wcpay_request:cancel':
-                            // location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
-//                                alert('取消');
-                            break;
-                        case 'get_brand_wcpay_request:fail':
-                            //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
-//                            alert('错误');
-                            break;
-                        case 'get_brand_wcpay_request:ok':
-                            // location.href="/?_a=done&order_sn=<?php echo $order_sn;?>&ac=<?php echo $authcode?>";
-                            //alert('成功');
-                            $("#shareit1").show();
-                            break;
-                    }
+//                    switch (res.err_msg){
+//
+//                        case 'get_brand_wcpay_request:cancel':
+//                            // location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+////                                alert('取消');
+//                            break;
+//                        case 'get_brand_wcpay_request:fail':
+//                            //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+////                            alert('错误');
+//                            break;
+//                        case 'get_brand_wcpay_request:ok':
+//                            // location.href="/?_a=done&order_sn=<?php echo $order_sn;?>&ac=<?php echo $authcode?>";
+//                            //alert('成功');
+//                            $("#shareit1").show();
+//                            break;
+//                    }
                 }
         );
     }
@@ -150,43 +300,25 @@
 
 <script type="text/javascript">
     $('.btn_shang').click(function(){
-        var max = parseFloat($('input[name="max_amount"]').val());
-        var min = parseFloat($('input[name="min_amount"]').val());
-
-        var amount = (Math.random()*(max-min)+min).toFixed(2);
-        $('.amount_block').text(amount+'元');
-        $('input[name="amount"]').val(amount);
+//        var max = parseFloat($('input[name="max_amount"]').val());
+//        var min = parseFloat($('input[name="min_amount"]').val());
+//        var is_rand = $('input[name="is_rand"]').val();
+//        var amount = (Math.random()*(max-min)+min).toFixed(2);
+//
+//        if(is_rand == '1'){
+//            $('.amount_block').text(amount+'元');
+//            $('input[name="amount"]').val(amount);
+//        }else{
+//            $('.amount_block').text(min+'元');
+//            $('input[name="amount"]').val(min);
+//        }
         // 设置随机金额
         //
         $('.buy_detail_block').removeClass('hide').addClass('show');
     });
-    /**
-     * 生成支付订单
-     */
-    function set_order(){
-        var id = $('input[name="number_no"]').val();
-        var amount = $('input[name="amount"]').val();
-        $.ajax({
-            type:'post',
-            url:"{:U('/zhao/zhaopian/order')}",
-            async:false,
-            cache:false,
-            data:{id:id, amount:amount},
-            dataType:'json',
-            success:function(result){
-                if(result.error==0){
-                    // callpay(result.data);
-                    set_pay(result.data);
-                }else if(result.error==1){
-                    layer.msg(result.message, function(){});
-                    return false;
-                }
-            }
-        });
 
-    }
 
-    function set_pay(id){
+    function set_payss(id){
         if(!id){
             var id = $('input[name="pay_id"]').val();
         }
@@ -197,7 +329,7 @@
         }
         $.ajax({
             type:'post',
-            url:"{:U('/zhao/weixin/zhaopian')}",
+            url:"{:U('/auto/zhaopian')}",
             async:false,
             cache:false,
             data:{id:id},
@@ -205,7 +337,6 @@
             success:function(result){
                 if(result.error==0){
                     callpay(result.data);
-
                 }else if(result.error==1){
                     layer.msg(result.message, function(){});
                 }

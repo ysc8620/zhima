@@ -4,38 +4,36 @@
     <meta charset="UTF-8">
     <title>测试</title>
     <script src='/js/jquery.js'></script>
+    <style>
+
+        .text-center {text-align: center;}
+
+        .btn-hight {height:100px;width:230px;}
+
+        #img img{width:200px;}
+
+        a.btn-new{ background:#fa6352;  -webkit-border-radius:3px;border-radius:3px; font-size:16px; display:inline-block; width:100px; height:30px; text-align: center; line-height: 30px; text-decoration: none; background:red; color: #fff; position:relative; overflow:hidden;}
+        input{position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0);}
+    </style>
+
 </head>
 <body>
 
-<style>
-
-    .text-center {text-align: center;}
-
-    .btn-hight {height:100px;width:230px;}
-
-    #img img{width:200px;}
-
-    a.btn-new{ background:#fa6352;  -webkit-border-radius:3px;border-radius:3px; font-size:16px; display:inline-block; width:100px; height:30px; text-align: center; line-height: 30px; text-decoration: none; background:red; color: #fff; position:relative; overflow:hidden;}
-    input{position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0);}
-</style>
 
 
-<div style="margin: 12px 0">
-    <a href="#">
-        上传
-        <input type="file" value="浏览" />
-    </a>
-</div>
+
 <div class="col-lg-12 col-sm-12" style="margin: 12px auto 10px;">
 
     <div class="form-group text-center">
 
         <a href="#">
-            上传
+            上传--{$signPackage.appId}===
             <input type="file" value="浏览" />
         </a>
 
     </div>
+
+    <div id="img"></div>
 
     <div class="form-group text-center">
 

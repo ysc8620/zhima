@@ -9,49 +9,56 @@
     }
 
 </script>
-        <style type="text/css">
-            input.pic{position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0); z-index: 10; width: 100%; height: 100%}
-        </style>
+<style type="text/css">
+    input.pic{position:absolute; right:0; top:0; font-size:100px; opacity:0; filter:alpha(opacity=0); z-index: 10; width: 100%; height: 100%}
+    .list_img{ width: 72px; position: relative; height: 72px;border-radius: 3px; line-height: 72px; float: left; text-align: center; border: #363636 1px solid; background: #161616; margin-bottom: 2px; margin-right: 2px; overflow: hidden}
+    .list_img_add{ border-radius: 3px; width: 72px; height: 72px;  text-align: center; border: #363636 1px solid;  background: #161616; overflow: hidden}
+    .list_img_add img, .list_img img{ max-height: 72px; max-width: 72px; vertical-align: middle}
+</style>
 <div class="container">
 	<div class="from">
-        <form action="{:U('/zhao/zhaopian/add')}" method="post" enctype="multipart/form-data" name="theForm" id="theForm" onSubmit="return checkZhaopian(this)">
+        <form action="{:U('/zhao/zhaopian/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkZhaopian(this)">
             <input type="hidden" name="sign" value="{$sign}" />
             <input type="hidden" name="is_rand" value="1" />
-		    <ul>
-			<div class="row" style="height: 200px; text-align: center; background: url(/images/bg.png) center center no-repeat #161616;">
-                <input type="file" class="pic" name="imgOne" id="imgOne" onchange="preImg(this.id,'imgPre');" />
-                <img id="imgPre" src="/images/touming.png" style="max-width:100%; max-height:100%; display: block; margin: 0 auto;" />
+            <input type="hidden" name="media_ids" value="" />
+		<ul>
+			<div class="row select_pic_tebie bg_img" id="chooseImage" style="height: 240px; text-align: center; background: #161616; overflow: hidden">
+                <img id="preview" name="preview" src="/images/bg.png" style="width: 120px; vertical-align: middle; display: block; margin: 50px auto;" />
 		     </div>
 		</ul>
+        <ul class="mb10 list_img_block hide">
+            <div class="list_img_add fl select_pic_tebie" id="chooseImage1"><img src="/images/plus-icon.png" style="height: 56px; margin-top: 10px" /> </div>
+            <div class="cl"></div>
+        </ul>
 		<ul>
-			<div class="row">
-				<input class="fr color_999 tl text"  name="remark" maxlength="120"  id="remark" value="珍藏多年,首次公开,绝对值得" />
+			<div class="row" style="height: 98px;">
+				<textarea class="fr color_999 tl text"  name="remark" maxlength="120"  id="remark"  >据说看了能提升幸福感~</textarea>
 			</div>
 		</ul>
 		<ul>
 			<div class="w50 fl">
-				<div class="amount tr"><input type="button" data-role="set_rand" class="btn w50 " value="随机价格" /></div>
+				<div class="amount tr"><input type="button" data-role="set_rand" class="btn  " value="随机价格" /></div>
 				<div class="amount_remark tr ptop6 pbottom10" style="padding-right: 12px;">￥1.05-￥5.00范围随机</div>
 			</div>
             <div class="w50 fl">
-                <div class="amount tl ml10"><input type="button" data-role="set_price" class="btn w50 color_def" value="设置价格" /></div>
+                <div class="amount tl ml10"><input type="button" data-role="set_price" class="btn  color_def" value="设置价格" /></div>
                 <div class="amount_remark ml10 ptop6 pbottom10" style="padding-left: 12px;">可设置￥1.05-￥200内</div>
             </div>
 		</ul>
             <ul data-role="price_block" style="display: none">
                 <div class="w50 fr">
-                    <div class="amount tl ml10"><input type="number" name="amount" class="text2 color_999  w50" value="1.05" /></div>
+                    <div class="amount tl ml10" style="position: relative"><input type="text" name="amount" style="color: #aa6c08; text-align: center" lang="en"  class="text2 color_999  w50" value="1.05" /><span style="position: absolute; top: 0; left: 120px; line-height: 58px">元</span></div>
                 </div>
             </ul>
 		<ul class="cl mt10">
 		<div class="tit ">
-			<div class="w90 mc">
-			<input type="submit" class="btn" value="发 布" />
+			<div class=" mc">
+			<input type="button" class="btn send_post" value="发 布" />
 			</div>
 			<div class="w90 mc tc f12 ptop6">
-                发布一张朋友发红包才能看的照片
-                收入会自动通过微信红包发给你
+                发布一张照片, 朋友发红包才能看,<br/>收入会在5分钟内自助通过微信支付转给你
 			</div>
+            <div class="w90 mc tc f12 ptop6" style="color: #494949; margin-top: 12px;">深圳一窝蜂网络提供技术支持</div>
 			</div>
 		</ul>
 		</form>
@@ -60,61 +67,165 @@
 </div>
 </div>
 <include file="Public:foot" />
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+
+    wx.config({
+        appId: '{$signPackage.appId}',
+        timestamp: '{$signPackage.timestamp}',
+        nonceStr: '{$signPackage.nonceStr}',
+        signature: '{$signPackage.signature}',
+        jsApiList: [
+            /*
+             * 所有要调用的 API 都要加到这个列表中
+             * 这里以图像接口为例
+             */
+            "chooseImage",
+            "uploadImage"
+        ]
+    });
+
+    wx.ready(function () {
+        var images = {
+            localId: [],
+            serverId: []
+        };
+
+        document.querySelector('#chooseImage1').onclick = function (event) {
+            event.preventDefault(); //阻止默认动作即该链接不会跳转。
+            event.stopPropagation();//阻止冒泡事件，上级的单击事件不会被调用
+            //不仅阻止了事件往上冒泡，而且阻止了事件本身
+            wx.chooseImage({
+                success: function (res) {
+                    //images.localId = res.localIds;
+                    jQuery(function(){
+                        $('.list_img_block').removeClass('hide');
+                        $.each( res.localIds, function(i, n){
+                            images.localId.push(n);
+                            if(images.localId.length == 1){
+                                $('#preview').attr('src',n)
+                                $('#preview').css('margin','2px auto');
+                                $('#preview').css('width','auto');
+                                $('#preview').css('max-height','236px');
+                                $('#preview').css('max-width','100%');
+                            }else{
+                                $(".list_img_add").before('<div class="list_img fl"> <img src="'+n+'" /> <div class="del" data-id="'+n+'"><img src="/images/delete-icon.png"  style="width: 20px; position: absolute; right: 4px; bottom: 4px;" /></div></div>');
+                            }
+                        });
+
+                        $('.list_img .del').unbind('click');
+                        $('.list_img .del').click(function(){
+                            var url = $(this).attr('data-id');
+                            $.each(images.localId, function(i, n){
+                                if(n == url){
+                                    images.localId.splice(i, 1);
+                                }
+                            });
+                            $(this).parent().remove();
+
+                        });
+                    });
+                }
+            });
+            return false;
+        };
+
+        document.querySelector('#chooseImage').onclick = function (event) {
+            event.preventDefault(); //阻止默认动作即该链接不会跳转。
+            event.stopPropagation();//阻止冒泡事件，上级的单击事件不会被调用
+           //不仅阻止了事件往上冒泡，而且阻止了事件本身
+            wx.chooseImage({
+                success: function (res) {
+                    //images.localId = res.localIds;
+                    jQuery(function(){
+                        $('.list_img_block').removeClass('hide');
+                        $.each( res.localIds, function(i, n){
+                            images.localId.push(n);
+                            if(images.localId.length == 1){
+                                $('#preview').attr('src',n)
+                                $('#preview').css('margin','2px auto');
+                                $('#preview').css('width','auto');
+                                $('#preview').css('max-height','236px');
+                                $('#preview').css('max-width','100%');
+                            }else{
+                                $(".list_img_add").before('<div class="list_img fl"> <img src="'+n+'" /> <div class="del" data-id="'+n+'"><img src="/images/delete-icon.png"  style="width: 20px; position: absolute; right: 4px; bottom: 4px;" /></div></div>');
+                            }
+                        });
+
+                        $('.list_img .del').unbind('click');
+                        $('.list_img .del').click(function(){
+                            var url = $(this).attr('data-id');
+                            $.each(images.localId, function(i, n){
+                                if(n == url){
+                                    images.localId.splice(i, 1);
+                                }
+                            });
+                            $(this).parent().remove();
+
+                        });
+                    });
+                }
+            });
+            return false;
+        };
+
+        function upload(n){
+            wx.uploadImage({
+                localId: n,
+                success: function (res) {
+                    images.serverId.push(res.serverId);
+                    $('input[name="media_ids"]').val($('input[name="media_ids"]').val()+','+res.serverId);
+                    if(images.localId.length>0){
+                        upload(images.localId.pop())
+                    }else{
+                       // alert($('input[name="media_ids"]').val())
+                        $('form').submit();
+                    }
+                },
+                fail: function (res) {
+                    layer.msg(JSON.stringify(res), function(){});
+                }
+            });
+        }
+        $('.send_post').click(function() {
+
+            if (images.localId.length < 1) {
+                layer.msg('请先使用选择图片按钮', function(){});
+                return;
+
+            }
+
+            images.serverId = [];
+          //  jQuery(function(){
+           // $.each(images.localId, function(i,n) {
+            id = images.localId.pop();
+               // alert(i+'-'+n);
+            upload(id)
+           // });
+           // });
+        });
+
+
+
+
+    });
+
+
+
+</script>
 <script type="text/javascript">
-    /**
-     * 从 file 域获取 本地图片 url
-     */
-    /**
-     * 从 file 域获取 本地图片 url
-     */
-    function getFileUrl(sourceId) {
-        var url;
-        if (navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) { // IE10取消了滤镜
-            //url = document.getElementById(sourceId).value;
-            document.all.imgOne.select();
-            $("#preview").focus();
-            url = document.selection.createRange().text;
-
-        } else if (navigator.userAgent.indexOf("Firefox") > 0) { // Firefox
-            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
-        } else if (navigator.userAgent.indexOf("Chrome") > 0) { // Chrome
-            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
-        }else if(navigator.userAgent.indexOf("MSIE 10.0") > 0){
-            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
-        }else{
-            url = window.URL.createObjectURL(document.getElementById(sourceId).files.item(0));
-        }
-        return url;
-    }
-
-    /**
-     * 将本地图片 显示到浏览器上
-     */
-    function preImg(sourceId, targetId) {
-        var url = getFileUrl(sourceId);
-        var imgPre = document.getElementById(targetId);
-        if(window.navigator.userAgent.indexOf("MSIE") >= 1 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0) ) {
-            var picpreview=document.getElementById("preview");
-            picpreview.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = url;
-        }else{
-            imgPre.src = url;
-        }
-
-    }
-    function checkTextLength(obj, length) {
-        if(obj.value.length > length)   {
-            obj.value = obj.value.substr(0, length);
-        }
-    }
 
     function checkZhaopian(){
-        var file_val = $('input[name="imgOne"]').val();
+
+//        return false;
+        try{
+        var file_val = $('input[name="media_ids"]').val();
         if(file_val.length < 1){
             layer.msg('请选择要上传的照片', function(){});
             return false;
         }
 
-        var remark = $('input[name="remark"]').val();
+        var remark = $('textarea[name="remark"]').val();
         if(remark.length < 1){
             layer.msg('请设置照片描述信息', function(){});
             return false;
@@ -130,11 +241,13 @@
             }
             amount = parseFloat(amount);
             if(amount < 1.05 || amount > 200){
-                layer.msg('价格范围在1.05-200之间', function(){});
+                layer.msg('价格范围1.05-200之间', function(){});
                 return false;
             }
         }
-
+        }catch (e){
+            layer.msg('错误:'+ e.message, function(){});
+        }
         return true;
     }
 
