@@ -148,6 +148,108 @@ function sendPay($data = array()){
 
 class PayNotifyCallBack extends WxPayNotify
 {
+
+    public function zhaopian($result,$pay_log_id=0){
+        // 更改order 状态
+        // 更改 hongbao状态
+        $result['out_trade_no'];
+        $order = M('zhaopian_order')->where("order_sn='{$result['out_trade_no']}'")->find();
+        $user = M('user')->find($order['user_id']);
+        if($order){
+            // 重复操作
+            if($order['state'] > 1){
+                return true;
+            }
+            $order_data = array(
+                'pay_id' => $pay_log_id,
+                'pay_time' => time(),
+                'transaction_id'=>$result['transaction_id'],
+                'state' => 2
+            );
+            M('zhaopian_order')->where("id='{$order['id']}'")->save($order_data);
+
+            $zhaopian = M('zhaopian')->where("id='{$order['hongbao_id']}'")->find();
+            if($zhaopian){
+                $data = array(
+                    'update_time' => time(),
+                    'total_num' => $zhaopian['total_num'] + 1,
+                    'total_amount' =>$zhaopian['total_amount'] + $order['amount']
+                );
+                $zhaopian = M('zhaopian')->where("id='{$order['hongbao_id']}'")->save($data);
+                $zhaopian_user = M('user')->find($zhaopian['user_id']);
+                // 自动发送红包
+                if(true){
+                    $bao = array(
+                        'partner_trade_no' => get_order_sn(),
+                        're_user_name'=>$zhaopian_user['name'],
+                        'openid' => $zhaopian['openid'],
+                        'amount' => floor($order['amount'] * 0.98 * 100),
+                        'desc'=> "好消息！“{$user['name']}”刚刚购买了您的私货照片。"
+                    );
+
+                    $send = $bao;
+                    $send['user_id'] = $zhaopian['user_id'];
+                    $send['addtime'] = time();
+                    $send['order_id'] = $order['id'];
+                    $send['zhaopian_id'] = $order['zhaopian_id'];
+                    $hongbao_id = M('zhaopian_pay')->add($send);
+                    if($hongbao_id){
+                        M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('send_id'=>$hongbao_id, 'send_sn'=>$bao['partner_trade_no'], 'send_time'=>time()));
+                        $data = sendPay($bao);
+                        if($data['result_code'] == 'SUCCESS' && $data['return_code'] == 'SUCCESS'){
+                            M('zhaopian_order')->where(array("id='{$order['id']}'"))->save(array('is_send_zhaopian'=>1));
+                            M('zhaopian_pay')->where(array("id='$hongbao_id'"))->save(array('state'=>2, 'payment_no'=>$data['payment_no']));
+
+                            $user_amount = number_format($order['amount'] * 0.98,2);
+                            $msg =  "你发布的照片有朋友购买了！
+
+照片标题：{$zhaopian['remark']}
+
+支付金额：￥{$order['amount']}元
+
+好友购买照片钱已经通过微信支付打给你，其中已扣除2%微信支付手续费，扣除后金额为{$user_amount}元";
+                            \Wechat\Wxapi::send_wxmsg($zhaopian['openid'],'红包照片状态提醒',U('/zhaopian/detail',array('id'=>$zhaopian['number_no']),true,true),$msg );
+                        }else{
+                            M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>3));
+                            $user_amount = number_format($order['amount'] * 0.98,2);
+                            $msg = "你发布的照片有朋友购买了！
+
+照片标题：{$zhaopian['remark']}
+
+支付金额：￥{$order['amount']}元
+
+红包将会在1~3个工作内，通过微信红包打给你，
+其中已扣除2%的微信支付手续费，扣除后金额为{$user_amount}元。
+因为微信支付到我们的账户需要1~3个工作日，我们
+的账户预存垫付的现金不足，暂时不能实时转账，希望
+理解。资金安全请你放心，如果有疑问请联系客服。";
+                            \Wechat\Wxapi::send_wxmsg($zhaopian['openid'],'红包照片状态提醒',U('/zhaopian/detail',array('id'=>$zhaopian['number_no']),true,true),$msg );
+                            $sys_openid = "oV3oMxP5wdTR8BpptzNq2tDdGtLk";
+                            $msg = "重要提示! 红包发送异常!!! 可能余额不足,或支付金额异常,支付金额:{$user_amount},请及时处理.";
+                            \Wechat\Wxapi::send_wxmsg($sys_openid,'红包照片状态提醒',"http://{$_SERVER['HTTP_HOST']}",$msg);
+                        }
+                    }
+                }
+            }
+
+        }
+        return true;
+    }
+
+    public function bao($result, $pay_log_id=0){
+        $order_sn = $result['out_trade_no'];
+        $bao = M('bao')->where("order_sn='{$order_sn}'")->find();
+        if($bao['state'] <= 1){
+            $data = array(
+                'pay_id' => $pay_log_id,
+                'pay_time' => time(),
+                'transaction_id'=>$result['transaction_id'],
+                'state' => 2
+            );
+            M('bao')->where("order_sn='{$order_sn}'")->save($data);
+
+        }
+    }
     //查询订单
     public function Queryorder($transaction_id)
     {
@@ -169,17 +271,12 @@ class PayNotifyCallBack extends WxPayNotify
             // 更改 hongbao状态
             $order_sn = $result['out_trade_no'];
             if(substr($order_sn,0,2) == 'HB'){
-                $bao = M('bao')->where("order_sn='{$$order_sn}'")->find();
-                if($bao['state'] <= 1){
-                    $data = array(
-                        'pay_id' => $id,
-                        'pay_time' => time(),
-                        'transaction_id'=>$result['transaction_id'],
-                        'state' => 2
-                    );
-                    M('bao')->where("order_sn='{$order_sn}'")->save($data);
-                }
+               $this->bao($result, $id);
+                return true;
+            }
 
+            if(substr($order_sn,0,2) == 'ZP'){
+                $this->zhaopian($result, $id);
                 return true;
             }
 

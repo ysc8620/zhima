@@ -267,7 +267,7 @@ class ZhaopianController extends BaseController {
                     'zhaopian_user_id' => $this->zhaopian['user_id'],
                     'zhaopian_openid' => $this->zhaopian['openid'],
                     'number_no' =>$this->zhaopian['number_no'],
-                    'order_sn' =>get_order_sn('zo'),
+                    'order_sn' =>get_order_sn('ZP'),
                     'user_id' => $this->user_id,
                     'amount' => $amount,
                     'addtime' => time(),
@@ -282,7 +282,7 @@ class ZhaopianController extends BaseController {
                 if($this->zhaopian['is_rand']>0){
                     $amount = $this->getRandomAmount();
                     $order['amount'] = $amount;
-                    $order['order_sn'] = get_order_sn();
+                    $order['order_sn'] = get_order_sn('ZP');
                     M('zhaopian_order')->where(array('id'=>$order['id']))->save(array('amount'=>$amount, 'order_sn'=>$order['order_sn']));
                 }
             }
