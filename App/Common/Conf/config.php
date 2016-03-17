@@ -6,7 +6,7 @@ $config = array(
     'TMPL_STRIP_SPACE'     =>true,
     'OUTPUT_ENCODE'        =>true, // 页面压缩输出
 
-    'MODULE_ALLOW_LIST'    =>    array('www','bao','cou','user','admin','install','zhao'),
+    'MODULE_ALLOW_LIST'    =>    array('www','bao','cou','user','home','admin','install','zhao'),
     'DEFAULT_MODULE'       =>    'www',  // 默认模块
 
     //加密混合值
