@@ -39,11 +39,11 @@ do{
     if(!file_exists($pic_path)){
         echo $item['media_id']."\r\n";
         $ds = \Wechat\Wxapi::downloadWeixinFile($item['media_id']);
-        print_r($ds);
+        var_dump($ds);
         die();
         \Wechat\Wxapi::saveWeixinFile($pic_path,$ds['body']);
     }
-
+    continue;
     if($item['is_default']){
         M('zhaopian')->where(array('id'=>$item['zhaopian_id']))->save(array('pic_url'=>$pic_url));
         if(file_exists($pic_path)){
