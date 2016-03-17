@@ -44,7 +44,7 @@ class ZhaopianController extends BaseController {
             }
             // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
             $user = M('user')->find($this->user_id);
-            $data['number_no'] = get_order_sn('zp');
+            $data['number_no'] = get_order_sn();
             $data['user_id'] = $this->user_id;
             $data['remark'] = $remark;
             $data['is_rand'] = $is_rand;
@@ -310,6 +310,7 @@ class ZhaopianController extends BaseController {
             if($this->zhaopian['total_pic'] > 1){
 
                 $this->pic_list = M('zhaopian_pic')->where(array('zhaopian_id'=>$this->zhaopian['id']))->select();
+                var_dump($this->pic_list);
             }
         }
 
