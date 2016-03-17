@@ -338,6 +338,7 @@ class PayNotifyCallBack extends WxPayNotify
                             'act_name'=> '凑红包',
                             'remark' => '凑红包',
                         );
+
                         $send = $bao;
                         $send['user_id'] = $hongbao['user_id'];
                         $send['addtime'] = time();

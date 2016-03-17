@@ -14,6 +14,7 @@ require_once ROOT_PATH .'/Inc/Library/Wxpay/weixin.php';
 class AutoController extends Controller {
     // 自动发送红包
     function sendhongbao(){
+        header("Content-type:text/html;charset=utf-8");
         // 设置过期
         $list = M('hongbao')->where(array('state'=>1, 'addtime'=>array('lt', time()-86400)))->select();
        foreach($list as $item){
@@ -109,6 +110,7 @@ class AutoController extends Controller {
                     $log = "发送红包失败, 红包编号：{$hongbao['id']},发送编号：{$hongbao_send['id']}";
                     f_log($log, ROOT_PATH.'Runtime/Logs/hongbao.log');
                     echo $log."<br/>";
+                    print_r($data);
                 }
 
                 sleep(5);
