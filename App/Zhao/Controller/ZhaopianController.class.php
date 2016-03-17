@@ -366,8 +366,8 @@ class ZhaopianController extends BaseController {
      *
      */
     public function detail_list(){
-        $id = I('post.id','','strval');
-        $page = I('post.page',1,'intval');
+        $id = I('request.id','','strval');
+        $page = I('request.page',1,'intval');
         $page = $page < 1?1:$page;
         $zhaopian = M('zhaopian')->where(array('number_no'=>$id))->find();
         if(!$zhaopian){
