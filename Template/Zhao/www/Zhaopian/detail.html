@@ -247,6 +247,9 @@
             success:function(result){
                 alert('xxx');
                 $('.layui-layer-content').html(result);
+            },
+            error:function(){
+                alert('error')
             }
         });
     }
