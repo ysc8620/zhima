@@ -192,7 +192,7 @@ $msg =  "你发布的照片有朋友购买了！
 支付金额：￥{$order['amount']}元
 
 好友购买照片钱已经通过微信红包打给你，其中已扣除2%微信支付手续费，扣除后金额为{$user_amount}元";
-\Wechat\Wxapi::send_wxmsg($zhaopian['openid'],'红包照片状态提醒',U('/zhaopian/detail',array('id'=>$zhaopian['number_no']),true,true),$msg );
+\Wechat\Wxapi::send_wxmsg($zhaopian['openid'],'红包照片状态提醒',U('/zhao/zhaopian/detail',array('id'=>$zhaopian['number_no']),true,true),$msg );
                             }else{
                                 M('hongbao_send')->where(array("id='$hongbao_id'"))->save(array('state'=>3));
                                 $user_amount = number_format($order['amount'] * 0.98,2);
@@ -207,7 +207,7 @@ $msg = "你发布的照片有朋友购买了！
 因为微信支付到我们的账户需要1~3个工作日，我们
 的账户预存垫付的现金不足，暂时不能实时转账，希望
 理解。资金安全请你放心，如果有疑问请联系客服。";
-                                \Wechat\Wxapi::send_wxmsg($zhaopian['openid'],'红包照片状态提醒',U('/zhaopian/detail',array('id'=>$zhaopian['number_no']),true,true),$msg );
+                                \Wechat\Wxapi::send_wxmsg($zhaopian['openid'],'红包照片状态提醒',U('/zhao/zhaopian/detail',array('id'=>$zhaopian['number_no']),true,true),$msg );
                                 $sys_openid = "obb1AuA79tIJ-BGY7HA38FXAJwoc";
                                 $msg = "重要提示! 红包发送异常!!! 可能余额不足,或支付金额异常,支付金额:{$user_amount},请及时处理.";
                                 \Wechat\Wxapi::send_wxmsg($sys_openid,'红包照片状态提醒',"http://{$_SERVER['HTTP_HOST']}",$msg);
