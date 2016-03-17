@@ -248,9 +248,11 @@
                 alert('xxx');
                 $('.layui-layer-content').html(result);
             },
-            error:function(){
-                alert('error')
-            }
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            },
         });
     }
     //调用微信JS api 支付
