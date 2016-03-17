@@ -68,7 +68,7 @@
                 <if condition="$zhaopian[total_pic] gt 1">
                     <volist name="pic_list" id="pic" key="i">
                         /uploads/{$pic.pic_url}
-                        
+                        <img src="/uploads/{$pic.pic_url}" />
                     </volist>
                     <!--<div class="main_visual">-->
                         <!--<div class="flicking_con" style="margin-left: -{$img_left}px">-->
