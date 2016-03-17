@@ -39,7 +39,6 @@ do{
     if(!file_exists($pic_path) && filesize($pic_path) > 4028){
         echo $item['media_id']."\r\n";
         $ds = \Wechat\Wxapi::downloadWeixinFile($item['media_id']);
-
         \Wechat\Wxapi::saveWeixinFile($pic_path,$ds['body']);
     }
 
