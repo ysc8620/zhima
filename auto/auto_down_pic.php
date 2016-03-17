@@ -36,13 +36,13 @@ do{
         mkdir(dirname($pic_path), 0777, true);
     }
     echo $pic_url."\r\n";
-    if(!file_exists($pic_path)){
+    if(!file_exists($pic_path) && filesize($pic_path) > 4028){
         echo $item['media_id']."\r\n";
         $ds = \Wechat\Wxapi::downloadWeixinFile($item['media_id']);
 
         \Wechat\Wxapi::saveWeixinFile($pic_path,$ds['body']);
     }
-   
+
     if($item['is_default']){
         M('zhaopian')->where(array('id'=>$item['zhaopian_id']))->save(array('pic_url'=>$pic_url));
         if(file_exists($pic_path)){
