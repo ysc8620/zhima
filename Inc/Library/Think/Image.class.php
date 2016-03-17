@@ -188,4 +188,9 @@ class Image{
         $this->img->text($text, $font, $size, $color, $locate, $offset, $angle);
         return $this;
     }
+
+    public function gaussianBlurImage (  $radius=80 ,  $sigma=8){
+        $this->img->gaussianBlurImage($radius, $sigma);
+        return $this;
+    }
 }
