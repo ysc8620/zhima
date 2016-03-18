@@ -174,7 +174,7 @@
             </ul>
             <ul>
                 <div class="row" style="height: 80px;">
-                    <textarea class="fr color_999 tl"  name="remark" maxlength="120" style="margin-right: 34px; height: 80px; width: 90%;color: #494949" id="remark">恭喜发财,大吉大利!</textarea>
+                    <textarea class="fr color_999 tl"  name="remark" maxlength="120" style="margin-right: 34px; height: 80px; width: 88%;color: #494949" id="remark">恭喜发财,大吉大利!</textarea>
                 </div>
             </ul>
             <ul>
@@ -280,7 +280,7 @@
         if(checkBao()){
             var amount = $('input[name="amount"]').val();
             var total = $('input[name="total"]').val();
-            var remark = $('input[name="remark"]').val();
+            var remark = $('textarea[name="remark"]').val();
             var id = $('input[name="id"]').val();
             var bao_id = $('input[name="bao_id"]').val();
             var index = layer.load(1, {
@@ -400,7 +400,7 @@
             return false;
         }
 
-        var remark = $.trim($('input[name="remark"]').val());
+        var remark = $.trim($('textarea[name="remark"]').val());
         if(remark.length < 2){
             layer.msg('请输入红包说明.', function(){});
             return false;
