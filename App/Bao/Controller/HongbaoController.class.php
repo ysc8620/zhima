@@ -194,7 +194,7 @@ class HongbaoController extends BaseController {
         $order_list = M('bao_order')->where(array('bao_id'=>$this->hongbao['id'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2))))->order("addtime desc")->select();
         $total_order_amount = M('bao_order')->where(array('bao_id'=>$this->hongbao['id'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2))))->sum('amount');
         $this->total_order_amount = number_format(floatval($total_order_amount), 2);
-        $from_bao_list = M('bao')->where(array('from_bao_id'=>$this->hongbao['id']))->select();
+        $from_bao_list = M('bao')->where(array('from_bao_id'=>$this->hongbao['id'],'state'=>array('in',array(2,3))))->select();
         if($from_bao_list){
             foreach($from_bao_list as $i=>$order){
                 $user = M('user')->find($order['user_id']);
