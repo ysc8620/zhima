@@ -151,8 +151,8 @@
     </div>
 
 <div  class="bao_block " style='display: none'> <div class="shareit"></div>
-<div class="follow" style="background: #fff5e4!important;">
-    <div class="from">
+<div class="follow" style="background: #fff5e4!important; width: 90%;">
+    <div class="from" style="width: 86%;">
         <div class="close_block" onclick="$('.bao_block').hide();" style="float: right; clear: both; margin-bottom: 12px;"><img src="/images/icon-close-round.png" style="height: 18px" /></div>
         <form action="{:U('/bao/hongbao/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
             <input type="hidden" name="sign" value="{$sign}" />
@@ -364,7 +364,7 @@
         });
         $.ajax({
             type:'post',
-            url:"{:U('/bao/hongbao/order',array('show'=>'yes'))}",
+            url:"{:U('/bao/hongbao/order')}",
             async:false,
             cache:false,
             data:{id:id},
