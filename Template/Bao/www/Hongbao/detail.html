@@ -275,7 +275,17 @@
     $('[data-role="zanzhu"]').click(function(){
         $('.bao_block').show();
     });
+    $('input[name="amount"]').keyup(function(){
+        var amount = parseFloat($(this).val() == ''?0:$(this).val());
+        $('.total_amount').text(amount);
 
+    });
+
+    $('input[name="amount"]').change(function(){
+        var amount = parseFloat($(this).val() == ''?0:$(this).val());
+        $('.total_amount').text(amount);
+
+    });
     $('.zanzhubao').click(function(){
         if(checkBao()){
             var amount = $('input[name="amount"]').val();
