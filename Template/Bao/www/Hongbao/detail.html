@@ -31,7 +31,7 @@
                         <if condition="$hongbao['user_id'] eq $user_id">
                             <button type="button"  onclick="set_share()" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>分享</font></button>
                         <elseif condition="$hongbao['is_sponsor'] eq 1" />
-                            <button type="button" style="font-size: 24px; color: #fdf05e" class="btn btn_cou"><font>赞助</font></button>
+                            <button type="button" style="font-size: 24px; color: #fdf05e" class="btn btn_cou" data-role="zanzhu"><font>赞助</font></button>
                         </if>
                     </div>
                     <if condition="$hongbao['user_id'] eq $user_id and $hongbao['is_sponsor'] eq 1">
@@ -79,7 +79,7 @@
 		</div>
 		<div class="cl"></div>
 	</div><div class="cl"></div>
-	<div class="from "><div class="foot_reamrk">如果48小时内该红包没有领完, 系统会自动退还余额</div></div>
+	<div class="from "><div class="foot_reamrk">如果72小时内该红包没有领完, 系统会自动退还余额</div></div>
      <div class="cl" ></div>
 
     <div id="shareit1" style="display:  <if condition="$is_show_share and $user_id eq $hongbao['user_id']">block<else />none</if>">
@@ -101,17 +101,59 @@
 </div>
 
     <div id="remark_block" class="box_block" style='<if condition="!$receive_order and $hongbao['total_num'] gt count($order_list) and $user_id neq $hongbao['user_id']">display: block<else/>display:none</if>'>
-    <div class="shareit"></div>
-    <div class="follow">
-        <p style="text-align: center; padding: 12px; font-size: 18px; line-height: 24px;">
-            <img src="{$hongbao_user.header}" alt="{$hongbao_user.name}" class="detail_head_img" /> <br />
-            <span>{$hongbao_user.name}</span><br/>
-            <span style="font-size: 16px; padding-top: 12px; clear: both;">发了一个红包, 金额随机</span><br/>
-            <span style="font-size: 20px; padding-top: 28px; clear: both;">”{$hongbao.remark}“</span></p>
-        <img src="/images/linghongbao-banner.png" onclick="set_order()" style="width: 100%;" />
-        <div class="cls" style="clear: both; margin-bottom: 6px;"></div>
-        <p style="text-align: center; padding: 12px; font-size: 16px; line-height: 20px;" onclick="$('#remark_block').hide();">看看大家手气></p>
+        <div class="shareit"></div>
+        <div class="follow">
+            <p style="text-align: center; padding: 12px; font-size: 18px; line-height: 24px;">
+                <img src="{$hongbao_user.header}" alt="{$hongbao_user.name}" class="detail_head_img" /> <br />
+                <span>{$hongbao_user.name}</span><br/>
+                <span style="font-size: 16px; padding-top: 12px; clear: both;">发了一个红包, 金额随机</span><br/>
+                <span style="font-size: 20px; padding-top: 28px; clear: both;">”{$hongbao.remark}“</span></p>
+            <img src="/images/linghongbao-banner.png" onclick="set_order()" style="width: 100%;" />
+            <div class="cls" style="clear: both; margin-bottom: 6px;"></div>
+            <p style="text-align: center; padding: 12px; font-size: 16px; line-height: 20px;" onclick="$('#remark_block').hide();">看看大家手气></p>
+        </div>
     </div>
+
+<div  class="bao_block " style='display: none'> <div class="shareit"></div>
+<div class="follow" style="background: #fff5e4!important;">
+    <div class="from">
+        <div class="close_block" onclick="$('.bao_block').hide();" style="float: right; clear: both; margin-bottom: 12px;"><img src="/images/icon-close-round.png" style="height: 18px" /></div>
+        <form action="{:U('/bao/hongbao/add')}" method="post" name="theForm" id="theForm" onSubmit="return checkHongBao(this)">
+            <input type="hidden" name="sign" value="{$sign}" />
+            <input type="hidden" name="bao_id" value="" />
+            <ul>
+                <div class="row">
+                    <span class="label" style="color: #ba8120">红包个数</span><input class="fr" name="total" type="number" id="total" style="margin-right: 34px; color: #494949" oninput="checkTextLength( this,3)" maxlength="3" value="" placeholder="填写个数" /> <span class="unit" style="color: #ba8120">个</span>
+                </div>
+            </ul>
+            <ul>
+                <div class="row" >
+                    <span class="label" style="color: #ba8120">总金额 <img src="/images/icon-pin.png" style="width: 14px; vertical-align: middle; " /></span><input class="fr"  name="amount" type="number" id="amount" style="margin-right: 34px; color: #494949" placeholder="填写金额" oninput="checkTextLength( this,4)" maxlength="4" value="" /> <span class="unit"  style="color: #ba8120">元</span>
+                </div>
+            </ul>
+            <ul>
+                <div class="row" style="height: 80px;">
+                    <textarea class="fr color_999 tl"  name="remark" maxlength="120" style="margin-right: 34px; height: 80px; width: 92%;color: #494949" id="remark">恭喜发财,大吉大利!</textarea>
+                </div>
+            </ul>
+            <ul>
+                <div class="tit">
+                    <div class="amount" style="color: #bf8b37; margin-top: 20px;">￥<font class="total_amount">10</font></div>
+                </div>
+            </ul>
+            <ul>
+                <div class="tit">
+                    <div class="w90 mc">
+                        <input type="button" class="btn zanzhubao" value="塞钱进红包" />
+                    </div>
+                    <div class="w90 mc tc" style="color: #bbb; padding: 12px 0; font-size: 16px">
+                        72小时红包没领完，钱会退回您微信零钱
+                    </div>
+                </div>
+            </ul>
+        </form>
+    </div>
+</div>
 </div>
 </div>
 
@@ -121,6 +163,59 @@
 </script>
 
 <include file="Public:foot" />
+
+<script type="text/javascript">
+    //调用微信JS api 支付
+    function jsApiCall(data)
+    {
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                data,
+                function(res){
+                    //WeixinJSBridge.log(res.err_msg);
+                    // alert(res.err_code+'='+res.err_desc+'='+res.err_msg);
+                    // window.location.href = "/notes.html";
+                    // alert('支付成功');
+//                    window.location.href="?show_share=1";
+//                    return false;
+//                    window.location.reload();
+//                    return false;
+                    switch (res.err_msg){
+
+                        case 'get_brand_wcpay_request:cancel':
+                            // location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+//                                alert('取消');
+                            break;
+                        case 'get_brand_wcpay_request:fail':
+                            //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+//                            alert('错误');
+//                            alert(res);
+                            layer.msg('支付失败请重试', function(){});
+                            break;
+                        case 'get_brand_wcpay_request:ok':
+                            var number_no = $('input[name="id"]').val();
+                            location.href="/index.php?s=/bao/hongbao/detail/id/"+number_no+".html";
+                            break;
+                    }
+                }
+        );
+    }
+
+    function callpay(data)
+    {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall(data);
+        }
+    }
+</script>
+
 
 <script type="text/javascript">
     $('.view_all').click(function(){
@@ -136,6 +231,38 @@
 </script>
 
 <script type="text/javascript">
+    $('[data-role="zanzhu"]').click(function(){
+        $('.bao_block').show();
+    });
+
+    $('.zanzhubao').click(function(){
+        if(checkBao()){
+            var amount = $('input[name="amount"]').val();
+            var total = $('input[name="total"]').val();
+            var remark = $('input[name="remark"]').val();
+            var id = $('input[name="id"]').val();
+            var bao_id = $('input[name="bao_id"]').val();
+            var index = layer.load(1, {
+                shade: [0.1,'#000'] //0.1透明度的白色背景
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "{:U('/bao/hongbao/add')}",
+                data: { amount: amount, total:total, remark:remark, from_id:id, id:bao_id} ,
+                dataType:'json',
+                success: function(data){
+                    layer.close(index);
+                    if(data.msg_code == 10001){
+                        $('input[name="bao_id"]').val(data.number_no);
+                        jsApiCall(data.jsApiParameters);
+                    }else{
+                        layer.msg(data.msg_content, function(){});
+                    }
+                }
+            });
+        }
+    });
 
     //立即分享到微信朋友圈点击事件
     $("#error_block").on("click", function() {
@@ -208,6 +335,36 @@
             }
         });
 
+    }
+
+    function checkBao(){
+        var amount = $('input[name="amount"]').val();
+        var reg = new RegExp("^[0-9]*\.?[0-9]*$");
+        if(!reg.test(amount)){
+            layer.msg('请填写正确金额.', function(){});
+            return false;
+        }
+
+        var total = $('input[name="total"]').val();
+        if(!reg.test(total)){
+            layer.msg('请填写整数份额.', function(){});
+            return false;
+        }
+
+        if(amount / total > 200 || amount / total < 1.05){
+            layer.msg('平均每个红包在1.05-200元之间.', function(){});
+            total_amount = (total * 1.05).toFixed(2);
+            $('input[name="amount"]').val(total_amount);
+            $('.total_amount').html(total_amount);
+            return false;
+        }
+
+        var remark = $.trim($('input[name="remark"]').val());
+        if(remark.length < 2){
+            layer.msg('请输入红包说明.', function(){});
+            return false;
+        }
+        return true;
     }
 
     function checkHongBao(_this){

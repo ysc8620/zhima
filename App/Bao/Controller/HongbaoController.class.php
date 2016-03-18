@@ -30,6 +30,7 @@ class HongbaoController extends BaseController {
             $amount = I('post.amount',0,'floatval');
             $total = I('post.total',0,'intval');
             $remark = I('post.remark','','htmlspecialchars');
+            $from_bao_id = I('post.from_id', '','strval');
             if($amount <= 1 || $total < 1){
                 $json['msg_code'] = 10002;
                 $json['msg_content'] = '请输入福利金额或福利个数';
@@ -53,6 +54,18 @@ class HongbaoController extends BaseController {
                 // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
                 $order_sn = get_order_sn('HB');
 
+                $data['from_user_id'] = $this->user_id;
+                $data['from_openid'] = $user['openid'];
+
+                if($from_bao_id){
+                    $from_bao = M('bao')->where(array('number_no'=>$from_bao_id))->find();
+                    if($from_bao){
+                        $data['from_bao_id'] = $from_bao['id'];
+                        $data['from_user_id'] = $from_bao['user_id'];
+                        $data['from_openid'] = $from_bao['openid'];
+                    }
+                }
+
                 $data['number_no'] = get_order_sn();
                 $number_no = $data['number_no'];
                 $data['order_sn'] = $order_sn;
@@ -63,8 +76,6 @@ class HongbaoController extends BaseController {
                 $data['addtime'] = time();
                 $data['state'] = 1;
                 $data['openid'] = $user['openid'];
-                $data['from_user_id'] = $this->user_id;
-                $data['from_openid'] = $user['openid'];
                 $data['is_rand'] = 1;
                 $re = M('bao')->add($data);
             }else{
@@ -73,6 +84,10 @@ class HongbaoController extends BaseController {
             }
 
             if($re){
+
+                $bao = M('bao')->where(array('number_no'=>$number_no))->find();
+                $this->create_order($bao);
+
                 $json['number_no'] = $number_no;
                 $new = array();
                 // redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
@@ -136,7 +151,7 @@ class HongbaoController extends BaseController {
     public function detail(){
         $this->title ="福利详情";
 
-        $id = I('get.id',0, 'strval');
+        $id = I('get.id','', 'strval');
 
         $this->show_share = I('get.show_share', 0,'strval');
         if($id < 1){
@@ -146,6 +161,12 @@ class HongbaoController extends BaseController {
 
         if(!$this->hongbao){
             $this->error('没找到福利详情', U('/bao/notes'));
+        }
+
+        if($this->hongbao['from_bao_id'] > 0){
+            $from_bao = M('bao')->where(array('id'=>$this->hongbao['from_bao_id']))->find();
+            $this->redirect(U('/bao/hongbao/detail', array('id'=>$from_bao['number_no'])));
+            return true;
         }
 
 //        if($this->hongbao['state'] == 1){
@@ -170,8 +191,8 @@ class HongbaoController extends BaseController {
 
         $this->title = "{$this->hongbao_user['name']}发的福利";
 
-        $order_list = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'], 'state'=>array('in', array(1,2)))))->order("addtime desc")->select();
-        $total_order_amount = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'], 'state'=>array('in', array(1,2)))))->sum('amount');
+        $order_list = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2)))))->order("addtime desc")->select();
+        $total_order_amount = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2)))))->sum('amount');
         $this->total_order_amount = number_format(floatval($total_order_amount), 2);
 
 
@@ -294,45 +315,12 @@ class HongbaoController extends BaseController {
                 $json['msg_content'] = '福利已经领取完毕.';
                 break;
             }
-
+            $order = M('bao_order')->where(array('number_no'=>$id, 'user_id'=>$this->user_id))->find();
             $user = M('user')->find($this->user_id);
-            $total_order = M('bao_order')->where( array('bao_id'=>$hongbao['id']))->count();
-            $total_amount = M('bao_order')->where( array('bao_id'=>$hongbao['id']))->sum('amount');
-            $total_amount = floatval($total_amount);
-            $total_order = intval($total_order);
-            if($total_order >= $hongbao['total_num']){
-                $json['msg_code'] = 10002;
-                $json['msg_content'] = '福利已经领取完毕.';
-                break;
-            }
-            $order = M('bao_order')->where(array('bao_id'=>$hongbao['id'], 'user_id'=>$this->user_id))->find();
-            if(! $order){
-                // 'id', 'bao_id', 'bao_user_id', 'bao_openid', 'from_bao_id', 'from_user_id', 'from_openid',
-                // 'number_no', 'order_sn', 'amount', 'addtime', 'state', 'user_id', 'openid', 'transaction_id'
-
-                $order_total_amount = $hongbao['total_amount'] - $hongbao['total_amount'] * 0.02 - $total_amount;
-
-                $data = array(
-                    'bao_id' => $hongbao['id'],
-                    'bao_user_id' => $hongbao['user_id'],
-                    'bao_openid' => $hongbao['openid'],
-                    'from_bao_id' => $hongbao['from_bao_id'],
-                    'from_openid' => $hongbao['from_openid'],
-                    'number_no' => $hongbao['number_no'],
-                    'order_sn' => get_order_sn('HB'),
-                    'amount' => $this->get_order_amount($order_total_amount,$hongbao['total_num'] - $total_order),
-                    'addtime' => time(),
-                    'state' => 1,
-                    'openid'=>$user['openid'],
-                    'user_id' => $this->user_id,
-
-                );
-                //$order_id =
-                $order_id = M('bao_order')->add($data);
-                if( ($total_order + 1) == $hongbao['total_num']){
-                    M('bao')->where(array('id'=>$hongbao['id']))->save(array('state'=>3, 'success_time'=>time()));
-                }
-                $order = M('bao_order')->find($order_id);
+            if(!$order){
+                $user_id = $this->user_id;
+                M('bao_order')->execute("UPDATE bao_order SET user_id='{$user_id}','openid'=>'{$user['openid']}' WHERE number_no='{$id}' AND user_id=0 LIMIT 1");
+                $order = M('bao_order')->where(array('number_no'=>$id, 'user_id'=>$this->user_id))->find();
             }
 
             $honbao_user = M('user')->find($order['bao_user_id']);
@@ -377,15 +365,30 @@ class HongbaoController extends BaseController {
 
     }
 
-    private function get_rand_amount($total_amount, $total_num, $lingqu_amount=0, $lingqu_num=0){
-
-        if($total_num == 1){
-            return $total_amount;
+    public function create_order($hongbao){
+        $total_amount = $hongbao['total_amount'] - $hongbao['total_amount'] * 0.02;
+        $total_num = $hongbao['total_num'];
+        $order_total_amount = 0;
+        for($i=0; $i<$total_num; $i++){
+            #$order_total_amount = $total_amount - $total_amount;
+            $amount = $this->get_order_amount($total_amount - $order_total_amount,$total_num - $i);
+            $data = array(
+                'bao_id' => $hongbao['id'],
+                'bao_user_id' => $hongbao['user_id'],
+                'bao_openid' => $hongbao['openid'],
+                'from_bao_id' => $hongbao['from_bao_id'],
+                'from_openid' => $hongbao['from_openid'],
+                'number_no' => $hongbao['number_no'],
+                'order_sn' => get_order_sn('HB'),
+                'amount' => $amount,
+                'addtime' => time(),
+                'state' => 1,
+                'openid'=>'',
+                'user_id' => 0,
+            );
+            M('bao_order')->add($data);
+            $order_total_amount += $amount;
         }
-        $order_total_amount = ($total_amount - ($total_num ))* 0.8;
-
-        $a = 1 + mt_rand(0, $order_total_amount * 100)/100;
-        return $a;
     }
 
     /**

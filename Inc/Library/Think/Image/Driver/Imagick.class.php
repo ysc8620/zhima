@@ -583,6 +583,7 @@ class Imagick{
         }
         $draw->destroy();
     }
+
     public function gaussianBlurImage (  $radius=80 ,  $sigma=8){
         if(empty($this->img)) E('没有指定图像资源');
 

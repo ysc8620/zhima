@@ -149,6 +149,47 @@ function sendPay($data = array()){
 class PayNotifyCallBack extends WxPayNotify
 {
 
+    /**
+     * @param $bao_id
+     */
+    private function get_order_amount($total_amount, $total_num, $min=1){
+
+        if($total_num == 1){
+            return $total_amount;
+        }
+        $order_total_amount = ($total_amount - ($total_num ))* 0.8;
+
+        $a = 1 + mt_rand(0, $order_total_amount * 100)/100;
+        return $a;
+
+    }
+
+    public function create_order($hongbao){
+        $total_amount = $hongbao['total_amount'] - $hongbao['total_amount'] * 0.02;
+        $total_num = $hongbao['total_num'];
+        $order_total_amount = 0;
+        for($i=0; $i<$total_num; $i++){
+            #$order_total_amount = $total_amount - $total_amount;
+            $amount = $this->get_order_amount($total_amount - $order_total_amount,$total_num - $i);
+            $data = array(
+                'bao_id' => $hongbao['id'],
+                'bao_user_id' => $hongbao['user_id'],
+                'bao_openid' => $hongbao['openid'],
+                'from_bao_id' => $hongbao['from_bao_id'],
+                'from_openid' => $hongbao['from_openid'],
+                'number_no' => $hongbao['number_no'],
+                'order_sn' => get_order_sn('HB'),
+                'amount' => $amount,
+                'addtime' => time(),
+                'state' => 1,
+                'openid'=>'',
+                'user_id' => 0,
+            );
+            M('bao_order')->add($data);
+            $order_total_amount += $amount;
+        }
+    }
+
     public function zhaopian($result,$pay_log_id=0){
         // 更改order 状态
         // 更改 hongbao状态
@@ -247,8 +288,10 @@ class PayNotifyCallBack extends WxPayNotify
                 'state' => 2
             );
             M('bao')->where("order_sn='{$order_sn}'")->save($data);
+            $this->create_order($bao);
         }
     }
+
     //查询订单
     public function Queryorder($transaction_id)
     {
