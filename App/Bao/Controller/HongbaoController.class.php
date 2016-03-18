@@ -88,7 +88,7 @@ class HongbaoController extends BaseController {
                 $bao = M('bao')->where(array('number_no'=>$number_no))->find();
                 $this->create_order($bao);
 
-                $json['number_no'] = $number_no;
+                $json['number_no'] = $from_bao_id?$from_bao_id:$number_no;
                 $new = array();
                 // redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
                 $new['body'] = "福利";
