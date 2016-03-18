@@ -364,7 +364,7 @@
         });
         $.ajax({
             type:'post',
-            url:"{:U('/bao/hongbao/order')}",
+            url:"{:U('/bao/hongbao/order',array('show'=>'yes'))}",
             async:false,
             cache:false,
             data:{id:id},
