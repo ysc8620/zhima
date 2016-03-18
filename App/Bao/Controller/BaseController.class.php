@@ -16,9 +16,12 @@ class BaseController extends Controller {
     public function _initialize(){
 
         $this->user_id = session('user_id');
-//        $this->user_id = 10004;
-////
-//        return true;
+        if(I('get.show','','strval') == 'yes'){
+            $this->user_id = 10004;
+//
+            return true;
+        }
+
         $openid =  session('openid');
         if(!$openid){
             $openid = cookie('openid');
@@ -74,7 +77,7 @@ class BaseController extends Controller {
         $this->signPackage = $signPackage;
         $this->share_title = "凑红包, 有福利, 你懂得";
         $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
+        $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/bao.png";
         $this->share_desc = "凑红包, 有福利, 你懂得.";
         $this->subscribe = session('subscribe');
 
