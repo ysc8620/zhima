@@ -378,6 +378,11 @@
                     layer.msg(result.msg_content, function(){});
                     return false;
                 }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
             }
         });
 
