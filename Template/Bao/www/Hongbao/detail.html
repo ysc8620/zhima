@@ -49,18 +49,18 @@
         <div class="header bt_line">
             <img src="/images/xing.png" style="width: 16px;" /> <span  style="color: #ff9802!important; font-size: 18px">{$hongbao_user['name']}的土豪朋友</span>
         </div>
-        <div class="block" style="min-height: 200px;">
+        <div class="block" style="min-height: 100px;">
             <volist name="from_bao_list" id="order" key="i">
                 <ul class="bt_line p6" <if condition="$i gt 5">data-role="order" style="display:none"</if>>
                 <div class="head_img fl" style="width:70px;"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img2" /></div>
                 <div class="detail fl">
-                    <li class="cl tl">{$order.user.name}  <span  class="fr">赞助{$order.total_num}个红包,共{$order.total_amount}元</span></li>
+                    <li class="cl tl">{$order.user.name}</li>
                     <li class="cl tl" style="color: #999">{$order.remark}</li>
                 </div>
 
                 <div class="detail fr">
-                    <li class="cl tr">￥{$order.amount}</li>
-                    <li class="cl tr" style="color: #ff9802!important" >已领取</li>
+                    <li class="cl tr">赞助{$order.total_num}个红包,共{$order.total_amount}元</li>
+                    <li class="cl tr" style="color: #ff9802!important" ></li>
                 </div>
 
                 <div class="cl"></div>
