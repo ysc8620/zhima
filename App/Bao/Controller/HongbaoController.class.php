@@ -191,11 +191,17 @@ class HongbaoController extends BaseController {
 
         $this->title = "{$this->hongbao_user['name']}发的福利";
 
-        $order_list = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2)))))->order("addtime desc")->select();
-        $total_order_amount = M('bao_order')->where(array(array('bao_id'=>$this->hongbao['id'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2)))))->sum('amount');
+        $order_list = M('bao_order')->where(array('bao_id'=>$this->hongbao['id'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2))))->order("addtime desc")->select();
+        $total_order_amount = M('bao_order')->where(array('bao_id'=>$this->hongbao['id'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2))))->sum('amount');
         $this->total_order_amount = number_format(floatval($total_order_amount), 2);
-
-
+        $from_bao_list = M('bao')->where(array('from_bao_id'=>$this->hongbao['id']))->select();
+        if($from_bao_list){
+            foreach($from_bao_list as $i=>$order){
+                $user = M('user')->find($order['user_id']);
+                $from_bao_list[$i]['user'] = $user;
+            }
+        }
+        $this->from_bao_list = $from_bao_list;
         $limit_part = $this->hongbao['total_num'] - count($order_list);
         $limit_part = $limit_part<0?0:$limit_part;
 

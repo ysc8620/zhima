@@ -44,6 +44,47 @@
 		</div>
 
 	</div>
+    <if condition="$from_bao_list">
+    <div class="order_list">
+        <div class="header bt_line">
+            <img src="/images/xing.png" style="width: 16px;" /> <span  style="color: #ff9802!important; font-size: 18px">{$hongbao_user['name']}的土豪朋友</span>
+        </div>
+        <div class="block" style="min-height: 200px;">
+            <volist name="from_bao_list" id="order" key="i">
+                <ul class="bt_line p6" <if condition="$i gt 5">data-role="order" style="display:none"</if>>
+                <div class="head_img fl" style="width:70px;"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img2" /></div>
+                <div class="detail fl">
+                    <li class="cl tl">{$order.user.name}  <span  class="fr">赞助{$order.total_num}个红包,共{$order.total_amount}元</span></li>
+                    <li class="cl tl" style="color: #999">{$order.remark}</li>
+                </div>
+
+                <div class="detail fr">
+                    <li class="cl tr">￥{$order.amount}</li>
+                    <li class="cl tr" style="color: #ff9802!important" >已领取</li>
+                </div>
+
+                <div class="cl"></div>
+                </ul>
+            </volist>
+
+            <div class="cl"></div>
+
+        </div>
+        <if condition="count($from_bao_list) gt 5">
+            <div class="xiala">
+                <div class="view_all"><span><img src="/images/xia.png" class="img" style="width:12px;"/></span> <span class="f12">查看全部赞助者</span></div>
+            </div>
+        </if>
+
+        <div class="cl"></div>
+        <div class="xiala">
+            <div class="s"><span style="color: #ff9802!important; font-size: 18px">赞助TA的红包，做TA的土豪朋友</span></div>
+        </div>
+        <div class="cl"></div>
+    </div>
+    </if>
+
+
 	<div class="order_list">
 		<div class="header bt_line">
 			<span><img src="/images/sm.png" style="width:14px; line-height:14px; vertical-align:middle;" /></span> <span>已有{:count($order_list)}人领取红包，共计￥{$total_order_amount}元</span>
