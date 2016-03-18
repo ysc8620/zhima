@@ -308,7 +308,6 @@ class HongbaoController extends BaseController {
             'msg_content' => '',
         );
         do{
-
             $hongbao = M('bao')->where(array('number_no'=>$id))->find();
             if(!$hongbao){
                 $json['msg_code'] = 10002;
