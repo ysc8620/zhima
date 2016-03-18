@@ -302,7 +302,7 @@ class HongbaoController extends BaseController {
      * 领取福利
      */
     public function order(){
-        $id = I('post.id','', 'strval');
+        $id = I('request.id','', 'strval');
         $json = array(
             'msg_code' => 10001,
             'msg_content' => '',
