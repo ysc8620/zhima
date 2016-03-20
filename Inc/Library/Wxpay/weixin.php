@@ -177,6 +177,8 @@ class PayNotifyCallBack extends WxPayNotify
                 'bao_openid' => $hongbao['openid'],
                 'from_bao_id' => $hongbao['from_bao_id'],
                 'from_openid' => $hongbao['from_openid'],
+                'from_number_no' => $hongbao['from_number_no'],
+                'from_user_id' => $hongbao['from_user_id'],
                 'number_no' => $hongbao['number_no'],
                 'order_sn' => get_order_sn('HB'),
                 'amount' => $amount,

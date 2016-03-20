@@ -345,7 +345,7 @@
                 if(result.msg_code==10001){
                     // callpay(result.data);
                     $('.set_sponsor').remove();
-                    layer.msg('设置成功', function(){});
+                    layer.msg('设置成功');
                 }else{
                     layer.msg(result.message, function(){});
                     return false;

@@ -54,8 +54,13 @@ class HongbaoController extends BaseController {
                 // `id`, `number_no`, `user_id`, `part_amount`, `total_amount`, `total_part`, `remark`, `addtime`, `update_time`, `state`
                 $order_sn = get_order_sn('HB');
 
+                $data['number_no'] = get_order_sn();
+                $number_no = $data['number_no'];
+
+
                 $data['from_user_id'] = $this->user_id;
                 $data['from_openid'] = $user['openid'];
+                $data['from_number_no'] = $number_no;
 
                 if($from_bao_id){
                     $from_bao = M('bao')->where(array('number_no'=>$from_bao_id))->find();
@@ -63,11 +68,10 @@ class HongbaoController extends BaseController {
                         $data['from_bao_id'] = $from_bao['id'];
                         $data['from_user_id'] = $from_bao['user_id'];
                         $data['from_openid'] = $from_bao['openid'];
+                        $data['from_number_no'] = $from_bao['number_no'];
                     }
                 }
 
-                $data['number_no'] = get_order_sn();
-                $number_no = $data['number_no'];
                 $data['order_sn'] = $order_sn;
                 $data['user_id'] = $this->user_id;
                 $data['total_amount'] = $amount;
@@ -84,10 +88,6 @@ class HongbaoController extends BaseController {
             }
 
             if($re){
-
-                $bao = M('bao')->where(array('number_no'=>$number_no))->find();
-                $this->create_order($bao);
-
                 $json['number_no'] = $from_bao_id?$from_bao_id:$number_no;
                 $new = array();
                 // redirect(U('/hongbao/detail', array('id'=>$data['number_no'])));
@@ -100,7 +100,7 @@ class HongbaoController extends BaseController {
                 $new['goods_tag'] = "BAO";
                 // $openid = ;//session('openid')?session('openid'):cookie('openid');
                 $new['openid'] = $user['openid'];
-                $json['jsApiParameters'] = json_decode(jsapipay($new, false));
+                //$json['jsApiParameters'] = json_decode(jsapipay($new, false));
                 break;
             }else{
                 $json['msg_code'] = 10002;
@@ -383,6 +383,8 @@ class HongbaoController extends BaseController {
                 'bao_openid' => $hongbao['openid'],
                 'from_bao_id' => $hongbao['from_bao_id'],
                 'from_openid' => $hongbao['from_openid'],
+                'from_number_no' => $hongbao['from_number_no'],
+                'from_user_id' => $hongbao['from_user_id'],
                 'number_no' => $hongbao['number_no'],
                 'order_sn' => get_order_sn('HB'),
                 'amount' => $amount,
@@ -422,6 +424,24 @@ class HongbaoController extends BaseController {
             }
         }while(false);
         echo json_encode($json);
+    }
+
+
+    public function bao(){
+        $order_sn = I('get.sn','','strval');
+        $pay_log_id = 0;
+        $transaction_id = '10001';
+        $bao = M('bao')->where("order_sn='{$order_sn}'")->find();
+        if($bao['state'] <= 1){
+            $data = array(
+                'pay_id' => $pay_log_id,
+                'pay_time' => time(),
+                'transaction_id'=>$transaction_id,
+                'state' => 2
+            );
+            M('bao')->where("order_sn='{$order_sn}'")->save($data);
+            $this->create_order($bao);
+        }
     }
 
 }
