@@ -406,6 +406,7 @@ class HongbaoController extends BaseController {
      */
     public function sponsor(){
         $id = I('post.id',0, 'strval');
+        $state = I('post.state',0,'intval');
         $json = array(
             'msg_code' => 10001,
             'msg_content' => '',
@@ -414,7 +415,7 @@ class HongbaoController extends BaseController {
             $hongbao = M('bao')->where(array('number_no'=>$id))->find();
             if($hongbao){
                 if($hongbao['user_id'] == $this->user_id){
-                    M('bao')->where(array('id'=>$hongbao['id']))->save(array('is_sponsor'=>0));
+                    M('bao')->where(array('id'=>$hongbao['id']))->save(array('is_sponsor'=>$state));
                 }else{
                     $json['msg_code'] = 10002;
                     $json['msg_content'] = '没有权限';

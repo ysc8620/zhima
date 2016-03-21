@@ -35,9 +35,10 @@
                             <button type="button" style="font-size: 24px; color: #fdf05e" class="btn btn_cou" data-role="zanzhu"><font>赞助</font></button>
                         </if>
                     </div>
-                    <if condition="$hongbao['user_id'] eq $user_id and $hongbao['is_sponsor'] eq 1">
+                    <if condition="$hongbao['user_id'] eq $user_id">
 					<div class="set_sponsor">
-						<a href="javascript:void(0)" style="margin-top: 10px!important; clear: both; line-height: 36px;" onclick="set_sponsor()">设为“不可赞助”</a>
+						    <a href="javascript:void(0)" class="set_sponsor_block" style="margin-top: 10px!important; clear: both; line-height: 36px;" data-state="<if condition="$hongbao['is_sponsor'] eq 1">0<else/>1</if>" onclick="set_sponsor(this)">设为“<if condition="$hongbao['is_sponsor'] eq 1">不<else/></if>可赞助”</a>
+                        </if>
 					</div>
                         </if>
 				</div>
@@ -327,24 +328,28 @@
     /**
      * 设置赞赏
      */
-    function set_sponsor(){
+    function set_sponsor(_this){
         var id = $('input[name="id"]').val();
+        var state = parseInt($(_this).attr('data-state'));
         var index = layer.load(1, {
             shade: [0.1,'#000'] //0.1透明度的白色背景
         });
-        var _this
+
         $.ajax({
             type:'post',
             url:"{:U('/bao/hongbao/sponsor')}",
             async:false,
             cache:false,
-            data:{id:id},
+            data:{id:id,state:state},
             dataType:'json',
             success:function(result){
                 layer.close(index);
                 if(result.msg_code==10001){
                     // callpay(result.data);
-                    $('.set_sponsor').remove();
+                    //$('.set_sponsor').remove();
+                    $(_this).attr('data-state', state==1?0:1);
+                    // 设为“<if condition="$hongbao['is_sponsor'] eq 1">不<else/></if>可赞助”
+                    $(_this).text("设为“"+(state==1?'':'不')+"可赞助“");
                     layer.msg('设置成功');
                 }else{
                     layer.msg(result.message, function(){});
