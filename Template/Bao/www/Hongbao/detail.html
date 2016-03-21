@@ -350,7 +350,7 @@
                     $(_this).attr('data-state', state==1?0:1);
                     // 设为“<if condition="$hongbao['is_sponsor'] eq 1">不<else/></if>可赞助”
                     $(_this).text("设为“"+(state==1?'不':'')+"可赞助“");
-                    layer.msg('设置成功'+state);
+                    layer.msg('设置成功');
                 }else{
                     layer.msg(result.message, function(){});
                     return false;
