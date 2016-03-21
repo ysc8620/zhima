@@ -328,7 +328,7 @@ class HongbaoController extends BaseController {
             if(!$order){
                 $user_id = $this->user_id;
                 M('bao_order')->execute("UPDATE zml_bao_order SET user_id='{$user_id}',openid='{$user['openid']}' WHERE from_number_no='{$id}' AND user_id=0 LIMIT 1");
-                $order = M('bao_order')->where(array('number_no'=>$id, 'user_id'=>$this->user_id))->find();
+                $order = M('bao_order')->where(array('from_number_no'=>$id, 'user_id'=>$this->user_id))->find();
             }
 
             $honbao_user = M('user')->find($order['bao_user_id']);
