@@ -163,9 +163,9 @@ class HongbaoController extends BaseController {
             $this->error('没找到福利详情', U('/bao/notes'));
         }
 
-        if($this->hongbao['from_bao_id'] > 0){
-            $from_bao = M('bao')->where(array('id'=>$this->hongbao['from_bao_id']))->find();
-            $this->redirect(U('/bao/hongbao/detail', array('id'=>$from_bao['number_no'])));
+        if($this->hongbao['from_bao_id'] > 0 && $this->honbao['from_number_no'] != $this->hongbao['number_no']){
+            //$from_bao = M('bao')->where(array('id'=>$this->hongbao['from_bao_id']))->find();
+            $this->redirect(U('/bao/hongbao/detail', array('id'=>$this->hongbao['from_number_no'])));
             return true;
         }
 
@@ -186,13 +186,13 @@ class HongbaoController extends BaseController {
                 M('bao')->where(array('id'=>$this->hongbao['id']))->save(array('is_read'=>1));
             }
         }else{
-            $this->receive_order = M('bao_order')->where(array('bao_id'=>$this->hongbao['id'], 'user_id'=>$this->user_id))->find();
+            $this->receive_order = M('bao_order')->where(array('from_number_no'=>$this->hongbao['from_number_no'], 'user_id'=>$this->user_id))->find();
         }
 
         $this->title = "{$this->hongbao_user['name']}发的福利";
 
-        $order_list = M('bao_order')->where(array('bao_id'=>$this->hongbao['id'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2))))->order("addtime desc")->select();
-        $total_order_amount = M('bao_order')->where(array('bao_id'=>$this->hongbao['id'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2))))->sum('amount');
+        $order_list = M('bao_order')->where(array('from_number_no'=>$this->hongbao['from_number_no'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2))))->order("addtime desc")->select();
+        $total_order_amount = M('bao_order')->where(array('from_number_no'=>$this->hongbao['from_number_no'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2))))->sum('amount');
         $this->total_order_amount = number_format(floatval($total_order_amount), 2);
         $from_bao_list = M('bao')->where(array('from_bao_id'=>$this->hongbao['id'],'state'=>array('in',array(2,3))))->select();
         if($from_bao_list){
