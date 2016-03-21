@@ -165,7 +165,7 @@ class HongbaoController extends BaseController {
 
         if($this->hongbao['from_bao_id'] > 0 && $this->honbao['from_number_no'] != $this->hongbao['number_no']){
             //$from_bao = M('bao')->where(array('id'=>$this->hongbao['from_bao_id']))->find();
-            $this->redirect(U('/bao/hongbao/detail'), array('id'=>$this->hongbao['from_number_no']));
+            $this->redirect('/bao/hongbao/detail', array('id'=>$this->hongbao['from_number_no']));
             return true;
         }
 
