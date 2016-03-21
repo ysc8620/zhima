@@ -16,14 +16,17 @@ class NotesController extends BaseController {
         $this->state = I('request.state', '');
         $limit = 10;
         if($this->state == 'creation'){
-            $list = M('bao')->where(array('user_id'=>$this->user_id, array('state'=>array('in','2,3,4'))))->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('bao')->where(array('user_id'=>$this->user_id, array('state'=>array('in','2,3,4'))))->count();
+            $list = M('bao')->where(array('user_id'=>$this->user_id,'from_bao_id'=>0, 'state'=>array('in','2,3,4')))->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('bao')->where(array('user_id'=>$this->user_id,'from_bao_id'=>0,'state'=>array('in','2,3,4')))->count();
         }elseif($this->state == 'receive'){
-            $list = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') and state in(2,3,4)")->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') and state in(2,3,4)")->count();
+            $list = M('bao')->where("number_no in(SELECT from_number_no FROM zml_bao_order WHERE user_id='{$this->user_id}') and state in(2,3,4)")->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('bao')->where("number_no in(SELECT from_number_no FROM zml_bao_order WHERE user_id='{$this->user_id}') and state in(2,3,4)")->count();
+        }elseif($this->state == 'sponsor'){
+            $list = M('bao')->where(array('user_id'=>$this->user_id,'from_bao_id'=>array('gt',0), 'state'=>array('in','2,3,4')))->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('bao')->where(array('user_id'=>$this->user_id,'from_bao_id'=>array('gt',0) ,'state'=>array('in','2,3,4')))->count();
         }else{
-            $list = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') or (user_id='{$this->user_id}' and state in(2,3,4))")->page($page,$limit)->order("addtime DESC")->select();
-            $total = M('bao')->where("id in(SELECT bao_id FROM zml_bao_order WHERE user_id='{$this->user_id}') or (user_id='{$this->user_id}' and state in(2,3,4))")->count();
+            $list = M('bao')->where("number_no in(SELECT from_number_no FROM zml_bao_order WHERE user_id='{$this->user_id}') or (user_id='{$this->user_id}' and state in(2,3,4))")->page($page,$limit)->order("addtime DESC")->select();
+            $total = M('bao')->where("number_no in(SELECT from_number_no FROM zml_bao_order WHERE user_id='{$this->user_id}') or (user_id='{$this->user_id}' and state in(2,3,4))")->count();
 
         }
 
@@ -31,7 +34,7 @@ class NotesController extends BaseController {
         if($list){
             foreach($list as $i=>$item){
                 #$list[$i]['hongbao'] = M('hongbao')->find($item['hongbao_id']);
-                $list[$i]['user'] = M('user')->find($item['user_id']);
+                $list[$i]['user'] = M('user')->find($item['from_user_id']);
                 if($this->state == 'receive'){
                     $list[$i]['order'] = M('bao_order')->where(array('bao_id'=>$item['id'],'user_id'=>$this->user_id))->find();
                 }

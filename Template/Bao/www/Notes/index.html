@@ -21,13 +21,14 @@
         <a style="color: #323232!important; font-size: 15px;" href="{:U('/bao/notes/index')}" class="fixed_nav_item  <if condition='$state eq ""'>nav_cur</if>"><span class="nav_txt">所有</span></a>
         <a style="color: #323232!important; font-size: 15px;" href="{:U('/bao/notes/index',array('state'=>'creation'))}" class="fixed_nav_item <if condition='$state eq "creation"'>nav_cur</if> "><span class="nav_txt nav_payment">我发出的</span></a>
         <a style="color: #323232!important; font-size: 15px;" href="{:U('/bao/notes/index',array('state'=>'receive'))}" class="fixed_nav_item <if condition='$state eq "receive"'>nav_cur</if> "><span class="nav_txt nav_payment">我领到的</span></a>
+        <a style="color: #323232!important; font-size: 15px;" href="{:U('/bao/notes/index',array('state'=>'sponsor'))}" class="fixed_nav_item <if condition='$state eq "sponsor"'>nav_cur</if> "><span class="nav_txt nav_payment">我赞助的</span></a>
     </div>
 	<div class="order_list">
 		<div class="header bt_line">
 				</div>
 		<div class="block" style="min-height: 200px;">
             <volist name="list" id="item">
-                <a class="" href="{:U('/bao/hongbao/detail',array('id'=>$item['number_no']))}">
+                <a class="" href="{:U('/bao/hongbao/detail',array('id'=>$item['from_number_no']))}">
 			<ul class="bt_line p6">
 				<div class="head_img fl" style="width:70px;"><img src="{$item.user.header}" alt="{$item.user.name}" class="detail_head_img2" /></div>
 					<div class="detail fl">
