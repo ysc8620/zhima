@@ -173,7 +173,7 @@ class HongbaoController extends BaseController {
 //            $this->error('福利还没支付', U('/bao/notes'));
 //        }
         $hongbao_amount = M('bao')->where(array('from_number_no'=>$this->hongbao['from_number_no'],'state'=>array('in',array(2,3,4))))->sum('total_amount');
-        $this->hongbao_total_amount = number_format(floatval($hongbao_amount), 2);
+        $hongbao_total_amount = number_format(floatval($hongbao_amount), 2);
         $hongbao_total_num = M('bao')->where(array('from_number_no'=>$this->hongbao['from_number_no'],'state'=>array('in',array(2,3,4))))->sum('total_num');
         $this->hongbao_total_num = intval($hongbao_total_num);
         $this->hongbao_user = M('user')->find($this->hongbao['user_id']);
@@ -196,7 +196,7 @@ class HongbaoController extends BaseController {
 
         $order_list = M('bao_order')->where(array('from_number_no'=>$this->hongbao['from_number_no'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2))))->order("addtime desc")->select();
         $total_order_amount = M('bao_order')->where(array('from_number_no'=>$this->hongbao['from_number_no'],'user_id'=>array('gt',0), 'state'=>array('in', array(1,2))))->sum('amount');
-        $hongbao_total_amount = number_format(floatval($total_order_amount), 2);
+        $this->total_order_amount = number_format(floatval($total_order_amount), 2);
         $from_bao_list = M('bao')->where(array('from_bao_id'=>$this->hongbao['id'],'state'=>array('in',array(2,3))))->select();
         if($from_bao_list){
             foreach($from_bao_list as $i=>$order){
