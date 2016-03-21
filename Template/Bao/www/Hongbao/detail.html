@@ -49,13 +49,13 @@
     <if condition="$from_bao_list">
     <div class="order_list" style="background: #fffbf3">
         <div class="header bt_line">
-            <span style="line-height: 18px;"><img src="/images/xing.png" style="width: 14px; vertical-align: middle;" /></span> <span  style="color: #ff9802!important; line-height: 18px; font-size: 14px">{$hongbao_user['name']}的土豪朋友</span>
+            <span style="line-height: 18px;"><img src="/images/xing.png" style="width: 14px; margin-bottom: 2px; vertical-align: middle;" /></span> <span  style="color: #ff9802!important; line-height: 18px; font-size: 14px">{$hongbao_user['name']}的土豪朋友</span>
         </div>
         <div class="block" style="min-height: 100px;">
             <table cellpadding="0" cellspacing="0" border="0">
                 <volist name="from_bao_list" id="order" key="i">
                 <tr class="bt_line p6"  <if condition="$i gt 5">data-role="order" style="display:none"</if>>
-                    <td width="70" style="text-align: left"><div class=" fl ml10"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img2" /></div></td>
+                    <td width="70" style="text-align: left"><div class=" fl ml10"><img src="{$order.user.header}" alt="{$order.user.name}" style="margin: 2px;" class="detail_head_img2" /></div></td>
                     <td style="text-align: left"><div class="fl ml10" style="width: 100%;">
                         <div class="cl tl" style="margin-top: 6px; width: 100%;"><span style="color: #ff9802!important; font-size: 14px">{$order.user.name}</span> <span class="fr" style="font-size: 14px;">赞助{$order.total_num}个红包,共{$order.total_amount}元</span> </div>
                         <div class="cl tl remark" style=" font-size: 15px; color: #999; width: 100%">“{$order.remark}”</div>
