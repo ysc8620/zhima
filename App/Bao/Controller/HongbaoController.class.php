@@ -100,7 +100,7 @@ class HongbaoController extends BaseController {
                 $new['goods_tag'] = "BAO";
                 // $openid = ;//session('openid')?session('openid'):cookie('openid');
                 $new['openid'] = $user['openid'];
-                //$json['jsApiParameters'] = json_decode(jsapipay($new, false));
+                $json['jsApiParameters'] = json_decode(jsapipay($new, false));
                 break;
             }else{
                 $json['msg_code'] = 10002;
