@@ -205,7 +205,7 @@ class HongbaoController extends BaseController {
             }
         }
         $this->from_bao_list = $from_bao_list;
-        $limit_part = $this->hongbao['total_num'] - count($order_list);
+        $limit_part = $hongbao_total_num - count($order_list);
         $limit_part = $limit_part<0?0:$limit_part;
 
 //        if($this->hongbao['user_id'] == $this->user_id){

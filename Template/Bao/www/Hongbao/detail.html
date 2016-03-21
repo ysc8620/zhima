@@ -26,7 +26,7 @@
 				<div class="tit">
                     <if condition=" count($order_list) eq $hongbao_total_num">
                         <div class="title" style="font-size: 16px; margin: 8px 0;"><img src="/images/ok.png" style=" width:16px; vertical-align: middle" /> 领完啦~</div>
-                        <div class="title" style="font-size: 12px; margin: 8px 0; color: #bbb">{$hongbao.total_num}个红包已领完，用时{$use_time}</div>
+                        <div class="title" style="font-size: 12px; margin: 8px 0; color: #bbb">{$hongbao_total_num}个红包已领完，用时{$use_time}</div>
                     </if>
                     <div class="">
                         <if condition="$hongbao['user_id'] eq $user_id">
@@ -137,7 +137,7 @@
     </span>
 </div>
 
-    <div id="remark_block" class="box_block" style='<if condition="!$receive_order and $hongbao['total_num'] gt count($order_list) and $user_id neq $hongbao['user_id']">display: block<else/>display:none</if>'>
+    <div id="remark_block" class="box_block" style='<if condition="!$receive_order and $hongbao_total_num gt count($order_list) and $user_id neq $hongbao['user_id']">display: block<else/>display:none</if>'>
         <div class="shareit"></div>
         <div class="follow">
             <p style="text-align: center; padding: 12px; font-size: 18px; line-height: 24px;">
