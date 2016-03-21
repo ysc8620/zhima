@@ -49,7 +49,7 @@
     <if condition="$from_bao_list">
     <div class="order_list" style="background: #fffbf3">
         <div class="header bt_line">
-            <img src="/images/xing.png" style="width: 16px;" /> <span  style="color: #ff9802!important; font-size: 14px">{$hongbao_user['name']}的土豪朋友</span>
+            <img src="/images/xing.png" style="width: 16px; vertical-align: middle" /> <span  style="color: #ff9802!important; font-size: 14px">{$hongbao_user['name']}的土豪朋友</span>
         </div>
         <div class="block" style="min-height: 100px;">
             <volist name="from_bao_list" id="order" key="i">
@@ -57,7 +57,7 @@
                 <div class="head_img fl" style="width:70px;"><img src="{$order.user.header}" alt="{$order.user.name}" class="detail_head_img2" /></div>
                 <div class="detail fl">
                     <li class="cl tl">{$order.user.name} <span class="fr" style="margin-left: 20px;">赞助{$order.total_num}个红包,共{$order.total_amount}元</span> </li>
-                    <li class="cl tl" style="color: #999">”{$order.remark}“</li>
+                    <li class="cl tl" style="color: #999">“{$order.remark}”</li>
                 </div>
 
                 <div class="cl"></div>
@@ -145,7 +145,7 @@
                 <img src="{$hongbao_user.header}" alt="{$hongbao_user.name}" class="detail_head_img" /> <br />
                 <span>{$hongbao_user.name}</span><br/>
                 <span style="font-size: 16px; padding-top: 12px; clear: both;">发了一个红包, 金额随机</span><br/>
-                <span style="font-size: 20px; padding-top: 28px; clear: both;">”{$hongbao.remark}“</span></p>
+                <span style="font-size: 20px; padding-top: 28px; clear: both;">“{$hongbao.remark}”</span></p>
             <img src="/images/linghongbao-banner.png" onclick="set_order()" style="width: 100%;" />
             <div class="cls" style="clear: both; margin-bottom: 6px;"></div>
             <p style="text-align: center; padding: 12px; font-size: 16px; line-height: 20px;" onclick="$('#remark_block').hide();">看看大家手气></p>
