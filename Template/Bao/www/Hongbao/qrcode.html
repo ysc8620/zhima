@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>测试问答</title>
+    <style type="text/css">
+        @charset "utf-8";/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+        html {font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+        body {margin:0;width:100%;height:100%;font-family:"Helvetica Neue",Helvetica,Arial,"Microsoft YaHei","微软雅黑"}
+        body {margin:0 auto;min-width:320px;max-width:640px;height:100%;font-size:12px;line-height:1.5;color:#666;-webkit-text-size-adjust:100%!important;-webkit-user-select:none;user-select:none;background-color:#fff}
+        html {width:100%;height:100%;font-family:"Helvetica Neue",Helvetica,Arial,"Microsoft YaHei","微软雅黑"}
+        article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary {display:block}
+        audio,canvas,progress,video {display:inline-block;vertical-align:baseline}
+        audio:not([controls]) {display:none;height:0}
+        [hidden],template {display:none}
+        a {background-color:transparent;text-decoration:none;-webkit-tap-highlight-color:transparent;color:#5171b0!important; font-size:12px;}
+        a:visited,a:active,a:hover {text-decoration:none;outline:0;color:#333;}
+        abbr[title] {border-bottom:1px dotted}
+        b,strong {font-weight:700}
+        dfn {font-style:italic}
+        h1 {font-size:2em;margin:.67em 0}
+        img {border:0}
+        svg:not(:root) {overflow:hidden}
+        figure {margin:1em 40px}
+        hr {-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+        pre {overflow:auto}
+        code,kbd,pre,samp {font-family:monospace,monospace;font-size:1em}
+        optgroup {font-weight:700}
+        table {border-collapse:collapse;border-spacing:0}
+        td,th {padding:0}
+        body,textarea,input,button,select,keygen,legend {outline:0}
+        * {-webkit-box-sizing:border-box;box-sizing:border-box}
+        ::before,::after {-webkit-box-sizing:border-box;box-sizing:border-box}
+        body,html {width:100%;height:100%}
+        body>a {display:none}
+        img {max-width:100%;width:auto\9;height:auto;-ms-interpolation-mode:bicubic}
+        ul {padding:0;margin:0}
+        li {padding:0;margin:0;list-style:none; line-height:30px; }
+        .main_block{ width:600px; height:750px; border-radius:10px;--moz-border-radius:10px;--webkit-border-radius: 10px; text-align:center; line-height:24px; font-size:16px; color:#868686}
+        .header{ text-align:center;  margin:20px auto;}
+        .head{   background-repeat: no-repeat;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px #fff;
+            display: inline-block;
+            height: 80px;
+            width: 80px;}
+        .name{ color:#0f0f0f; font-size:20px;}
+        .recode img{ max-width: 450px;}
+        .cl{ margin:20px 0; clear:both;}
+        .mtop40{ margin-top:100px;}
+    </style>
+</head>
+
+<body>
+
+<div class="main_block">
+    <div class="cl header"><img src="0.jpg" class="head" /></div>
+    <div class="cl name">{$bao_user.name}发的红包</div>
+    <div class="cl amount">{$total_num}个红包,共{$total_amount}元</div>
+    <div class="cl remark">{$bao.remark}</div>
+    <div class="cl recode"><img src="{$bao_user.header}" /></div>
+
+    <div class="cl mtop40">
+        <ul>
+            <li>长按此图识别图中二维码!!</li>
+            <li>此红包有效领取时间截止2016-03-27</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

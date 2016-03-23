@@ -457,4 +457,13 @@ class HongbaoController extends BaseController {
         }
     }
 
+    public function qrcode(){
+        $number_no = I('get.id','','strval');
+        $this->bao = M('bao')->where( array('number_no'=>$number_no))->find();
+        $this->total_amount = M('bao')->where( array('from_number_no'=>$number_no, 'state'=>array('in', array(2,3,4))))->sum('total_amount');
+        $this->total_num = M('bao_order')->where( array('from_number_no'=>$number_no))->count();
+
+        $this->bao_user = M('user')->find($this->bao['user_id']);
+        $this->display();
+    }
 }
