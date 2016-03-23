@@ -16,6 +16,7 @@ class BaseController extends Controller {
     public function _initialize(){
 
         $this->user_id = session('user_id');
+
         if(I('get.show','','strval') == 'yes'){
             $this->user_id = 10004;
 //
