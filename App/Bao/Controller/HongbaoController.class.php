@@ -188,9 +188,9 @@ class HongbaoController extends BaseController {
                 // 已经分享
                 M('bao')->where(array('id'=>$this->hongbao['id']))->save(array('is_read'=>1));
             }
-        }else{
-            $this->receive_order = M('bao_order')->where(array('from_number_no'=>$this->hongbao['from_number_no'], 'user_id'=>$this->user_id))->find();
         }
+        $this->receive_order = M('bao_order')->where(array('from_number_no'=>$this->hongbao['from_number_no'], 'user_id'=>$this->user_id))->find();
+
 
         $this->title = "{$this->hongbao_user['name']}发的福利";
 
