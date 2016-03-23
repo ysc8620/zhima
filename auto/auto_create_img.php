@@ -16,5 +16,6 @@ do{
     if(!$bao){
         break;
     }
-    exec("/data/wkhtmltoimage 'http://sh.kakaapp.com/index.php?s=/bao/hongbao/qrcode.html&id={$bao['number_no']}&show=yes' /data/website/zhaopian/shares/{$bao['number_no']}.png");
+    echo $bao['number_no']."\r\n";
+    echo exec("/data/wkhtmltoimage 'http://sh.kakaapp.com/index.php?s=/bao/hongbao/qrcode.html&id={$bao['number_no']}&show=yes' /data/website/zhaopian/shares/{$bao['number_no']}.png");
 }while(true);
