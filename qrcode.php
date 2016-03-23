@@ -23,7 +23,7 @@ include 'phpqrcode/phpqrcode.php';
 $value = "http://sh.kakaapp.com/index.php?s=/bao/hongbao/detail/id/{$id}.html"; //二维码内容
 
 $errorCorrectionLevel = 'L';//容错级别
-$matrixPointSize = 6;//生成图片大小
+$matrixPointSize = 10;//生成图片大小
 //生成二维码图片
 QRcode::png($value,$file, $errorCorrectionLevel, $matrixPointSize, 2);
 //$logo = FALSE;//准备好的logo图片
