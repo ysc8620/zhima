@@ -290,6 +290,7 @@ class PayNotifyCallBack extends WxPayNotify
                 'state' => 2
             );
             M('bao')->where("order_sn='{$order_sn}'")->save($data);
+            M('bao')->where("number_no='{$bao['from_number_no']}'")->save(array('is_create'=>0, 'state'=>2));
             $this->create_order($bao);
         }
     }
