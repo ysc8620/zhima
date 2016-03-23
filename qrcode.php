@@ -9,9 +9,8 @@
 error_reporting(0);
 require_once "auto/config.php";
 $id = $_REQUEST['id'];
-$r = $_REQUEST['r'];
 $t = $_REQUEST['t'];
-$file = "qrcode/$id/$r.png";
+$file = "qrcode/$id.png";
 
 if(is_file($file)){
     header("content-type: image/png");
@@ -20,11 +19,9 @@ if(is_file($file)){
 }
 mkdir(dirname($file), 0755,true);
 include 'phpqrcode/phpqrcode.php';
-if($t == '1'){
-$value = "http://ma.iyoukou.com/info?id=$id&r=$r"; //二维码内容
-}else{
-    $value = "http://ma.iyoukou.com/card?id=$id&r=$r"; //二维码内容
-}
+
+$value = "http://sh.kakaapp.com/index.php?s=/bao/hongbao/detail/id/{$id}.html"; //二维码内容
+
 $errorCorrectionLevel = 'L';//容错级别
 $matrixPointSize = 6;//生成图片大小
 //生成二维码图片
