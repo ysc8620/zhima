@@ -249,19 +249,19 @@ class HongbaoController extends BaseController {
 
 分享朋友圈： 我赞助王苏蕴发了￥10元福利，快来抢，手慢无！“恭喜发财，大吉大利”共10份。
             */
-            $this->share_title_friend = "我发了￥{$this->hongbao['total_amount']}元福利，快来抢，手慢无！“恭喜发财，大吉大利”共{$this->hongbao['total_num']}份。";//"我发布了{$this->zhaopian['total_pic']}张照片，想看吗？“{$this->zhaopian['remark']}”";
+            $this->share_title_friend = "我发了￥{$this->hongbao['total_amount']}元福利，快来抢，手慢无！“恭喜发财，大吉大利”共{$hongbao_total_num}份。";//"我发布了{$this->zhaopian['total_pic']}张照片，想看吗？“{$this->zhaopian['remark']}”";
             $this->share_title = "我发了￥{$this->hongbao['total_amount']}元福利，快来抢，手慢无！";//"我发布了{$this->zhaopian['total_pic']}张照片，想看吗？";
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/bao.png";
-            $this->share_desc = "“{$this->hongbao['remark']}”共{$this->hongbao['total_num']}份，还剩{$limit_part}份";
+            $this->share_desc = "“{$this->hongbao['remark']}”共{$hongbao_total_num}份，还剩{$limit_part}份";
         }else{
 
-            $this->share_title_friend = "{$this->hongbao_user['name']}发了￥{$this->hongbao['total_amount']}元福利，快来抢，手慢无！“{$this->hongbao['remark']}”共{$this->hongbao['total_num']}份。";//"我买了{$this->zhaopian_user['name']}发布的照片，推荐！“{$this->zhaopian['remark']}”";
+            $this->share_title_friend = "{$this->hongbao_user['name']}发了￥{$this->hongbao['total_amount']}元福利，快来抢，手慢无！“{$this->hongbao['remark']}”共{$hongbao_total_num}份。";//"我买了{$this->zhaopian_user['name']}发布的照片，推荐！“{$this->zhaopian['remark']}”";
             $this->share_title = "{$this->hongbao_user['name']}发了￥{$this->hongbao['total_amount']}元福利，快来抢，手慢无！";//"我买了{$this->zhaopian_user['name']}的照片，推荐！";
 
             $this->share_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/bao.png";
-            $this->share_desc = "“{$this->hongbao['remark']}”共{$this->hongbao['total_num']}份，还剩{$limit_part}份";
+            $this->share_desc = "“{$this->hongbao['remark']}”共{$hongbao_total_num}份，还剩{$limit_part}份";
         }
         $this->default_index = 0;
         $this->is_show_star = false;
