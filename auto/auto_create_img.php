@@ -17,6 +17,6 @@ do{
         break;
     }
     echo $bao['number_no']."\r\n";
-    echo exec("/data/wkhtmltoimage --crop-h 750 --crop-w 400 --crop-x 300 --crop-y 0 'http://sh.kakaapp.com/index.php?s=/bao/hongbao/qrcode.html&id={$bao['number_no']}&show=yes' /data/website/zhaopian/shares/{$bao['number_no']}.png");
+    echo exec("/data/wkhtmltoimage --crop-h 750 --crop-w 400 --crop-x 310 --crop-y 0 'http://sh.kakaapp.com/index.php?s=/bao/hongbao/qrcode.html&id={$bao['number_no']}&show=yes' /data/website/zhaopian/shares/{$bao['number_no']}.png");
     M('bao')->where(array('id'=>$bao['id']))->save(array('is_create'=>1));
 }while(true);
