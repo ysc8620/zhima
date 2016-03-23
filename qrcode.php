@@ -9,9 +9,8 @@
 error_reporting(0);
 require_once "auto/config.php";
 $id = $_REQUEST['id'];
-$t = $_REQUEST['t'];
-$file = "qrcode/$id.png";
-
+$t = $_REQUEST['n'];
+$file = "qrcode/$id-$total_num.png";
 if(is_file($file)){
     header("content-type: image/png");
     echo file_get_contents($file);
