@@ -271,11 +271,9 @@ class HongbaoController extends BaseController {
                 $state = array(
                     'state' =>3
                 );
-                if($order_list[0]['addtime'] > 0){
-                    $state['success_time'] = $order_list[0]['addtime'];
-                }else{
-                    $state['success_time'] = time();
-                }
+
+                $state['success_time'] = time();
+
                 M('bao')->where(array('id'=>$this->hongbao['id']))->save($state);
             }
 
@@ -327,8 +325,19 @@ class HongbaoController extends BaseController {
             $user = M('user')->find($this->user_id);
             if(!$order){
                 $user_id = $this->user_id;
-                M('bao_order')->execute("UPDATE zml_bao_order SET user_id='{$user_id}',openid='{$user['openid']}' WHERE from_number_no='{$id}' AND user_id=0 LIMIT 1");
+                $time = time();
+                M('bao_order')->execute("UPDATE zml_bao_order SET user_id='{$user_id}',openid='{$user['openid']}',addtime='{$time}' WHERE from_number_no='{$id}' AND user_id=0 LIMIT 1");
                 $order = M('bao_order')->where(array('from_number_no'=>$id, 'user_id'=>$this->user_id))->find();
+                $is_have = M('bao_order')->where(array('from_number_no'=>$id, 'user_id'=>0))->find();
+                if(!$is_have){
+                    //
+                    M('bao')->where(array('from_number_no'=>$id))->save(array('success_time'=>time(), 'state'=>3));
+                }
+//                else{
+//                    if($hongbao['state'] == 3){
+//                        M('bao')->where(array('from_number_no'=>$id))->save(array('success_time'=>time(), 'state'=>2));
+//                    }
+//                }
             }
 
             $honbao_user = M('user')->find($order['bao_user_id']);
