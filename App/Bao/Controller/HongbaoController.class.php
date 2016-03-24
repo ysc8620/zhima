@@ -439,7 +439,9 @@ class HongbaoController extends BaseController {
         echo json_encode($json);
     }
 
-
+    /**
+     *
+     */
     public function bao(){
         $order_sn = I('get.sn','','strval');
         $pay_log_id = 0;
@@ -457,6 +459,9 @@ class HongbaoController extends BaseController {
         }
     }
 
+    /**
+     *
+     */
     public function qrcode(){
         $number_no = I('get.id','','strval');
         $this->bao = M('bao')->where( array('number_no'=>$number_no))->find();
