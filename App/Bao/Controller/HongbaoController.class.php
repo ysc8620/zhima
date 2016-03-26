@@ -296,6 +296,7 @@ class HongbaoController extends BaseController {
         $this->share_link = U('/bao/hongbao/detail', array('id'=>$id), true,true);
         $this->order_list = $order_list;
         $this->id = $id;
+        echo $hongbao_total_num.'='.count($order_list);
         $this->display();
     }
 
