@@ -31,7 +31,6 @@ class BaseController extends Controller {
             }
         }
 
-
         // 系统获取当前用户
         if( ! $this->user_id ){
             if($openid){
