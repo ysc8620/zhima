@@ -30,6 +30,7 @@ class HongbaoController extends BaseController {
             $amount = I('post.amount',0,'floatval');
             $total = I('post.total',0,'intval');
             $remark = I('post.remark','','htmlspecialchars');
+            $remark = str_replace('红包','福利',$remark);
             $from_bao_id = I('post.from_id', '','strval');
             if($amount <= 1 || $total < 1){
                 $json['msg_code'] = 10002;
