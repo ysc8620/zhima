@@ -296,7 +296,7 @@ class HongbaoController extends BaseController {
         $this->share_link = U('/bao/hongbao/detail', array('id'=>$id), true,true);
         $this->order_list = $order_list;
         $this->id = $id;
-        echo $hongbao_total_num.'='.count($order_list);
+       // echo $hongbao_total_num.'='.count($order_list);
         $this->display();
     }
 
@@ -332,7 +332,7 @@ class HongbaoController extends BaseController {
                 $is_have = M('bao_order')->where(array('from_number_no'=>$id, 'user_id'=>0))->find();
                 if(!$is_have){
                     //
-                    M('bao')->where(array('from_number_no'=>$id))->save(array('success_time'=>time(), 'state'=>3));
+                    M('bao')->where(array('from_number_no'=>$id, 'state'=>array('in', array(2,3,4))))->save(array('success_time'=>time(), 'state'=>3));
                 }
 //                else{
 //                    if($hongbao['state'] == 3){
