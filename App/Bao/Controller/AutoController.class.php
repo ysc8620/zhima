@@ -38,7 +38,7 @@ class AutoController extends Controller {
 
                 $refund_amount = 0;
                 if($total_amount > 0 ){
-                    if($total_amount == $hongbao['total_amount'] * 0.98){
+                    if($total_amount <= $hongbao['total_amount'] * 0.98){
                         $refund_amount = $hongbao['total_amount'];
                     }else{
                         $refund_amount = $total_amount;
