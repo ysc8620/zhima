@@ -53,7 +53,7 @@ class AutoController extends Controller {
                     f_log($log, ROOT_PATH.'Runtime/Logs/refund.log');
                     echo $log."<br/>";
                 }
-                sleep(5);
+                //sleep(5);
 
                 //
 
