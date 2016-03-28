@@ -10,6 +10,7 @@
 namespace Bao\Controller;
 use Think\Controller;
 set_time_limit(0);
+header("Content-type:text/html;charset=utf-8");
 require_once ROOT_PATH .'/Inc/Library/Wxpay/weixin.php';
 class AutoController extends Controller {
     // 自动发送红包
