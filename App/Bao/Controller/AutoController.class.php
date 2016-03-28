@@ -34,7 +34,7 @@ class AutoController extends Controller {
                     $order_sn = $hongbao['refund_sn'];
                 }
 
-                $total_amount = M('bao_order')->where(array('bao_id'=>$hongbao['id'],'user_id'=>0))->sum('amount');
+                $total_amount = M('bao_order')->where(array('bao_id'=>$hongbao['id'],'user_id'=>'0','state'=>1))->sum('amount');
                 if($total_amount >0 ){
                     $refund_amount = 0;
                     if($total_amount == $hongbao['total_amount'] * 0.98){
