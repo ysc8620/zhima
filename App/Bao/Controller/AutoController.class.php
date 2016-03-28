@@ -51,7 +51,7 @@ class AutoController extends Controller {
                     $rs = refund(array('out_trade_no'=>$order_sn, 'total_fee'=>$hongbao['total_amount']*100, 'refund_fee'=>$refund_amount*100));
 
                     if($rs['return_code'] == 'SUCCESS' && $rs['result_code'] == 'SUCCESS'){
-                        M('bao')->where(array("id"=>$hongbao['id']))->save(array('is_refund'=>1,'refund_time'=>time()));
+                        M('bao')->where(array("id"=>$hongbao['id']))->save(array('is_refund'=>1,'state'=>3, 'refund_time'=>time()));
                         $log = "订单退款成功, 红包编号：{$hongbao['id']},订单编号：{$order_sn}";
                         f_log($log, ROOT_PATH.'Runtime/Logs/refund.log');
                         echo $log."<br/>";
