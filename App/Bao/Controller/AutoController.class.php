@@ -62,7 +62,7 @@ class AutoController extends Controller {
                     }
                 }
 
-                //sleep(5);
+                sleep(5);
 
                 //
 
