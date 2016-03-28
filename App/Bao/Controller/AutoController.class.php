@@ -35,8 +35,9 @@ class AutoController extends Controller {
                 }
 
                 $total_amount = M('bao_order')->where(array('bao_id'=>$hongbao['id'],'user_id'=>'0','state'=>1))->sum('amount');
-                if($total_amount >0 ){
-                    $refund_amount = 0;
+
+                $refund_amount = 0;
+                if($total_amount > 0 ){
                     if($total_amount == $hongbao['total_amount'] * 0.98){
                         $refund_amount = $hongbao['total_amount'];
                     }else{
@@ -44,16 +45,19 @@ class AutoController extends Controller {
                     }
 
                 }
-                $rs = (array('out_trade_no'=>$order_sn, 'total_fee'=>$hongbao['total_amount']*100, 'refund_fee'=>$refund_amount*100));
-                print_r($rs);
-                if($rs['return_code'] == 'SUCCESS' && $rs['result_code'] == 'SUCCESS'){
-                    M('bao')->where(array("id"=>$hongbao['id']))->save(array('is_refund'=>1,'refund_time'=>time(),'refund_sn'=>$order_sn));
-                    M('hongbao')->where(array('id'=>$hongbao['id']))->save(array('is_refund'=>1));
-                }else{
-                    $log = "订单退款失败, 红包编号：{$hongbao['id']},退款订单编号：{$order_sn}";
-                    f_log($log, ROOT_PATH.'Runtime/Logs/refund.log');
-                    echo $log."<br/>";
+                if($refund_amount > 0){
+                    $rs = (array('out_trade_no'=>$order_sn, 'total_fee'=>$hongbao['total_amount']*100, 'refund_fee'=>$refund_amount*100));
+                    print_r($rs);
+                    if($rs['return_code'] == 'SUCCESS' && $rs['result_code'] == 'SUCCESS'){
+                        M('bao')->where(array("id"=>$hongbao['id']))->save(array('is_refund'=>1,'refund_time'=>time(),'refund_sn'=>$order_sn));
+                        M('hongbao')->where(array('id'=>$hongbao['id']))->save(array('is_refund'=>1));
+                    }else{
+                        $log = "订单退款失败, 红包编号：{$hongbao['id']},退款订单编号：{$order_sn}";
+                        f_log($log, ROOT_PATH.'Runtime/Logs/refund.log');
+                        echo $log."<br/>";
+                    }
                 }
+
                 //sleep(5);
 
                 //
