@@ -137,7 +137,7 @@ class HongbaoController extends BaseController {
         {
             if ( $$u > 0 )
             {
-                $elapse = $$u . $cn;
+                $elapse .= $$u . $cn;
                 break;
             }
         }
@@ -333,7 +333,7 @@ class HongbaoController extends BaseController {
                 $is_have = M('bao_order')->where(array('from_number_no'=>$id, 'user_id'=>0))->find();
                 if(!$is_have){
                     //
-                    M('bao')->where(array('from_number_no'=>$id, 'state'=>array('in', array(2,3,4))))->save(array('success_time'=>time(), 'state'=>3));
+                    M('bao')->where(array('from_number_no'=>$id, 'state'=>array('in', array(2))))->save(array('success_time'=>time(), 'state'=>3));
                 }
 //                else{
 //                    if($hongbao['state'] == 3){
