@@ -56,6 +56,7 @@ class AutoController extends Controller {
                         f_log($log, ROOT_PATH.'Runtime/Logs/refund.log');
                         echo $log."<br/>";
                     }else{
+                        print_r($rs);
                         $log = "订单退款失败, 红包编号：{$hongbao['id']},退款订单编号：{$order_sn}";
                         f_log($log, ROOT_PATH.'Runtime/Logs/refund.log');
                         echo $log."<br/>";
