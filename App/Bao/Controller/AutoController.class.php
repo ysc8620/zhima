@@ -47,7 +47,7 @@ class AutoController extends Controller {
                 print_r($rs);
                 if($rs['return_code'] == 'SUCCESS' && $rs['result_code'] == 'SUCCESS'){
                     M('bao')->where(array("id"=>$hongbao['id']))->save(array('is_refund'=>1,'refund_time'=>time(),'refund_sn'=>$order_sn));
-
+                    M('hongbao')->where(array('id'=>$hongbao['id']))->save(array('is_refund'=>1));
                 }else{
                     $log = "订单退款失败, 红包编号：{$hongbao['id']},退款订单编号：{$order_sn}";
                     f_log($log, ROOT_PATH.'Runtime/Logs/refund.log');
@@ -55,7 +55,7 @@ class AutoController extends Controller {
                 }
                 sleep(5);
 
-                M('hongbao')->where(array('id'=>$hongbao['id']))->save(array('is_refund'=>1));
+                //
 
             }
         }
