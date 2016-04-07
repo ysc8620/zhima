@@ -14,6 +14,9 @@ class IndexController extends Controller {
      * 系统初始化
      */
     public function index(){
+       if($_SERVER['HTTP_HOST'] != 'sh.kakaapp.com'){
+           return header("Location: http://www.baidu.com");
+       }
 
       $this->display();
     }
