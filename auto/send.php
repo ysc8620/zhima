@@ -13,8 +13,8 @@
 require("smtp.php");
 ##########################################
 $smtpserver = "email-smtp.us-west-2.amazonaws.com";//SMTP服务器
-$smtpserverport = 25;//SMTP服务器端口 25, 465 or 587
-$smtpusermail = "info@ilovedeals.sg";//SMTP服务器的用户邮箱
+$smtpserverport = 465;//SMTP服务器端口 25, 465 or 587
+$smtpusermail = "noreply@ilovedeals.sg";//SMTP服务器的用户邮箱
 $smtpemailto = "ysc8620@163.com";//发送给谁
 $smtpuser = "AKIAJJQWCEU3EAIHG57A";//SMTP服务器的用户帐号
 $smtppass = "AvVgMyjw7Xf9dBWegRAYzOE1UewplBIvnpTMxYcOpxqo";//SMTP服务器的用户密码
