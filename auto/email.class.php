@@ -264,7 +264,7 @@ function smtp_sockopen_mx($address)
 
 {
 
-$domain = ereg_replace("^.+@([^@]+)$", "\1", $address);
+$domain = preg_replace("^.+@([^@]+)$", "\1", $address);
 
 if (!@getmxrr($domain, $MXHOSTS)) {
 
@@ -423,7 +423,7 @@ $comment = "\([^()]*\)";
 
 while (ereg($comment, $address)) {
 
-$address = ereg_replace($comment, "", $address);
+$address = preg_replace($comment, "", $address);
 
 }
 
@@ -437,9 +437,9 @@ function get_address($address)
 
 {
 
-$address = ereg_replace("([ \t\r\n])+", "", $address);
+$address = preg_replace("([ \t\r\n])+", "", $address);
 
-$address = ereg_replace("^.*<(.+)>.*$", "\1", $address);
+$address = preg_replace("^.*<(.+)>.*$", "\1", $address);
 
 return $address;
 
