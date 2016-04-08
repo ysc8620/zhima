@@ -32,6 +32,7 @@
 		echo "<a href='index.html'>点此返回</a>";
 		exit();
 	}
+var_dump($state);
 	echo "恭喜！邮件发送成功！！";
 	echo "<a href='index.html'>点此返回</a>";
 	echo "</div>";
