@@ -241,11 +241,9 @@ function smtp_sockopen_relay()
 {
 
 $this->log_write("Trying to ".$this->relay_host.":".$this->smtp_port."\n");
-try{
+
     $this->sock = fsockopen('ssl://'.$this->relay_host, $this->smtp_port, $errno, $errstr, $this->time_out);
-}catch (Exception $e){
-    print_r($e->getMessage());
-}
+
 
 
 if (!($this->sock && $this->smtp_ok())) {
