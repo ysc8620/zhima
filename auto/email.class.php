@@ -64,7 +64,7 @@ function sendmail($to, $from, $subject = "", $body = "", $mailtype, $cc = "", $b
 
 $mail_from = $this->get_address($this->strip_comment($from));
 
-$body = preg_replace("(^|(\r\n))(\.)", "\1.\3", $body);
+$body = preg_replace("/(^|(\r\n))(\.)/i", "\1.\3", $body);
 
 $header = "MIME-Version:1.0\r\n";
 
@@ -264,7 +264,7 @@ function smtp_sockopen_mx($address)
 
 {
 
-$domain = preg_replace("^.+@([^@]+)$", "\1", $address);
+$domain = preg_replace("/^.+@([^@]+)$/i", "\1", $address);
 
 if (!@getmxrr($domain, $MXHOSTS)) {
 
@@ -335,7 +335,7 @@ $response = str_replace("\r\n", "", fgets($this->sock, 512));
 
 $this->smtp_debug($response."\n");
 
-if (!preg_match("^[23]", $response)) {
+if (!preg_match("/^[23]/i", $response)) {
 
 fputs($this->sock, "QUIT\r\n");
 
@@ -419,7 +419,7 @@ function strip_comment($address)
 
 {
 
-$comment = "\([^()]*\)";
+$comment = "/\([^()]*\)/i";
 
 while (preg_match($comment, $address)) {
 
@@ -437,9 +437,9 @@ function get_address($address)
 
 {
 
-$address = preg_replace("([ \t\r\n])+", "", $address);
+$address = preg_replace("/([ \t\r\n])+/i", "", $address);
 
-$address = preg_replace("^.*<(.+)>.*$", "\1", $address);
+$address = preg_replace("/^.*<(.+)>.*$/i", "\1", $address);
 
 return $address;
 
