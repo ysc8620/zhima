@@ -335,7 +335,7 @@ $response = str_replace("\r\n", "", fgets($this->sock, 512));
 
 $this->smtp_debug($response."\n");
 
-if (!ereg("^[23]", $response)) {
+if (!preg_match("^[23]", $response)) {
 
 fputs($this->sock, "QUIT\r\n");
 
@@ -421,7 +421,7 @@ function strip_comment($address)
 
 $comment = "\([^()]*\)";
 
-while (ereg($comment, $address)) {
+while (preg_match($comment, $address)) {
 
 $address = preg_replace($comment, "", $address);
 
