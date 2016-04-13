@@ -6,7 +6,7 @@
 // +----------------------------------------------------------------------
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
-namespace Zhao\Controller;
+namespace Zjh\Controller;
 use Think\Controller;
 class BaseController extends Controller {
 
@@ -46,7 +46,7 @@ class BaseController extends Controller {
                         if($user['subscribe']){
                             // 自动获取
                             $url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-                            header("Location: ".U("/zhao/weixin/userinfo").'&url='.urlencode($url));
+                            header("Location: ".U("/zjh/weixin/userinfo").'&url='.urlencode($url));
                         }else{
                             // 网页授权
                             \Wechat\Wxapi::authorize();

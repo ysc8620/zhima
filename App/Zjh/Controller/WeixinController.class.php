@@ -6,7 +6,7 @@
 // +----------------------------------------------------------------------
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
-namespace Zhao\Controller;
+namespace Zjh\Controller;
 use Think\Controller;
 use Wechat\Wx;
 require_once ROOT_PATH .'/Inc/Library/Wxpay/weixin.php';
@@ -21,7 +21,7 @@ class WeixinController extends Controller {
             $data .= "==POST=";
         }
 
-        f_log($data , ROOT_PATH.'/weizhao_api.log');
+        f_log($data , ROOT_PATH.'/weizjh_api.log');
 
         $weixin = F('weixin','',CONF_PATH);
         //define your token
@@ -42,10 +42,10 @@ class WeixinController extends Controller {
             session('access_token', $data['access_token']);
             cookie('openid',$data['openid'],array('expire'=>time()+2592000));
 
-            header("location: ".U('/zhao/weixin/userinfo').'&url='.$_GET['url']. '&token='.$data['access_token']);
+            header("location: ".U('/zjh/weixin/userinfo').'&url='.$_GET['url']. '&token='.$data['access_token']);
             exit();
         }else{
-            header("location: ".U('/zhao/weixin/userinfo').'&url='.$_GET['url']);
+            header("location: ".U('/zjh/weixin/userinfo').'&url='.$_GET['url']);
             exit();
         }
     }
@@ -138,110 +138,12 @@ class WeixinController extends Controller {
 
         $url = urldecode($_GET['url']);
         if(empty($url)){
-            $url = U('/zhao/');
+            $url = U('/zjh/');
         }
 
         header("location:".$url."");
         exit();
     }
-
-    public function zhaopian(){
-        $json = array(
-            'error'=>0,
-            'message'=>'',
-            'data'=>''
-        );
-
-        do{
-            $id = I('id','', 'strval');
-            if($id){
-                $zhaopian = M('zhaopian')->where(array('id'=>$id))->find();
-                if(!$zhaopian){
-                    $json['error'] = 1;
-                    $json['message'] = "找不到要购买的照片.";
-                    break;
-                }
-
-                if($zhaopian['state'] != 1){
-                    #$this->error("红包不能支付", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                    $json['error'] = 1;
-                    $json['message'] = "照片不能支付";
-                    break;
-                }
-
-                if($zhaopian['state'] != 1){
-                    #$this->error("红包已经凑齐", U('/hongbao/detail', array('id'=>$hongbao['number_no'])));
-                    $json['error'] = 1;
-                    $json['message'] = "照片已关闭";
-                    break;
-                }
-
-                $order = M('zhaopian_order')->where(array('zhaopian_id'=>$id, 'user_id'=>$this->user_id, 'state'=>2))->find();
-
-                if($order){
-                    $json['error'] = 1;
-                    $json['message'] = "您已经购买过该照片";
-                    break;
-                }
-                if(true){
-                        $amount = ceil($order['amount'] *100);
-                        if($amount < 1 || $amount > 20000){
-                            #$this->error("红包金额不对能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
-                            $json['error'] = 1;
-                            $json['message'] = "支付金额超过限制.{$amount}";
-                            break;
-                        }
-                        $data = array();
-                        $data['body'] = "xx";
-                        $data['attach'] = "dd";
-                        $data['order_sn'] = $order['order_sn'];
-                        $data['total_fee'] = $amount;
-                        $data['time_start'] = date('YmdHis');
-                        $data['time_expire'] =  date("YmdHis", time() + 600);
-                        $data['goods_tag'] = "HBZ";
-                        // $openid = ;//session('openid')?session('openid'):cookie('openid');
-                        $data['openid'] = $order['openid'];
-                        $str = '';
-                        foreach($data as $k=>$v){
-                            $str .="$k=$v,";
-                        }
-//
-//                        $this->user = M('user')->find($zhaopian['user_id']);
-//
-//                        $this->title = "{$this->user['name']}凑红包";
-//                        $this->zhaopian = $zhaopian;
-//                        $this->order = $order;
-//                        $this->id = $id;
-
-
-
-                        try{
-                            $jsApiParameters = jsapipay($data, false);
-                        }catch (\Exception $e){
-                            $json['error'] = 1;
-                            $json['message'] = "签名失败".$e->getMessage().$str;
-                            break;
-                        }
-                        $json['data'] = json_decode($jsApiParameters);
-                        break;
-                    }else{
-                        //$this->error("红包状态不能支付", U('/hongbao/detail', array('id'=>$order['number_no'])));
-                        $json['error'] = 1;
-                        $json['message'] = "照片状态不能支付";
-                        break;
-                    }
-
-
-            }
-            #$this->error("红包状态不能支付", U('/notes'));
-                $json['error'] = 1;
-                $json['message'] = "照片状态不能支付";
-                break;
-        }while(false);
-        echo json_encode($json);
-        die();
-    }
-
 
     /**
      * 异步回调

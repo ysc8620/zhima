@@ -6,12 +6,11 @@
 // +----------------------------------------------------------------------
 // | Author:  火鸡 <834758588@qq.com>
 // +----------------------------------------------------------------------
-namespace Zhao\Controller;
+namespace Zjh\Controller;
 use Think\Controller;
 class IndexController extends BaseController {
     public function index(){
 
-        redirect(U("/zhao/zhaopian"));
     	//首页幻灯片获取
     	$this->display();
 		//session('user',null);
