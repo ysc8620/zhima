@@ -1,0 +1,139 @@
+<include file="Public:header" />
+<div class="container">
+    <section class="main-view">
+        <div class="my">
+            <div class="my_head">
+                <div class="my_head_pic">
+                    <img class="my_head_img" width="130" height="130" src="{$user.header}">
+                </div>
+                <div class="my_head_info">
+                    <h4 class="my_head_name ">{$user.name}</h4>
+                </div>
+                <div class="" style="color: #fff">
+                    我的金币：{$user.qun_credit}个  <span style="margin-left: 6px;"> <a href="{:U('/zjh/top')}" style="color: red; text-decoration: underline">充值</a></span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="nav">
+                <ul class="nav_list">
+                    <li>
+                        <a href="{:U('/zjh/command')}">
+                            <div class="nav_item_hd"><i class="fa fa-reorder"></i>命令行管理</div>
+                        </a>
+                        <div class="nav_item_bd">
+                            <a href="{:U('/zjh/command')}"><span class="nav_item_txt">命令行列表</span></a>
+                            <a href="{:U('/zjh/command/edit')}">
+                                <span class="nav_item_txt">新添命令行<i class="nav_item_num" id="need_pay_count"  style="display:none">0</i></span>
+                            </a>
+
+                        </div>
+                    </li>
+                    <li>
+                        <div class="nav_item_bd nav_list">
+                            <table class="ordertable" style="width: 100%;">
+                                <tr >
+                                    <td width="50">编号</td><td>指令代码</td><td>执行接口</td><td  width="60">状态</td><td width="60">操作</td>
+                                </tr>
+                            <volist name="list" id="item">
+                            <tr >
+                                <td>{$item.id}</td><td>{$item.command}</td><td>{$item.action}</td><td><if condition="$item[status] eq 1">启用<else/>停用</if></td><td><a style="width: 60px; color: #007aff" href="{:U('/zjh/command/edit', array('id'=>$item[id]))}">编辑</a></td>
+                            </tr>
+                            </volist>
+                            </table>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+<include file="Public:foot" />
+<script type="text/javascript">
+
+    $('input[name="credit"]').keyup(function(){
+        var amount = parseInt($(this).val() == ''?0:$(this).val());
+        var total = parseFloat(amount/10).toFixed(2);
+        $('.total_amount').text(total);
+    });
+</script>
+
+<script type="text/javascript">
+    //调用微信JS api 支付
+    function jsApiCall(data)
+    {
+        WeixinJSBridge.invoke(
+                'getBrandWCPayRequest',
+                data,
+                function(res){
+                    //WeixinJSBridge.log(res.err_msg);
+                    // alert(res.err_code+'='+res.err_desc+'='+res.err_msg);
+                    // window.location.href = "/notes.html";
+                    // alert('支付成功');
+                    window.location.href = "{:U('/zjh')}";
+                    return false;
+//                    window.location.reload();
+//                    return false;
+                    switch (res.err_msg){
+
+                        case 'get_brand_wcpay_request:cancel':
+                            // location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+//                                alert('取消');
+                            break;
+                        case 'get_brand_wcpay_request:fail':
+                            //location.href="/?_a=fail&order_sn=<?php echo $order_sn;?>";
+//                            alert('错误');
+                            break;
+                        case 'get_brand_wcpay_request:ok':
+                            // location.href="/?_a=done&order_sn=<?php echo $order_sn;?>&ac=<?php echo $authcode?>";
+                            //alert('成功');
+                            $("#shareit1").show();
+                            break;
+                    }
+                }
+        );
+    }
+
+    function callpay(data)
+    {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall(data);
+        }
+    }
+
+    function set_pay(id){
+        var credit = $('input[name="credit"]').val();
+        var reg = new RegExp("^[1-9][0-9]*$");
+        if(!reg.test(credit)){
+            layer.msg('请填写整数金额.', function(){});
+            return false;
+        }
+
+        $.ajax({
+            type:'post',
+            url:"{:U('/zjh/top/pay')}",
+            async:false,
+            cache:false,
+            data:{id:id},
+            dataType:'json',
+            success:function(result){
+                if(result.error==0){
+                    callpay(result.data);
+
+                }else if(result.error==1){
+                    layer.msg(result.message, function(){});
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

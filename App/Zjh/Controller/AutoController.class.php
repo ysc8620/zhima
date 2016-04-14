@@ -13,4 +13,5 @@ set_time_limit(0);
 require_once ROOT_PATH .'/Inc/Library/Wxpay/weixin.php';
 class AutoController extends Controller {
 
+
 }

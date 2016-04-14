@@ -1,0 +1,83 @@
+<include file="Public:header" />
+<div class="container">
+    <section class="main-view">
+        <div class="my">
+            <div class="my_head">
+                <div class="my_head_pic">
+                    <img class="my_head_img" width="130" height="130" src="{$user.header}">
+                </div>
+                <div class="my_head_info">
+                    <h4 class="my_head_name ">{$user.name}</h4>
+                </div>
+                <div class="" style="color: #fff">
+                    我的金币：{$user.qun_credit}个  <span style="margin-left: 6px;"> <a href="{:U('/zjh/top')}" style="color: red; text-decoration: underline">充值</a></span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="nav">
+                <ul class="nav_list">
+                    <li>
+                        <a href="{:U('/zjh/command')}">
+                            <div class="nav_item_hd"><i class="fa fa-reorder"></i>命令行管理</div>
+                        </a>
+                        <div class="nav_item_bd">
+                            <a href="{:U('/zjh/command')}"><span class="nav_item_txt">命令行列表</span></a>
+                            <a href="{:U('/zjh/command/edit')}">
+                                <span class="nav_item_txt">新添命令行<i class="nav_item_num" id="need_pay_count"  style="display:none">0</i></span>
+                            </a>
+
+                        </div>
+                    </li>
+                    <li>
+
+                        <div class="nav_item_bd nav_list">
+                                <input type="hidden" name="id" value="{$command.id}" />
+                                <li style="height: 40px; line-height: 40px; padding-left: 12px;">指令代码：<input type="text" class="input"  style="height: 26px; line-height: 26px" name="command" value="{$command.command}" /></li>
+                                <li style="height: 40px; line-height: 40px; padding-left: 12px;">执行接口：<input type="text" class="input"  style="height: 26px; line-height: 26px" name="action" value="{$command.action}" /></li>
+                                <li style="height: 40px; line-height: 40px; padding-left: 12px;">附加参数：<input type="text" class="input" style="height: 26px; line-height: 26px" name="params" value="{$command.params}" /></li>
+                                <li style="height: 40px; line-height: 40px; padding-left: 12px;">命令说明：<input type="text" class="input"  style="height: 26px; line-height: 26px" name="remark" value="{$command.remark}" /></li>
+                                <li style="height: 40px; line-height: 40px; padding-left: 12px;">命令状态：<select name="status"  class="input"><option value="1" <if condition="$command.status eq 1">selected</if>>启用</option><option value="0" <if condition="$command.status eq '0'">selected</if>>停用</option></select> </li>
+
+                                <li style="height: 40px; line-height: 40px; padding-left: 12px;"><input type="button" data-role="submit" class="btn" value="提交" /></li>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+<include file="Public:foot" />
+<script type="text/javascript">
+
+    $('[data-role="submit" ]').click(function(){
+        var id = $('input[name="id"]').val();
+        var command = $('input[name="command"]').val();
+        var action = $('input[name="action"]').val();
+        var status = $('input[name="status"]').val();
+        var params = $('input[name="params"]').val();
+
+        var remark = $('input[name="remark"]').val();
+        $.ajax({
+            type:'post',
+            url:"{:U('/zjh/command/post')}",
+            async:false,
+            cache:false,
+            data:{id:id,command:command,action:action,status:status,params:params,remark:remark},
+            dataType:'json',
+            success:function(result){
+                if(result.error==0){
+                    layer.msg('操作成功');
+                    window.location.href = '{:U("/zjh/command")}';
+                    return true;
+                }else if(result.error==1){
+                    layer.msg(result.message, function(){});
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

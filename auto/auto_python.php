@@ -13,6 +13,8 @@ define('APPSECRET','a9d93c77993f03bec6af9d4a35f327cb');
 
 $root_path = realpath(dirname(dirname(__FILE__)));
 include($root_path . '/auto/config.php');
+
+
 $json = array(
     'msg_code' => 10001,
     'msg_content' => '',
@@ -23,6 +25,12 @@ $json = array(
     ),
     'post' => $_POST
 );
+
+class match{
+    public function __construct(){
+
+    }
+}
 
 do{
     # 判斷是否在進行中
