@@ -15,10 +15,20 @@ class IndexController extends BaseController {
         $page = $page<1?1:$page;
         $limit = 20;
 
-        $list = M('zhajinhua')->table('zml_zhajinhua z')->join("zml_zhajinhua_user o on o.zha_id = z.id and o.user_id='{$this->user_id}'")->field('z.*')->order('z.addtime desc')->page($page,$limit)->select();
-        //$total = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2) AND state=1")->count();
-        $total = M('zhajinhua')->table('zml_zhajinhua z')->join("zml_zhajinhua_user o on o.zha_id = z.id and o.user_id='{$this->user_id}'")->count();
+        $this->state = I('request.state', '');
 
+        if($this->state != '1'){
+            $list = M('zhajinhua')->table('zml_zhajinhua z')->join("zml_zhajinhua_user o on o.zha_id = z.id and o.user_id='{$this->user_id}'")->where("z.status in(1,2,3)")->field('z.*')->order('z.addtime desc')->page($page,$limit)->select();
+
+            $total = M('zhajinhua')->table('zml_zhajinhua z')->join("zml_zhajinhua_user o on o.zha_id = z.id and o.user_id='{$this->user_id}'")->where("z.status in(1,2,3)")->count();
+
+        }else{
+            $time = time()-1200;
+            $list = M('zhajinhua')->where("status=0 AND addtime > '{$time}'")->order('addtime desc')->page($page,$limit)->select();
+            //$total = M('zhaopian')->where("id in(SELECT zhaopian_id FROM zml_zhaopian_order where user_id='{$this->user_id}' and state = 2) AND state=1")->count();
+            $total = M('zhajinhua')->where("status=0 AND addtime > '{$time}'")->count();
+
+        }
 
         // $list = M('hongbao_order')->where(array('user_id'=>$this->user_id))->page($page,10)->order("id DESC")->select();
         if($list){

@@ -18,29 +18,25 @@
             <div class="nav">
                 <ul class="nav_list">
                     <li>
-                        <a href="{:U('/zjh')}">
+                        <a href="{:U('/zjh')}" class="">
                             <div class="nav_item_hd"><i class="fa fa-group"></i>游戏记录</div>
                         </a>
-                        <!--<div class="nav_item_bd">
-
-                            <a href="{:U('/zjh')}" ><span class="nav_item_txt">全部游戏</span></a>
-                            <a href="{:U('/zjh/index/index',array('status'=>1))}" >
-                                <span class="nav_item_txt">我发起的<i class="nav_item_num" id="need_pay_count"  style="display:none">0</i></span>
+                        <div class="nav_item_bd">
+                            <a href="{:U('/zjh')}" style="width: 50%" class="<if condition='$state eq ""'>nav_cur</if>" ><span class="nav_item_txt">全部游戏</span></a>
+                            <a href="{:U('/zjh/index/index',array('state'=>1))}" style="width: 50%" class="<if condition='$state eq "1"'>nav_cur</if>" >
+                                <span class="nav_item_txt">还未开始</span>
                             </a>
-                            <a href="{:U('/zjh/index/index',array('status'=>2))}" >
-                                <span class="nav_item_txt">我参与的<i class="nav_item_num" id="need_recv_count" style="display:none">0</i></span>
-                            </a>
-                        </div>-->
+                        </div>
                     </li>
                     <li>
                         <div class="nav_item_bd nav_list">
                             <table class="ordertable" style="width: 100%;">
                                 <tr >
-                                    <td width="50">游戏编号</td><td>来自群</td><td>创建者</td><td width="60">赢家</td><td  width="60">状态</td><td  width="60">开始时间</td>
+                                    <td width="80">编号</td><td>来自群</td><td>创建者</td><td width="60">赢家</td><td  width="60">状态</td><td  width="80">发起时间</td>
                                 </tr>
                                 <volist name="list" id="item">
                                     <tr >
-                                        <td>{$item.id}</td><td>{$item.qun_name}</td><td>{$item.user.name}</td><td width="60">赢家</td><td><if condition="$item[status] eq 1">启用<else/>停用</if></td><td>{$item.addtime}</td>
+                                        <td>{$item.number_no}</td><td>{$item.qun_name}</td><td>{$item.user.name}</td><td width="60">赢家</td><td><if condition="$item[status] eq 1">进行中<elseif condition="$item[status] eq 2" />已结束<elseif condition="$item[status] eq 3" />已过期<else />待开始</if></td><td>{$item.addtime|date="m-d H:i",###}</td>
                                     </tr>
                                 </volist>
                             </table>
