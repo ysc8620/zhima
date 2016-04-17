@@ -14,7 +14,7 @@ class IndexController extends Controller {
      * 系统初始化
      */
     public function index(){
-       if($_SERVER['HTTP_HOST'] != 'sh.kakaapp.com'){
+       if($_SERVER['HTTP_HOST'] != 'sh.kakaapp.com' && $_SERVER['HTTP_HOST'] != 'w.zhima.cn'){
            return header("Location: http://www.baidu.com");
        }
 

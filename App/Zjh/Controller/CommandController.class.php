@@ -60,7 +60,7 @@ class CommandController extends BaseController {
         $data['action'] = I('post.action','','strval');
         $data['params'] = I('post.params','','strval');
         $data['remark'] = I('post.remark','','strval');
-        $data['status'] = I('post.status','','strval');
+        $data['status'] = I('post.status','1','strval');
         if(empty($data['command']) || empty($data['action'])){
             $json['error'] = 1;
             $json['message'] = '请输入指令代码或执行接口信息';
@@ -114,7 +114,8 @@ class CommandController extends BaseController {
         }else{
             M('qun_command')->add($data);
         }
-
+        $list = M('qun_command')->where(array('status'=>1))->select();
+        file_put_contents(ROOT_PATH .'/auto/command.json', json_encode($list));
         echo json_encode($json);
         die();
     }

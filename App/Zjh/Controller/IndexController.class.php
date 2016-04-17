@@ -58,9 +58,4 @@ class IndexController extends BaseController {
     	$this->display();
 		//session('user',null);
     }
-
-    public function pay(){
-        $this->display();
-    }
-
 }
