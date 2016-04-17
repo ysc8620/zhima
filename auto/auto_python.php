@@ -7,6 +7,8 @@
  * To change this template use File | Settings | File Templates.
  */
 set_time_limit(0);
+$root_path = realpath(dirname(dirname(__FILE__)));
+require_once ($root_path . '/auto/config.php');
 require_once 'auto_match.php';
 
 define('APPID', '14569962162794');
@@ -28,8 +30,6 @@ $base_file ="F:/user/zhima/auto/command.json";
 //}
 //die();
 ///////////////////////////////////////////////////
-$root_path = realpath(dirname(dirname(__FILE__)));
-include($root_path . '/auto/config.php');
 $json = array(
     'msg_code' => 10001,
     'msg_content' => '',
@@ -68,7 +68,7 @@ do{
 
     $word = $data['content']['data'];
     $command_list = json_decode(file_get_contents($base_file), true);
-    $obj = new match($data);
+   $obj = new \Automatch($data);
     $is_command = false;
     foreach($command_list as $command){
         $preg = preg_match("/^".$command['command']."$/i", $word);

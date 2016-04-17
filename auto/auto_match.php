@@ -8,14 +8,18 @@
  */
 set_time_limit(0);
 $root_path = realpath(dirname(dirname(__FILE__)));
-include($root_path . '/auto/config.php');
+require_once ($root_path . '/auto/config.php');
 require_once($root_path .'/auto/Cards.php');
-
-class match{
+$base_url = 'http://127.0.0.1/';
+class Automatch{
     public function __construct($data){
-        $this->qun = M('qun')->where(array('UserName'=>$data['user']['id']))->find();
-        $this->user = M('qun_user')->where( array('UserName'=>$data['content']['user']['id']))->find();
+        $this->qun = M('qun')->where( "UserName='{$data['user']['id']}'")->find();
+        $this->user = M('qun_user')->where("UserName='{$data['content']['user']['id']}'")->find();
         $this->json = $json = array(
+            'test'=>array(
+              'qun'=>$this->qun,
+                'user'=>$this->user
+            ),
             'msg_code' => 10001,
             'msg_content' => '',
             'data' => array(
@@ -32,26 +36,27 @@ class match{
      * 启动游戏
      * @param $data
      */
-    function start($data){
+    function open($data){
+        global $base_url;
         $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
             $game = M('zhajinhua')->where("status in(0,1) AND update_time<".time()-600)->find();
             if($game){
-                $json['data']['message'] = "@{$this->user['NickName']} 目前还有游戏正在进行中。。。 请等游戏完成后再启动。";
+                $json['data']['message'] = "@{$this->user['nickname']} 目前还有游戏正在进行中。。。 请等游戏完成后再启动。";
                 break;
             }
 
             if($this->user['qun_credit'] < 10){
-                $json['data']['message'] = "@{$this->user['NickName']} 你的游戏金币少于10个，请充值后再进行游戏。充值地址：".U('/zjh/top',array(),true,true);
+                $json['data']['message'] = "@{$this->user['nickname']} 你的游戏金币少于10个，请充值后再进行游戏。充值地址：". $base_url .U('/zjh/top',array(),true);
                 break;
             }
             // `qun_id`, `qun_name`, `number_no`, `user_id`, `card_data`, `total_user`, `total_credit`, `win_user`, `status`, `addtime`, `finish_time`, `update_time`, `nexit_user_id`
             $data = array(
                 'qun_id' => $this->qun['id'],
-                'qun_name' => $this->qun['NickName'],
+                'qun_name' => $this->qun['nickname'],
                 'number_no' => get_order_sn('ZJH'),
-                'user_id' => $this->user['NickName'],
+                'user_id' => $this->user['id'],
                 'addtime' => time(),
                 'update_time' => time()
             );
@@ -65,7 +70,7 @@ class match{
                     'addtime' => time()
                 );
                 M('zhajinhua_user')->add($data_user);
-                $json['data']['message'] = "@{$this->user['NickName']} 创建成功, 参加游戏请输入指令：【加入】, 游戏详情：".U('/zjh/game/detail',array('id'=>$data['number_no']),true,true);
+                $json['data']['message'] = "@{$this->user['nickname']} 创建成功, 参加游戏请输入指令：【加入】, 游戏详情：". $base_url . U('/zjh/game/detail',array('id'=>$data['number_no']),true);
                 break;
             }
         }while(false);
@@ -79,6 +84,7 @@ class match{
      * @return array
      */
     function join($data){
+        global $base_url;
         $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
@@ -90,7 +96,7 @@ class match{
             }
 
             if($this->user['qun_credit'] < 10){
-                $json['data']['message'] = "@{$this->user['NickName']} 你的游戏金币少于10个，请充值后再进行游戏。充值地址：".U('/zjh/top',array(),true,true);
+                $json['data']['message'] = "@{$this->user['nickname']} 你的游戏金币少于10个，请充值后再进行游戏。充值地址：".$base_url.U('/zjh/top',array(),true);
                 break;
             }
 
@@ -103,7 +109,7 @@ class match{
                 'addtime' => time()
             );
             M('zhajinhua_user')->add($data_user);
-            $json['data']['message'] = "@{$this->user['NickName']} 加入游戏, 游戏详情：".U('/zjh/game/detail',array('id'=>$data['number_no']),true,true);
+            $json['data']['message'] = "@{$this->user['nickname']} 加入游戏, 游戏详情：".$base_url.U('/zjh/game/detail',array('id'=>$data['number_no']),true);
             break;
 
         }while(false);
@@ -113,7 +119,7 @@ class match{
     /**
      * 开始游戏
      */
-    function open($data){
+    function start($data){
         $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
@@ -126,13 +132,13 @@ class match{
 
             if($this->user['id'] != $game['user_id']){
                 $user = M('qun_user')->find($game['user_id']);
-                $json['msg_content'] = "@{$this->user['NickName']} 只有游戏创建者【{$user['NickName']}】才能开始游戏。";
+                $json['data']['message'] = "@{$this->user['nickname']} 只有游戏创建者【{$user['nickname']}】才能开始游戏。";
                 break;
             }
 
             $user_list = M('zhajinhua_user')->where(array('qun_id'=>$game['id']))->select();
             if(count($user_list) < 2){
-                $json['msg_content'] = "@{$this->user['NickName']} 参与游戏的人数必须要在2-10个人。";
+                $json['data']['message'] = "@{$this->user['nickname']} 参与游戏的人数必须要在2-10个人。";
                 break;
             }
 
@@ -169,7 +175,7 @@ class match{
             );
 
             $user = M('qun_user')->find($user_list[0]['user_id']);
-            $json['msg_content'] = "游戏开始了, 轮到【{$user['NickName']}】说话， 可以选择【看牌】【跟注】【弃牌】";
+            $json['data']['message'] = "游戏开始了, 轮到【{$user['nickname']}】说话， 可以选择【看牌】【跟注】【弃牌】";
             break;
 
         }while(false);
@@ -180,7 +186,7 @@ class match{
      * 跟牌
      */
     function genpai($data){
-        
+
     }
 
     /**
