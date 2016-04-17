@@ -42,7 +42,6 @@ $json = array(
     //'post' => $_POST
 );
 
-
 do{
     // 验证API
     if($_POST['api'] != APPID){
