@@ -48,7 +48,7 @@ class Automatch{
         $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
-            $game = M('zhajinhua')->where("status in(0,1) AND update_time<".time()-600)->find();
+            $game = M('zhajinhua')->where("status in(0,1) AND update_time>".time()-600)->find();
             if($game){
                 $json['data']['message'] = "@{$this->user['nickname']} 目前还有游戏正在进行中。。。 请等游戏完成后再启动。";
                 break;
@@ -95,7 +95,7 @@ class Automatch{
         $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
-            $game = M('zhajinhua')->where("status in(0,1) AND update_time<".time()-600)->find();
+            $game = M('zhajinhua')->where("status in(0,1) AND update_time>".time()-600)->find();
             if(!$game){
                 $json['msg_code'] = 10002;
                 $json['msg_content'] = '没有进行中的游戏。';
@@ -137,7 +137,7 @@ class Automatch{
         $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
-            $game = M('zhajinhua')->where("status in(0,1) AND update_time<".time()-600)->find();
+            $game = M('zhajinhua')->where("status in(0,1) AND update_time>".time()-600)->find();
             if(!$game){
                 $json['msg_code'] = 10002;
                 $json['msg_content'] = '没有进行中的游戏。';
