@@ -795,11 +795,11 @@ class Automatch{
             $next_user_info = M('qun_user')->find($next_user['user_id']);
             if($bool > 0){
                 M('zhajinhua_user')->where(array('id'=>$last_user['id']))->save(array('status'=>3,'update_time'=>time(),'bipai_user_id'=>$this->user['id']));
-                $json['data']['message'] = "@{$this->user['nickname']} 您的牌比【{$last_user_info['nickname']}】大， 接下来【{$next_user_info}】说话。";
+                $json['data']['message'] = "@{$this->user['nickname']} 您的牌比【{$last_user_info['nickname']}】大， 接下来【{$next_user_info['nickname']}】说话。";
                 break;
             }else{
                 M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(array('status'=>3,'update_time'=>time(),'bipai_user_id'=>$this->user['id']));
-                $json['data']['message'] = "@{$this->user['nickname']} 您的牌比【{$last_user_info['nickname']}】小， 接下来【{$next_user_info}】说话。";
+                $json['data']['message'] = "@{$this->user['nickname']} 您的牌比【{$last_user_info['nickname']}】小， 接下来【{$next_user_info['nickname']}】说话。";
                 break;
             }
         }while(false);
