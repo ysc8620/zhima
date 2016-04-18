@@ -36,7 +36,7 @@ class Automatch{
      * @param $param
      */
     function U($app, $param=array()){
-        return "http://sh.kakaapp.com/".U($app, $param);
+        return "http://sh.kakaapp.com/index.php?s=".str_replace('__APP__','',U($app, $param));
     }
 
     /**
@@ -116,7 +116,7 @@ class Automatch{
                 'addtime' => time()
             );
             M('zhajinhua_user')->add($data_user);
-            $json['data']['message'] = "@{$this->user['nickname']} 加入游戏, 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$data['number_no']),true);
+            $json['data']['message'] = "@{$this->user['nickname']} 加入游戏, 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             break;
 
         }while(false);
