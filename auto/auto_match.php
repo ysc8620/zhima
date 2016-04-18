@@ -10,7 +10,6 @@ set_time_limit(0);
 $root_path = realpath(dirname(dirname(__FILE__)));
 require_once ($root_path . '/auto/config.php');
 require_once($root_path .'/auto/Cards.php');
-$base_url = 'http://127.0.0.1/';
 class Automatch{
     public function __construct($data){
         $this->qun = M('qun')->where( "UserName='{$data['user']['id']}'")->find();
@@ -33,6 +32,14 @@ class Automatch{
     }
 
     /**
+     * @param $app
+     * @param $param
+     */
+    function U($app, $param=array()){
+        return "http://sh.kakaapp.com/".U($app, $param);
+    }
+
+    /**
      * 启动游戏
      * @param $data
      */
@@ -48,7 +55,7 @@ class Automatch{
             }
 
             if($this->user['qun_credit'] < 10){
-                $json['data']['message'] = "@{$this->user['nickname']} 你的游戏金币少于10个，请充值后再进行游戏。充值地址：". $base_url .U('/zjh/top',array(),true);
+                $json['data']['message'] = "@{$this->user['nickname']} 你的游戏金币少于10个，请充值后再进行游戏。充值地址：". $this->U('/zjh/top');// .U('/zjh/top',array(),true);
                 break;
             }
             // `qun_id`, `qun_name`, `number_no`, `user_id`, `card_data`, `total_user`, `total_credit`, `win_user`, `status`, `addtime`, `finish_time`, `update_time`, `nexit_user_id`
@@ -70,7 +77,7 @@ class Automatch{
                     'addtime' => time()
                 );
                 M('zhajinhua_user')->add($data_user);
-                $json['data']['message'] = "@{$this->user['nickname']} 创建成功, 参加游戏请输入指令：【加入】, 游戏详情：". $base_url . U('/zjh/game/detail',array('id'=>$data['number_no']),true);
+                $json['data']['message'] = "@{$this->user['nickname']} 创建成功, 参加游戏请输入指令：【加入】, 游戏详情：". $this->U('/zjh/game/detail',array('id'=>$data['number_no']),true);
                 break;
             }
         }while(false);
@@ -96,7 +103,7 @@ class Automatch{
             }
 
             if($this->user['qun_credit'] < 10){
-                $json['data']['message'] = "@{$this->user['nickname']} 你的游戏金币少于10个，请充值后再进行游戏。充值地址：".$base_url.U('/zjh/top',array(),true);
+                $json['data']['message'] = "@{$this->user['nickname']} 你的游戏金币少于10个，请充值后再进行游戏。充值地址：".$this->U('/zjh/top',array(),true);
                 break;
             }
 
@@ -109,7 +116,7 @@ class Automatch{
                 'addtime' => time()
             );
             M('zhajinhua_user')->add($data_user);
-            $json['data']['message'] = "@{$this->user['nickname']} 加入游戏, 游戏详情：".$base_url.U('/zjh/game/detail',array('id'=>$data['number_no']),true);
+            $json['data']['message'] = "@{$this->user['nickname']} 加入游戏, 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$data['number_no']),true);
             break;
 
         }while(false);

@@ -14,7 +14,7 @@ require_once 'auto_match.php';
 define('APPID', '14569962162794');
 define('APPSECRET','a9d93c77993f03bec6af9d4a35f327cb');
 
-$base_file ="F:/user/zhima/auto/command.json";
+$base_file ="/data/website/zhaopian/auto/command.json";
 ///////////////////////////////////////////////////
 //$command_list = json_decode(file_get_contents($base_file));
 //$word = '开始';
