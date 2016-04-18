@@ -9,7 +9,7 @@
 set_time_limit(0);
 $root_path = realpath(dirname(dirname(__FILE__)));
 require_once ($root_path . '/auto/config.php');
-require_once($root_path .'/auto/Cards.php');
+require_once($root_path .'/auto/cards.php');
 class Automatch{
     public function __construct($data){
         $this->qun = M('qun')->where( "UserName='{$data['user']['id']}'")->find();
