@@ -36,7 +36,7 @@
                                 </tr>
                                 <volist name="list" id="item">
                                     <tr >
-                                        <td>{$item.number_no}</td><td>{$item.qun_name}</td><td>{$item.user.name}</td><td width="60">赢家</td><td><if condition="$item[status] eq 1">进行中<elseif condition="$item[status] eq 2" />已结束<elseif condition="$item[status] eq 3" />已过期<else />待开始</if></td><td>{$item.addtime|date="m-d H:i",###}</td>
+                                        <td>{$item.id}</td><td>{$item.qun_name}</td><td>{$item.user.name}</td><td width="60">赢家</td><td><if condition="$item[status] eq 1">进行中<elseif condition="$item[status] eq 2" />已结束<elseif condition="$item[status] eq 3" />已过期<else />待开始</if></td><td>{$item.addtime|date="m-d H:i",###}</td>
                                     </tr>
                                 </volist>
                             </table>
