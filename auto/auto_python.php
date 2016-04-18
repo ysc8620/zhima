@@ -16,6 +16,12 @@ define('APPSECRET','a9d93c77993f03bec6af9d4a35f327cb');
 
 $base_file ="/data/website/zhaopian/auto/command.json";
 ///////////////////////////////////////////////////
+//
+//$word = "加100";
+//preg_match_all("/^(加|加注)\\s*(\\d+)$/i", $word, $re);
+//print_r($re);
+//die();
+
 //$command_list = json_decode(file_get_contents($base_file));
 //$word = '开始';
 //foreach($command_list as $command){
@@ -68,7 +74,7 @@ do{
 
     $word = $data['content']['data'];
     $command_list = json_decode(file_get_contents($base_file), true);
-   $obj = new \Automatch($data);
+    $obj = new \Automatch($data);
     $is_command = false;
     foreach($command_list as $command){
         $preg = preg_match("/^".$command['command']."$/i", $word);
