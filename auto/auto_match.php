@@ -13,6 +13,7 @@ require_once($root_path .'/auto/cards.php');
 class Automatch{
     public function __construct($data){
         $this->msg = $data;
+        $this->time = time() - 600;
         $this->qun = M('qun')->where( "UserName='{$data['user']['id']}'")->find();
         $this->user = M('qun_user')->where("UserName='{$data['content']['user']['id']}'")->find();
         $this->json = $json = array(
@@ -71,7 +72,7 @@ class Automatch{
         $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
-            $game = M('zhajinhua')->where("status in(0,1) AND update_time>".time()-600)->find();
+            $game = M('zhajinhua')->where("qun_id = '{$this->qun['id']}' AND status in(0,1) AND update_time>{$this->time}")->find();
             if($game){
                 $json['data']['message'] = "@{$this->user['nickname']} 目前还有游戏正在进行中。。。 请等游戏完成后再启动。";
                 break;
@@ -118,7 +119,7 @@ class Automatch{
         $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
-            $game = M('zhajinhua')->where("status in(0) AND update_time>".time()-600)->find();
+            $game = M('zhajinhua')->where("qun_id = '{$this->qun['id']}' AND status in(0) AND update_time>{$this->time}")->find();
             if(!$game){
                 $json['msg_code'] = 10002;
                 $json['msg_content'] = '没有进行中的游戏。';
@@ -160,7 +161,7 @@ class Automatch{
         $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
-            $game = M('zhajinhua')->where("status in(0) AND update_time>".time()-600)->find();
+            $game = M('zhajinhua')->where("qun_id = '{$this->qun['id']}' AND status in(0) AND update_time>{$this->time}")->find();
             if(!$game){
                 $json['msg_code'] = 10002;
                 $json['msg_content'] = '没有进行中的游戏。';
@@ -226,7 +227,7 @@ class Automatch{
         $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
-            $game = M('zhajinhua')->where("status in(1) AND update_time>".time()-600)->find();
+            $game = M('zhajinhua')->where("qun_id = '{$this->qun['id']}' AND status in(1) AND update_time>{$this->time}")->find();
             if(!$game){
                 $json['msg_code'] = 10002;
                 $json['msg_content'] = '没有进行中的游戏。';
@@ -320,7 +321,7 @@ class Automatch{
 
         do{
             // 判断是否有在进行中的游戏
-            $game = M('zhajinhua')->where("status in(1) AND update_time>".time()-600)->find();
+            $game = M('zhajinhua')->where("qun_id = '{$this->qun['id']}' AND status in(1) AND update_time>{$this->time}")->find();
             if(!$game){
                 $json['msg_code'] = 10002;
                 $json['msg_content'] = '没有进行中的游戏。';
@@ -387,9 +388,40 @@ class Automatch{
      */
     function qipai($data){
 
-        $json = $this->json;
-        $json['data']['message'] = "接口正在紧张开发中";
+        do{
+            // 判断是否有在进行中的游戏
+            $game = M('zhajinhua')->where("qun_id = '{$this->qun['id']}' AND status in(1) AND update_time>{$this->time}")->find();
+            if(!$game){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '没有进行中的游戏。';
+                break;
+            }
+
+            $game_user = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'user_id'=>$this->user['id']))->find();
+            if(!$game_user){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '该用户没有参加游戏。';
+                break;
+            }
+
+            M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(array('status'=>4,'update_time'=>time()));
+
+            $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND id>'{$game_user['id']}' AND status=1")->order("id ASC")->find();
+            if(!$next_user){
+                $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND status=1")->order("id ASC")->find();
+                if($next_user['id'] == $game_user){
+                    $json['msg_code'] = 10002;
+                    $json['msg_content'] = '没有出牌用户了。';
+                    break;
+                }
+            }
+
+            $json['data']['message'] = "游戏进行中,【{$this->user['nickname']}】弃牌，下次轮到【{$next_user['nickname']}】说话， 可以选择【跟牌】【弃牌】【加+金币数】";
+            break;
+
+        }while(false);
         echo json_encode($json);
+        die();
     }
 
     /**
@@ -400,6 +432,7 @@ class Automatch{
         $json = $this->json;
         $json['data']['message'] = "接口正在紧张开发中";
         echo json_encode($json);
+        die();
     }
 
     /**
@@ -412,6 +445,7 @@ class Automatch{
         $json = $this->json;
         $json['data']['message'] = "接口正在紧张开发中";
         echo json_encode($json);
+        die();
     }
 
     /**
