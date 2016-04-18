@@ -115,7 +115,6 @@ class Automatch{
      * @return array
      */
     function join($data){
-        global $base_url;
         $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
@@ -243,7 +242,7 @@ class Automatch{
 
             if($this->user['id'] != $game['next_user_id']){
                 $json['msg_code'] = 10002;
-                $json['msg_content'] = '没轮到该用户投注。';
+                $json['msg_content'] = '没轮到该用户说话。';
                 break;
             }
 
@@ -252,7 +251,6 @@ class Automatch{
                 $json['msg_content'] = '该用户已经弃牌。';
                 break;
             }
-
 
             $last_user_id = $game['next_user_id'];
             $credit = $game['last_credit'] > 0?$game['last_credit']:5;
@@ -271,9 +269,8 @@ class Automatch{
             $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND id>'{$game_user['id']}' AND status=1")->order("id ASC")->find();
             if(!$next_user){
                 $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND status=1")->order("id ASC")->find();
-                if($next_user['id'] == $game_user){
-                    $json['msg_code'] = 10002;
-                    $json['msg_content'] = '没有出牌用户了。';
+                if($next_user['id'] == $game_user['id']){
+                    $json['data']['message'] = "@{$this->user['nickname']} 没有可以说话用户 可以选择【开牌】";
                     break;
                 }
             }
@@ -285,7 +282,7 @@ class Automatch{
                 array(
                     'update_time' => time(),
                     'total_credit' => $game['total_redit'] + $credit,
-                    'nexit_user_id' => $game_user['user_id'],
+                    'last_user_id' => $game_user['user_id'],
                     'last_is_show' => $game_user['is_show'],
                     'last_credit' => $credit,
                     'next_user_id' => $next_user['user_id'],
@@ -337,7 +334,7 @@ class Automatch{
 
             if($this->user['id'] != $game['next_user_id']){
                 $json['msg_code'] = 10002;
-                $json['msg_content'] = '没轮到该用户投注。';
+                $json['msg_content'] = '没轮到该用户说话。';
                 break;
             }
 
@@ -347,16 +344,69 @@ class Automatch{
                 break;
             }
 
+            $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND id>'{$game_user['id']}' AND status=1")->order("id ASC")->find();
+            if(!$next_user){
+                $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND status=1")->order("id ASC")->find();
+                if($next_user['id'] == $game_user['id']){
+                    $json['data']['message'] = "@{$this->user['nickname']} 没有可以说话用户 可以选择【开牌】";
+                    break;
+                }
+            }
+
+            $credit = $game['last_credit'] > 0?$game['last_credit']:5;
+
+            // 判断用户跟注金币， 是否看牌为准
+            if($game['last_is_show']){
+                if(! $game_user['is_show']){
+                    $credit = intval($credit/2);
+                }
+            }else{
+                if($game['is_show']){
+                    $credit = $credit * 2;
+                }
+            }
+
             //
             preg_match_all("/^(加|加注)\\s*(\\d+)$/i", $this->msg['content']['data'], $re);
-            $credit = intval($re[2][0]);
-            if($credit < 5 || $credit> 100){
-                $json['data']['message'] = "@{$this->user['nickname']} 您加注金币有误,加注必须在5-100金币之间. 可以选择【看牌】【跟牌】【弃牌】【加+金币数】";
+            $new_credit = intval($re[2][0]);
+            if($credit < 5 || ($new_credit) > 100 || $new_credit < $credit){
+                $json['data']['message'] = "@{$this->user['nickname']} 您加注金币不在有效范围,加注必须在{$credit}-100金币之间. 可以选择【加+金币数】";
                 break;
             }
-        }while(false);
 
-        return $this->json;
+            $game_credit_log = $game['credit_log']?json_decode($game['credit_log']):array();
+            array_push( $game_credit_log, array('user_id'=>$game_user['user_id'], 'credit'=>$new_credit,'is_show'=>$game_user['is_show'],'time'=>time(),'total_jiaopai'=>$game_user['total_jiaopai']+1) );
+            // 更新游戏信息
+            M('zhajinhua')->where(array('id'=>$game['id']))->save(
+                array(
+                    'update_time' => time(),
+                    'total_credit' => $game['total_redit'] + $new_credit,
+                    'last_user_id' => $game_user['user_id'],
+                    'last_is_show' => $game_user['is_show'],
+                    'last_credit' => $new_credit,
+                    'next_user_id' => $next_user['user_id'],
+                    'total_jiaopai' => ($game['total_jiaopai'] + 1),
+                    'credit_log' => json_encode($game_credit_log)
+                )
+            );
+
+            $user_credit_log = $game_user['credit_log']?json_decode($game_user['credit_log']):array();
+            array_push($user_credit_log, array('credit'=>$new_credit, 'is_show'=>$game_user['is_show'], 'time'=>time(), 'total_jiaopai'=>$game_user['total_jiaopai']+1));
+            // 更新参与用户信息
+            M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(
+                array(
+                    'total_credit' => $game_user['total_credit'] + $new_credit,
+                    'update_time' => time(),
+                    'total_jiaopai' => ($game_user['total_jiaopai'] + 1),
+                    'credit_log' => json_encode($user_credit_log)
+                )
+            );
+
+            $json['data']['message'] = "游戏进行中,【{$this->user['nickname']}】加注{$new_credit}金币，下次轮到【{$next_user['nickname']}】说话， 可以选择【看牌】【跟牌】【弃牌】【加+金币数】";
+
+        }while(false);
+        echo json_encode($json);
+        die();
     }
 
     /**
@@ -367,8 +417,41 @@ class Automatch{
      */
     function kanpai($data){
         $json = $this->json;
-        $json['data']['message'] = "接口正在紧张开发中";
+        do{
+            // 判断是否有在进行中的游戏
+            $game = M('zhajinhua')->where("qun_id = '{$this->qun['id']}' AND status in(1) AND update_time>{$this->time}")->find();
+            if(!$game){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '没有进行中的游戏。';
+                break;
+            }
+
+            $game_user = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'user_id'=>$this->user['id']))->find();
+            if(!$game_user){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '该用户没有参加游戏。';
+                break;
+            }
+
+            if($this->user['id'] != $game['next_user_id']){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '没轮到该用户说话。';
+                break;
+            }
+
+            if($game_user['status'] != 1){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '该用户已经弃牌。';
+                break;
+            }
+
+            M('zhajinhua')->where(array('id'=>$game['id']))->save(array('update_time'=>time()));
+            M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(array('is_show'=>1, 'update_time'=>time()));
+            $json['data']['message'] = "@{$this->user['nickname']} 底牌查看地址：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true)."，【{$this->user['nickname']}】继续说话， 可以选择【跟牌】【弃牌】【加+金币数】";
+
+        }while(false);
         echo json_encode($json);
+        die();
     }
 
     /**
@@ -376,10 +459,110 @@ class Automatch{
      * @param $data
      */
     function kaipai($data){
-
         $json = $this->json;
-        $json['data']['message'] = "接口正在紧张开发中";
+        do{
+            // 判断是否有在进行中的游戏
+            $game = M('zhajinhua')->where("qun_id = '{$this->qun['id']}' AND status in(1) AND update_time>{$this->time}")->find();
+            if(!$game){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '没有进行中的游戏。';
+                break;
+            }
+
+            $game_user = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'user_id'=>$this->user['id']))->find();
+            if(!$game_user){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '该用户没有参加游戏。';
+                break;
+            }
+
+            if($game_user['status'] != 1){
+                $json['msg_code'] = 10002;
+                $json['msg_content'] = '该用户已经弃牌。';
+                break;
+            }
+
+            $game_user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
+            if(count($game_user_list) > 2){
+                $json['data']['message'] = "@{$this->user['nickname']} 用户大于2人，不能开牌。 请选择【比牌】【跟注】【加+金币数】【弃牌】";
+                break;
+            }
+            $game_user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
+            if(count($game_user_list) == 1){
+                 $win_user = $game_user;
+            }else{
+                $card1 = json_decode($game_user_list[0]['card_data']);
+                $card2 = json_decode($game_user_list[1]['card_data']);
+                $card = new cards();
+                $bool = $card->compareCards($card1, $card2);
+                if($bool > 0){
+                    $win_user = $game_user_list[0];
+                }elseif($bool < 0){
+                    $win_user = $game_user_list[1];
+                }else{
+                    if($game_user['id'] == $game_user_list[0]['id']){
+                        $win_user = $game_user_list[1];
+                    }else{
+                        $win_user = $game_user_list[0];
+                    }
+                }
+            }
+
+            $credit = $game['last_credit'] > 0?$game['last_credit']:5;
+
+            // 判断用户跟注金币， 是否看牌为准
+            if($game['last_is_show']){
+                if(! $game_user['is_show']){
+                    $credit = intval($credit/2);
+                }
+            }else{
+                if($game['is_show']){
+                    $credit = $credit * 2;
+                }
+            }
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+            $game_credit_log = $game['credit_log']?json_decode($game['credit_log']):array();
+            array_push( $game_credit_log, array('user_id'=>$game_user['user_id'], 'credit'=>$credit,'is_show'=>$game_user['is_show'],'time'=>time(),'total_jiaopai'=>$game_user['total_jiaopai']+1) );
+            // 更新游戏信息
+            M('zhajinhua')->where(array('id'=>$game['id']))->save(
+                array(
+                    'update_time' => time(),
+                    'total_credit' => $game['total_redit'] + $credit,
+                    'last_user_id' => $game_user['user_id'],
+                    'last_is_show' => $game_user['is_show'],
+                    'last_credit' => $credit,
+                    'next_user_id' => 0,
+                    'total_jiaopai' => ($game['total_jiaopai'] + 1),
+                    'credit_log' => json_encode($game_credit_log),
+                    'win_user'=>$win_user['user_id'],
+                    'status' => 2,
+                    'kaipai_user_id'=>$game_user['user_id'],
+                    'finish_time' => time()
+                )
+            );
+
+            $user_credit_log = $game_user['credit_log']?json_decode($game_user['credit_log']):array();
+            array_push($user_credit_log, array('credit'=>$credit, 'is_show'=>$game_user['is_show'], 'time'=>time(), 'total_jiaopai'=>$game_user['total_jiaopai']+1));
+            // 更新参与用户信息
+            M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(
+                array(
+                    'total_credit' => $game_user['total_credit'] + $credit,
+                    'update_time' => time(),
+                    'total_jiaopai' => ($game_user['total_jiaopai'] + 1),
+                    'credit_log' => json_encode($user_credit_log),
+                    'is_kaipai' => 1,
+                    'status' => 2
+                )
+            );
+            $win_user_info = M('qun_user')->find($win_user['user_id']);
+            $amount = ($game['total_credit'] + $credit) - ($game['total_user'] * $game['dichi']);
+            $json['data']['message'] = "游戏结束， 恭喜【{$win_user_info['nickname']}】，在本轮游戏中获胜，获得{$amount}金币。 继续游戏请选择【准备】";
+            break;
+            /////////////////////////////////////////////////////////////////////////////////////////////////////
+        }while(false);
         echo json_encode($json);
+        die();
     }
 
     /**
@@ -409,9 +592,8 @@ class Automatch{
             $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND id>'{$game_user['id']}' AND status=1")->order("id ASC")->find();
             if(!$next_user){
                 $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND status=1")->order("id ASC")->find();
-                if($next_user['id'] == $game_user){
-                    $json['msg_code'] = 10002;
-                    $json['msg_content'] = '没有出牌用户了。';
+                if($next_user['id'] == $game_user['id']){
+                    $json['data']['message'] = "@{$this->user['nickname']} 没有可以说话用户 可以选择【开牌】";
                     break;
                 }
             }
