@@ -81,7 +81,8 @@ class BaseController extends Controller {
         $this->share_imgUrl = "http://$_SERVER[HTTP_HOST]/images/logo.jpg";
         $this->share_desc = "私货微群社区";
         $this->subscribe = session('subscribe');
-
+        $user = M('user')->find($this->user_id);
+        $this->user = $user;
         // if(!$this->user_id)
     }
 
