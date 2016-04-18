@@ -118,9 +118,9 @@ alert('t'+credit);
             async:false,
             cache:false,
             data:{credit:credit},
-            dataType:'json',
+            dataType:'html',
             success:function(result){
-                alert(result.error)
+                alert(result)
                 if(result.error==0){
                     callpay(result.data);
 
