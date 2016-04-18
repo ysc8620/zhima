@@ -16,10 +16,6 @@ class Automatch{
         $this->qun = M('qun')->where( "UserName='{$data['user']['id']}'")->find();
         $this->user = M('qun_user')->where("UserName='{$data['content']['user']['id']}'")->find();
         $this->json = $json = array(
-            'test'=>array(
-              'qun'=>$this->qun,
-                'user'=>$this->user
-            ),
             'msg_code' => 10001,
             'msg_content' => '',
             'data' => array(
@@ -42,8 +38,8 @@ class Automatch{
         $strRes=curl_exec($ch);
         curl_close($ch);
         $arrResponse=json_decode($strRes,true);
-        print_r($arrResponse);
-        die();
+//        print_r($arrResponse);
+//        die();
         if($arrResponse['status'] == 0)
         {
             /**错误处理*/
@@ -430,7 +426,3 @@ class Automatch{
         echo json_encode($json);
     }
 }
-
-
-$new = new Automatch(array());
-$new->dwz('http://sh.kakaapp.com/index.php?s=/zjh/game/detail/id/ZJH20160418151699579750.html');
