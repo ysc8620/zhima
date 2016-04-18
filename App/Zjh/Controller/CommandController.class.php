@@ -13,9 +13,7 @@ class CommandController extends BaseController {
 
         $user = M('user')->find($this->user_id);
 
-        echo time();
-        print_r($user);
-        exit();
+
         if($user['name'] != '乐圣昌'){
             return header('Location: '.U('/zjh'));
         }
