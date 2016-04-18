@@ -18,24 +18,17 @@
             <div class="nav">
                 <ul class="nav_list">
                     <li>
-                        <a href="{:U('/zhj/top')}">
-                            <div class="nav_item_hd"><i class="fa fa-reorder"></i>充值中心</div>
+                        <a href="{:U('/zhj')}">
+                            <div class="nav_item_hd"><i class="fa fa-reorder"></i>游戏中心 -> 游戏详情</div>
                         </a>
-                        <div class="nav_item_bd">
-                            <a href="{:U('/zhj/top/list')}"><span class="nav_item_txt">全部</span></a>
-                            <a href="{:U('/zhj/top/list',array('state'=>1))}">
-                                <span class="nav_item_txt">充值记录<i class="nav_item_num" id="need_pay_count"  style="display:none">0</i></span>
-                            </a>
-                            <a href="{:U('/zhj/top/list',array('state'=>2))}">
-                                <span class="nav_item_txt">消费记录<i class="nav_item_num" id="need_recv_count" style="display:none">0</i></span>
-                            </a>
-                        </div>
                     </li>
                     <li>
                         <div class="nav_item_bd nav_list">
-                            <li style="height: 40px; line-height: 40px; padding-left: 12px;">充值：<input type="text" maxlength="6" style="height: 26px; line-height: 26px" name="credit" value="100" /> 金币=<span class="total_amount">10.00</span>元</li>
-
-                            <li style="height: 40px; line-height: 40px; padding-left: 12px;"><input type="button" data-role="top" onclick="set_pay()" class="btn" value="立即充值" /></li>
+                            <li style="height: 40px; line-height: 40px; padding-left: 12px;">游戏底池：{$game.dichi}</li>
+                            <li style="height: 40px; line-height: 40px; padding-left: 12px;">最小压注：{$game.min_credit}</li>
+                            <li style="height: 40px; line-height: 40px; padding-left: 12px;">最大压注：{$game.max_credit}</li>
+                            <li style="height: 40px; line-height: 40px; padding-left: 12px;">开始时间：{$game.addtime|date="m-d H:i",###}</li>
+                            <li style="height: 40px; line-height: 40px; padding-left: 12px;">游戏状态：<if condition="$game[status] eq '0'">待开始<elseif condition="$game[status] eq 1" />进行中<elseif condition="$game[status] eq 2" />已结束<elseif condition="$game[status] eq 3" />已过期</if></li>
                         </div>
                     </li>
                 </ul>

@@ -18,6 +18,9 @@ class GameController extends BaseController {
     }
 
     public function detail(){
+        $id = I('request.id','','strval');
+        $this->game = M('zhajinhua')->where(array('number_no'=>$id))->find();
+        $this->user = M('user')->find($this->user_id);
         $this->title = "游戏详情";
         $this->display();
     }

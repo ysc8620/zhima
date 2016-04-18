@@ -107,16 +107,23 @@ class Automatch{
                 break;
             }
 
+            // 判断是否加入过
+            $user = M('zhajinhua_user')->where(array('qun_id'=>$game['id'], 'user_id'=>$this->user['id']))->find();
 
             // `zha_id`, `user_id`, `card_data`, `status`, `credit`, `addtime`, `is_win`, `update_time`, `credit_log`, `is_show`
+            if( ! $user){
+                $data_user = array(
+                    'zha_id' => $game['id'],
+                    'user_id' => $this->user['id'],
+                    'addtime' => time()
+                );
+                M('zhajinhua_user')->add($data_user);
 
-            $data_user = array(
-                'zha_id' => $game['id'],
-                'user_id' => $this->user['id'],
-                'addtime' => time()
-            );
-            M('zhajinhua_user')->add($data_user);
-            $json['data']['message'] = "@{$this->user['nickname']} 加入游戏, 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
+                $json['data']['message'] = "@{$this->user['nickname']} 加入游戏, 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
+            }else{
+
+                $json['data']['message'] = "@{$this->user['nickname']} 已经加入游戏, 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
+            }
             break;
 
         }while(false);
@@ -236,6 +243,7 @@ class Automatch{
      * @param $data
      */
     function jieshu($data){
+
 
         return $this->json;
     }
