@@ -55,4 +55,10 @@ class TopController extends BaseController {
         echo json_encode($json);
         die();
     }
+
+    function notes(){
+        $this->title = '充值记录';
+
+        $this->display();
+    }
 }
