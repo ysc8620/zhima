@@ -39,8 +39,6 @@ class Automatch{
         $strRes=curl_exec($ch);
         curl_close($ch);
         $arrResponse=json_decode($strRes,true);
-//        print_r($arrResponse);
-//        die();
         if($arrResponse['status'] == 0)
         {
             /**错误处理*/
@@ -130,6 +128,17 @@ class Automatch{
                 break;
             }
 
+            if($this->user['qun_credit'] < 10){
+                $json['data']['message'] = "@{$this->user['nickname']} 你的游戏金币少于10个，请充值后再进行游戏。充值地址：".$this->U('/zjh/top',array(),true);
+                break;
+            }
+
+            $user_list = M('zhajinhua_user')->where(array('qun_id'=>$game['id'],'zha_id'=>$game['id']))->select();
+            if(count($user_list) > 9){
+                $json['data']['message'] = "@{$this->user['nickname']} 参与人数已满，请下次再玩。请选择【开始】游戏";
+                break;
+            }
+
             // 判断是否加入过
             $user = M('zhajinhua_user')->where(array('qun_id'=>$game['id'], 'user_id'=>$this->user['id']))->find();
 
@@ -173,7 +182,7 @@ class Automatch{
                 break;
             }
 
-            $user_list = M('zhajinhua_user')->where(array('qun_id'=>$game['id']))->select();
+            $user_list = M('zhajinhua_user')->where(array('qun_id'=>$game['id'],'zha_id'=>$game['id']))->select();
             if(count($user_list) < 2){
                 $json['data']['message'] = "@{$this->user['nickname']} 参与游戏的人数必须要在2-10个人。";
                 break;
