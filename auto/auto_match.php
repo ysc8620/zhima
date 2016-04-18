@@ -32,6 +32,27 @@ class Automatch{
         );
     }
 
+    function dwz($url){
+        $ch=curl_init();
+        curl_setopt($ch,CURLOPT_URL,"http://dwz.cn/create.php");
+        curl_setopt($ch,CURLOPT_POST,true);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        $data=array('url'=>$url);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+        $strRes=curl_exec($ch);
+        curl_close($ch);
+        $arrResponse=json_decode($strRes,true);
+        print_r($arrResponse);
+        die();
+        if($arrResponse['status'] == 0)
+        {
+            /**错误处理*/
+            // echo iconv('UTF-8','GBK',$arrResponse['err_msg'])."\n";
+            return $url;
+        }
+        /** tinyurl */
+        return $arrResponse['tinyurl'];
+    }
     /**
      * @param $app
      * @param $param
@@ -409,3 +430,7 @@ class Automatch{
         echo json_encode($json);
     }
 }
+
+
+$new = new Automatch(array());
+$new->dwz('http://sh.kakaapp.com/index.php?s=/zjh/game/detail/id/ZJH20160418151699579750.html');
