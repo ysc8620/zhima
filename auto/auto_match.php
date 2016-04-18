@@ -125,10 +125,10 @@ class Automatch{
                 );
                 M('zhajinhua_user')->add($data_user);
                 M('zhajinhua')->where(array('id'=>$game['id']))->save(array('update_time'=>time()));
-                $json['data']['message'] = "@{$this->user['nickname']} 加入游戏, 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
+                $json['data']['message'] = "@{$this->user['nickname']} 加入游戏,开始请按【开始】. 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }else{
 
-                $json['data']['message'] = "@{$this->user['nickname']} 已经加入游戏, 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
+                $json['data']['message'] = "@{$this->user['nickname']} 已经加入游戏,开始请按【开始】. 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }
             break;
 
