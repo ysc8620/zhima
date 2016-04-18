@@ -281,7 +281,7 @@ class Automatch{
             }
 
             $game_credit_log = $game['credit_log']?json_decode($game['credit_log']):array();
-            array_push( $game_credit_log, array('user_id'=>$game_user['user_id'], 'credit'=>$credit,'is_show'=>$game_user['is_show'],'time'=>time(),'total_jiaopai'=>$game_user['total_jiaopai']+1) );
+            array_push( $game_credit_log, array('type'=>'genpai', 'user_id'=>$game_user['user_id'], 'credit'=>$credit,'is_show'=>$game_user['is_show'],'time'=>time(),'total_jiaopai'=>$game_user['total_jiaopai']+1) );
             // 更新游戏信息
             M('zhajinhua')->where(array('id'=>$game['id']))->save(
                 array(
@@ -297,7 +297,7 @@ class Automatch{
             );
 
             $user_credit_log = $game_user['credit_log']?json_decode($game_user['credit_log']):array();
-            array_push($user_credit_log, array('credit'=>$credit, 'is_show'=>$game_user['is_show'], 'time'=>time(), 'total_jiaopai'=>$game_user['total_jiaopai']+1));
+            array_push($user_credit_log, array('type'=>'genpai','credit'=>$credit, 'is_show'=>$game_user['is_show'], 'time'=>time(), 'total_jiaopai'=>$game_user['total_jiaopai']+1));
             // 更新参与用户信息
             M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(
                array(
@@ -382,7 +382,7 @@ class Automatch{
             }
 
             $game_credit_log = $game['credit_log']?json_decode($game['credit_log']):array();
-            array_push( $game_credit_log, array('user_id'=>$game_user['user_id'], 'credit'=>$new_credit,'is_show'=>$game_user['is_show'],'time'=>time(),'total_jiaopai'=>$game_user['total_jiaopai']+1) );
+            array_push( $game_credit_log, array('type'=>'jiazhu','user_id'=>$game_user['user_id'], 'credit'=>$new_credit,'is_show'=>$game_user['is_show'],'time'=>time(),'total_jiaopai'=>$game_user['total_jiaopai']+1) );
             // 更新游戏信息
             M('zhajinhua')->where(array('id'=>$game['id']))->save(
                 array(
@@ -398,7 +398,7 @@ class Automatch{
             );
 
             $user_credit_log = $game_user['credit_log']?json_decode($game_user['credit_log']):array();
-            array_push($user_credit_log, array('credit'=>$new_credit, 'is_show'=>$game_user['is_show'], 'time'=>time(), 'total_jiaopai'=>$game_user['total_jiaopai']+1));
+            array_push($user_credit_log, array('type'=>'jiazhu','credit'=>$new_credit, 'is_show'=>$game_user['is_show'], 'time'=>time(), 'total_jiaopai'=>$game_user['total_jiaopai']+1));
             // 更新参与用户信息
             M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(
                 array(
@@ -530,7 +530,7 @@ class Automatch{
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////
             $game_credit_log = $game['credit_log']?json_decode($game['credit_log']):array();
-            array_push( $game_credit_log, array('user_id'=>$game_user['user_id'], 'credit'=>$credit,'is_show'=>$game_user['is_show'],'time'=>time(),'total_jiaopai'=>$game_user['total_jiaopai']+1) );
+            array_push( $game_credit_log, array('type'=>'kaipai','user_id'=>$game_user['user_id'], 'credit'=>$credit,'is_show'=>$game_user['is_show'],'time'=>time(),'total_jiaopai'=>$game_user['total_jiaopai']+1) );
             // 更新游戏信息
             M('zhajinhua')->where(array('id'=>$game['id']))->save(
                 array(
@@ -550,7 +550,7 @@ class Automatch{
             );
 
             $user_credit_log = $game_user['credit_log']?json_decode($game_user['credit_log']):array();
-            array_push($user_credit_log, array('credit'=>$credit, 'is_show'=>$game_user['is_show'], 'time'=>time(), 'total_jiaopai'=>$game_user['total_jiaopai']+1));
+            array_push($user_credit_log, array('type'=>'kaipai','credit'=>$credit, 'is_show'=>$game_user['is_show'], 'time'=>time(), 'total_jiaopai'=>$game_user['total_jiaopai']+1));
             // 更新参与用户信息
             M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(
                 array(
@@ -741,6 +741,49 @@ class Automatch{
                     break;
                 }
             }
+
+            $credit = $game['last_credit'] > 0?$game['last_credit']:5;
+
+            // 判断用户跟注金币， 是否看牌为准
+            if($game['last_is_show']){
+                if(! $game_user['is_show']){
+                    $credit = intval($credit/2);
+                }
+            }else{
+                if($game['is_show']){
+                    $credit = $credit * 2;
+                }
+            }
+
+            /////////////////////////////////////////////////////////////////////////////////
+            $game_credit_log = $game['credit_log']?json_decode($game['credit_log']):array();
+            array_push( $game_credit_log, array('type'=>'bipai','user_id'=>$game_user['user_id'], 'credit'=>$credit,'is_show'=>$game_user['is_show'],'time'=>time(),'total_jiaopai'=>$game_user['total_jiaopai']+1) );
+            // 更新游戏信息
+            M('zhajinhua')->where(array('id'=>$game['id']))->save(
+                array(
+                    'update_time' => time(),
+                    'total_credit' => $game['total_redit'] + $credit,
+                    'last_user_id' => $game_user['user_id'],
+                    'last_is_show' => $game_user['is_show'],
+                    'last_credit' => $credit,
+                    'next_user_id' => 0,
+                    'total_jiaopai' => ($game['total_jiaopai'] + 1),
+                    'credit_log' => json_encode($game_credit_log),
+                )
+            );
+
+            $user_credit_log = $game_user['credit_log']?json_decode($game_user['credit_log']):array();
+            array_push($user_credit_log, array('type'=>'bipai','credit'=>$credit, 'is_show'=>$game_user['is_show'], 'time'=>time(), 'total_jiaopai'=>$game_user['total_jiaopai']+1));
+            // 更新参与用户信息
+            M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(
+                array(
+                    'total_credit' => $game_user['total_credit'] + $credit,
+                    'update_time' => time(),
+                    'total_jiaopai' => ($game_user['total_jiaopai'] + 1),
+                    'credit_log' => json_encode($user_credit_log)
+                )
+            );
+            /////////////////////////////////////////////////////////////////////////////////
 
             $last_user = M('zhajinhua_user')->where(array('zha_id'=>$game['id'], 'user_id'=>$game['last_user_id']))->find();
             $last_card = json_decode($last_user['card_data']);
