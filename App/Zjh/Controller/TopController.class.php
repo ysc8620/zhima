@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 namespace Zjh\Controller;
 use Think\Controller;
+require_once ROOT_PATH .'/Inc/Library/Wxpay/weixin.php';
 class TopController extends BaseController {
     public function index(){
         $this->title = "充值中心";
