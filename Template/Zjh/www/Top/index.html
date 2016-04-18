@@ -104,14 +104,14 @@
         }
     }
 
-    function set_pay(id){
+    function set_pay(){
         var credit = $('input[name="credit"]').val();
         var reg = new RegExp("^[1-9][0-9]*$");
         if(!reg.test(credit)){
             layer.msg('请填写整数金额.', function(){});
             return false;
         }
-
+alert('t');
         $.ajax({
             type:'post',
             url:"{:U('/zjh/top/pay')}",
@@ -120,6 +120,7 @@
             data:{id:id},
             dataType:'json',
             success:function(result){
+                alert(result.error)
                 if(result.error==0){
                     callpay(result.data);
 
