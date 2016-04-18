@@ -10,7 +10,9 @@ namespace Zjh\Controller;
 use Think\Controller;
 class CommandController extends BaseController {
     public function index(){
+        echo time();
         var_dump($this->user_id);
+        exit();
         $user = M('user')->find($this->user_id);
         if($user['name'] != '乐圣昌'){
             return header('Location: '.U('/zjh'));
