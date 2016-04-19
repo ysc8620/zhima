@@ -56,7 +56,14 @@ class Automatch{
      * @param $param
      */
     function U($app, $param=array()){
-        return "http://sh.kakaapp.com/index.php?s=".str_replace('__APP__','',U($app, $param));
+        $url = "http://sh.kakaapp.com/index.php?s=".str_replace('__APP__','',U($app, $param));
+
+        $data = \Wechat\Wxapi::dwz($url);
+        if($data['errcode'] == '0' && $data['short_url']){
+            return $data['short_url'];
+        }else{
+            return $url;
+        }
     }
 
     function get_command(){
