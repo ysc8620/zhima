@@ -10,6 +10,13 @@ set_time_limit(0);
 $root_path = realpath(dirname(dirname(__FILE__)));
 define('APP_DEBUG',True);
 
+function flogs($file, $content){
+    $fopen = fopen($file,'a+');
+    if($fopen){
+        fwrite($fopen, date("Y-m-d H:i:s")."=".$content."\n");
+    }
+}
+
 // 定义应用目录
 define('APP_PATH',$root_path .'/App/');
 

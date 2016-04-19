@@ -10,8 +10,10 @@ set_time_limit(0);
 $root_path = realpath(dirname(dirname(__FILE__)));
 require_once ($root_path . '/auto/config.php');
 require_once($root_path .'/auto/cards.php');
+
 class Automatch{
     public function __construct($data){
+        global $root_path;
         $this->msg = $data;
         $this->time = time() - 600;
         $this->qun = M('qun')->where( "UserName='{$data['user']['id']}'")->find();
@@ -27,6 +29,7 @@ class Automatch{
             ),
             //'post' => $_POST
         );
+        flogs($root_path.'/auto/msg.log', json_encode($data));
     }
 
     function dwz($url){
