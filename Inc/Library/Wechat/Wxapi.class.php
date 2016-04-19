@@ -250,6 +250,19 @@ class Wxapi
         return $arr;
     }
 
+    static public function dwz($url){
+        self::init();
+        $ACCESS_TOKEN = self::getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token=".$ACCESS_TOKEN;
+        $data = array(
+            'action' =>'long2short',
+            'long_url' => $url
+        );
+        $tmpInfo = self::httpPost($url, $data);
+        $arr= json_decode($tmpInfo,true);
+        return $arr;
+    }
+
     /**
      *
      * @param $url
@@ -292,8 +305,6 @@ class Wxapi
         return $temp;
     }
 
-
-
     static public function downloadWeixinFile($media_id)
     {
         self::init();
@@ -322,4 +333,5 @@ class Wxapi
             }
         }
     }
+
 }
