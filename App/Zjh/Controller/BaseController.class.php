@@ -91,7 +91,7 @@ class BaseController extends Controller {
                 M('user')->where(array('id'=>$user['uin']))->save(array('qun_user_id'=>$list[0]['id']));
                 M('qun_user')->where(array('id'=>$list[0]['id']))->save(array('user_id'=>$user['uin']));
             }else{
-                // print_r($list);
+                echo $user['name'];
                 echo "找不到对应用户";
             }
             //
