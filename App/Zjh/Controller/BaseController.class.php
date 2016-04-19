@@ -85,13 +85,13 @@ class BaseController extends Controller {
         $this->user = $user;
 
         // 自动设置用户
-        if( ! $user['qun_user_id']){
+        if( $user['qun_user_id'] < 1){
             $list = M('qun_user')->where(array('NickName'=>$user['name']))->select();
             if(count($list) == 1){
-                M('user')->where(array('id'=>$user['uin']))->save(array('qun_user_id'=>$list[0]['id']));
+                M('user')->where(array('uin'=>$user['uin']))->save(array('qun_user_id'=>$list[0]['id']));
                 M('qun_user')->where(array('id'=>$list[0]['id']))->save(array('user_id'=>$user['uin']));
             }else{
-                
+
                 echo $user['name'];
                 echo "找不到对应用户";
             }
