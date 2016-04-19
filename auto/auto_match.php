@@ -289,7 +289,7 @@ class Automatch{
             M('zhajinhua')->where(array('id'=>$game['id']))->save(
                 array(
                     'update_time' => time(),
-                    'total_credit' => $game['total_redit'] + $credit,
+                    'total_credit' => $game['total_credit'] + $credit,
                     'last_user_id' => $game_user['user_id'],
                     'last_is_show' => $game_user['is_show'],
                     'last_credit' => $credit,
@@ -390,7 +390,7 @@ class Automatch{
             M('zhajinhua')->where(array('id'=>$game['id']))->save(
                 array(
                     'update_time' => time(),
-                    'total_credit' => $game['total_redit'] + $new_credit,
+                    'total_credit' => $game['total_credit'] + $new_credit,
                     'last_user_id' => $game_user['user_id'],
                     'last_is_show' => $game_user['is_show'],
                     'last_credit' => $new_credit,
@@ -538,7 +538,7 @@ class Automatch{
             M('zhajinhua')->where(array('id'=>$game['id']))->save(
                 array(
                     'update_time' => time(),
-                    'total_credit' => $game['total_redit'] + $credit,
+                    'total_credit' => $game['total_credit'] + $credit,
                     'last_user_id' => $game_user['user_id'],
                     'last_is_show' => $game_user['is_show'],
                     'last_credit' => $credit,
@@ -781,7 +781,7 @@ class Automatch{
             M('zhajinhua')->where(array('id'=>$game['id']))->save(
                 array(
                     'update_time' => time(),
-                    'total_credit' => $game['total_redit'] + $credit,
+                    'total_credit' => $game['total_credit'] + $credit,
                     'last_user_id' => $game_user['user_id'],
                     'last_is_show' => $game_user['is_show'],
                     'last_credit' => $credit,

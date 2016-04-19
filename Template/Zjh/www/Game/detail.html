@@ -30,6 +30,7 @@
                             <li style="height: 40px; line-height: 40px; padding-left: 12px;">开始时间：{$game.addtime|date="m-d H:i",###}</li>
                             <if condition="$game.win_user_name">
                             <li style="height: 40px; line-height: 40px; padding-left: 12px;">游戏赢家：{$game.win_user_name}</li>
+                                <li style="height: 40px; line-height: 40px; padding-left: 12px;">压注总额：{$game.total_credit}金币</li>
                             </if>
                             <li style="height: 40px; line-height: 40px; padding-left: 12px;">游戏状态：<if condition="$game[status] eq '0'">待开始<elseif condition="$game[status] eq 1" />进行中<elseif condition="$game[status] eq 2" />已结束<elseif condition="$game[status] eq 3" />已过期</if></li>
                         </div>
