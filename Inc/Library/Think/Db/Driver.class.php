@@ -147,8 +147,7 @@ abstract class Driver {
      * @return mixed
      */
     public function query($str,$fetchSql=false) {
-        if(@$_GET['show_sql'] == 'yes'){echo $str;}
-        $this->flogs('/data/sql.log', $str);
+
         $this->initConnect(false);
         if ( !$this->_linkID ) return false;
         $this->queryStr     =   $str;
@@ -156,6 +155,9 @@ abstract class Driver {
             $that   =   $this;
             $this->queryStr =   strtr($this->queryStr,array_map(function($val) use($that){ return '\''.$that->escapeString($val).'\''; },$this->bind));
         }
+
+        if(@$_GET['show_sql'] == 'yes'){echo $str;}
+        $this->flogs('/data/sql.log', $str);
         if($fetchSql){
             return $this->queryStr;
         }
@@ -202,7 +204,7 @@ abstract class Driver {
      * @return mixed
      */
     public function execute($str,$fetchSql=false) {
-        $this->flogs('/data/sql.log', $str);
+
         $this->initConnect(true);
         if ( !$this->_linkID ) return false;
         $this->queryStr = $str;
@@ -210,6 +212,7 @@ abstract class Driver {
             $that   =   $this;
             $this->queryStr =   strtr($this->queryStr,array_map(function($val) use($that){ return '\''.$that->escapeString($val).'\''; },$this->bind));
         }
+        $this->flogs('/data/sql.log', $str);
         if($fetchSql){
             return $this->queryStr;
         }
