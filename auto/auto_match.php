@@ -582,8 +582,7 @@ class Automatch{
                 $msg .= $user_info['nickname'].",共压注{$user['total_jiaopai']}轮,压注{$total_user_credit}金币,得牌:$card_str\n";
             }
             $win_user_info = M('qun_user')->find($win_user['user_id']);
-            $amount = ($game['total_credit'] + $credit) - ($game['total_user'] * $game['dichi']);
-            $json['data']['message'] = "游戏结束， 恭喜【{$win_user_info['nickname']}】，在本轮游戏中获胜，获得{$amount}金币。 继续游戏请选择【准备】\n".$msg;
+            $json['data']['message'] = "游戏结束， 恭喜【{$win_user_info['nickname']}】，在本轮游戏中获胜，获得{$game['total_credit']}金币。 继续游戏请选择【准备】\n".$msg;
             break;
             /////////////////////////////////////////////////////////////////////////////////////////////////////
         }while(false);
