@@ -344,7 +344,7 @@ class Automatch{
 
             if($this->user['id'] != $game['next_user_id']){
                 $json['msg_code'] = 10002;
-                $json['msg_content'] = '没轮到该用户说话。';
+                $json['msg_content'] = '没轮到该用户说话。'."{$this->user['id']}={$game['next_user_id']}";;
                 break;
             }
 
