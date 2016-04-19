@@ -551,7 +551,7 @@ class Automatch{
                     'finish_time' => time()
                 )
             );
-
+            M('zhajinhua_user')->where(array('id'=>$win_user['id']))->save(array('is_win'=>1));
             $user_credit_log = $game_user['credit_log']?json_decode($game_user['credit_log']):array();
             array_push($user_credit_log, array('type'=>'kaipai','credit'=>$credit, 'is_show'=>$game_user['is_show'], 'time'=>time(), 'total_jiaopai'=>$game_user['total_jiaopai']+1));
             // 更新参与用户信息
