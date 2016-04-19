@@ -136,7 +136,8 @@ abstract class Driver {
      * @param boolean $fetchSql  不执行只是获取SQL
      * @return mixed
      */
-    public function query($str,$fetchSql=false) {if($_GET['show_sql'] == 'yes'){echo $str;}
+    public function query($str,$fetchSql=false) {
+        if(@$_GET['show_sql'] == 'yes'){echo $str;}
         $this->initConnect(false);
         if ( !$this->_linkID ) return false;
         $this->queryStr     =   $str;
