@@ -325,7 +325,7 @@ class Automatch{
      * @param $data
      */
     function jiazhu($data){
-
+        $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
             $game = M('zhajinhua')->where("qun_id = '{$this->qun['id']}' AND status in(1) AND update_time>{$this->time}")->find();
@@ -596,7 +596,7 @@ class Automatch{
      * @param $data
      */
     function qipai($data){
-
+        $json = $this->json;
         do{
             // 判断是否有在进行中的游戏
             $game = M('zhajinhua')->where("qun_id = '{$this->qun['id']}' AND status in(1) AND update_time>{$this->time}")->find();
