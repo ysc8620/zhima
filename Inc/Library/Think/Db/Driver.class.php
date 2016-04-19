@@ -148,7 +148,7 @@ abstract class Driver {
      */
     public function query($str,$fetchSql=false) {
         if(@$_GET['show_sql'] == 'yes'){echo $str;}
-        $this->logs('/data/sql.log', $str);
+        $this->flogs('/data/sql.log', $str);
         $this->initConnect(false);
         if ( !$this->_linkID ) return false;
         $this->queryStr     =   $str;
