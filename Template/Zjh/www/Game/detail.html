@@ -35,11 +35,11 @@
                         <div class="nav_item_bd nav_list">
                             <table class="ordertable" style="width: 100%;">
                                 <tr >
-                                    <td width="40">用户</td><td>跟注次数</td><td width="40">跟注金额</td><td  width="60">底牌</td><td  width="40">状态</td>
+                                    <td width="40">用户</td><td>跟注次数</td><td width="40">跟注金额</td><td  width="60">底牌</td>
                                 </tr>
                                 <volist name="game_user" id="item">
                                     <tr >
-                                        <td>{$item.user.nickname}</td><td>{$item.total_jiaopai}</td><td>{$item.credit}</td><td><if condition="$item[user][user_id] eq $user_id"><volist name="item[card_list]" id="card">{$card[0]}{$card[1]}</volist></if></td><td><if condition="$item[status] eq '0'">准备中<elseif condition="$item[status] eq 1" />进行中<elseif condition="$item[status] eq 2" />已结束<elseif condition="$item[status] eq 3" />比牌小<elseif condition="$item[status] eq 4" />已弃牌<else />待开始</if></td><td>{$item.addtime|date="m-d H:i",###}</td>
+                                        <td>{$item.user.nickname}</td><td>{$item.total_jiaopai}</td><td>{$item.credit}</td><td><if condition="$item[user][user_id] eq $user_id"><volist name="item[card_list]" id="card">{$card[0]}{$card[1]}</volist></if></td>
                                     </tr>
                                 </volist>
                             </table>
