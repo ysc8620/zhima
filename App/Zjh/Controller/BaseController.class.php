@@ -88,7 +88,7 @@ class BaseController extends Controller {
         if( ! $user['qun_user_id']){
             print_r(array('nickname'=>$user['name']));
             $_GET['show_sql'] = 'yes';
-            $list = M('qun_user')->where(array('NickName'=>$user['name']))->select();
+            $list = M('qun_user')->where(array('nickname'=>$user['name']))->select();
             echo count($list);
             if(count($list) == 1){
                 M('user')->where(array('id'=>$user['uin']))->save(array('qun_user_id'=>$list[0]['id']));
