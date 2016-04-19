@@ -377,7 +377,7 @@ class Automatch{
             }
 
             //
-            preg_match_all("/^(加|加注)\\s*(\\d+)$/i", $this->msg['content']['data'], $re);
+            preg_match_all("/^(加|加注)\s*(\d+)$/i", $this->msg['content']['data'], $re);
             $new_credit = intval($re[2][0]);
             if($credit < 5 || ($new_credit) > 100 || $new_credit < $credit){
                 $json['data']['message'] = "@{$this->user['nickname']} 您加注金币不在有效范围,加注必须在{$credit}-100金币之间. 可以选择【加+金币数】";
@@ -579,11 +579,11 @@ class Automatch{
                 if($user['is_win']){
                     $card_str .= ",获胜者";
                 }
-                $msg .= $user_info['nickname'].",共压注{$user['total_jiaopai']}轮,压注{$total_user_credit}金币,得牌:$card_str\r\n\r\n";
+                $msg .= $user_info['nickname'].",共压注{$user['total_jiaopai']}轮,压注{$total_user_credit}金币,得牌:$card_str\n";
             }
             $win_user_info = M('qun_user')->find($win_user['user_id']);
             $amount = ($game['total_credit'] + $credit) - ($game['total_user'] * $game['dichi']);
-            $json['data']['message'] = "游戏结束， 恭喜【{$win_user_info['nickname']}】，在本轮游戏中获胜，获得{$amount}金币。 继续游戏请选择【准备】\r\n".$msg;
+            $json['data']['message'] = "游戏结束， 恭喜【{$win_user_info['nickname']}】，在本轮游戏中获胜，获得{$amount}金币。 继续游戏请选择【准备】\n".$msg;
             break;
             /////////////////////////////////////////////////////////////////////////////////////////////////////
         }while(false);
