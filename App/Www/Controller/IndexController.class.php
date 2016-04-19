@@ -21,6 +21,12 @@ class IndexController extends Controller {
       $this->display();
     }
 
+    public function test(){
+        $data = \Wechat\Wxapi::dwz(U('/zjh/game/detail',array('id'=>234),true,true));
+        print_r($data);
+        die();
+    }
+
     protected function error($message,$jumpUrl){
         session('error_message', $message);
         redirect($jumpUrl);

@@ -13,9 +13,7 @@ use Think\Controller;
 class MsgController extends Controller {
 
     public function index(){
-        $data = \Wechat\Wxapi::dwz(U('/zjh/game/detail',array('id'=>234),true,true));
-        print_r($data);
-        die();
+
         require_once ROOT_PATH .'/auto/auto_match.php';
         $base_file ="/data/website/zhaopian/auto/command.json";
         $json = array(
