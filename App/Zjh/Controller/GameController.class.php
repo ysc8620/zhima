@@ -23,10 +23,11 @@ class GameController extends BaseController {
         $this->user = M('user')->find($this->user_id);
 
         $this->game_user = M('zhajinhua_user')->where(array('zha_id'=>$this->game['id']))->select();
-        foreach($this->game_user as &$game){
-            $game['card_list'] = json_decode($game['card_data']);
-            $game['user'] = M('qun_user')->find($game['user_id']);
+        foreach($this->game_user as $i=>$game){
+            $this->game_user[$i]['card_list'] = json_decode($game['card_data']);
+            $this->game_user[$i]['user'] = M('qun_user')->find($game['user_id']);
         }
+        // print_r($this->game_user);
         $this->title = "游戏详情";
         $this->display();
     }
