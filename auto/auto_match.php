@@ -83,7 +83,7 @@ class Automatch{
                 $json['data']['message'] = "@{$this->user['nickname']} 你的游戏金币少于10个，请充值后再进行游戏。充值地址：". $this->U('/zjh/top');// .U('/zjh/top',array(),true);
                 break;
             }
-            // `qun_id`, `qun_name`, `number_no`, `user_id`, `card_data`, `total_user`, `total_credit`, `win_user`, `status`, `addtime`, `finish_time`, `update_time`, `nexit_user_id`
+            // `qun_id`, `qun_name`, `number_no`, `user_id`, `card_data`, `total_user`, `total_credit`, `win_user`, `status`, `addtime`, `finish_time`, `update_time`, `next_user_id`
             $data = array(
                 'qun_id' => $this->qun['id'],
                 'qun_name' => $this->qun['nickname'],
@@ -213,7 +213,7 @@ class Automatch{
                     'status' => 1,
                     'update_time' => time(),
                     'total_credit' => $total_credit,
-                    'nexit_user_id' => $user_list[0]['user_id'],
+                    'next_user_id' => $user_list[0]['user_id'],
                     'card_data' => json_encode($card_data),
                     'total_user' => count($user_list)
                 )
