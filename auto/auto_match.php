@@ -304,7 +304,7 @@ class Automatch{
             // 更新参与用户信息
             M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(
                array(
-                   'total_credit' => $game_user['total_credit'] + $credit,
+                   'credit' => $game_user['credit'] + $credit,
                    'update_time' => time(),
                    'total_jiaopai' => ($game_user['total_jiaopai'] + 1),
                    'credit_log' => json_encode($user_credit_log)
@@ -405,7 +405,7 @@ class Automatch{
             // 更新参与用户信息
             M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(
                 array(
-                    'total_credit' => $game_user['total_credit'] + $new_credit,
+                    'credit' => $game_user['credit'] + $new_credit,
                     'update_time' => time(),
                     'total_jiaopai' => ($game_user['total_jiaopai'] + 1),
                     'credit_log' => json_encode($user_credit_log)
@@ -557,7 +557,7 @@ class Automatch{
             // 更新参与用户信息
             M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(
                 array(
-                    'total_credit' => $game_user['total_credit'] + $credit,
+                    'credit' => $game_user['credit'] + $credit,
                     'update_time' => time(),
                     'total_jiaopai' => ($game_user['total_jiaopai'] + 1),
                     'credit_log' => json_encode($user_credit_log),
@@ -569,7 +569,7 @@ class Automatch{
             $msg = "";
             foreach($user_list as $user){
                 $user_info = M('qun_user')->find($user['user_id']);
-                $total_user_credit = $user['total_credit'] - $game['dichi'];
+                $total_user_credit = $user['credit'] - $game['dichi'];
                 $cards = json_decode($user['card_data']);
                 $card_str = '';
                 foreach($cards as $card){
@@ -796,7 +796,7 @@ class Automatch{
             // 更新参与用户信息
             M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(
                 array(
-                    'total_credit' => $game_user['total_credit'] + $credit,
+                    'credit' => $game_user['credit'] + $credit,
                     'update_time' => time(),
                     'total_jiaopai' => ($game_user['total_jiaopai'] + 1),
                     'credit_log' => json_encode($user_credit_log)
