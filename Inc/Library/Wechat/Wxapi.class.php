@@ -250,13 +250,13 @@ class Wxapi
         return $arr;
     }
 
-    static public function dwz($url){
+    static public function dwz($link){
         self::init();
         $ACCESS_TOKEN = self::getAccessToken();
         $url = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token=".$ACCESS_TOKEN;
         $data = array(
             'action' =>'long2short',
-            'long_url' => $url
+            'long_url' => $link
         );
         $tmpInfo = self::httpPost($url, $data);
         $arr= json_decode($tmpInfo,true);
