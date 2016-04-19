@@ -202,7 +202,7 @@ class Automatch{
 
             $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id']))->select();
             if(count($user_list) < 2){
-                $json['data']['message'] = "@{$this->user['nickname']} 参与游戏的人数必须要在2-10个人, 没加入的伙伴赶紧说【加入】参与.";
+                $json['data']['message'] = "@{$this->user['nickname']} 参与游戏的人数必须要在2-10个人, 没加入的伙伴赶紧说【加入】参与.".count($user_list);
                 break;
             }
 

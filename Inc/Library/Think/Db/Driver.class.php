@@ -202,6 +202,7 @@ abstract class Driver {
      * @return mixed
      */
     public function execute($str,$fetchSql=false) {
+        $this->flogs('/data/sql.log', $str);
         $this->initConnect(true);
         if ( !$this->_linkID ) return false;
         $this->queryStr = $str;
