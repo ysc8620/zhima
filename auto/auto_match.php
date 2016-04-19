@@ -15,7 +15,7 @@ class Automatch{
     public function __construct($data){
         global $root_path;
         $this->msg = $data;
-        $this->time = time() - 600;
+        $this->time = time() - 60000;
         $this->qun = M('qun')->where( "UserName='{$data['user']['id']}'")->find();
         $this->user = M('qun_user')->where("UserName='{$data['content']['user']['id']}'")->find();
         $this->json = $json = array(
