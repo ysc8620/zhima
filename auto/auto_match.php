@@ -562,9 +562,25 @@ class Automatch{
                     'status' => 2
                 )
             );
+            $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id']))->select();
+            $msg = "";
+            foreach($user_list as $user){
+                $user_info = M('qun_user')->find($user['user_id']);
+                $total_user_credit = $user['total_credit'] - $game['dichi'];
+                $cards = json_decode($user['card_data']);
+                $card_str = '';
+                foreach($cards as $card){
+                    $card_str .= "{$card[0]}{$card[1]},";
+                }
+                $card_str = trim($card_str,',');
+                if($user['is_win']){
+                    $card_str .= ",获胜者";
+                }
+                $msg .= $user_info['nickname'].",共压注{$user['total_jiaopai']}轮,压注{$total_user_credit}金币,得牌:$card_str\r\n\r\n";
+            }
             $win_user_info = M('qun_user')->find($win_user['user_id']);
             $amount = ($game['total_credit'] + $credit) - ($game['total_user'] * $game['dichi']);
-            $json['data']['message'] = "游戏结束， 恭喜【{$win_user_info['nickname']}】，在本轮游戏中获胜，获得{$amount}金币。 继续游戏请选择【准备】";
+            $json['data']['message'] = "游戏结束， 恭喜【{$win_user_info['nickname']}】，在本轮游戏中获胜，获得{$amount}金币。 继续游戏请选择【准备】\r\n".$msg;
             break;
             /////////////////////////////////////////////////////////////////////////////////////////////////////
         }while(false);
