@@ -156,8 +156,8 @@ class Automatch{
             // `zha_id`, `user_id`, `card_data`, `status`, `credit`, `addtime`, `is_win`, `update_time`, `credit_log`, `is_show`
             $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id']))->select();
             $user_str = '';
-            foreach($user_list as $user){
-                $user_str .= '【'.$user['nickname'].'】';
+            foreach($user_list as $uuser){
+                $user_str .= '【'.$uuser['nickname'].'】';
             }
             $user_str = $user_str?'压注顺序:'.$user_str:'';
             if( ! $user){
