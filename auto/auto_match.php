@@ -140,7 +140,7 @@ class Automatch{
 
             // 判断是否加入过
             $user = M('zhajinhua_user')->where(array('zha_id'=>$game['id'], 'user_id'=>$this->user['id']))->find();
-
+            $game_user = M('qun_user')->find($game['user_id']);
             // `zha_id`, `user_id`, `card_data`, `status`, `credit`, `addtime`, `is_win`, `update_time`, `credit_log`, `is_show`
             if( ! $user){
                 $data_user = array(
@@ -150,10 +150,10 @@ class Automatch{
                 );
                 M('zhajinhua_user')->add($data_user);
                 M('zhajinhua')->where(array('id'=>$game['id']))->save(array('update_time'=>time()));
-                $json['data']['message'] = "@{$this->user['nickname']} 加入游戏,开始请按【开始】. 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
+                $json['data']['message'] = "@{$this->user['nickname']} 加入游戏,开始请【@{$game_user['nickname']} 】说【开始】. 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }else{
 
-                $json['data']['message'] = "@{$this->user['nickname']} 已经加入游戏,开始请按【开始】. 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
+                $json['data']['message'] = "@{$this->user['nickname']} 已经加入游戏,开始请【{$game_user['nickname']} 】说【开始】. 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }
             break;
 
@@ -177,7 +177,7 @@ class Automatch{
 
             if($this->user['id'] != $game['user_id']){
                 $user = M('qun_user')->find($game['user_id']);
-                $json['data']['message'] = "@{$this->user['nickname']} 只有游戏创建者【{$user['nickname']}】才能开始游戏。";
+                $json['data']['message'] = "@{$this->user['nickname']} 只有游戏创建者【{$user['nickname']}】才能开始游戏。开始请【{$user['nickname']} 】说【开始】. ";
                 break;
             }
 
@@ -265,11 +265,11 @@ class Automatch{
 
             // 判断用户跟注金币， 是否看牌为准
             if($game['last_is_show']){
-                if(! $game_user['is_show']){
+                if( ! $game_user['is_show']){
                     $credit = intval($credit/2);
                 }
             }else{
-                if($game['is_show']){
+                if($game_user['is_show']){
                     $credit = $credit * 2;
                 }
             }
@@ -371,7 +371,7 @@ class Automatch{
                     $credit = intval($credit/2);
                 }
             }else{
-                if($game['is_show']){
+                if($game_user['is_show']){
                     $credit = $credit * 2;
                 }
             }
@@ -526,7 +526,7 @@ class Automatch{
                     $credit = intval($credit/2);
                 }
             }else{
-                if($game['is_show']){
+                if($game_user['is_show']){
                     $credit = $credit * 2;
                 }
             }
