@@ -16,8 +16,8 @@ class Automatch{
         global $root_path;
         $this->msg = $data;
         $this->time = time() - 600;
-        $this->qun = M('qun')->where( "username='{$data['user']['id']}'")->find();
-        $this->user = M('qun_user')->where("username='{$data['content']['user']['id']}'")->find();
+        $this->qun = M('qun')->where( "UserName='{$data['user']['id']}'")->find();
+        $this->user = M('qun_user')->where("UserName='{$data['content']['user']['id']}'")->find();
         $this->json = $json = array(
             'msg_code' => 10001,
             'msg_content' => '',
