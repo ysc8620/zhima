@@ -254,10 +254,10 @@ class Wxapi
         self::init();
         $ACCESS_TOKEN = self::getAccessToken();
         $url = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token=".$ACCESS_TOKEN;
-        $data = array(
-            'action' =>'long2short',
-            'long_url' => $link
-        );
+        $data = '{
+            "action" :"long2short",
+            "long_url": "'.$link.'"
+        }';
         $tmpInfo = self::httpPost($url, $data);
         $arr= json_decode($tmpInfo,true);
         return $arr;
