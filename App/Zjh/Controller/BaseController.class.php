@@ -90,13 +90,17 @@ class BaseController extends Controller {
             if(count($list) == 1){
                 M('user')->where(array('uin'=>$user['uin']))->save(array('qun_user_id'=>$list[0]['id']));
                 M('qun_user')->where(array('id'=>$list[0]['id']))->save(array('user_id'=>$user['uin']));
+                $user['qun_user_id'] = $list[0]['id'];
             }else{
 
                 echo $user['name'];
                 echo "找不到对应用户";
             }
             //
+
         }
+
+        $this->qun_user_id = $user['qun_user_id'];
         // if(!$this->user_id)
     }
 

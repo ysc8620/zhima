@@ -39,7 +39,7 @@
                                 </tr>
                                 <volist name="game_user" id="item">
                                     <tr >
-                                        <td>{$item[user][nickname]}</td><td>{$item.total_jiaopai}</td><td>{$item.credit}</td><td><if condition="$item[user][user_id] eq $user_id or $game[status] gt 1">{$item.card_info}</if></td>
+                                        <td>{$item[user][nickname]}</td><td>{$item.total_jiaopai}</td><td>{$item.credit}</td><td><if condition="($item[user_id] eq $qun_user_id and $item[is_show] eq 1) or $game[status] gt 1">{$item.card_info}</if></td>
                                     </tr>
                                 </volist>
                             </table>
