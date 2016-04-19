@@ -86,6 +86,7 @@ class BaseController extends Controller {
 
         // 自动设置用户
         if( ! $user['qun_user_id']){
+            print_r(array('nickname'=>$user['name']));
             $list = M('qun_user')->where(array('nickname'=>$user['name']))->select();
             echo count($list);
             if(count($list) == 1){
