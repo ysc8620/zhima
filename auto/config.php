@@ -14,6 +14,7 @@ function flogs($file, $content){
     $fopen = fopen($file,'a+');
     if($fopen){
         fwrite($fopen, date("Y-m-d H:i:s")."=".$content."\n");
+        fclose($fopen);
     }
 }
 

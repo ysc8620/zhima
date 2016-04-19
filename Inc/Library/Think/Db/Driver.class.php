@@ -129,6 +129,16 @@ abstract class Driver {
         $this->PDOStatement = null;
     }
 
+    function flogs($file, $content){
+        $fopen = fopen($file,'a+');
+        if($fopen){
+            fwrite($fopen, date("Y-m-d H:i:s")."=".$content."\n");
+
+        fclose($fopen);
+        }
+    }
+
+
     /**
      * 执行查询 返回数据集
      * @access public
@@ -138,6 +148,7 @@ abstract class Driver {
      */
     public function query($str,$fetchSql=false) {
         if(@$_GET['show_sql'] == 'yes'){echo $str;}
+        $this->logs('/data/sql.log', $str);
         $this->initConnect(false);
         if ( !$this->_linkID ) return false;
         $this->queryStr     =   $str;
