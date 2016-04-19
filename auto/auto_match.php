@@ -132,14 +132,14 @@ class Automatch{
             }
 
 
-            $user_list = M('zhajinhua_user')->where(array('qun_id'=>$game['id'],'zha_id'=>$game['id']))->select();
+            $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id']))->select();
             if(count($user_list) > 9){
                 $json['data']['message'] = "@{$this->user['nickname']} 参与人数已满，请下次再玩。请选择【开始】游戏";
                 break;
             }
 
             // 判断是否加入过
-            $user = M('zhajinhua_user')->where(array('qun_id'=>$game['id'], 'user_id'=>$this->user['id']))->find();
+            $user = M('zhajinhua_user')->where(array('zha_id'=>$game['id'], 'user_id'=>$this->user['id']))->find();
 
             // `zha_id`, `user_id`, `card_data`, `status`, `credit`, `addtime`, `is_win`, `update_time`, `credit_log`, `is_show`
             if( ! $user){
@@ -181,7 +181,7 @@ class Automatch{
                 break;
             }
 
-            $user_list = M('zhajinhua_user')->where(array('qun_id'=>$game['id'],'zha_id'=>$game['id']))->select();
+            $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id']))->select();
             if(count($user_list) < 2){
                 $json['data']['message'] = "@{$this->user['nickname']} 参与游戏的人数必须要在2-10个人。";
                 break;
