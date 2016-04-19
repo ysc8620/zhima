@@ -22,6 +22,7 @@ class IndexController extends Controller {
     }
 
     public function test(){
+        echo U('/zjh/game/detail',array('id'=>234),true,true);
         $data = \Wechat\Wxapi::dwz(U('/zjh/game/detail',array('id'=>234),true,true));
         print_r($data);
         die();
