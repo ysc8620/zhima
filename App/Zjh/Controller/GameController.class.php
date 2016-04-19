@@ -32,8 +32,10 @@ class GameController extends BaseController {
             $game_user[$i]['card_info'] = trim($card_str,',');
             $game_user[$i]['user'] = M('qun_user')->find($game['user_id']);
         }
+
+
         $this->game_user = $game_user;
-        // print_r($this->game_user);
+         print_r($game_user);
         $this->title = "游戏详情";
         $this->display();
     }
