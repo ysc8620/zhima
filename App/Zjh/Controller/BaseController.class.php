@@ -87,6 +87,7 @@ class BaseController extends Controller {
         // 自动设置用户
         if( ! $user['qun_user_id']){
             $list = M('qun_user')->where(array('nickname'=>$user['name']))->select();
+            echo count($list);
             if(count($list) == 1){
                 M('user')->where(array('id'=>$user['uin']))->save(array('qun_user_id'=>$list[0]['id']));
                 M('qun_user')->where(array('id'=>$list[0]['id']))->save(array('user_id'=>$user['uin']));
