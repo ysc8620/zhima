@@ -737,6 +737,7 @@ class Automatch{
      */
     function zhunbei($data){
         $json = $this->json;
+        $json['ee'] = 1;
         do{
             $json['test'][] = 1;
             // 判断是否有在进行中的游戏
