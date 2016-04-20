@@ -253,8 +253,8 @@ class Automatch{
             $user = M('qun_user')->find($user_list[0]['user_id']);
             $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id']))->select();
             $user_str = '';
-            foreach($user_list as $user){
-                $user_str .= '【'.$user['nickname'].'】';
+            foreach($user_list as $uuser){
+                $user_str .= '【'.$uuser['nickname'].'】';
             }
             $user_str = $user_str?'压注顺序：'.$user_str:'';
 
