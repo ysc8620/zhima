@@ -39,6 +39,7 @@ $base_file = $root_path . "/auto/command.json";
 $json = array(
     'msg_code' => 10001,
     'msg_content' => '',
+    'command'=>'-',
     'data' => array(
         'type' => 1,
         'uid' =>'',
