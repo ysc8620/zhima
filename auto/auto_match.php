@@ -800,7 +800,7 @@ class Automatch{
                 $json['test'][] = 8;
                 $json['data']['message'] = "@{$this->user['nickname']} 已经加入游戏,开始【@{$game_user['nickname']}】请说【开始】.游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }
-            $json['test'][] = 9;
+            $json['test'][] = 9; // 
         }while(false);
         echo json_encode( $json);
         die();
