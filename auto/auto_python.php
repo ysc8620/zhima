@@ -77,15 +77,18 @@ do{
     $command_list = json_decode(file_get_contents($base_file), true);
     $obj = new \Automatch($data);
     $is_command = false;
+    $json['command_text'] = $word;
     foreach($command_list as $command){
         $preg = preg_match("/^".$command['command']."$/i", $word);
         if($preg){
             $is_command = true;
             $action = $command['action'];
+            $json['action'] = $action;
             if( $action ){
                 if(method_exists ($obj, $action)){
                     $json = $obj->$action($data);
                     $json['command'] = $command['action'];
+                    $json['command_text'] = $word;
                 }
             }
 
