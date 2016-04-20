@@ -359,19 +359,19 @@ class Automatch{
             $next_user_info = M('qun_user')->find($next_user['user_id']);
             $command = '';
             if(!$next_user_info['is_show']){
-                $command .= "【看牌】";
+                $command = "【看牌】";
             }
 
             $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
             $kaipai_str = '';
             if(count($user_list) == 2){
-                $kaipai_str .= "【开牌】";
+                $kaipai_str = "【开牌】";
             }elseif(count($user_list) < 2){
                 $json['data']['message'] = "@{$this->user['nickname']} 没有其他说话用户 请说【开牌】结束游戏";
                 break;
             }
 
-            $json['data']['message'] = "游戏进行中,【{$this->user['nickname']}】跟{$credit}金币,接下来轮到【{$next_user_info['nickname']}】说话,可以说$command【跟牌】【加+金币数】【比牌】$kaipai_str【弃牌】";
+            $json['data']['message'] = "游戏进行中,【{$this->user['nickname']}】跟{$credit}金币,接下来轮到【{$next_user_info['nickname']}】说话,可以说{$command}【跟牌】【加+金币数】【比牌】{$kaipai_str}【弃牌】";
             break;
 
         }while(false);
@@ -470,22 +470,20 @@ class Automatch{
                 )
             );
             $next_user_info = M('qun_user')->find($next_user['user_id']);
-
-            $command = '';
+            $command='';
             if(!$next_user_info['is_show']){
-                $command .= "【看牌】";
+                $command = "【看牌】";
             }
-
+            $kaipai_str='';
             $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
-            $kaipai_str = '';
             if(count($user_list) == 2){
-                $kaipai_str .= "【开牌】";
+                $kaipai_str = "【开牌】";
             }elseif(count($user_list) < 2){
                 $json['data']['message'] = "@{$this->user['nickname']} 没有其他说话用户 请说【开牌】结束游戏";
                 break;
             }
 
-            $json['data']['message'] = "游戏进行中,【{$this->user['nickname']}】加注{$new_credit}金币，接下来轮到【{$next_user_info['nickname']}】说话， 可以选择$command【跟牌】【加+金币数】【比牌】$kaipai_str【弃牌】";
+            $json['data']['message'] = "游戏进行中,【{$this->user['nickname']}】加注{$new_credit}金币，接下来轮到【{$next_user_info['nickname']}】说话， 可以选择{$command}【跟牌】【加+金币数】【比牌】{$kaipai_str}【弃牌】";
 
         }while(false);
         echo json_encode($json);
@@ -533,19 +531,19 @@ class Automatch{
 
             $command = '';
             if(!$this->user['is_show']){
-                $command .= "【看牌】";
+                $command = "【看牌】";
             }
 
             $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
             $kaipai_str = '';
             if(count($user_list) == 2){
-                $kaipai_str .= "【开牌】";
+                $kaipai_str = "【开牌】";
             }elseif(count($user_list) < 2){
                 $json['data']['message'] = "@{$this->user['nickname']} 没有其他说话用户 请说【开牌】结束游戏";
                 break;
             }
 
-            $json['data']['message'] = "@{$this->user['nickname']} 底牌查看：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true).",【{$this->user['nickname']}】继续说话,可以说$command【跟牌】【加+金币数】$kaipai_str【弃牌】";
+            $json['data']['message'] = "@{$this->user['nickname']} 底牌查看：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true).",【{$this->user['nickname']}】继续说话,可以说{$command}【跟牌】【加+金币数】{$kaipai_str}【弃牌】";
         }while(false);
         echo json_encode($json);
         die();
@@ -718,19 +716,19 @@ class Automatch{
             $next_user_info = M('qun_user')->find($next_user['user_id']);
             $command = '';
             if(!$next_user_info['is_show']){
-                $command .= "【看牌】";
+                $command = "【看牌】";
             }
 
             $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
             $kaipai_str = '';
             if(count($user_list) == 2){
-                $kaipai_str .= "【开牌】";
+                $kaipai_str = "【开牌】";
             }elseif(count($user_list) < 2){
                 $json['data']['message'] = "@{$next_user_info['nickname']} 没有其他说话用户 请说【开牌】结束游戏";
                 break;
             }
 
-            $json['data']['message'] = "游戏进行中,【{$this->user['nickname']}】弃牌，接下来轮到【{$next_user_info['nickname']}】说话， 可以选择$command【跟牌】【加+金币数】$kaipai_str【弃牌】";
+            $json['data']['message'] = "游戏进行中,【{$this->user['nickname']}】弃牌，接下来轮到【{$next_user_info['nickname']}】说话， 可以选择{$command}【跟牌】【加+金币数】{$kaipai_str}【弃牌】";
             break;
 
         }while(false);
@@ -922,13 +920,13 @@ class Automatch{
 
             $command = '';
             if(!$next_user_info['is_show']){
-                $command .= "【看牌】";
+                $command = "【看牌】";
             }
 
             $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
             $kaipai_str = '';
             if(count($user_list) == 2){
-                $kaipai_str .= "【开牌】";
+                $kaipai_str = "【开牌】";
             }elseif(count($user_list) < 2){
                 $json['data']['message'] = "@{$this->user['nickname']} 没有其他说话用户 请说【开牌】结束游戏";
                 break;
@@ -936,11 +934,11 @@ class Automatch{
 
             if($bool > 0){
                 M('zhajinhua_user')->where(array('id'=>$last_user['id']))->save(array('status'=>3,'update_time'=>time(),'bipai_user_id'=>$this->user['id']));
-                $json['data']['message'] = "@{$this->user['nickname']} 您的牌比【{$last_user_info['nickname']}】大， 接下来【{$next_user_info['nickname']}】说话,请选择$command【跟牌】【加+金币数】$kaipai_str【比牌】【弃牌】";
+                $json['data']['message'] = "@{$this->user['nickname']} 您的牌比【{$last_user_info['nickname']}】大， 接下来【{$next_user_info['nickname']}】说话,请选择{$command}【跟牌】【加+金币数】{$kaipai_str}【比牌】【弃牌】";
                 break;
             }else{
                 M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(array('status'=>3,'update_time'=>time(),'bipai_user_id'=>$this->user['id']));
-                $json['data']['message'] = "@{$this->user['nickname']} 您的牌比【{$last_user_info['nickname']}】小， 接下来【{$next_user_info['nickname']}】说话,请选择$command【跟牌】【加+金币数】$kaipai_str【比牌】【弃牌】";
+                $json['data']['message'] = "@{$this->user['nickname']} 您的牌比【{$last_user_info['nickname']}】小， 接下来【{$next_user_info['nickname']}】说话,请选择{$command}【跟牌】【加+金币数】{$kaipai_str}【比牌】【弃牌】";
                 break;
             }
         }while(false);
