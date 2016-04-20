@@ -543,7 +543,7 @@ class Automatch{
                 break;
             }
 
-            $json['data']['message'] = "@{$this->user['nickname']} 底牌查看：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true).",【{$this->user['nickname']}】继续说话,可以说{$command}【跟牌】【加+金币数】{$kaipai_str}【弃牌】";
+            $json['data']['message'] = "@{$this->user['nickname']} 底牌查看：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true)." ,【{$this->user['nickname']}】继续说话,可以说{$command}【跟牌】【加+金币数】{$kaipai_str}【弃牌】";
         }while(false);
         echo json_encode($json);
         die();
