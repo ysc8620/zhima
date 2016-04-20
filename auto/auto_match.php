@@ -742,15 +742,16 @@ class Automatch{
     function zhunbei($data){
         $json = $this->json;
         do{
+            $json['test'][] = 1;
             // 判断是否有在进行中的游戏
             $game = M('zhajinhua')->where("qun_id = '{$this->qun['id']}' AND status in(0) AND update_time>{$this->time}")->find();
 
             if($this->user['qun_credit'] < 10){
                 $json['data']['message'] = "@{$this->user['nickname']} 你的游戏金币少于10个，请充值后再进行游戏。充值地址：".$this->U('/zjh/top',array(),true);
                 break;
-            }
+            } $json['test'][] = 2;
 
-            if(!$game){
+            if(!$game){ $json['test'][] = 3;
                 $data = array(
                     'qun_id' => $this->qun['id'],
                     'qun_name' => $this->qun['nickname'],
@@ -760,7 +761,7 @@ class Automatch{
                     'update_time' => time()
                 );
                 $res = M('zhajinhua')->add($data);
-                if($res){
+                if($res){ $json['test'][] = 4;
                     // `zha_id`, `user_id`, `card_data`, `status`, `credit`, `addtime`, `is_win`, `update_time`, `credit_log`, `is_show`
                     $zha = M('zhajinhua')->where(array('number_no'=>$data['number_no']))->find();
                     $data_user = array(
@@ -772,14 +773,14 @@ class Automatch{
                     M('zhajinhua_user')->add($data_user);
                     $json['data']['message'] = "@{$this->user['nickname']} 加入游戏,开始请按【开始】. 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$zha['number_no']),true);
                     break;
-                }
+                } $json['test'][] = 5;
             }
 
             $user_list = M('zhajinhua_user')->where(array('qun_id'=>$game['id'],'zha_id'=>$game['id']))->select();
             if(count($user_list) > 9){
                 $json['data']['message'] = "@{$this->user['nickname']} 参与人数已满，请下次再玩。请选择【开始】游戏";
                 break;
-            }
+            } $json['test'][] = 6;
 
             // 判断是否加入过
             $user = M('zhajinhua_user')->where(array('qun_id'=>$game['id'], 'user_id'=>$this->user['id']))->find();
@@ -791,16 +792,15 @@ class Automatch{
                     'user_id' => $this->user['id'],
                     'addtime' => time(),
                     'nickname' => $this->user['nickname']
-                );
+                ); $json['test'][] = 7;
                 M('zhajinhua_user')->add($data_user);
                 M('zhajinhua')->where(array('id'=>$game['id']))->save(array('update_time'=>time()));
                 $json['data']['message'] = "@{$this->user['nickname']} 加入游戏,开始【@{$game_user['nickname']}】请说【开始】.游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }else{
-
+                $json['test'][] = 8;
                 $json['data']['message'] = "@{$this->user['nickname']} 已经加入游戏,开始【@{$game_user['nickname']}】请说【开始】.游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }
-            break;
-
+            $json['test'][] = 9;
         }while(false);
         return $json;
     }
