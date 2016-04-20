@@ -486,8 +486,7 @@ class Automatch{
             $json['data']['message'] = "游戏进行中,【{$this->user['nickname']}】加注{$new_credit}金币，接下来轮到【{$next_user_info['nickname']}】说话， 可以选择{$command}【跟牌】【加+金币数】【比牌】{$kaipai_str}【弃牌】";
 
         }while(false);
-        echo json_encode($json);
-        die();
+        return $json;
     }
 
     /**
@@ -545,8 +544,7 @@ class Automatch{
 
             $json['data']['message'] = "@{$this->user['nickname']} 底牌查看：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true)." ,【{$this->user['nickname']}】继续说话,可以说{$command}【跟牌】【加+金币数】{$kaipai_str}【弃牌】";
         }while(false);
-        echo json_encode($json);
-        die();
+        return $json;
     }
 
     /**
@@ -674,8 +672,7 @@ class Automatch{
             break;
             /////////////////////////////////////////////////////////////////////////////////////////////////////
         }while(false);
-        echo json_encode($json);
-        die();
+        return $json;
     }
 
     /**
@@ -732,8 +729,7 @@ class Automatch{
             break;
 
         }while(false);
-        echo json_encode($json);
-        die();
+        return $json;
     }
 
     /**
@@ -800,10 +796,9 @@ class Automatch{
                 $json['test'][] = 8;
                 $json['data']['message'] = "@{$this->user['nickname']} 已经加入游戏,开始【@{$game_user['nickname']}】请说【开始】.游戏详情：".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }
-            $json['test'][] = 9; // 
+            $json['test'][] = 9; //
         }while(false);
-        echo json_encode( $json);
-        die();
+        return $json;
     }
 
     /**
@@ -814,8 +809,7 @@ class Automatch{
 
         $json = $this->json;
         $json['data']['message'] = "接口正在紧张开发中";
-        echo json_encode($json);
-        die();
+        return $json;
     }
 
     /**
@@ -943,7 +937,6 @@ class Automatch{
                 break;
             }
         }while(false);
-        echo json_encode($json);
-        die();
+        return $json;
     }
 }

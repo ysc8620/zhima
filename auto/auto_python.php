@@ -84,6 +84,7 @@ do{
             if( $action ){
                 if(method_exists ($obj, $action)){
                     $json = $obj->$action($data);
+                    $json['command'] = $command['action'];
                 }
             }
 
