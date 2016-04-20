@@ -719,7 +719,7 @@ class Automatch{
             if(count($user_list) == 2){
                 $kaipai_str .= "【开牌】";
             }elseif(count($user_list) < 2){
-                $json['data']['message'] = "@{$this->user['nickname']} 没有其他说话用户 请说【开牌】结束游戏";
+                $json['data']['message'] = "@{$next_user_info['nickname']} 没有其他说话用户 请说【开牌】结束游戏";
                 break;
             }
 
