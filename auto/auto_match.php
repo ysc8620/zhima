@@ -890,7 +890,7 @@ class Automatch{
                     'last_user_id' => $game_user['user_id'],
                     'last_is_show' => $game_user['is_show'],
                     'last_credit' => $credit,
-                    'next_user_id' => 0,
+                    'next_user_id' => $next_user['user_id'],
                     'total_jiaopai' => ($game['total_jiaopai'] + 1),
                     'credit_log' => json_encode($game_credit_log),
                 )
