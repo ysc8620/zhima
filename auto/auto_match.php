@@ -802,7 +802,8 @@ class Automatch{
             }
             $json['test'][] = 9;
         }while(false);
-        return $json;
+        echo json_encode( $json);
+        die();
     }
 
     /**
