@@ -117,7 +117,8 @@ class Automatch{
                 $data_user = array(
                     'zha_id' => $zha['id'],
                     'user_id' => $this->user['id'],
-                    'addtime' => time()
+                    'addtime' => time(),
+                    'nickname' => $this->user['nickname']
                 );
                 M('zhajinhua_user')->add($data_user);
                 $json['data']['message'] = "@{$this->user['nickname']} 游戏创建成功,底池5金币,最小投注5金币,最大投注100金币。 加入游戏请说【加入】,游戏详情：". $this->U('/zjh/game/detail',array('id'=>$data['number_no']),true);
@@ -760,7 +761,8 @@ class Automatch{
                     $data_user = array(
                         'zha_id' => $zha['id'],
                         'user_id' => $this->user['id'],
-                        'addtime' => time()
+                        'addtime' => time(),
+                        'nickname' =>$this->user['nickname']
                     );
                     M('zhajinhua_user')->add($data_user);
                     $json['data']['message'] = "@{$this->user['nickname']} 加入游戏,开始请按【开始】. 游戏详情：".$this->U('/zjh/game/detail',array('id'=>$zha['number_no']),true);
@@ -782,7 +784,8 @@ class Automatch{
                 $data_user = array(
                     'zha_id' => $game['id'],
                     'user_id' => $this->user['id'],
-                    'addtime' => time()
+                    'addtime' => time(),
+                    'nickname' => $this->user['nickname']
                 );
                 M('zhajinhua_user')->add($data_user);
                 M('zhajinhua')->where(array('id'=>$game['id']))->save(array('update_time'=>time()));
