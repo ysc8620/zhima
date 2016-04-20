@@ -162,12 +162,7 @@ class Automatch{
             $user = M('zhajinhua_user')->where(array('zha_id'=>$game['id'], 'user_id'=>$this->user['id']))->find();
             $game_user = M('qun_user')->find($game['user_id']);
             // `zha_id`, `user_id`, `card_data`, `status`, `credit`, `addtime`, `is_win`, `update_time`, `credit_log`, `is_show`
-            $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id']))->select();
-            $user_str = '';
-            foreach($user_list as $uuser){
-                $user_str .= '【'.$uuser['nickname'].'】';
-            }
-            $user_str = $user_str?'压注顺序:'.$user_str:'';
+
             if( ! $user){
                 $data_user = array(
                     'zha_id' => $game['id'],
@@ -176,10 +171,22 @@ class Automatch{
                     'addtime' => time()
                 );
                 M('zhajinhua_user')->add($data_user);
+                $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id']))->select();
+                $user_str = '';
+                foreach($user_list as $uuser){
+                    $user_str .= '【'.$uuser['nickname'].'】';
+                }
+                $user_str = $user_str?'压注顺序:'.$user_str:'';
+
                 M('zhajinhua')->where(array('id'=>$game['id']))->save(array('update_time'=>time()));
                 $json['data']['message'] = "@{$this->user['nickname']} 加入游戏,开始请【@{$game_user['nickname']} 】说【开始】$user_str 游戏详情:".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }else{
-
+                $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id']))->select();
+                $user_str = '';
+                foreach($user_list as $uuser){
+                    $user_str .= '【'.$uuser['nickname'].'】';
+                }
+                $user_str = $user_str?'压注顺序:'.$user_str:'';
                 $json['data']['message'] = "@{$this->user['nickname']} 已经加入游戏,开始请【@{$game_user['nickname']} 】说【开始】$user_str 游戏详情:".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }
             break;
