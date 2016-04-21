@@ -698,17 +698,18 @@ class Automatch{
             }
 
             M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(array('status'=>4,'update_time'=>time()));
+            $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
+            if( count($user_list) == 1){
+                $this->user = M('qun_user')->find($user_list[0]['user_id']);
+                $this->kaipai($data);
+            }
 
             $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND id>'{$game_user['id']}' AND status=1")->order("id ASC")->find();
             if(!$next_user){
                 $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND status=1")->order("id ASC")->find();
-                if($next_user['id'] == $game_user['id']){
-                    $json['data']['message'] = "@{$this->user['nickname']} 没有可以说话用户 可以选择【开牌】";
-                    break;
-                }
             }
 
-
+            M('zhajinhua')->where(array('zha_id'=>$game['id']))->save(array('next_user_id'=>$next_user['user_id']));
 
             $next_user_info = M('qun_user')->find($next_user['user_id']);
             $command = '';
@@ -716,7 +717,7 @@ class Automatch{
                 $command = "【看牌】";
             }
 
-            $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
+            #$user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
             $kaipai_str = '';
             if(count($user_list) == 2){
                 $kaipai_str = "【开牌】";
@@ -853,6 +854,11 @@ class Automatch{
                 break;
             }
 
+            $user_list = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND status=1")->order("id ASC")->find();
+            if(count($user_list) <= 2){
+                $this->kaipai($data);
+            }
+
             $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND id>'{$game_user['id']}' AND status=1")->order("id ASC")->find();
             if(!$next_user){
                 $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND status=1")->order("id ASC")->find();
@@ -919,7 +925,7 @@ class Automatch{
                 $command = "【看牌】";
             }
 
-            $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
+            // $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id'],'status'=>1))->select();
             $kaipai_str = '';
             if(count($user_list) == 2){
                 $kaipai_str = "【开牌】";
