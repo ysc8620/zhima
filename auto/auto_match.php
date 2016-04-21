@@ -179,7 +179,7 @@ class Automatch{
                 $user_str = $user_str?'压注顺序:'.$user_str:'';
 
                 M('zhajinhua')->where(array('id'=>$game['id']))->save(array('update_time'=>time()));
-                $json['data']['message'] = "@{$this->user['nickname']} 加入游戏,开始请【@{$game_user['nickname']} 】说【开始】$user_str 游戏详情:".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
+                $json['data']['message'] = "@{$this->user['nickname']} 加入游戏,开始请【@{$game_user['nickname']} 】说【开始】{$user_str} 游戏详情:".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }else{
                 $user_list = M('zhajinhua_user')->where(array('zha_id'=>$game['id']))->select();
                 $user_str = '';
@@ -187,7 +187,7 @@ class Automatch{
                     $user_str .= '【'.$uuser['nickname'].'】';
                 }
                 $user_str = $user_str?'压注顺序:'.$user_str:'';
-                $json['data']['message'] = "@{$this->user['nickname']} 已经加入游戏,开始请【@{$game_user['nickname']} 】说【开始】$user_str 游戏详情:".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
+                $json['data']['message'] = "@{$this->user['nickname']} 已经加入游戏,开始请【@{$game_user['nickname']} 】说【开始】{$user_str} 游戏详情:".$this->U('/zjh/game/detail',array('id'=>$game['number_no']),true);
             }
             break;
 
@@ -265,7 +265,7 @@ class Automatch{
             }
             $user_str = $user_str?'压注顺序：'.$user_str:'';
 
-            $json['data']['message'] = "游戏开始了, 可以开始压注了，$user_str 接下来【@{$user['nickname']} 】说话， 可以选择【看牌】【跟牌】【弃牌】【加+金币数】";
+            $json['data']['message'] = "游戏开始了, 可以开始压注了, {$user_str} 接下来【@{$user['nickname']} 】说话， 可以选择【看牌】【跟牌】【弃牌】【加+金币数】";
             break;
 
         }while(false);
