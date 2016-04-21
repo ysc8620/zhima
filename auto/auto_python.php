@@ -89,6 +89,8 @@ do{
                     $json = $obj->$action($data);
                     $json['command'] = $command['action'];
                     $json['command_text'] = $word.'----';
+                }else{
+                    $json['method_exists'] = $word.'----';
                 }
             }
 
