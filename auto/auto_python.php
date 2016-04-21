@@ -88,7 +88,7 @@ do{
                 if(method_exists ($obj, $action)){
                     $json = $obj->$action($data);
                     $json['command'] = $command['action'];
-                    $json['command_text'] = $word;
+                    $json['command_text'] = $word.'----';
                 }
             }
 
