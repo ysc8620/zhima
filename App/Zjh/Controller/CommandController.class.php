@@ -14,7 +14,7 @@ class CommandController extends BaseController {
         $user = M('user')->find($this->user_id);
 
 
-        if($user['name'] != '乐圣昌'){
+        if($this->user_id != 10004){
             return header('Location: '.U('/zjh'));
         }
 
@@ -30,7 +30,7 @@ class CommandController extends BaseController {
 
     public function edit(){
         $user = M('user')->find($this->user_id);
-        if($user['name'] != '乐圣昌'){
+        if($this->user_id != 10004){
             return header('Location: '.U('/zjh'));
         }
         $this->user = $user;
@@ -54,7 +54,7 @@ class CommandController extends BaseController {
             'data'=>''
         );
         $user = M('user')->find($this->user_id);
-        if($user['name'] != '乐圣昌'){
+        if($this->user_id != 10004){
             return header('Location: '.U('/zjh'));
         }
 
