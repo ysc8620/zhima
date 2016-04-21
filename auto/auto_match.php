@@ -667,6 +667,9 @@ class Automatch{
                 }
                 $msg .= $user_info['nickname'].",共压注{$user['total_jiaopai']}轮,压注{$total_user_credit}金币,得牌:$card_str\n";
             }
+
+            $game = M('zhajinhua')->where(array('id'=>$game['id']))->find();
+
             $win_user_info = M('qun_user')->find($win_user['user_id']);
             $json['data']['message'] = "游戏结束， 恭喜【{$win_user_info['nickname']}】，在本轮游戏中获胜，获得{$game['total_credit']}金币。 继续游戏请选择【准备】\n".$msg;
             break;
@@ -702,6 +705,7 @@ class Automatch{
             if( count($user_list) == 1){
                 $this->user = M('qun_user')->find($user_list[0]['user_id']);
                 $this->kaipai($data);
+                return true;
             }
 
             $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND id>'{$game_user['id']}' AND status=1")->order("id ASC")->find();
@@ -857,6 +861,7 @@ class Automatch{
             $user_list = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND status=1")->order("id ASC")->find();
             if(count($user_list) <= 2){
                 $this->kaipai($data);
+                return true;
             }
 
             $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND id>'{$game_user['id']}' AND status=1")->order("id ASC")->find();
