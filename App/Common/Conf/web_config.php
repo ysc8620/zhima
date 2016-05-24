@@ -1,1 +1,1 @@
-<?php	return array ( 'sitename' => '凑红包系统', 'domain' => 'http://hb.kakaapp.com', 'logo' => '/uploads/1/20151017/zmlcms_1445061661767.png', 'title' => '凑红包系统', 'keywords' => '凑红包管理后台', 'desc' => '凑红包管理后台', 'huancun' => '3600', 'upload_exts' => '', 'rootPath' => '', );?>
+<?php	return array ( 'sitename' => '后台系统', 'domain' => 'http://w.zhima.cn', 'logo' => '/uploads//20160523/zmlcms_1463988821252.png', 'title' => '后台系统', 'keywords' => '后台系统', 'desc' => '管理后台', 'huancun' => '3600', 'upload_exts' => '', 'rootPath' => '', 'URL_MODEL' => '3', );?>

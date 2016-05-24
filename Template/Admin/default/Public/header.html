@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-  <title>凑红包后台管理系统</title>
+  <title>后台管理系统</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="__PUBLIC__/css/pintuer.css">
   <script src="__PUBLIC__/js/jquery-1.8.3.min.js"></script>
@@ -16,7 +16,7 @@
     <div class="x12">
       <div class="x2 ">
         <a href="javascript:void(0)">
-          <span class=" text-red" style="font-size: 32px;">芝麻乐</span><span class="text-gray padding-left">众筹管理后台</span>
+          <span class="text-gray padding-left">管理后台</span>
         </a>
       </div>
 		<div class="x8  text-right float-right">
@@ -53,19 +53,13 @@
 	<div class="x12" style="min-height:800px">
 	<div class="x12 border-bottom padding-bottom">
 		<volist name="menu" id="vo">
-		<a href="{:U($vo['name'])}" class="button  padding-top padding-big-left border-none radius-none padding-bottom x12 <if condition="'__SELF__' eq '/'.$vo['name'].'.html'">bg-sub</if>"> {$vo.title} <span class="float-right icon-angle-right"></span></a>
+		<a href="{:U($vo['name'])}" class="button  padding-top padding-big-left border-none radius-none padding-bottom x12 <if condition="'__SELF__' eq '/'.$vo['name'].'.html'">bg-sub</if>"> <b>{$vo.title}</b> <span class="float-right icon-angle-right"></span></a>
 		<volist name="vo.sub_menu" id="v">
 			<a href="{:U($v['name'])}" class="padding-large-left button x12  border-none radius-none <if condition="'__SELF__' eq '/'.$v['name'].'.html'">bg-sub</if>"><span class="padding-left">{$v.title}<span class="float-right icon-angle-right"></span></span></a>
 		</volist>
 		</volist>
 	</div>
 	<div class="clearfix"></div>
-		<div class="padding text-center text-small text-gray">
-			<a href="http://www.zhimale.com" class=" text-gray padding-right">帮助中心</a>|
-			<a href="http://www.zhimale.com" class="text-gray padding-left">联系我们</a>
-			<span class="text-gray padding-top x12">ZHIMALE 版权所有</span>
-			<span class="text-gray padding-top x12">版本号 <php>echo ZHIMALE_V</php></span>
-		</div>
 	</div>
     </div>
     <div class="x10 bg-white" style="min-height:680px;">

@@ -1,0 +1,91 @@
+<!-- 导航 -->
+<include file="Public/header" />
+
+<div class="x12 border-bottom padding">
+	<ul class="bread">
+		<li><a href="__MODULE__/robot" class="icon-home"> 智能机器人</a></li>
+		<li><a href="__MODULE__/robot"> 机器人管理</a></li>
+		<li>编辑机器人</li>
+	</ul>
+</div>
+<div class="x12 padding" >
+	<form class="form-x form-block" action="#" method="post" >
+		<div class="form-group x12">
+			<div class="label">
+				<label for="name">机器人名称*</label>
+			</div>
+			<div class="field x5">
+				<input type="text" class="input box-shadow-none radius-none" value="{$robot.name}" id="name" name="name" size="120"  placeholder="机器人名称" />
+			</div>
+		</div>
+		<div class="form-group x12">
+			<div class="label">
+				<label for="uin">机器人Uin*</label>
+			</div>
+			<div class="field x5">
+				<input type="text" class="input box-shadow-none radius-none" readonly value="{$robot.uin}" id="uin" name="uin" size="120" />
+			</div>
+		</div>
+		<div class="form-group x12">
+			<div class="label">
+				<label for="nickname">机器人昵称</label>
+			</div>
+			<div class="field x5">
+				<input type="text" class="input box-shadow-none radius-none" value="{$robot.nickname}" id="nickname" name="nickname" size="120"  placeholder="机器人昵称" />
+			</div>
+		</div>
+		<div class="form-group x12">
+			<div class="label">
+				<label for="remark">机器人备注</label>
+			</div>
+			<div class="field x5">
+				<input type="text" class="input box-shadow-none radius-none" value="{$robot.remark}" id="remark" name="remark" size="120"  placeholder="机器人备注" />
+			</div>
+		</div>
+
+		<div class="clearfix"></div>
+		<div class="margin-big-top text-center bg padding">
+			<button class="btn button bg-sub" type="button" onClick="add_news('{$robot.id}')"> 确 定 发 布</button>
+		</div>
+	</form>
+</div>
+</div>
+<!-- 底部 -->
+<include file="foot" />
+</div>
+<script type="text/javascript">
+
+	function add_news(id){
+		var name=$("input[name='name']").val();
+		var nickname=$("input[name='nickname']").val();
+		var remark=$("input[name='remark']").val();
+
+		if(name.length < 1){
+			layer.tips('机器人名称不能为空', $("input[name='name']"));
+			$("input[name='name']").focus()
+			return false
+		}
+
+
+		$.post("__MODULE__/Robot/robot_edit",{
+			name:name,
+			nickname:nickname,
+			remark:remark,
+			id:id,
+		},function(ret){
+			if(ret.status==1){
+				layer.msg(ret.info, {
+					offset: 200,
+					shift: 2
+				});
+				window.location.href=ret.url
+			}else{
+				layer.msg(ret.info, {
+					offset: 200,
+					shift: 2
+				});
+			}
+		})
+	}
+</script>
+</body></html>
