@@ -810,7 +810,6 @@ class Automatch{
      * @param $data
      */
     function jieshu($data){
-
         $json = $this->json;
         $json['data']['message'] = "接口正在紧张开发中";
         return $json;
@@ -939,10 +938,32 @@ class Automatch{
 
             if($bool > 0){
                 M('zhajinhua_user')->where(array('id'=>$last_user['id']))->save(array('status'=>3,'update_time'=>time(),'bipai_user_id'=>$this->user['id']));
+
+                $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND id>'{$game_user['id']}' AND status=1")->order("id ASC")->find();
+                if(!$next_user){
+                    $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND status=1")->order("id ASC")->find();
+                    if($next_user['id'] == $game_user['id']){
+                        $json['data']['message'] = "@{$this->user['nickname']} 没有可以说话用户 可以选择【开牌】";
+                        break;
+                    }
+                }
+
+                $next_user_info = M('qun_user')->find($next_user['user_id']);
                 $json['data']['message'] = "@{$this->user['nickname']} 您的牌比【{$last_user_info['nickname']}】大， 接下来【{$next_user_info['nickname']}】说话,请选择{$command}【跟牌】【加+金币数】{$kaipai_str}【比牌】【弃牌】";
                 break;
             }else{
                 M('zhajinhua_user')->where(array('id'=>$game_user['id']))->save(array('status'=>3,'update_time'=>time(),'bipai_user_id'=>$this->user['id']));
+
+                $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND id>'{$game_user['id']}' AND status=1")->order("id ASC")->find();
+                if(!$next_user){
+                    $next_user = M('zhajinhua_user')->where("zha_id='{$game['id']}' AND status=1")->order("id ASC")->find();
+                    if($next_user['id'] == $game_user['id']){
+                        $json['data']['message'] = "@{$this->user['nickname']} 没有可以说话用户 可以选择【开牌】";
+                        break;
+                    }
+                }
+                $next_user_info = M('qun_user')->find($next_user['user_id']);
+
                 $json['data']['message'] = "@{$this->user['nickname']} 您的牌比【{$last_user_info['nickname']}】小， 接下来【{$next_user_info['nickname']}】说话,请选择{$command}【跟牌】【加+金币数】{$kaipai_str}【比牌】【弃牌】";
                 break;
             }
