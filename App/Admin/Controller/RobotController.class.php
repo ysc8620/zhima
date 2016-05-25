@@ -21,7 +21,7 @@ class RobotController extends CommonController {
         $show       = $Page->show();
 
         $this->assign('lists',$lists);
-        $this->assign('show', $show);
+        $this->assign('page', $show);
         $this->assign('count', $count);
         $this->display();
     }
@@ -209,7 +209,7 @@ class RobotController extends CommonController {
         $show       = $Page->show();
 
         $this->assign('lists',$lists);
-        $this->assign('show', $show);
+        $this->assign('page', $show);
         $this->assign('count', $count);
 
         $this->display();

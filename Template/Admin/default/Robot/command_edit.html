@@ -17,7 +17,7 @@
             <div class="field x5">
                 <select name="type" id="type" class="text select" style="width: 120px; vertical-align: middle">
                     <option value="command">指令</option>
-                    <option value="msg" selected <if condition="$command['type'] eq 'msg'">selected</if>>消息</option>
+                    <option value="msg" <if condition="$command['type'] eq 'msg'">selected</if>>消息</option>
                 </select>  *指令需要接口处理， 消息直接回复内容{$command.type}
             </div>
         </div>
@@ -67,7 +67,7 @@
                 <label for="remark">指令说明</label>
             </div>
             <div class="field x5">
-                <input type="text" class="input box-shadow-none radius-none" value="{$command.remark}" id="remark" name="remark" size="120"  placeholder="关卡限制：0不限制，或者关卡id" />
+                <input type="text" class="input box-shadow-none radius-none" value="{$command.remark}" id="remark" name="remark" size="120"  placeholder="指令说明" />
             </div>
         </div>
 
@@ -78,7 +78,7 @@
             <div class="field x5">
                 <select name="status" id="status">
                     <option value="1">启用</option>
-                    <option value="0" <if condition="$command.type eq '0'">selected</if>>停用</option>
+                    <option value="0" <if condition="$command['status'] eq '0'">selected</if>>停用</option>
                 </select>
             </div>
         </div>
