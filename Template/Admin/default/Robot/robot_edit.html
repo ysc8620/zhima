@@ -70,14 +70,15 @@
 			name:name,
 			nickname:nickname,
 			remark:remark,
-			id:id,
+			id:id
 		},function(ret){
 			if(ret.status==1){
 				layer.msg(ret.info, {
 					offset: 200,
 					shift: 2
 				});
-				window.history.back();
+                window.location.href = "__MODULE__/robot";
+				// window.history.back();
 				// window.location.reload();
 			}else{
 				layer.msg(ret.info, {

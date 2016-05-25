@@ -31,14 +31,15 @@ class RobotController extends CommonController {
      */
     public function robot_edit(){
         if(IS_POST){
-            $post=I('post.');
+            $post = I('post.');
             $id = $post['id'];
             if($id){
-                $post['id']=$id;
-                $ok=M('robots')->save($post);
+                $post['id'] = $id;
+                $post['uptime'] = time();
+                $ok = M('robots')->save($post);
             }else{
                 $post['addtime'] = time();
-                $ok=M('robots')->add($post);
+                $ok = M('robots')->add($post);
             }
             if($ok){
                 $this->success('成功',$_SERVER['HTTP_REFERER']);
@@ -59,6 +60,9 @@ class RobotController extends CommonController {
         $this->display();
     }
 
+    /**
+     * 机器人删除
+     */
     public function robot_del(){
         $post=I('get.');
         $id = $post['id'];
@@ -122,10 +126,53 @@ class RobotController extends CommonController {
      */
     public function game_edit(){
         $httpget = I('get.');
+        $id =     $httpget['id'];
+        if(IS_POST){
+            $post = I('post.');
+            $id = $post['id'];
+            if( $id ){
+                $post['id'] = $id;
+                $post['uptime'] = time();
+                $ok = M('qun_game')->save($post);
+            }else{
+                $post['addtime'] = time();
+                $ok = M('qun_game')->add($post);
+            }
 
-        //print_r( $lists);
-        $this->assign('lists',array());
+            if($ok){
+                $this->success('成功',$_SERVER['HTTP_REFERER']);
+            }else{
+                $this->error('失败');
+            }
+            return ;
+        }
+
+        /**
+         * 游戏详情
+         */
+        $this->assign('game',array());
+        if($id){
+            $game = M('qun_game')->find($id);
+            $this->assign('game', $game);
+        }
+
         $this->display();
+    }
+
+    /**
+     * 机器人删除
+     */
+    public function game_del(){
+        $post=I('get.');
+        $id = $post['id'];
+        if($id){
+            $ok = M('qun_game')->delete($id);
+            if($ok){
+                $this->success('成功');
+            }else{
+                $this->error('失败');
+            }
+        }
     }
 
     /**
@@ -154,9 +201,9 @@ class RobotController extends CommonController {
      * 机器人命令列表
      */
     public function command(){
-        $lists = M('robots')->limit(20)->select();
+        $lists = M('qun_command')->limit(20)->select();
 
-        $count 		=  M('robots')->count();
+        $count 		=  M('qun_command')->count();
 
         $Page       = new \Think\Page($count,20);			// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();
@@ -172,11 +219,49 @@ class RobotController extends CommonController {
      * 机器人命令编辑
      */
     public function command_edit(){
-        $httpget = I('get.');
+        if(IS_POST){
+            $post=I('post.');
+            $id = $post['id'];
+            if($id){
+                $post['id'] = $id;
+                $post['uptime'] = time();
+                $ok = M('qun_command')->save($post);
+            }else{
+                $post['addtime'] = time();
+                $ok = M('qun_command')->add($post);
+            }
+            if($ok){
+                $this->success('成功',$_SERVER['HTTP_REFERER']);
+            }else{
+                $this->error('失败');
+            }
+            return ;
+        }
 
-        //print_r( $lists);
-        $this->assign('lists',array());
+        $httpget = I('get.');
+        $id = $httpget['id'];
+
+        if($id){
+            $command = M('qun_command')->find($id);
+            $this->assign('command', $command);
+        }
         $this->display();
+    }
+
+    /**
+     * 机器人删除
+     */
+    public function command_del(){
+        $post=I('get.');
+        $id = $post['id'];
+        if($id){
+            $ok = M('qun_command')->delete($id);
+            if($ok){
+                $this->success('成功');
+            }else{
+                $this->error('失败');
+            }
+        }
     }
 
 }

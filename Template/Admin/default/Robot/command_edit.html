@@ -1,51 +1,91 @@
 <!-- 导航 -->
-<include file="Public/header" />
+<include file="Public/header" xmlns="http://www.w3.org/1999/html"/>
 
 <div class="x12 border-bottom padding">
 	<ul class="bread">
 		<li><a href="__MODULE__/robot" class="icon-home"> 智能机器人</a></li>
-		<li><a href="__MODULE__/robot"> 机器人管理</a></li>
-		<li>编辑机器人</li>
+		<li><a href="__MODULE__/robot/command.html"> 指令管理</a></li>
+		<li>指令编辑</li>
 	</ul>
 </div>
 <div class="x12 padding" >
 	<form class="form-x form-block" action="#" method="post" >
+        <div class="form-group x12">
+            <div class="label">
+                <label for="type">指令类型*</label>
+            </div>
+            <div class="field x5">
+                <select name="type" id="type" class="text select" style="width: 120px; vertical-align: middle">
+                    <option value="command">指令</option>
+                    <option value="msg" selected <if condition="$command['type'] eq 'msg'">selected</if>>消息</option>
+                </select>  *指令需要接口处理， 消息直接回复内容{$command.type}
+            </div>
+        </div>
 		<div class="form-group x12">
 			<div class="label">
-				<label for="name">机器人名称*</label>
+				<label for="command">指令代码*</label>
 			</div>
 			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" value="{$robot.name}" id="name" name="name" size="120"  placeholder="机器人名称" />
+				<input type="text" class="input box-shadow-none radius-none" value="{$command.command}" id="command" name="command" size="120"  placeholder="指令代码" />
 			</div>
 		</div>
 		<div class="form-group x12">
 			<div class="label">
-				<label for="uin">机器人Uin*</label>
+				<label for="action">执行接口</label>
 			</div>
 			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" readonly value="{$robot.uin}" id="uin" name="uin" size="120" />
+				<input type="text" class="input box-shadow-none radius-none"  value="{$command.action}" id="action" name="action" size="120" placeholder="执行接口" />
 			</div>
 		</div>
 		<div class="form-group x12">
 			<div class="label">
-				<label for="nickname">机器人昵称</label>
+				<label for="game_id">限制游戏</label>
 			</div>
 			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" value="{$robot.nickname}" id="nickname" name="nickname" size="120"  placeholder="机器人昵称" />
+				<input type="text" class="input box-shadow-none radius-none" value="{$command.game_id}" id="game_id" name="game_id" size="120"  placeholder="限制游戏：0不限制, 或者游戏id" />
 			</div>
 		</div>
 		<div class="form-group x12">
 			<div class="label">
-				<label for="remark">机器人备注</label>
+				<label for="level_id">关卡限制</label>
 			</div>
 			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" value="{$robot.remark}" id="remark" name="remark" size="120"  placeholder="机器人备注" />
+				<input type="text" class="input box-shadow-none radius-none" value="{$command.level_id}" id="level_id" name="level_id" size="120"  placeholder="关卡限制：0不限制，或者关卡id" />
 			</div>
 		</div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="msg">回复内容</label>
+            </div>
+            <div class="field x5">
+                <textarea type="text" class="input box-shadow-none radius-none" id="msg" name="msg" size="120"  placeholder="指令类型为msg时，自动回复信息" >{$command.msg}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group x12">
+            <div class="label">
+                <label for="remark">指令说明</label>
+            </div>
+            <div class="field x5">
+                <input type="text" class="input box-shadow-none radius-none" value="{$command.remark}" id="remark" name="remark" size="120"  placeholder="关卡限制：0不限制，或者关卡id" />
+            </div>
+        </div>
+
+        <div class="form-group x12">
+            <div class="label">
+                <label for="status">指令状态</label>
+            </div>
+            <div class="field x5">
+                <select name="status" id="status">
+                    <option value="1">启用</option>
+                    <option value="0" <if condition="$command.type eq '0'">selected</if>>停用</option>
+                </select>
+            </div>
+        </div>
 
 		<div class="clearfix"></div>
 		<div class="margin-big-top text-center bg padding">
-			<button class="btn button bg-sub" type="button" onClick="add_news('{$robot.id}')"> 确 定 发 布</button>
+			<button class="btn button bg-sub" type="button" onClick="add_news('{$command.id}')"> 确 定 发 布</button>
 		</div>
 	</form>
 </div>
@@ -56,28 +96,39 @@
 <script type="text/javascript">
 
 	function add_news(id){
-		var name=$("input[name='name']").val();
-		var nickname=$("input[name='nickname']").val();
-		var remark=$("input[name='remark']").val();
+		var command = $("input[name='command']").val();
+		var type = $("select[name='type']").val();
+		var action = $("input[name='action']").val();
+        var game_id = $("input[name='game_id']").val();
+        var level_id = $("input[name='level_id']").val();
+        var message = $("textarea[name='message']").val();
+        var remark = $("input[name='remark']").val();
+        var status = $("select[name='status']").val();
 
-		if(name.length < 1){
-			layer.tips('机器人名称不能为空', $("input[name='name']"));
-			$("input[name='name']").focus()
+		if(command.length < 1){
+			layer.tips('指令代码不能为空', $("input[name='command']"));
+			$("input[name='command']").focus()
 			return false
 		}
 
-		$.post("__MODULE__/Robot/robot_edit",{
-			name:name,
-			nickname:nickname,
+		$.post("__MODULE__/Robot/command_edit",{
+            type:type,
+            command:command,
+			action:action,
+            game_id:game_id,
+            level_id:level_id,
+            message:message,
+            status:status,
 			remark:remark,
-			id:id,
+			id:id
 		},function(ret){
 			if(ret.status==1){
 				layer.msg(ret.info, {
 					offset: 200,
 					shift: 2
 				});
-				window.history.back();
+                window.location.href = "__MODULE__/Robot/command";
+				// window.history.back();
 				// window.location.reload();
 			}else{
 				layer.msg(ret.info, {

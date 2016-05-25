@@ -4,48 +4,83 @@
 <div class="x12 border-bottom padding">
 	<ul class="bread">
 		<li><a href="__MODULE__/robot" class="icon-home"> 智能机器人</a></li>
-		<li><a href="__MODULE__/robot"> 机器人管理</a></li>
-		<li>编辑机器人</li>
+		<li><a href="__MODULE__/robot/game.html"> 游戏管理</a></li>
+		<li>编辑游戏</li>
 	</ul>
 </div>
 <div class="x12 padding" >
 	<form class="form-x form-block" action="#" method="post" >
 		<div class="form-group x12">
 			<div class="label">
-				<label for="name">机器人名称*</label>
+				<label for="name">游戏名称*</label>
 			</div>
 			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" value="{$robot.name}" id="name" name="name" size="120"  placeholder="机器人名称" />
+				<input type="text" class="input box-shadow-none radius-none" value="{$game.name}" id="name" name="name" size="120"  placeholder="机器人名称" />
 			</div>
 		</div>
 		<div class="form-group x12">
 			<div class="label">
-				<label for="uin">机器人Uin*</label>
+				<label for="command">唤起命令*</label>
 			</div>
 			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" readonly value="{$robot.uin}" id="uin" name="uin" size="120" />
+				<input type="text" class="input box-shadow-none radius-none"  value="{$game.command}" id="command" name="command" size="120" placeholder="唤起游戏输入口令" />
 			</div>
 		</div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="action">执行接口*</label>
+            </div>
+            <div class="field x5">
+                <input type="text" class="input box-shadow-none radius-none"  value="{$game.action}" id="action" name="action" size="120" placeholder="启动游戏执行接口" />
+            </div>
+        </div>
 		<div class="form-group x12">
 			<div class="label">
-				<label for="nickname">机器人昵称</label>
+				<label for="game_time">游戏时间</label>
 			</div>
 			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" value="{$robot.nickname}" id="nickname" name="nickname" size="120"  placeholder="机器人昵称" />
+				<input type="text" class="input box-shadow-none radius-none" value="{$game.game_time}" id="game_time" name="game_time" size="120"  placeholder="游戏时间‘秒’" />
 			</div>
 		</div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="game_level_time">关卡时间</label>
+            </div>
+            <div class="field x5">
+                <input type="text" class="input box-shadow-none radius-none" value="{$game.game_level_time}" id="game_level_time" name="game_level_time" size="120"  placeholder="关卡时间‘秒’" />
+            </div>
+        </div>
 		<div class="form-group x12">
 			<div class="label">
-				<label for="remark">机器人备注</label>
+				<label for="remark">游戏备注</label>
 			</div>
 			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" value="{$robot.remark}" id="remark" name="remark" size="120"  placeholder="机器人备注" />
+				<input type="text" class="input box-shadow-none radius-none" value="{$game.remark}" id="remark" name="remark" size="120"  placeholder="游戏备注" />
 			</div>
 		</div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="help">玩法帮助</label>
+            </div>
+            <div class="field x5">
+                <textarea type="text" class="input box-shadow-none radius-none" id="help" name="help" size="120"  placeholder="游戏玩法帮助">{$game.help}</textarea>
+            </div>
+        </div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="status">游戏状态</label>
+            </div>
+            <div class="field x5">
+                <select name="status" id="status">
+                        <option value="1">启用</option>
+                    <option value="0" <if condition="$game.status eq '0'">selected</if>>停用</option>
+                </select>
+            </div>
+        </div>
 
 		<div class="clearfix"></div>
 		<div class="margin-big-top text-center bg padding">
-			<button class="btn button bg-sub" type="button" onClick="add_news('{$robot.id}')"> 确 定 发 布</button>
+			<button class="btn button bg-sub" type="button" onClick="add_news('{$game.id}')"> 确 定 发 布</button>
 		</div>
 	</form>
 </div>
@@ -56,9 +91,14 @@
 <script type="text/javascript">
 
 	function add_news(id){
-		var name=$("input[name='name']").val();
-		var nickname=$("input[name='nickname']").val();
-		var remark=$("input[name='remark']").val();
+		var name = $("input[name='name']").val();
+		var command = $("input[name='command']").val();
+		var action = $("input[name='action']").val();
+        var game_time = $("input[name='game_time']").val();
+        var game_level_time = $("input[name='game_level_time']").val();
+        var remark = $("input[name='remark']").val();
+        var help = $("textarea[name='help']").val();
+        var status = $("select[name='status']").val();
 
 		if(name.length < 1){
 			layer.tips('机器人名称不能为空', $("input[name='name']"));
@@ -66,18 +106,24 @@
 			return false
 		}
 
-		$.post("__MODULE__/Robot/robot_edit",{
+		$.post("__MODULE__/Robot/game_edit",{
 			name:name,
-			nickname:nickname,
-			remark:remark,
-			id:id,
+			command:command,
+			action:action,
+            game_time:game_time,
+            game_level_time:game_level_time,
+            remark:remark,
+            help:help,
+            status:status,
+			id:id
 		},function(ret){
 			if(ret.status==1){
 				layer.msg(ret.info, {
 					offset: 200,
 					shift: 2
 				});
-				window.history.back();
+                window.location.href = "__MODULE__/Robot/game";
+				//window.history.back();
 				// window.location.reload();
 			}else{
 				layer.msg(ret.info, {
