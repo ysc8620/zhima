@@ -76,9 +76,16 @@ class RobotController extends CommonController {
      * 群管理
      */
     public function qun(){
-        $httpget = I('get.');
+        $lists = M('qun')->limit(20)->select();
 
-        $this->assign('lists',array());
+        $count 		=  M('qun')->count();
+
+        $Page       = new \Think\Page($count,20);			// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $show       = $Page->show();
+
+        $this->assign('lists',$lists);
+        $this->assign('page', $show);
+        $this->assign('count', $count);
         $this->display();
     }
 
@@ -97,10 +104,16 @@ class RobotController extends CommonController {
      * 游戏管理
      */
     public function game(){
-        $httpget = I('get.');
+        $lists = M('qun_game')->limit(20)->select();
 
-        //print_r( $lists);
-        $this->assign('lists',array());
+        $count 		=  M('qun_game')->count();
+
+        $Page       = new \Think\Page($count,20);			// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $show       = $Page->show();
+
+        $this->assign('lists',$lists);
+        $this->assign('page', $show);
+        $this->assign('count', $count);
         $this->display();
     }
 
