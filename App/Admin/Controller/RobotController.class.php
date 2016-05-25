@@ -41,7 +41,7 @@ class RobotController extends CommonController {
                 $ok=M('robots')->add($post);
             }
             if($ok){
-                $this->success('成功');
+                $this->success('成功',$_SERVER['HTTP_REFERER']);
             }else{
                 $this->error('失败');
             }
@@ -59,13 +59,25 @@ class RobotController extends CommonController {
         $this->display();
     }
 
+    public function robot_del(){
+        $post=I('get.');
+        $id = $post['id'];
+        if($id){
+            $ok = M('robots')->delete($id);
+            if($ok){
+                $this->success('成功');
+            }else{
+                $this->error('失败');
+            }
+        }
+    }
+
     /**
      * 群管理
      */
     public function qun(){
         $httpget = I('get.');
 
-        //print_r( $lists);
         $this->assign('lists',array());
         $this->display();
     }

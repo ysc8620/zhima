@@ -66,7 +66,6 @@
 			return false
 		}
 
-
 		$.post("__MODULE__/Robot/robot_edit",{
 			name:name,
 			nickname:nickname,
@@ -78,7 +77,8 @@
 					offset: 200,
 					shift: 2
 				});
-				window.location.href=ret.url
+				window.history.back();
+				// window.location.reload();
 			}else{
 				layer.msg(ret.info, {
 					offset: 200,

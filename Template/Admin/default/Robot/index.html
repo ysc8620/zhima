@@ -5,9 +5,7 @@
 	</div>
     <div class="x12 padding border-bottom height-big">
     <a href="__MODULE__/Robot/robot_edit" class="padding text-sub">添加机器人</a>
-
 </div>
-
     <table class="table table-bordered table-hover text-small">
 		<tbody>
 			<tr>
@@ -25,7 +23,7 @@
                     <td>{$vo.uin}</td>
 					<td>{$vo.nickname}</td>
 					<td>{$vo.addtime|date="Y-m-d H:i",###}</td>
-                    <td><a href="__MODULE__/Robot/robot_edit/id/{$vo.id}">详情</a></td>
+                    <td><a href="__MODULE__/Robot/robot_edit/id/{$vo.id}">详情</a> | <a href="__MODULE__/Robot/robot_del/id/{$vo.id}" onclick="return confirm('确定要删除数据吗？')">删除</a> </td>
 				</tr>
 			</volist>
 		</tbody>
