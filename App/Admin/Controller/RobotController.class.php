@@ -17,7 +17,7 @@ class RobotController extends CommonController {
 
         $count 		=  M('robots')->count();
 
-        $Page       = new \Think\Page($count,10);			// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $Page       = new \Think\Page($count,20);			// 实例化分页类 传入总记录数和每页显示的记录数(25)
         $show       = $Page->show();
 
         $this->assign('lists',$lists);
@@ -29,11 +29,33 @@ class RobotController extends CommonController {
     /**
      * 机器人编辑
      */
-    public function rebot_edit(){
-        $httpget = I('get.');
+    public function robot_edit(){
+        if(IS_POST){
+            $post=I('post.');
+            $id = $post['id'];
+            if($id){
+                $post['id']=$id;
+                $ok=M('robots')->save($post);
+            }else{
+                $post['addtime'] = time();
+                $ok=M('robots')->add($post);
+            }
+            if($ok){
+                $this->success('成功');
+            }else{
+                $this->error('失败');
+            }
+            return ;
+        }
 
-        //print_r( $lists);
-        $this->assign('lists',array());
+        $httpget = I('get.');
+        $id = $httpget['id'];
+
+        if($id){
+            $robot = M('robots')->find($id);
+            $this->assign('robot', $robot);
+        }
+
         $this->display();
     }
 
@@ -107,10 +129,17 @@ class RobotController extends CommonController {
      * 机器人命令列表
      */
     public function command(){
-        $httpget = I('get.');
+        $lists = M('robots')->limit(20)->select();
 
-        //print_r( $lists);
-        $this->assign('lists',array());
+        $count 		=  M('robots')->count();
+
+        $Page       = new \Think\Page($count,20);			// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $show       = $Page->show();
+
+        $this->assign('lists',$lists);
+        $this->assign('show', $show);
+        $this->assign('count', $count);
+
         $this->display();
     }
 

@@ -1,14 +1,13 @@
 <include file="Public/header" />
 <div class="x12 padding ">
 	<div class="x6 padding">
-		红包总数：<span class="text-dot">{$hongbao_count}</span> 个
+		命令行总数：<span class="text-dot">{$count}</span> 个
 	</div>
     <div class="x12 padding border-bottom height-big">
-    <a href="__MODULE__/Hongbao/index.html" class="padding text-sub">全部</a>
-    <a href="__MODULE__/Hongbao/index/status/1" class="padding <if condition="$_GET['status'] eq '1'">text-green<else /> text-sub</if>">正在凑</a>
-    <a href="__MODULE__/Hongbao/index/status/2" class="padding <if condition="$_GET['status'] eq '2'">text-green<else /> text-sub</if>">已成功</a>
-    <a href="__MODULE__/Hongbao/index/status/3" class="padding <if condition="$_GET['status'] eq '3'">text-green<else /> text-sub</if>">未成功</a>
-
+    <a href="__MODULE__/Robot/command_edit.html" class=" text-sub x6 fl">添加命令行</a>
+	<div class="x4 fr">
+		<form>关键字：<input type="text" name="kw" class="input box-shadow-none radius-none" style="width: 200px; display: inline" size="30" value="" /> <input type="submit" name="submit" class="btn-1-1" value="搜素"></form>
+	</div>
 </div>
 
     <table class="table table-bordered table-hover text-small">
@@ -25,7 +24,7 @@
 				<th>成功时间</th>
                 <th>操作 </th>
 			</tr>
-			<volist name="hongbao_list" id="vo">
+			<volist name="lists" id="vo">
 				<tr  class="height">
                     <td>{$vo.id}</td>
 					<td>{$vo.user.name}</td>
