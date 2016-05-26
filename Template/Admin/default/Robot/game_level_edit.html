@@ -20,76 +20,76 @@
 		</div>
 		<div class="form-group x12">
 			<div class="label">
-				<label for="uin">对应游戏*</label>
+				<label for="game_id">对应游戏*</label>
 			</div>
 			<div class="field x5">
                 <select class="input box-shadow-none radius-none" name="game_id" id="game_id">
                     <option value="0">不限制</option>
                     <volist name="game_list" id="vo">
-                        <option value="{$vo.id}" <if condition="$vo.id eq $level.game_id">selected</if>>{$vo.name}</option>
+                        <option value="{$vo.id}" <if condition="$vo[id] eq $level[game_id]">selected</if>>{$vo.name}</option>
                     </volist>
                 </select>
             </div>
 		</div>
         <div class="form-group x12">
             <div class="label">
-                <label for="uin">指令代码</label>
+                <label for="command">指令代码</label>
             </div>
             <div class="field x5">
-                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.command}" id="command" name="command" size="120" />
             </div>
         </div>
         <div class="form-group x12">
             <div class="label">
-                <label for="uin">执行接口</label>
+                <label for="action">执行接口</label>
             </div>
             <div class="field x5">
-                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.action}" id="action" name="action" size="120" />
             </div>
         </div>
         <div class="form-group x12">
             <div class="label">
-                <label for="uin">关卡编号</label>
+                <label for="level_id">关卡编号</label>
             </div>
             <div class="field x5">
-                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.level_id}" id="level_id" name="level_id" size="120" />
             </div>
         </div>
         <div class="form-group x12">
             <div class="label">
-                <label for="uin">关卡问题</label>
+                <label for="question">关卡问题</label>
             </div>
             <div class="field x5">
-                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.question}" id="question" name="question" size="120" />
             </div>
         </div>
         <div class="form-group x12">
             <div class="label">
-                <label for="uin">关卡答案</label>
+                <label for="answer">关卡答案</label>
             </div>
             <div class="field x5">
-                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.answer}" id="answer" name="answer" size="120" />
             </div>
         </div>
         <div class="form-group x12">
             <div class="label">
-                <label for="uin">关卡提示</label>
+                <label for="prompt">关卡提示</label>
             </div>
             <div class="field x5">
-                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.prompt}" id="prompt" name="prompt" size="120" />
             </div>
         </div>
         <div class="form-group x12">
             <div class="label">
-                <label for="uin">关卡时间</label>
+                <label for="level_time">关卡时间</label>
             </div>
             <div class="field x5">
-                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.level_time}" id="level_time" name="level_time" size="120" />
             </div>
         </div>
         <div class="form-group x12">
             <div class="label">
-                <label for="uin">状态</label>
+                <label for="status">状态</label>
             </div>
             <div class="field x5">
                 <select name="status" id="status" class="input box-shadow-none radius-none">
@@ -113,28 +113,43 @@
 <script type="text/javascript">
 
 	function add_news(id){
-		var name=$("input[name='name']").val();
-		var nickname=$("input[name='nickname']").val();
-		var remark=$("input[name='remark']").val();
+		var name = $("input[name='name']").val();
+		var game_id = $("select[name='game_id']").val();
+		var command = $("input[name='command']").val();
+        var action = $("input[name='action']").val();
+        var level_id = $("input[name='level_id']").val();
+        var question = $("input[name='question']").val();
+        var answer = $("input[name='answer']").val();
+        var prompt = $("input[name='prompt']").val();
+        var level_time = $("input[name='level_time']").val();
+        var status = $("select[name='status']").val();
 
 		if(name.length < 1){
-			layer.tips('机器人名称不能为空', $("input[name='name']"));
+			layer.tips('关卡名称不能为空', $("input[name='name']"));
 			$("input[name='name']").focus()
 			return false
 		}
 
-		$.post("__MODULE__/Robot/robot_edit",{
+		$.post("__MODULE__/Robot/game_level_edit",{
 			name:name,
-			nickname:nickname,
-			remark:remark,
-			id:id,
+			game_id:game_id,
+			command:command,
+            action:action,
+            level_id:level_id,
+            question:question,
+            answer:answer,
+            prompt:prompt,
+            level_time:level_time,
+            status:status,
+			id:id
 		},function(ret){
 			if(ret.status==1){
 				layer.msg(ret.info, {
 					offset: 200,
 					shift: 2
 				});
-				window.history.back();
+                window.location.href = "__MODULE__/robot/game_level"
+				//window.history.back();
 				// window.location.reload();
 			}else{
 				layer.msg(ret.info, {

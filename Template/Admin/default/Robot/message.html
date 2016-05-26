@@ -1,13 +1,10 @@
 <include file="Public/header" />
 <div class="x12 padding ">
 	<div class="x6 padding">
-		红包总数：<span class="text-dot">{$hongbao_count}</span> 个
+		消息总数：<span class="text-dot">{$count}</span> 个
 	</div>
     <div class="x12 padding border-bottom height-big">
-    <a href="__MODULE__/Hongbao/index.html" class="padding text-sub">全部</a>
-    <a href="__MODULE__/Hongbao/index/status/1" class="padding <if condition="$_GET['status'] eq '1'">text-green<else /> text-sub</if>">正在凑</a>
-    <a href="__MODULE__/Hongbao/index/status/2" class="padding <if condition="$_GET['status'] eq '2'">text-green<else /> text-sub</if>">已成功</a>
-    <a href="__MODULE__/Hongbao/index/status/3" class="padding <if condition="$_GET['status'] eq '3'">text-green<else /> text-sub</if>">未成功</a>
+    <a href="__MODULE__/Robot/message_edit.html" class="padding text-sub">新建消息</a>
 
 </div>
 
@@ -15,28 +12,26 @@
 		<tbody>
 			<tr>
                 <th>编号</th>
-				<th>发起人</th>
-                <th>状态</th>
-				<th>红包总金额</th>
-				<th>份数,金额</th>
-                <th>完成份数,金额</th>
-				<th>每份金额</th>
-				<th>创建时间</th>
-				<th>成功时间</th>
+				<th>发到群</th>
+                <th>消息类型</th>
+				<th>消息内容</th>
+				<th>扩展参数</th>
+                <th>发送时间</th>
+				<th>添加时间</th>
+				<th>消息状态</th>
                 <th>操作 </th>
 			</tr>
-			<volist name="hongbao_list" id="vo">
+			<volist name="lists" id="vo">
 				<tr  class="height">
                     <td>{$vo.id}</td>
-					<td>{$vo.user.name}</td>
-                    <td><if condition="$vo.state eq 1"><font color="red">还在凑</font><elseif condition="$vo.state eq 2" /><font color="green">已完成</font>, <if condition="$vo.is_send_hongbao eq 1"><font color="green">已发红包</font><else /><font color="red">待发红包</font></if><elseif condition="$vo.state eq 3" />未完成, <if condition="$vo.is_refund eq 1"><font color="green">已退款</font><else /><font color="red">待退款</font></if></if></td>
-                    <td>￥{$vo.total_amount}元</td>
-					<td>{$vo.total_part}个,￥{$vo.part_amount}元</td>
-                    <td>{$vo.total_num}个,￥{$vo.total_pay_amount}元</td>
-					<td>￥{$vo.part_amount}元</td>
+					<td>{$vo.qun_id}-{$vo.qun_name}</td>
+                    <td><if condition="$vo.msg_type_id eq 1">文本<elseif condition="$vo.msg_type_id eq 2"/>图片<else/>其他</if></td>
+                    <td>{$vo.content}</td>
+					<td>{$vo.expand}</td>
+                    <td><if condition="$vo.start_time gt 0">{$vo.start_time|date="Y-m-d H:i",###}<else/>即时</if></td>
 					<td>{$vo.addtime|date="Y-m-d H:i",###}</td>
-					<td><if condition="$vo.success_time gt 0">{$vo.success_time|date="Y-m-d H:i",###}<else/>-</if></td>
-                    <td><a href="__MODULE__/Hongbao/detail/id/{$vo.id}">详情</a></td>
+					<td><if condition="$vo.status gt 1"><font color="green">已发送</font><else/><font color="#dcdcdc">待发送</font></if></td>
+                    <td><a href="__MODULE__/Robot/message_edit/id/{$vo.id}">详情</a> | <a href="__MODULE__/Robot/message_del/id/{$vo.id}" onclick="return confirm('确定要删除数据吗？')">删除</a> </td>
 				</tr>
 			</volist>
 		</tbody>

@@ -155,6 +155,9 @@ class RobotController extends CommonController {
         $this->display();
     }
 
+    /**
+     * 关卡编辑
+     */
     public function game_level_edit(){
         if(IS_POST){
             $post = I('post.');
@@ -192,6 +195,22 @@ class RobotController extends CommonController {
     }
 
     /**
+     * 游戏删除
+     */
+    public function game_level_del(){
+        $post=I('get.');
+        $id = $post['id'];
+        if($id){
+            $ok = M('qun_game_level')->delete($id);
+            if($ok){
+                $this->success('成功');
+            }else{
+                $this->error('失败');
+            }
+        }
+    }
+
+    /**
      * 游戏管理
      */
     public function game(){
@@ -217,6 +236,7 @@ class RobotController extends CommonController {
         if(IS_POST){
             $post = I('post.');
             $id = $post['id'];
+
             if( $id ){
                 $post['id'] = $id;
                 $post['uptime'] = time();
@@ -266,10 +286,16 @@ class RobotController extends CommonController {
      * 群消息管理
      */
     public function message(){
-        $httpget = I('get.');
+        $lists = M('qun_message')->limit(20)->select();
 
-        //print_r( $lists);
-        $this->assign('lists',array());
+        $count 		=  M('qun_message')->count();
+
+        $Page       = new \Think\Page($count,20);			// 实例化分页类 传入总记录数和每页显示的记录数(25)
+        $show       = $Page->show();
+
+        $this->assign('lists',$lists);
+        $this->assign('page', $show);
+        $this->assign('count', $count);
         $this->display();
     }
 
@@ -277,11 +303,55 @@ class RobotController extends CommonController {
      * 消息编辑
      */
     public function message_edit(){
-        $httpget = I('get.');
+        if(IS_POST){
+            $post=I('post.');
+            $id = $post['id'];
+            if($post['start_time']){
+                $post['start_time'] = strtotime($post['start_time']);
+            }
+            if($id){
+                $post['id'] = $id;
+                $post['uptime'] = time();
+                $ok = M('qun_message')->save($post);
+            }else{
+                $post['addtime'] = time();
+                $ok = M('qun_message')->add($post);
+            }
+            if($ok){
+                $this->success('成功',$_SERVER['HTTP_REFERER']);
+            }else{
+                $this->error('失败');
+            }
+            return ;
+        }
 
-        //print_r( $lists);
-        $this->assign('lists',array());
+
+        $httpget = I('get.');
+        $id = $httpget['id'];
+        if($id){
+            $message  = M('qun_message')->find($id);
+            $this->assign('message', $message);
+        }
+
+        $qun_list = M('qun')->field('id,nickname')->select();
+        $this->assign('qun_list', $qun_list);
         $this->display();
+    }
+
+    /**
+     * 机器人删除
+     */
+    public function message_del(){
+        $post=I('get.');
+        $id = $post['id'];
+        if($id){
+            $ok = M('qun_message')->delete($id);
+            if($ok){
+                $this->success('成功');
+            }else{
+                $this->error('失败');
+            }
+        }
     }
 
     /**

@@ -4,7 +4,7 @@
 		关卡总数：<span class="text-dot">{$count}</span> 个
 	</div>
     <div class="x12 padding border-bottom height-big">
-
+        <a href="__MODULE__/Robot/game_level_edit" class="padding text-sub">添加游戏关卡</a>
 </div>
 
     <table class="table table-bordered table-hover text-small">
@@ -36,7 +36,7 @@
                     <td>{$vo.prompt}</td>
 					<td>{$vo.level_time}秒</td>
 					<td><if condition="$vo.status gt 0"><font color="green">启用</font><else/><font color="red">停用</font></if></td>
-                    <td><a href="__MODULE__/Robot/game_level_edit/id/{$vo.id}">详情</a></td>
+                    <td><a href="__MODULE__/Robot/game_level_edit/id/{$vo.id}">详情</a>  | <a href="__MODULE__/Robot/game_level_del/id/{$vo.id}" onclick="return confirm('确定要删除数据吗？')">删除</a> </td>
 				</tr>
 			</volist>
 		</tbody>
