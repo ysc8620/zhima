@@ -11,6 +11,7 @@
 		<tbody>
 			<tr>
                 <th>编号</th>
+                <th>群编号</th>
 				<th>对应机器人</th>
                 <th>群昵称</th>
 				<th>群头像</th>
@@ -19,7 +20,8 @@
 			<volist name="lists" id="vo">
 				<tr  class="height">
                     <td>{$vo.id}</td>
-					<td>{$vo.robot_id}</td>
+                    <td>{$vo.username}</td>
+					<td>{$vo.robot_id}-{$vo.robot_name}</td>
                     <td>{$vo.nickname}</td>
 					<td><img src="{$vo.headimgurl}" style="max-width: 80px;" /></td>
 					<td>{$vo.addtime|date="Y-m-d H:i",###}</td>

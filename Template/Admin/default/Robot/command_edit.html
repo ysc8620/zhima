@@ -15,10 +15,10 @@
                 <label for="type">指令类型*</label>
             </div>
             <div class="field x5">
-                <select name="type" id="type" class="text select" style="width: 120px; vertical-align: middle">
+                <select name="type" id="type" class="input box-shadow-none radius-none">
                     <option value="command">指令</option>
                     <option value="msg" <if condition="$command['type'] eq 'msg'">selected</if>>消息</option>
-                </select>  *指令需要接口处理， 消息直接回复内容{$command.type}
+                </select><span style="color: #a9a9a9"> *指令需要接口处理， 消息直接回复内容</span>
             </div>
         </div>
 		<div class="form-group x12">
@@ -42,7 +42,12 @@
 				<label for="game_id">限制游戏</label>
 			</div>
 			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" value="{$command.game_id}" id="game_id" name="game_id" size="120"  placeholder="限制游戏：0不限制, 或者游戏id" />
+                <select class="input box-shadow-none radius-none" name="game_id" id="game_id">
+                    <option value="0">不限制</option>
+                    <volist name="game_list" id="vo">
+                        <option value="{$vo.id}" <if condition="$vo.id eq $command.game_id">selected</if>>{$vo.name}</option>
+                        </volist>
+                </select>
 			</div>
 		</div>
 		<div class="form-group x12">
@@ -76,7 +81,7 @@
                 <label for="status">指令状态</label>
             </div>
             <div class="field x5">
-                <select name="status" id="status">
+                <select name="status" id="status" class="input box-shadow-none radius-none">
                     <option value="1">启用</option>
                     <option value="0" <if condition="$command['status'] eq '0'">selected</if>>停用</option>
                 </select>

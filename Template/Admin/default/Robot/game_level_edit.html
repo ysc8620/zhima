@@ -4,48 +4,105 @@
 <div class="x12 border-bottom padding">
 	<ul class="bread">
 		<li><a href="__MODULE__/robot" class="icon-home"> 智能机器人</a></li>
-		<li><a href="__MODULE__/robot"> 机器人管理</a></li>
-		<li>编辑机器人</li>
+		<li><a href="__MODULE__/robot/game_level"> 群关卡管理</a></li>
+		<li>编辑关卡</li>
 	</ul>
 </div>
 <div class="x12 padding" >
 	<form class="form-x form-block" action="#" method="post" >
 		<div class="form-group x12">
 			<div class="label">
-				<label for="name">机器人名称*</label>
+				<label for="name">关卡名称*</label>
 			</div>
 			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" value="{$robot.name}" id="name" name="name" size="120"  placeholder="机器人名称" />
+				<input type="text" class="input box-shadow-none radius-none" value="{$level.name}" id="name" name="name" size="120"  placeholder="机器人名称" />
 			</div>
 		</div>
 		<div class="form-group x12">
 			<div class="label">
-				<label for="uin">机器人Uin*</label>
+				<label for="uin">对应游戏*</label>
 			</div>
 			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" readonly value="{$robot.uin}" id="uin" name="uin" size="120" />
-			</div>
+                <select class="input box-shadow-none radius-none" name="game_id" id="game_id">
+                    <option value="0">不限制</option>
+                    <volist name="game_list" id="vo">
+                        <option value="{$vo.id}" <if condition="$vo.id eq $level.game_id">selected</if>>{$vo.name}</option>
+                    </volist>
+                </select>
+            </div>
 		</div>
-		<div class="form-group x12">
-			<div class="label">
-				<label for="nickname">机器人昵称</label>
-			</div>
-			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" value="{$robot.nickname}" id="nickname" name="nickname" size="120"  placeholder="机器人昵称" />
-			</div>
-		</div>
-		<div class="form-group x12">
-			<div class="label">
-				<label for="remark">机器人备注</label>
-			</div>
-			<div class="field x5">
-				<input type="text" class="input box-shadow-none radius-none" value="{$robot.remark}" id="remark" name="remark" size="120"  placeholder="机器人备注" />
-			</div>
-		</div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="uin">指令代码</label>
+            </div>
+            <div class="field x5">
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+            </div>
+        </div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="uin">执行接口</label>
+            </div>
+            <div class="field x5">
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+            </div>
+        </div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="uin">关卡编号</label>
+            </div>
+            <div class="field x5">
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+            </div>
+        </div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="uin">关卡问题</label>
+            </div>
+            <div class="field x5">
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+            </div>
+        </div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="uin">关卡答案</label>
+            </div>
+            <div class="field x5">
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+            </div>
+        </div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="uin">关卡提示</label>
+            </div>
+            <div class="field x5">
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+            </div>
+        </div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="uin">关卡时间</label>
+            </div>
+            <div class="field x5">
+                <input type="text" class="input box-shadow-none radius-none"  value="{$level.uin}" id="uin" name="uin" size="120" />
+            </div>
+        </div>
+        <div class="form-group x12">
+            <div class="label">
+                <label for="uin">状态</label>
+            </div>
+            <div class="field x5">
+                <select name="status" id="status" class="input box-shadow-none radius-none">
+                    <option value="1">启用</option>
+                    <option value="0" <if condition="$level['status'] eq '0'">selected</if>>停用</option>
+                </select>
+            </div>
+        </div>
+
 
 		<div class="clearfix"></div>
 		<div class="margin-big-top text-center bg padding">
-			<button class="btn button bg-sub" type="button" onClick="add_news('{$robot.id}')"> 确 定 发 布</button>
+			<button class="btn button bg-sub" type="button" onClick="add_news('{$level.id}')"> 确 定 发 布</button>
 		</div>
 	</form>
 </div>

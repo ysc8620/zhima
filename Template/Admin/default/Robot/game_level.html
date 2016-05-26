@@ -1,13 +1,9 @@
 <include file="Public/header" />
 <div class="x12 padding ">
 	<div class="x6 padding">
-		红包总数：<span class="text-dot">{$hongbao_count}</span> 个
+		关卡总数：<span class="text-dot">{$count}</span> 个
 	</div>
     <div class="x12 padding border-bottom height-big">
-    <a href="__MODULE__/Hongbao/index.html" class="padding text-sub">全部</a>
-    <a href="__MODULE__/Hongbao/index/status/1" class="padding <if condition="$_GET['status'] eq '1'">text-green<else /> text-sub</if>">正在凑</a>
-    <a href="__MODULE__/Hongbao/index/status/2" class="padding <if condition="$_GET['status'] eq '2'">text-green<else /> text-sub</if>">已成功</a>
-    <a href="__MODULE__/Hongbao/index/status/3" class="padding <if condition="$_GET['status'] eq '3'">text-green<else /> text-sub</if>">未成功</a>
 
 </div>
 
@@ -15,28 +11,32 @@
 		<tbody>
 			<tr>
                 <th>编号</th>
-				<th>发起人</th>
+				<th>对应游戏</th>
+                <th>关卡名称</th>
+				<th>唤起命令</th>
+				<th>执行接口</th>
+                <th>关卡编号</th>
+				<th>关卡问题</th>
+				<th>关卡答案</th>
+				<th>关卡提示</th>
+                <th>关卡时间</th>
                 <th>状态</th>
-				<th>红包总金额</th>
-				<th>份数,金额</th>
-                <th>完成份数,金额</th>
-				<th>每份金额</th>
-				<th>创建时间</th>
-				<th>成功时间</th>
                 <th>操作 </th>
 			</tr>
-			<volist name="hongbao_list" id="vo">
+			<volist name="lists" id="vo">
 				<tr  class="height">
                     <td>{$vo.id}</td>
-					<td>{$vo.user.name}</td>
-                    <td><if condition="$vo.state eq 1"><font color="red">还在凑</font><elseif condition="$vo.state eq 2" /><font color="green">已完成</font>, <if condition="$vo.is_send_hongbao eq 1"><font color="green">已发红包</font><else /><font color="red">待发红包</font></if><elseif condition="$vo.state eq 3" />未完成, <if condition="$vo.is_refund eq 1"><font color="green">已退款</font><else /><font color="red">待退款</font></if></if></td>
-                    <td>￥{$vo.total_amount}元</td>
-					<td>{$vo.total_part}个,￥{$vo.part_amount}元</td>
-                    <td>{$vo.total_num}个,￥{$vo.total_pay_amount}元</td>
-					<td>￥{$vo.part_amount}元</td>
-					<td>{$vo.addtime|date="Y-m-d H:i",###}</td>
-					<td><if condition="$vo.success_time gt 0">{$vo.success_time|date="Y-m-d H:i",###}<else/>-</if></td>
-                    <td><a href="__MODULE__/Hongbao/detail/id/{$vo.id}">详情</a></td>
+					<td>{$vo.game_id}-{$vo.game_name}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.command}</td>
+					<td>{$vo.action}</td>
+                    <td>{$vo.level_id}</td>
+					<td>{$vo.question}</td>
+                    <td>{$vo.answer}</td>
+                    <td>{$vo.prompt}</td>
+					<td>{$vo.level_time}秒</td>
+					<td><if condition="$vo.status gt 0"><font color="green">启用</font><else/><font color="red">停用</font></if></td>
+                    <td><a href="__MODULE__/Robot/game_level_edit/id/{$vo.id}">详情</a></td>
 				</tr>
 			</volist>
 		</tbody>
