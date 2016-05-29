@@ -426,6 +426,9 @@ class RobotController extends CommonController {
      * 机器人命令列表
      */
     public function command(){
+        $last_updata_time = '';
+        $last_updata_time = file_get_contents("/data/sphinx/last_update.log");
+        $this->assign('last_updata_time', $last_updata_time);
         $lists = M('qun_command')->limit(20)->select();
         $game_list = M('qun_game')->field('id,name')->select();
         $games = array();
