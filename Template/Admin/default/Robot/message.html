@@ -27,7 +27,7 @@
                     <td>{$vo.id}</td>
 					<td>{$vo.qun_id}-{$vo.qun_name}</td>
                     <td><if condition="$vo.msg_type_id eq 1">文本<elseif condition="$vo.msg_type_id eq 2"/>图片<else/>其他</if></td>
-                    <td>{$vo.content}</td>
+                    <td>{$vo.message}</td>
 					<td>{$vo.expand}</td>
                     <td><if condition="$vo.start_time gt 0">{$vo.start_time|date="Y-m-d H:i",###}<else/>即时</if></td>
 					<td>{$vo.addtime|date="Y-m-d H:i",###}</td>
