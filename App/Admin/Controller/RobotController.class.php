@@ -302,7 +302,8 @@ class RobotController extends CommonController {
     /**
      * 消息编辑
      */
-    public function message_edit(){
+    public function message_edit(){           // @写入redis
+
         if(IS_POST){
             $post=I('post.');
             $id = $post['id'];
@@ -312,8 +313,75 @@ class RobotController extends CommonController {
             if($id){
                 $post['id'] = $id;
                 $post['uptime'] = time();
+
+                $redis = new \Redis();
+                $redis->connect('127.0.0.1', 6379);
+                if($post['to_qun']){
+                    $qun_info = M('qun')->find($post['to_qun']);
+                    if($qun_info['robot_id']){
+
+                        $key = "robot_".$qun_info['robot_id'];
+
+                        $msg = array(
+                            'msg' => $post['content'],
+                            'uid' => $qun_info['username']
+                        );
+
+                        $redis->lpush($key, json_encode($msg));
+
+                    }
+                }else{
+                    $qun_list = M('qun')->select();
+                    foreach($qun_list as $qun_info){
+                        if($qun_info['robot_id']){
+
+                            $key = "robot_".$qun_info['robot_id'];
+
+                            $msg = array(
+                                'msg' => $post['content'],
+                                'uid' => $qun_info['username']
+                            );
+                            $redis->lpush($key, json_encode($msg));
+
+                        }
+                    }
+                }
+
                 $ok = M('qun_message')->save($post);
             }else{
+                $redis = new \Redis();
+                $redis->connect('127.0.0.1', 6379);
+                if($post['to_qun']){
+                    $qun_info = M('qun')->find($post['to_qun']);
+                    if($qun_info['robot_id']){
+
+                               $key = "robot_".$qun_info['robot_id'];
+
+                                $msg = array(
+                                    'msg' => $post['content'],
+                                    'uid' => $qun_info['username']
+                                );
+
+                                $redis->lpush($key, json_encode($msg));
+
+                    }
+                }else{
+                    $qun_list = M('qun')->select();
+                    foreach($qun_list as $qun_info){
+                        if($qun_info['robot_id']){
+
+                                $key = "robot_".$qun_info['robot_id'];
+
+                                $msg = array(
+                                    'msg' => $post['content'],
+                                    'uid' => $qun_info['username']
+                                );
+                                $redis->lpush($key, json_encode($msg));
+
+                        }
+                    }
+                }
+
                 $post['addtime'] = time();
                 $ok = M('qun_message')->add($post);
             }

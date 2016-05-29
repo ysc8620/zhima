@@ -12,12 +12,12 @@
 	<form class="form-x form-block" action="#" method="post" >
         <div class="form-group x12">
             <div class="label">
-                <label for="type">指令类型*</label>
+                <label for="msgtype">指令类型*</label>
             </div>
             <div class="field x5">
-                <select name="type" id="type" class="input box-shadow-none radius-none">
+                <select name="msgtype" id="msgtype" class="input box-shadow-none radius-none">
                     <option value="command">指令</option>
-                    <option value="msg" <if condition="$command['type'] eq 'msg'">selected</if>>消息</option>
+                    <option value="msg" <if condition="$command['msgtype'] eq 'msg'">selected</if>>消息</option>
                 </select><span style="color: #a9a9a9"> *指令需要接口处理， 消息直接回复内容</span>
             </div>
         </div>
@@ -60,10 +60,10 @@
 		</div>
         <div class="form-group x12">
             <div class="label">
-                <label for="msg">回复内容</label>
+                <label for="message">回复内容</label>
             </div>
             <div class="field x5">
-                <textarea type="text" class="input box-shadow-none radius-none" id="msg" name="msg" size="120"  placeholder="指令类型为msg时，自动回复信息" >{$command.msg}</textarea>
+                <textarea type="text" class="input box-shadow-none radius-none" id="message" name="message" size="120"  placeholder="指令类型为msg时，自动回复信息" >{$command.msg}</textarea>
             </div>
         </div>
 
@@ -90,7 +90,9 @@
 
 		<div class="clearfix"></div>
 		<div class="margin-big-top text-center bg padding">
+
 			<button class="btn button bg-sub" type="button" onClick="add_news('{$command.id}')"> 确 定 发 布</button>
+
 		</div>
 	</form>
 </div>

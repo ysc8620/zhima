@@ -14,8 +14,6 @@ class MsgController extends Controller {
 
     public function index(){
 
-        require_once ROOT_PATH .'/auto/auto_match.php';
-        $base_file ="/data/website/zhaopian/auto/command.json";
         $json = array(
             'msg_code' => 10001,
             'msg_content' => '',
@@ -53,23 +51,26 @@ class MsgController extends Controller {
             }
 
             $word = $data['content']['data'];
-            $command_list = json_decode(file_get_contents($base_file), true);
-            $obj = new \Automatch($data);
-            $is_command = false;
-            foreach($command_list as $command){
-                $preg = preg_match("/^".$command['command']."$/i", $word);
-                if($preg){
-                    $is_command = true;
-                    $action = $command['action'];
-                    if( $action ){
-                        if(method_exists ($obj, $action)){
-                            $json = $obj->$action($data);
-                        }
-                    }
+            print_r($word);
 
-                    break;
-                }
-            }
+
+//            $command_list = json_decode(file_get_contents($base_file), true);
+//            $obj = new \Automatch($data);
+//            $is_command = false;
+//            foreach($command_list as $command){
+//                $preg = preg_match("/^".$command['command']."$/i", $word);
+//                if($preg){
+//                    $is_command = true;
+//                    $action = $command['action'];
+//                    if( $action ){
+//                        if(method_exists ($obj, $action)){
+//                            $json = $obj->$action($data);
+//                        }
+//                    }
+//
+//                    break;
+//                }
+//            }
 
             if(!$is_command){
                 $json['msg_code'] = 10003;

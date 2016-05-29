@@ -10,6 +10,21 @@
 </div>
 <div class="x12 padding" >
 	<form class="form-x form-block" action="#" method="post" >
+        <!--
+        <div class="form-group x12">
+            <div class="label">
+                <label for="to_qun">发送到机器人*</label>
+            </div>
+            <div class="field x5">
+                <select class="input box-shadow-none radius-none" name="to_qun" id="to_qun">
+                    <option value="0">不限制</option>
+                    <volist name="robot_list" id="vo">
+                        <option value="{$vo.id}" <if condition="$vo[id] eq $message[to_robot]">selected</if>>{$vo.nickname}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>          -->
+
 		<div class="form-group x12">
 			<div class="label">
 				<label for="to_qun">发送到群*</label>
@@ -74,7 +89,9 @@
 
 		<div class="clearfix"></div>
 		<div class="margin-big-top text-center bg padding">
+
 			<button class="btn button bg-sub" type="button" onClick="add_news('{$message.id}')"> 确 定 发 布</button>
+
 		</div>
 	</form>
 </div>
