@@ -457,6 +457,7 @@ class RobotController extends CommonController {
      */
     public function command_edit(){
         if(IS_POST){
+
             $post=I('post.');
             $id = $post['id'];
             if($id){
