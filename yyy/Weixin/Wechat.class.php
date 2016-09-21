@@ -41,7 +41,7 @@
  *  		);
  *   $result = $weObj->createMenu($newmenu);
  */
-require_once dir(__FILE__) . "/File.class.php";
+require_once dirname(__FILE__) . "/File.class.php";
 class Wechat {
 
     const MSGTYPE_TEXT = 'text';
