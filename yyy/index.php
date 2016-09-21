@@ -5,8 +5,120 @@
  * Date: 2016/9/20
  * Time: 22:22
  */
-$base_url = "";
+header("Content-type:text/html;charset=utf-8");
 session_start();
+require_once $base_path . "/Weixin/MyWechat.class.php";
+
+/**
+ * 调用微信类返回 access_token
+ * @param  int $type 城市ID
+ * @return object 微信公共类的对象
+ */
+function initWechat($type)
+{
+
+    global $options;
+    if(empty($options)){
+        die('No Found Weixin Option.');
+    }
+
+    return new MyWechat($options);
+}
+$options = array(
+    'token' =>"", //填写你设定的key
+    'encodingaeskey' => "", //填写加密用的EncodingAESKey
+    'appid' => "", //填写高级调用功能的app id
+    'appsecret' => "", //填写高级调用功能的密钥
+    'mchid' => "",// 支付商户号
+    'zhifu'=>""//支付密钥
+);
+
+
+$base_url = "";
+$city_id = 23;
+$base_path = dir(__FILE__);
+$ac = $_GET['ac'];
+$wechat = initWechat($city_id);
+$FUserId = $_SESSION['openid'.$city_id];
+
+$money = 1;//元
+
+
+// 判断是否领取奖励
+$openid_path = $base_path . "/receive/$FUserId.json";
+$receive_info = [];
+if(file_exists($openid_path)){
+    $data = file_get_contents($openid_path);
+    $receive_info = (array)json_decode($data, true);
+}
+
+
+if($ac == 'access'){
+    $wechat->valid();
+    echo 'success';
+    die();
+}elseif($ac == 'receive'){
+    $json = [
+        'state' => 100,
+        'msg' => '',
+        'data' => []
+    ];
+    do{
+        if(empty($FUserId)){
+            $json['state'] = 101;
+            $json['msg'] = "没有获取到用户信息";
+            break;
+        }
+
+        // https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack
+        $partner_trade_no = "YY".$FUserId;
+        $data = [
+            'mch_appid' => $options['appid'],
+            'mchid' => $options['mchid'],
+            'partner_trade_no' => $partner_trade_no,
+            'openid' => $FUserId,
+            'check_name' => 'NO_CHECK',
+            'amount' => $money * 100,
+            'desc' => "摇一摇红包",
+        ];
+        $json['data'] = $data;
+        break;
+        $url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
+        $returnData = $wechat->pay($url, $data, $options['zhifu'], $this->type);
+
+
+
+    }while(false);
+    echo json_encode($json);
+    die();
+}
+// 进行授权
+if(! $FUserId){
+    //
+    $ticket = $_GET['ticket'];
+    if (empty($ticket)) {  //ticket 参数为空
+        $error = "摇一摇设备无法获取票据";
+        die($error);
+    }
+
+    //从微信摇一摇接口获取设备id及用户id
+    $user = $wechat->getShakeInfoShakeAroundUser($ticket);
+    if (empty($user)) {
+        $error = "票据用户获取失败,请重新摇一摇";
+        die($error);
+    }
+    //记录用户openid
+    $FUserId = $user['data']['openid'];
+    $_SESSION['openid'.$city_id] = $FUserId;
+}
+
+// 判断是否关注
+$userInfo = $wechat->getUserInfo($FUserId);
+if ($userInfo) {
+    $userSubscribe = $userInfo['subscribe'];
+} else {
+    $userSubscribe = 0;
+}
 
 ?>
 <!doctype html>
@@ -15,7 +127,7 @@ session_start();
     <meta name="Generator" content="hongbaoos v1.0" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>发起的凑红包</title>
+    <title>摇一摇红包</title>
     <meta name="Keywords" content="" />
     <meta name="Description" content="" />
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -46,7 +158,7 @@ session_start();
                 <div class="remark" style="margin: 16px 0; font-size: 18px">恭喜发财,大吉大利!</div>
                 <ul >
                     <div class="tit mt20">
-                        <div class="title"><font>您已领取：</font>￥1.78元</div>                    </div>
+                        <div class="title"><font>您已领取：</font>￥1元</div>                    </div>
                 </ul>
             </div>
         </ul>
@@ -85,12 +197,26 @@ session_start();
 </div>
 
 <script type="text/javascript">
-
     //立即分享到微信朋友圈点击事件
     $("#machine1").on("click", function() {
-        $('#remark_block').show();
-    });
+        $.ajax({
+            type:'post',
+            url:"?ac=",
+            async:false,
+            cache:false,
+            data:{id:id, page:page},
+            dataType:'html',
+            success:function(result){
+                $('#remark_block').show();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+        });
 
+    });
 
 </script>
 </body>
