@@ -78,16 +78,16 @@ function authorize($type)
 }
 
 $options = array(
-    'token' =>"mlmk8899", //填写你设定的key
+    'token' =>" CouHongBaoOs", //填写你设定的key
     'encodingaeskey' => "ok5axEaHCOs5FNz38t7mvLyafUtlxdHpFTMUgKyff4p", //填写加密用的EncodingAESKey
-    'appid' => "wxe7dec0577556bf7c", //填写高级调用功能的app id
-    'appsecret' => "61d0d68711659113a8dc8bb3befb5391", //填写高级调用功能的密钥
-    'mchid' => "1254761001",// 支付商户号
-    'zhifu'=>"xunyuantongda6666millionmake9999"//支付密钥
+    'appid' => "wx506e178e4e9096f7", //填写高级调用功能的app id
+    'appsecret' => " b66a31ee4f49032ff3beb76338c4120b", //填写高级调用功能的密钥
+    'mchid' => "1313250901",// 支付商户号
+    'zhifu'=>"SKDDB87DJSKSADFGDEDKCDEG821G78FE"//支付密钥
 );
 
 $base_url = "";
-$city_id = 23;
+$city_id = 1;
 
 $from = "{$_GET['from']}";
 $from = $from?$from:1;
